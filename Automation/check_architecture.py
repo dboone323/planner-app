@@ -10,6 +10,13 @@ import sys
 
 def check_project(path, warn_only=True):
     issues = []
+    # Quick helpers
+    def is_yaml_multi_doc(fp):
+        try:
+            with open(fp, 'r', encoding='utf-8') as fh:
+                return '\n---' in fh.read()
+        except Exception:
+            return False
     # Rule: No Swift files under SharedTypes should import SwiftUI
     for root, _dirs, files in os.walk(path):
         for f in files:
@@ -23,11 +30,11 @@ def check_project(path, warn_only=True):
                 except Exception:
                     pass
 
-    # Example rule: Avoid TODO/FIXME in code
+    # Example rule: Avoid TODO/FIXME in code (stricter)
     todo_count = 0
     for root, _dirs, files in os.walk(path):
         for f in files:
-            if f.endswith(('.swift', '.py', '.sh')):
+            if f.endswith(('.swift', '.py', '.sh', '.m', '.mm', '.kt', '.java')):
                 fp = os.path.join(root, f)
                 try:
                     with open(fp, 'r', encoding='utf-8') as fh:
@@ -36,8 +43,59 @@ def check_project(path, warn_only=True):
                                 todo_count += 1
                 except Exception:
                     pass
-    if todo_count > 50:
-        issues.append(f"Project has {todo_count} TODO/FIXME markers; consider cleaning up")
+    if todo_count > 10:
+        issues.append(f"Project has {todo_count} TODO/FIXME markers; consider cleaning up (threshold=10)")
+
+    # Rule: Detect GitHub Actions workflow multi-document YAMLs (not allowed by policy)
+    workflows_dir = os.path.join(path, '.github', 'workflows')
+    if os.path.isdir(workflows_dir):
+        for wf in os.listdir(workflows_dir):
+            if wf.endswith(('.yml', '.yaml')):
+                fp = os.path.join(workflows_dir, wf)
+                if is_yaml_multi_doc(fp):
+                    issues.append(f"Workflow {fp} contains multiple YAML documents (---). Split into single-document files.")
+                # Rule: detect deprecated/pinned actions usage heuristics
+                try:
+                    with open(fp, 'r', encoding='utf-8') as fh:
+                        txt = fh.read()
+                        # simple heuristic: actions/checkout@v1 or actions/setup-python@v1
+                        if '@v1' in txt or "@v2" in txt and 'actions/checkout' in txt and 'actions/setup-python' in txt:
+                            issues.append(f"Workflow {fp} may reference deprecated action major versions (check version pins)")
+                except Exception:
+                    pass
+    else:
+        issues.append(f"Missing workflows directory: {workflows_dir}")
+
+    # Rule: Check Dockerfiles that use 'latest' tag
+    for root, _dirs, files in os.walk(path):
+        for f in files:
+            if f == 'Dockerfile':
+                fp = os.path.join(root, f)
+                try:
+                    with open(fp, 'r', encoding='utf-8') as fh:
+                        for line in fh:
+                            if 'FROM' in line and ':latest' in line:
+                                issues.append(f"Dockerfile {fp} pins image with :latest; use an explicit tag or digest")
+                except Exception:
+                    pass
+
+    # Rule: If project contains an Xcode project, ensure there's at least one macOS/iOS workflow
+    has_xcode = any(f.endswith('.xcodeproj') for _, _dirs, files in os.walk(path) for f in files)
+    if has_xcode:
+        found_ci = False
+        if os.path.isdir(workflows_dir):
+            for wf in os.listdir(workflows_dir):
+                if wf.endswith(('.yml', '.yaml')):
+                    fp = os.path.join(workflows_dir, wf)
+                    try:
+                        with open(fp, 'r', encoding='utf-8') as fh:
+                            txt = fh.read()
+                            if 'macos' in txt or 'macOS' in txt or 'xcodebuild' in txt:
+                                found_ci = True
+                    except Exception:
+                        pass
+        if not found_ci:
+            issues.append('Xcode project detected but no macOS/iOS CI workflow found in .github/workflows')
 
     return issues
 
