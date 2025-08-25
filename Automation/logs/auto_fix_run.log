@@ -91,3 +91,4 @@ usage: ai_workflow_recovery.py [-h] [--repo-path REPO_PATH]
 ai_workflow_recovery.py: error: unrecognized arguments: --project /Users/danielstevens/Desktop/Code/Tools --enable-auto-fix
 Entrypoint finished
 Changes detected after auto-fix for /Users/danielstevens/Desktop/Code/Tools; committing
+Auto-fix run complete

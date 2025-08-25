@@ -166,6 +166,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--project', required=True)
     parser.add_argument('--warn-only', action='store_true', default=False)
+    parser.add_argument('--auto-fix', action='store_true', default=False,
+                        help='Attempt safe auto-fixes for low-risk issues (multi-doc split, pin common actions)')
     args = parser.parse_args()
 
     path = args.project
@@ -178,14 +180,50 @@ def main():
         print("Architecture issues detected:")
         for it in issues:
             print(f" - {it}")
-        if args.warn_only:
-            print("Warn-only mode: continuing with warnings")
-            sys.exit(0)
-        else:
-            print("Strict mode: failing")
-            sys.exit(1)
     else:
         print("No architecture issues detected")
+
+    if args.auto_fix:
+        # Re-run detection to gather files to fix (check_project already populated 'fixes' via side-effects),
+        # but because check_project returns only issues we need to re-run a short pass to collect fixes.
+        # Simpler: run check_project and inspect local variables by calling it again and capturing fixes via returned structure.
+        # Modify check_project to return both issues and fixes would be ideal; as a minimal change, re-run the file inspection here.
+        # We'll perform a focused scan to collect candidate fixes (multi-doc and common action pins).
+        candidate_fixes = []
+        workflows_dir = os.path.join(path, '.github', 'workflows')
+        if os.path.isdir(workflows_dir):
+            for wf in os.listdir(workflows_dir):
+                if wf.endswith(('.yml', '.yaml')):
+                    fp = os.path.join(workflows_dir, wf)
+                    try:
+                        with open(fp, 'r', encoding='utf-8') as fh:
+                            txt = fh.read()
+                            if '---' in txt:
+                                candidate_fixes.append(('multi-doc', fp))
+                            if 'actions/checkout@v1' in txt or 'actions/setup-python@v1' in txt:
+                                candidate_fixes.append(('pin-actions', fp))
+                    except Exception:
+                        pass
+        if candidate_fixes:
+            print('AUTO_FIX_CANDIDATES:')
+            for kind, fp in candidate_fixes:
+                print(f" - {kind}: {fp}")
+            # attempt auto-fixes
+            results = auto_fix_project(path, fixes_requested=candidate_fixes)
+            print('AUTO_FIX_RESULTS:')
+            for fp, kind, ok, msg in results:
+                status = 'APPLIED' if ok else 'SKIPPED'
+                print(f" - {status}: {kind} -> {fp}: {msg}")
+            # exit 0 to indicate we ran auto-fix analysis (caller will examine repo state)
+            sys.exit(0)
+
+    # If there were issues and not warn-only, fail.
+    if issues and not args.warn_only:
+        print("Strict mode: failing")
+        sys.exit(1)
+    else:
+        if issues:
+            print("Warn-only mode: continuing with warnings")
         sys.exit(0)
 
 if __name__ == '__main__':

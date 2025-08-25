@@ -1,13 +1,13 @@
 Quantum Agent entrypoint: project=/Users/danielstevens/Desktop/Code/Projects/MomentumFinance dry_run=true enable_auto_fix=true
-Architecture issues detected:
- - Workflow /Users/danielstevens/Desktop/Code/Projects/MomentumFinance/.github/workflows/ci.yml may reference deprecated action major versions (check version pins)
-Warn-only mode: continuing with warnings
 Running checker with auto-fix analysis
 Architecture issues detected:
  - Workflow /Users/danielstevens/Desktop/Code/Projects/MomentumFinance/.github/workflows/ci.yml may reference deprecated action major versions (check version pins)
 Warn-only mode: continuing with warnings
-Invoking ai_workflow_recovery.py --project /Users/danielstevens/Desktop/Code/Projects/MomentumFinance --dry-run --enable-auto-fix
-usage: ai_workflow_recovery.py [-h] [--repo-path REPO_PATH]
-                               [--max-retries MAX_RETRIES] [--dry-run]
-ai_workflow_recovery.py: error: unrecognized arguments: --project /Users/danielstevens/Desktop/Code/Projects/MomentumFinance --enable-auto-fix
+Detected git repository at /Users/danielstevens/Desktop/Code/Projects/MomentumFinance; attempting to commit fixes
+Invoking ai_workflow_recovery.py (dry-run enforced) for /Users/danielstevens/Desktop/Code/Projects/MomentumFinance
+2025-08-25 11:50:27,327 - INFO - 🤖 AI Workflow Recovery initialized for unknown/unknown
+2025-08-25 11:50:27,327 - INFO - 🔍 Running in dry-run mode (analysis only)
+2025-08-25 11:50:27,360 - INFO - 🧠 Analyzing workflow failure with AI...
+2025-08-25 11:50:27,360 - INFO - 🎯 Match found: missing_file (confidence: 0.95)
+2025-08-25 11:50:27,360 - INFO - 🎯 Would apply fix: create_missing_file for missing_file
 Entrypoint finished
