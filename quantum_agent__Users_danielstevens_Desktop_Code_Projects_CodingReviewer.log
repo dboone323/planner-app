@@ -1,0 +1,9 @@
+Quantum Agent entrypoint: project=/Users/danielstevens/Desktop/Code/Projects/CodingReviewer dry_run=true enable_auto_fix=true
+No architecture issues detected
+Running checker with auto-fix analysis
+No architecture issues detected
+Invoking ai_workflow_recovery.py --project /Users/danielstevens/Desktop/Code/Projects/CodingReviewer --dry-run --enable-auto-fix
+usage: ai_workflow_recovery.py [-h] [--repo-path REPO_PATH]
+                               [--max-retries MAX_RETRIES] [--dry-run]
+ai_workflow_recovery.py: error: unrecognized arguments: --project /Users/danielstevens/Desktop/Code/Projects/CodingReviewer --enable-auto-fix
+Entrypoint finished
