@@ -30,3 +30,10 @@ lint:
     - shfmt@3.6.0
     - trufflehog@3.90.5
     - yamllint@1.37.1
+actions:
+  disabled:
+    - trunk-announce
+    - trunk-check-pre-push
+    - trunk-fmt-pre-commit
+  enabled:
+    - trunk-upgrade-available
