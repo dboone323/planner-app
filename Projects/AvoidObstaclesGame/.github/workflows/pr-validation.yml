@@ -63,3 +63,27 @@ jobs:
           path: |
             xcodebuild.log
             test_game.sh || true
+
+  quantum-self-heal-run:
+    name: Quantum Agent - Dry Run Self-Heal
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run AI recovery (dry-run)
+        run: |
+          python3 Tools/Automation/ai_workflow_recovery.py --project Projects/AvoidObstaclesGame --dry-run 2>&1 | tee ai_recovery_avoid.log || true
+
+      - name: Upload AI recovery log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: avoidobstacles-ai-recovery-log
+          path: ai_recovery_avoid.log
