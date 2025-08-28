@@ -53,7 +53,7 @@ def perform_backup(path):
         ts = int(time.time())
         bak = f"{path}.bak.{ts}"
         shutil.copy2(path, bak)
-        return bak
+        return os.path.abspath(bak)
     except Exception as e:
         print(f"backup failed: {e}")
         return None
@@ -63,7 +63,38 @@ def _with_file_lock(path, func, *a, **kw):
     """Run func while holding an advisory lock on the target file (POSIX using fcntl).
     If locking isn't available, run without lock as best-effort.
     """
+    # Prefer portalocker if available (cross-platform); otherwise try POSIX fcntl or Windows msvcrt
+    locker = None
     try:
+        import portalocker
+        locker = 'portalocker'
+    except Exception:
+        try:
+            import fcntl
+            locker = 'fcntl'
+        except Exception:
+            try:
+                import msvcrt
+                locker = 'msvcrt'
+            except Exception:
+                locker = None
+
+    if locker == 'portalocker':
+        fd = open(path, 'a+')
+        try:
+            portalocker.lock(fd, portalocker.LOCK_EX)
+            return func(*a, **kw)
+        finally:
+            try:
+                portalocker.unlock(fd)
+            except Exception:
+                pass
+            try:
+                fd.close()
+            except Exception:
+                pass
+
+    if locker == 'fcntl':
         import fcntl
         fd = open(path, 'a+')
         try:
@@ -78,9 +109,25 @@ def _with_file_lock(path, func, *a, **kw):
                 fd.close()
             except Exception:
                 pass
-    except Exception:
-        # locking not available — just run the function
-        return func(*a, **kw)
+
+    if locker == 'msvcrt':
+        import msvcrt
+        fd = open(path, 'a+')
+        try:
+            msvcrt.locking(fd.fileno(), msvcrt.LK_LOCK, 1)
+            return func(*a, **kw)
+        finally:
+            try:
+                msvcrt.locking(fd.fileno(), msvcrt.LK_UN, 1)
+            except Exception:
+                pass
+            try:
+                fd.close()
+            except Exception:
+                pass
+
+    # no locking available
+    return func(*a, **kw)
 
 
 def restore_backup(bak):
@@ -92,6 +139,23 @@ def restore_backup(bak):
     except Exception as e:
         print(f"restore failed: {e}")
         return False
+
+
+def _atomic_write(path, data):
+    """Write data to path atomically using a temporary file and os.replace."""
+    import tempfile
+    d = os.path.dirname(path)
+    fd, tmp = tempfile.mkstemp(dir=d)
+    try:
+        with os.fdopen(fd, 'w') as f:
+            f.write(data)
+        os.replace(tmp, path)
+    finally:
+        try:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except Exception:
+            pass
 
 
 def _latest_backup_for(path):
@@ -187,8 +251,7 @@ def main():
                                     def _do_backup():
                                         bak = perform_backup(target)
                                         try:
-                                            with open(marker, 'w') as mf:
-                                                mf.write(str(bak or ''))
+                                            _atomic_write(marker, str(bak or ''))
                                         except Exception:
                                             pass
                                         return bak
@@ -209,8 +272,7 @@ def main():
                                     def _do_backup_marker():
                                         bak = perform_backup(target)
                                         try:
-                                            with open(marker, 'w') as mf:
-                                                mf.write(str(bak or ''))
+                                            _atomic_write(marker, str(bak or ''))
                                         except Exception:
                                             pass
                                         return bak
