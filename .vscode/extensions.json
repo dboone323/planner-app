@@ -18,8 +18,8 @@
     "ollama.vscode-ollama"
   ],
   "notes": {
-    "migration_date": "2025-11-01",
-    "reason": "Migrated from VS Code extensions to MCP servers for better AI integration and standardization",
-    "mcp_config": "MCP server configuration is in the main workspace Code.code-workspace file"
+    "migration": "Extensions have been migrated to MCP servers for better AI integration",
+    "mcp_config": "See mcp-settings.json for MCP server configuration",
+    "date": "2025-11-01"
   }
 }
