@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: plannerapp-validation-logs
           path: |
@@ -93,7 +93,7 @@ jobs:
 
       - name: Upload AI recovery log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: plannerapp-ai-recovery-log
           path: ai_recovery_plannerapp.log
