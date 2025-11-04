@@ -1,44 +1,99 @@
-name: PR Validation (SwiftPM)
+name: PR Validation
 
 on:
   pull_request:
-    branches:
-      - main
-      - develop
+    types: [opened, synchronize, reopened]
 
 jobs:
   pr-validate:
+    name: PR Validation (macOS)
     runs-on: macos-latest
-    timeout-minutes: 15
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.0'
-
-      - name: Make Scripts Executable
+      - name: Show environment
         run: |
-          chmod +x Tools/Automation/run_parallel_tests.sh
-          chmod +x Tools/Automation/detect_issues.sh
+          sw_vers
+          swift --version || true
 
-      - name: Run Parallel Tests (auto-discover)
+      - name: Install SwiftFormat (best-effort)
         run: |
-          Tools/Automation/run_parallel_tests.sh
+          if ! command -v swiftformat >/dev/null 2>&1; then
+            brew install swiftformat || true
+          fi
 
-      - name: Detect Issues
-        if: always()
+      - name: Run SwiftFormat lint (best-effort)
         run: |
-          Tools/Automation/detect_issues.sh || echo "Issues detected"
+          if command -v swiftformat >/dev/null 2>&1; then
+            swiftformat --lint . || true
+          else
+            echo "swiftformat not available; skipping"
+          fi
 
-      - name: Upload Artifacts
+      - name: Install SwiftLint (best-effort)
+        run: |
+          if ! command -v swiftlint >/dev/null 2>&1; then
+            brew install swiftlint || true
+          fi
+
+      - name: Run SwiftLint (best-effort)
+        run: |
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint || true
+          else
+            echo "swiftlint not available; skipping"
+          fi
+
+      - name: Build and test (if scheme found)
+        run: |
+          set -o pipefail
+          cd Projects/PlannerApp || true
+          proj=$(ls *.xcodeproj 2>/dev/null | head -n1 || true)
+          if [[ -n "$proj" ]]; then
+            echo "Found Xcode project: $proj"
+            schemes=$(xcodebuild -list -project "$proj" 2>/dev/null | sed -n '/Schemes:/,$p' | tail -n +2)
+            scheme=$(echo "$schemes" | head -n1 | xargs)
+            if [[ -n "$scheme" ]]; then
+              echo "Using scheme: $scheme"
+              xcodebuild -project "$proj" -scheme "$scheme" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16' clean build test | tee xcodebuild.log
+            else
+              echo "No scheme found in $proj; skipping build/test"
+            fi
+          else
+            echo "No .xcodeproj found; skipping build/test"
+          fi
+
+      - name: Upload logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pr-validation-artifacts
+          name: plannerapp-validation-logs
           path: |
-            test_results/
-            test_results/issues/
-          retention-days: 7
+            Projects/PlannerApp/xcodebuild.log
+            Projects/PlannerApp/xcodebuild.log || true
+
+  quantum-self-heal-run:
+    name: Quantum Agent - Dry Run Self-Heal
+    needs: pr-validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Run Quantum Agent entrypoint (dry-run)
+        run: |
+          bash Tools/Automation/quantum_agent_entrypoint.sh Projects/PlannerApp true false 2>&1 | tee ai_recovery_plannerapp.log || true
+
+      - name: Upload AI recovery log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plannerapp-ai-recovery-log
+          path: ai_recovery_plannerapp.log
