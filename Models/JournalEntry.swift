@@ -11,9 +11,19 @@ public struct JournalEntry: Identifiable, Codable {
     var mood: String
     var modifiedAt: Date? // Added for CloudKit sync/merge
 
+    // Sentiment analysis properties
+    var sentiment: String // "positive", "negative", or "neutral"
+    var sentimentScore: Double // -1.0 to 1.0
+
     init(
-        id: UUID = UUID(), title: String, body: String, date: Date, mood: String,
-        modifiedAt: Date? = Date()
+        id: UUID = UUID(),
+        title: String,
+        body: String,
+        date: Date,
+        mood: String,
+        modifiedAt: Date? = Date(),
+        sentiment: String = "neutral",
+        sentimentScore: Double = 0.0
     ) {
         self.id = id
         self.title = title
@@ -21,6 +31,38 @@ public struct JournalEntry: Identifiable, Codable {
         self.date = date
         self.mood = mood
         self.modifiedAt = modifiedAt
+        self.sentiment = sentiment
+        self.sentimentScore = sentimentScore
+    }
+
+    // MARK: - Sentiment Analysis
+
+    /// Update entry content and trigger sentiment analysis
+    mutating func updateContent(_ newContent: String) {
+        self.body = newContent
+        self.modifiedAt = Date()
+
+        // Analyze sentiment synchronously
+        analyzeSentiment()
+    }
+
+    /// Analyze sentiment of entry body using keyword-based scoring
+    mutating func analyzeSentiment() {
+        // Inline keyword-based sentiment analysis
+        let lower = body.lowercased()
+        let positives = [
+            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean",
+        ]
+        let negatives = [
+            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash",
+        ]
+        let positiveCount = positives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
+        let negativeCount = negatives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
+        let rawScore = Double(positiveCount - negativeCount)
+        let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
+
+        self.sentimentScore = normalizedScore
+        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion
@@ -35,6 +77,8 @@ public struct JournalEntry: Identifiable, Codable {
         record["date"] = date
         record["mood"] = mood
         record["modifiedAt"] = modifiedAt
+        record["sentiment"] = sentiment
+        record["sentimentScore"] = sentimentScore
         return record
     }
 
@@ -60,7 +104,9 @@ public struct JournalEntry: Identifiable, Codable {
             body: body,
             date: date,
             mood: mood,
-            modifiedAt: ckRecord["modifiedAt"] as? Date
+            modifiedAt: ckRecord["modifiedAt"] as? Date,
+            sentiment: ckRecord["sentiment"] as? String ?? "neutral",
+            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0
         )
     }
 }

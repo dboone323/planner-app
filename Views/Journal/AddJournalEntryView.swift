@@ -136,7 +136,7 @@ public struct AddJournalEntryView: View {
     }
 
     private func saveEntry() {
-        let newEntry = JournalEntry(
+        var newEntry = JournalEntry(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
             body: self.entryBody.trimmingCharacters(in: .whitespacesAndNewlines), // Use entryBody
             date: self.date,

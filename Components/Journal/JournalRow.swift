@@ -37,6 +37,9 @@ public struct JournalRow: View {
                         )
                     )
                     .foregroundColor(self.themeManager.currentTheme.secondaryTextColor.opacity(0.8))
+
+                SentimentBadge(sentiment: self.entry.sentiment, score: self.entry.sentimentScore)
+                    .padding(.top, 4)
                     .lineLimit(1)
             }
             Spacer()

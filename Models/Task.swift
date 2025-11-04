@@ -51,6 +51,12 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
 
+    // Sentiment analysis properties
+    /// Sentiment of task description ("positive", "negative", or "neutral")
+    var sentiment: String
+    /// Sentiment score from -1.0 (negative) to 1.0 (positive)
+    var sentimentScore: Double
+
     /// Creates a new task.
     /// - Parameters:
     ///   - id: The unique identifier (default: new UUID).
@@ -61,10 +67,12 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     ///   - dueDate: The due date (optional).
     ///   - createdAt: The creation date (default: now).
     ///   - modifiedAt: The last modified date (default: now).
+    ///   - sentiment: The sentiment label (default: "neutral").
+    ///   - sentimentScore: The sentiment score (default: 0.0).
     init(
         id: UUID = UUID(), title: String, description: String = "", isCompleted: Bool = false,
         priority: TaskPriority = .medium, dueDate: Date? = nil, createdAt: Date = Date(),
-        modifiedAt: Date? = Date()
+        modifiedAt: Date? = Date(), sentiment: String = "neutral", sentimentScore: Double = 0.0
     ) {
         self.id = id
         self.title = title
@@ -74,6 +82,38 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         self.dueDate = dueDate
         self.createdAt = createdAt
         self.modifiedAt = modifiedAt
+        self.sentiment = sentiment
+        self.sentimentScore = sentimentScore
+    }
+
+    // MARK: - Sentiment Analysis
+
+    /// Update task description and trigger sentiment analysis
+    mutating func updateDescription(_ newDescription: String) {
+        self.description = newDescription
+        self.modifiedAt = Date()
+
+        // Analyze sentiment synchronously
+        analyzeSentiment()
+    }
+
+    /// Analyze sentiment of task description using keyword-based scoring
+    mutating func analyzeSentiment() {
+        // Inline keyword-based sentiment analysis
+        let lower = description.lowercased()
+        let positives = [
+            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean",
+        ]
+        let negatives = [
+            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash",
+        ]
+        let positiveCount = positives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
+        let negativeCount = negatives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
+        let rawScore = Double(positiveCount - negativeCount)
+        let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
+
+        self.sentimentScore = normalizedScore
+        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion
@@ -88,6 +128,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         record["dueDate"] = self.dueDate
         record["createdAt"] = self.createdAt
         record["modifiedAt"] = self.modifiedAt
+        record["sentiment"] = self.sentiment
+        record["sentimentScore"] = self.sentimentScore
         return record
     }
 
@@ -117,7 +159,9 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
                 ?? .medium,
             dueDate: ckRecord["dueDate"] as? Date,
             createdAt: createdAt,
-            modifiedAt: ckRecord["modifiedAt"] as? Date
+            modifiedAt: ckRecord["modifiedAt"] as? Date,
+            sentiment: ckRecord["sentiment"] as? String ?? "neutral",
+            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0
         )
     }
 

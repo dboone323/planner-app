@@ -9,6 +9,8 @@ public struct JournalView: View {
     @State private var journalEntries: [JournalEntry] = []
     @State private var showAddEntry = false
     @State private var searchText = ""
+    @State private var sentimentFilter: SentimentFilter = .all
+    @State private var sortOption: JournalSortOption = .date
 
     // --- Security State REMOVED ---
     // @AppStorage(AppSettingKeys.journalBiometricsEnabled) private var biometricsEnabled: Bool = false
@@ -19,9 +21,8 @@ public struct JournalView: View {
 
     // Filtered and sorted entries
     private var filteredEntries: [JournalEntry] {
-        let sorted = journalEntries.sorted(by: { $0.date > $1.date })
-        if searchText.isEmpty { return sorted }
-        return sorted.filter {
+        // Apply text search filter
+        let searched = searchText.isEmpty ? journalEntries : journalEntries.filter {
             $0.title.localizedCaseInsensitiveContains(searchText)
                 || $0.body.localizedCaseInsensitiveContains(searchText)
                 || $0.mood.contains(searchText)
@@ -45,20 +46,44 @@ public struct JournalView: View {
             .background(themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Journal")
             .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    HStack(spacing: 12) {
+                        // Sentiment Filter Picker
+                        Picker("Filter", selection: $sentimentFilter) {
+                            ForEach(SentimentFilter.allCases, id: \.self) { filter in
+                                Text(filter.rawValue).tag(filter)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .accessibilityLabel("Sentiment Filter")
+
+                        // Sort Option Picker
+                        Picker("Sort", selection: $sortOption) {
+                            ForEach(JournalSortOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .accessibilityLabel("Sort By")
+                    }
+                }
+
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink {
+                        SentimentAnalyticsView(entries: journalEntries)
+                            .environmentObject(themeManager)
+                    } label: {
+                        Image(systemName: "chart.bar.fill")
+                    }
+                    .accessibilityLabel("View Sentiment Analytics")
+                }
+
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         showAddEntry.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
-                }
-                ToolbarItem(placement: .navigation) {
-                    Button {
-                        // Custom edit implementation for macOS
-                    } label: {
-                        Text("Edit")
-                    }
-                    .accessibilityLabel("Button")
                 }
             }
             .sheet(isPresented: $showAddEntry) {
@@ -105,6 +130,40 @@ public struct JournalView: View {
         print("[JournalView Simplified] saveEntries called")
         JournalDataManager.shared.save(entries: journalEntries)
     }
+}
+
+// Apply sentiment filter
+let sentimentFiltered: [JournalEntry] = switch sentimentFilter {
+case .all:
+    searched
+case .positive:
+    searched.filter { $0.sentiment == "positive" }
+case .neutral:
+    searched.filter { $0.sentiment == "neutral" }
+case .negative:
+    searched.filter { $0.sentiment == "negative" }
+}
+
+// Apply sorting
+switch sortOption {
+case .date:
+    return sentimentFiltered.sorted(by: { $0.date > $1.date })
+case .sentiment:
+    return sentimentFiltered.sorted(by: { $0.sentimentScore > $1.sentimentScore })
+}
+
+// MARK: - Supporting Types
+
+enum SentimentFilter: String, CaseIterable {
+    case all = "All"
+    case positive = "Positive"
+    case neutral = "Neutral"
+    case negative = "Negative"
+}
+
+enum JournalSortOption: String, CaseIterable {
+    case date = "Date"
+    case sentiment = "Sentiment"
 }
 
 // --- Preview Provider (Unchanged) ---
