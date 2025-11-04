@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   push:
@@ -10,8 +10,19 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode.app
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Resolve Swift Packages
+        run: |
+          set -eo pipefail
+          xcodebuild -resolvePackageDependencies -project PlannerApp.xcodeproj
+
       - name: List schemes
-        run: xcodebuild -list -project PlannerApp.xcodeproj || true
+        run: |
+          xcodebuild -list -project PlannerApp.xcodeproj
