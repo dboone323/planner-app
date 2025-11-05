@@ -9,6 +9,9 @@ import uuid
 
 # Files to add to the project
 missing_files = [
+    ("Components/SentimentBadge.swift", "SentimentBadge.swift"),
+    ("Views/Journal/SentimentAnalyticsView.swift", "SentimentAnalyticsView.swift"),
+
     (
         "Accessibility/AccessibilityEnhancements.swift",
         "AccessibilityEnhancements.swift",

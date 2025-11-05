@@ -27,6 +27,26 @@ public struct JournalView: View {
                 || $0.body.localizedCaseInsensitiveContains(searchText)
                 || $0.mood.contains(searchText)
         }
+
+        // Apply sentiment filter
+        let sentimentFiltered: [JournalEntry] = switch sentimentFilter {
+        case .all:
+            searched
+        case .positive:
+            searched.filter {  $0.sentiment == "positive" }
+        case .neutral:
+            searched.filter {  $0.sentiment == "neutral" }
+        case .negative:
+            searched.filter {  $0.sentiment == "negative" }
+        }
+
+        // Apply sorting
+        switch sortOption {
+        case .date:
+            return sentimentFiltered.sorted(by: {  $0.date > $1.date })
+        case .sentiment:
+            return sentimentFiltered.sorted(by: {  $0.sentimentScore > $1.sentimentScore })
+        }
     }
 
     // Removed init() related to isUnlocked state
@@ -130,26 +150,6 @@ public struct JournalView: View {
         print("[JournalView Simplified] saveEntries called")
         JournalDataManager.shared.save(entries: journalEntries)
     }
-}
-
-// Apply sentiment filter
-let sentimentFiltered: [JournalEntry] = switch sentimentFilter {
-case .all:
-    searched
-case .positive:
-    searched.filter { $0.sentiment == "positive" }
-case .neutral:
-    searched.filter { $0.sentiment == "neutral" }
-case .negative:
-    searched.filter { $0.sentiment == "negative" }
-}
-
-// Apply sorting
-switch sortOption {
-case .date:
-    return sentimentFiltered.sorted(by: { $0.date > $1.date })
-case .sentiment:
-    return sentimentFiltered.sorted(by: { $0.sentimentScore > $1.sentimentScore })
 }
 
 // MARK: - Supporting Types
