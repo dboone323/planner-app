@@ -5,11 +5,6 @@
 	};
 	objectVersion = 90;
 	objects = {
-		0C54A91A335E4967A81C1042 /* SharedKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 556F5515F64C41CA9BB91AFE /* shared-kit */;
-			productName = SharedKit;
-		};
 
 /* Begin PBXBuildFile section */
 		0631A476FC374621BC21A58C /* PlatformFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC6142FC88F4A8B969FE162 /* PlatformFeatures.swift */; };
@@ -77,7 +72,8 @@
 		DBD2722588798E4B7A2A03A9 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC169814801F8CDBBBC73C7 /* TaskListView.swift */; };
 		EC334CC720874E159EB225A4 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3698D37148483F8BE8E470 /* TaskRowView.swift */; };
 		F88CE36DFF624C828ADE25B1 /* VisualEnhancements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3A5A2135AE4820844E6552 /* VisualEnhancements.swift */; };
-		28F4C7A1254FFC0FD77981CE /* SharedKit in Frameworks */ = { isa = PBXBuildFile; productRef = 0C54A91A335E4967A81C1042 /* SharedKit */; };
+		809EA9A9C2704FAD9D8CEE19 /* SentimentBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A72B3DFC9274BC1A4AED333 /* SentimentBadge.swift */; };
+		B9AE12A20B114A92A5FCA3CE /* SentimentAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1FCB7086C4C968335F2BD /* SentimentAnalyticsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,7 +163,9 @@
             8FCEB989B2A464998A639437 /* TaskInputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskInputView.swift; path = Views/Tasks/TaskInputView.swift; sourceTree = "<group>"; };
 
 		FD4CD3BF68B740DCA1401394 /* DateSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Calendar/DateSectionView.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		8A72B3DFC9274BC1A4AED333 /* SentimentBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components/SentimentBadge.swift; sourceTree = "<group>"; };
+				FCE1FCB7086C4C968335F2BD /* SentimentAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Journal/SentimentAnalyticsView.swift; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		68F097172DC01EFA00092697 /* PlannerApp */ = {
@@ -202,7 +200,6 @@
 		68F097202DC01EFB00092697 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-			28F4C7A1254FFC0FD77981CE /* SharedKit in Frameworks */,
 			);
 		};
 		68F0972A2DC01EFB00092697 /* Frameworks */ = {
@@ -409,7 +406,19 @@
 			path = Goals;
 			sourceTree = "<group>";
 		};
-		68F0974797142DC01EFA00092697 /* PlannerApp */ = {
+		68F097472DC01FB000092697 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				68F097532DC0203600092697 /* AddCalendarEventView.swift */,
+				68F097542DC0203600092697 /* CalendarView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		68F097142DC01EFA00092697 /* PlannerApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 68F097372DC01EFB00092697 /* Build configuration list for PBXNativeTarget "PlannerApp" */;
 			buildPhases = (
@@ -418,17 +427,6 @@
 				68F097132DC01EFA00092697 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				68F097172DC01EFA00092697 /* PlannerApp */,
-			);
-			name = PlannerApp;
-			productName = PlannerApp;
-			productReference = 68F097152DC01EFA00092697 /* PlannerApp.app */;
-			productType = "com.apple.product-type.application";
-		};		buildRules = (
 			);
 			dependencies = (
 			);
@@ -591,6 +589,8 @@
 				68F0975F2DC023E000092697 /* AddJournalEntryView.swift in Sources */,
 				685D29C72DC13FE800967CFB /* Task.swift in Sources */,
 				68F097592DC0232400092697 /* MainTabView.swift in Sources */,
+				809EA9A9C2704FAD9D8CEE19 /* SentimentBadge.swift in Sources */,
+				B9AE12A20B114A92A5FCA3CE /* SentimentAnalyticsView.swift in Sources */,
 				09B893646F094912912D8D0C /* AccessibilityEnhancements.swift in Sources */,
 				C281D26FA91D4D84A1BACB90 /* CloudKitMigrationHelper.swift in Sources */,
 				0FAE27BD7336477CB7DC2463 /* EnhancedCloudKitManager.swift in Sources */,
