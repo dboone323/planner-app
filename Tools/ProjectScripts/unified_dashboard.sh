@@ -24,22 +24,22 @@ print_project_status() {
 	local project_name="$1"
 	local project_path="${PROJECTS_DIR}/${project_name}"
 
-	echo -e "${CYAN}�${� $project_n}ame${NC}"
-	echo "   📍 Locatio${: $project_p}ath"
+	echo -e "${CYAN}📁 ${project_name}${NC}"
+	echo "   📍 Location: $project_path"
 
 	# Count Swift files
 	local swift_files=$(find "${project_path}" -name "*.swift" 2>/dev/null | wc -l | tr -d ' ')
-	echo "   📄 Swift file${: $swift_fi}les"
+	echo "   📄 Swift files: $swift_files"
 
 	# Check GitHub workflows
 	if [[ -d "${project_path}/.github/workflows" ]]; then
 		local workflow_count=$(find "${project_path}/.github/workflows" -name "*.yml" -o -name "*.yaml" 2>/dev/null | wc -l | tr -d ' ')
-		echo -e "   🔄 GitHub workflows: ${GRE${N}$workflow_co}unt files${NC}"
+		echo -e "   🔄 GitHub workflows: ${GREEN}$workflow_count files${NC}"
 
 		# List workflows
 		find "${project_path}/.github/workflows" -name "*.yml" -o -name "*.yaml" 2>/dev/null | while read workflow; do
 			local workflow_name=$(basename "${workflow}" .yml)
-			echo "      �${ $workflow_na}me"
+			echo "      📋 $workflow_name"
 		done
 	else
 		echo -e "   🔄 GitHub workflows: ${RED}None${NC}"
