@@ -11,4 +11,4 @@ if [[ -f "${SETUP_PATH}" ]]; then
     source "${SETUP_PATH}"
 fi
 
-export PROJECT_DIR="${PROJECT_DIR:-${WORKSPACE_ROOT}/Projects/PlannerApp}"
+export PROJECT_DIR="${PROJECT_DIR:-${WORKSPACE_ROOT}/PlannerApp}"
