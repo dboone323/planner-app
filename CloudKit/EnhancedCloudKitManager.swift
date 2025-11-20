@@ -17,6 +17,13 @@ import Foundation
 typealias AsyncTask = _Concurrency.Task
 // typealias PlannerTask = Task
 
+// Conflict type for sync conflicts
+enum ConflictType {
+    case modified
+    case deleted
+    case created
+}
+
 @MainActor
 public class EnhancedCloudKitManager: ObservableObject {
     static let shared = EnhancedCloudKitManager()
@@ -85,12 +92,6 @@ public class EnhancedCloudKitManager: ObservableObject {
         let localRecord: CKRecord
         let serverRecord: CKRecord
         let type: ConflictType
-
-        enum ConflictType {
-            case modified
-            case deleted
-            case created
-        }
     }
 
     // Enhanced CloudKit error types for better user feedback

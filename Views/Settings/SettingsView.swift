@@ -114,8 +114,7 @@ public struct SettingsView: View {
     // MARK: - Helper Methods
 
     private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
-            granted, _ in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
             DispatchQueue.main.async {
                 if !granted {
                     showingNotificationAlert = true
@@ -149,7 +148,7 @@ public struct ThemePreviewSheet: View {
             ScrollView {
                 LazyVGrid(
                     columns: [
-                        GridItem(.adaptive(minimum: 150)),
+                        GridItem(.adaptive(minimum: 150))
                     ], spacing: 16
                 ) {
                     ForEach(Theme.availableThemes, id: \.name) { theme in
@@ -259,8 +258,7 @@ public struct NotificationToggleModifier: ViewModifier {
     }
 
     private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
-            granted, _ in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
             DispatchQueue.main.async {
                 if !granted {
                     // Could show alert here, but since we're in a modifier, we'll skip for now

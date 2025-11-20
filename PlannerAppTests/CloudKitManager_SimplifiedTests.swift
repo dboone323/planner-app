@@ -8,19 +8,7 @@
 @testable import PlannerApp
 import XCTest
 
-final class CloudKitManager_SimplifiedTests: XCTestCase {
-
-    // MARK: - Setup & Teardown
-
-    override func setUp() {
-        super.setUp()
-        // Setup test environment
-    }
-
-    override func tearDown() {
-        // Cleanup test environment
-        super.tearDown()
-    }
+final class CloudKitManagerSimplifiedTests: XCTestCase {
 
     // MARK: - Initialization Tests
 

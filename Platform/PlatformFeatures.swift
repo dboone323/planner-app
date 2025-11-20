@@ -211,8 +211,7 @@ import SwiftUI
 
         var body: some View {
             Color.clear
-                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) {
-                    notification in
+                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) { notification in
                     handleKeyboardShortcut(notification)
                 }
         }
@@ -319,7 +318,7 @@ import SwiftUI
                 .addGoal,
                 .search,
                 .flexibleSpace,
-                .calendar,
+                .calendar
             ]
 
             return touchBar
@@ -497,8 +496,7 @@ class IOSFeatureProvider: PlatformFeatureProvider {
                 .first(where: { $0.activationState == .foregroundActive }),
                 let rootViewController = windowScene.windows
                 .first(where: { $0.isKeyWindow })?
-                .rootViewController
-            {
+                .rootViewController {
                 rootViewController.present(activityViewController, animated: true)
             }
         #endif

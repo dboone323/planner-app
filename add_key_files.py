@@ -5,7 +5,6 @@ Script to add the most important missing Swift files to the Xcode project.
 
 import os
 import re
-import subprocess
 import uuid
 
 

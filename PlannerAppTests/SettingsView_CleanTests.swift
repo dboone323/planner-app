@@ -1,7 +1,7 @@
 @testable import PlannerApp
 import XCTest
 
-final class SettingsView_CleanTests: XCTestCase {
+final class SettingsViewCleanTests: XCTestCase {
     func testInitialization() {
         XCTAssertTrue(true, "Test for SettingsView_Clean")
     }

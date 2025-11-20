@@ -1,7 +1,7 @@
 @testable import PlannerApp
 import XCTest
 
-final class run_testsTests: XCTestCase {
+final class RunTestsTests: XCTestCase {
     func testInitialization() {
         XCTAssertTrue(true, "Test for run_tests")
     }

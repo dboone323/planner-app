@@ -1,7 +1,7 @@
 @testable import PlannerApp
 import XCTest
 
-final class fixes_dashboard_itemsTests: XCTestCase {
+final class FixesDashboardItemsTests: XCTestCase {
     func testInitialization() {
         XCTAssertTrue(true, "Test for fixes_dashboard_items")
     }

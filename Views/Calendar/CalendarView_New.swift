@@ -52,8 +52,15 @@ public struct CalendarView: View {
         return Set(events.map { calendar.startOfDay(for: $0.date) })
     }
 
+    // Structure for selected date items
+    private struct SelectedDateItems {
+        let events: [CalendarEvent]
+        let goals: [Goal]
+        let tasks: [Task]
+    }
+
     // Get items for selected date
-    private var selectedDateItems: (events: [CalendarEvent], goals: [Goal], tasks: [Task]) {
+    private var selectedDateItems: SelectedDateItems {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: selectedDate)
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? startOfDay
@@ -71,7 +78,7 @@ public struct CalendarView: View {
             return calendar.startOfDay(for: dueDate) == startOfDay
         }
 
-        return (dayEvents, dayGoals, dayTasks)
+        return SelectedDateItems(events: dayEvents, goals: dayGoals, tasks: dayTasks)
     }
 
     // Date Formatters

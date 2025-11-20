@@ -33,19 +33,19 @@ public struct JournalView: View {
         case .all:
             searched
         case .positive:
-            searched.filter {  $0.sentiment == "positive" }
+            searched.filter { $0.sentiment == "positive" }
         case .neutral:
-            searched.filter {  $0.sentiment == "neutral" }
+            searched.filter { $0.sentiment == "neutral" }
         case .negative:
-            searched.filter {  $0.sentiment == "negative" }
+            searched.filter { $0.sentiment == "negative" }
         }
 
         // Apply sorting
         switch sortOption {
         case .date:
-            return sentimentFiltered.sorted(by: {  $0.date > $1.date })
+            return sentimentFiltered.sorted(by: { $0.date > $1.date })
         case .sentiment:
-            return sentimentFiltered.sorted(by: {  $0.sentimentScore > $1.sentimentScore })
+            return sentimentFiltered.sorted(by: { $0.sentimentScore > $1.sentimentScore })
         }
     }
 

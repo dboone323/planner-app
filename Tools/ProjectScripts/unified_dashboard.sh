@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Unified Workflow Status Dashboard
 SETUP_PATH="$(git rev-parse --show-toplevel 2>/dev/null)/scripts/setup_paths.sh"
@@ -34,17 +35,20 @@ print_project_status() {
 	echo "   📍 Location: $project_path"
 
 	# Count Swift files
-	local swift_files=$(find "${project_path}" -name "*.swift" 2>/dev/null | wc -l | tr -d ' ')
+	local swift_files
+	swift_files=$(find "${project_path}" -name "*.swift" 2>/dev/null | wc -l | tr -d ' ')
 	echo "   📄 Swift files: $swift_files"
 
 	# Check GitHub workflows
 	if [[ -d "${project_path}/.github/workflows" ]]; then
-		local workflow_count=$(find "${project_path}/.github/workflows" -name "*.yml" -o -name "*.yaml" 2>/dev/null | wc -l | tr -d ' ')
+		local workflow_count
+		workflow_count=$(find "${project_path}/.github/workflows" -name "*.yml" -o -name "*.yaml" 2>/dev/null | wc -l | tr -d ' ')
 		echo -e "   🔄 GitHub workflows: ${GREEN}$workflow_count files${NC}"
 
 		# List workflows
 		find "${project_path}/.github/workflows" -name "*.yml" -o -name "*.yaml" 2>/dev/null | while read workflow; do
-			local workflow_name=$(basename "${workflow}" .yml)
+			local workflow_name
+			workflow_name=$(basename "${workflow}" .yml)
 			echo "      📋 $workflow_name"
 		done
 	else
@@ -117,7 +121,8 @@ print_summary() {
 
 	for project in "${PROJECTS_DIR}"/*; do
 		if [[ -d ${project} ]]; then
-			local project_name=$(basename "${project}")
+			local project_name
+			project_name=$(basename "${project}")
 			total_projects=$((total_projects + 1))
 
 			if [[ -d "${project}/.github/workflows" ]]; then
@@ -157,7 +162,8 @@ main() {
 	# Process each project
 	for project in "${PROJECTS_DIR}"/*; do
 		if [[ -d ${project} ]]; then
-			local project_name=$(basename "${project}")
+			local project_name
+			project_name=$(basename "${project}")
 			print_project_status "${project_name}"
 		fi
 	done

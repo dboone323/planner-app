@@ -8,19 +8,7 @@
 @testable import PlannerApp
 import XCTest
 
-final class AddGoalView_NewTests: XCTestCase {
-
-    // MARK: - Setup & Teardown
-
-    override func setUp() {
-        super.setUp()
-        // Setup test environment
-    }
-
-    override func tearDown() {
-        // Cleanup test environment
-        super.tearDown()
-    }
+final class AddGoalViewNewTests: XCTestCase {
 
     // MARK: - Initialization Tests
 
