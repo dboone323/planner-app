@@ -83,26 +83,37 @@ public struct CalendarView: View {
         return SelectedDateItems(events: dayEvents, goals: dayGoals, tasks: dayTasks)
     }
 
-    // Date Formatters
-    private var eventTimeFormatter: DateFormatter {
+    // Date Formatters - Cached for performance
+    private static let eventTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: use24HourTime ? "en_GB" : "en_US")
         return formatter
+    }()
+    
+    private static let eventTimeFormatter24Hour: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "en_GB")
+        return formatter
+    }()
+    
+    private var currentEventTimeFormatter: DateFormatter {
+        use24HourTime ? Self.eventTimeFormatter24Hour : Self.eventTimeFormatter
     }
 
-    private var monthYearFormatter: DateFormatter {
+    private static let monthYearFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter
-    }
+    }()
 
-    private var selectedDateFormatter: DateFormatter {
+    private static let selectedDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
         return formatter
-    }
+    }()
 
     public var body: some View {
         NavigationStack {
@@ -111,7 +122,7 @@ public struct CalendarView: View {
                 VStack(spacing: 16) {
                     // Calendar Header
                     HStack {
-                        Text(monthYearFormatter.string(from: selectedDate))
+                        Text(Self.monthYearFormatter.string(from: selectedDate))
                             .font(.title2)
                             .fontWeight(.semibold)
                             .foregroundColor(themeManager.currentTheme.primaryTextColor)
@@ -125,7 +136,8 @@ public struct CalendarView: View {
                                         themeManager.currentTheme.primaryAccentColor
                                     )
                             })
-                            .accessibilityLabel("Button")
+                            .accessibilityLabel(NSLocalizedString("calendar.previous_month", comment: "Previous month button"))
+                            .accessibilityHint(NSLocalizedString("calendar.previous_month.hint", comment: "Previous month hint"))
 
                             Button(action: nextMonth, label: {
                                 Image(systemName: "chevron.right")
@@ -133,7 +145,8 @@ public struct CalendarView: View {
                                         themeManager.currentTheme.primaryAccentColor
                                     )
                             })
-                            .accessibilityLabel("Button")
+                            .accessibilityLabel(NSLocalizedString("calendar.next_month", comment: "Next month button"))
+                            .accessibilityHint(NSLocalizedString("calendar.next_month.hint", comment: "Next month hint"))
                         }
                     }
                     .padding(.horizontal, 20)
@@ -154,7 +167,7 @@ public struct CalendarView: View {
                 // Selected Date Details
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
-                        Text(selectedDateFormatter.string(from: selectedDate))
+                        Text(Self.selectedDateFormatter.string(from: selectedDate))
                             .font(.headline)
                             .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
@@ -167,7 +180,8 @@ public struct CalendarView: View {
                                 .foregroundColor(themeManager.currentTheme.primaryAccentColor)
                                 .font(.title2)
                         }
-                        .accessibilityLabel("Button")
+                        .accessibilityLabel(NSLocalizedString("calendar.add_event", comment: "Add event button"))
+                        .accessibilityHint(NSLocalizedString("calendar.add_event.hint", comment: "Add event hint"))
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -178,7 +192,7 @@ public struct CalendarView: View {
 
                             // Events Section
                             if !items.events.isEmpty {
-                                DateSectionView(title: "Events", color: .blue) {
+                                DateSectionView(title: NSLocalizedString("calendar.section.events", comment: "Events section"), color: .blue) {
                                     ForEach(items.events) { event in
                                         EventRowView(event: event)
                                             .environmentObject(themeManager)
@@ -188,7 +202,7 @@ public struct CalendarView: View {
 
                             // Goals Section
                             if !items.goals.isEmpty {
-                                DateSectionView(title: "Goals", color: .green) {
+                                DateSectionView(title: NSLocalizedString("calendar.section.goals", comment: "Goals section"), color: .green) {
                                     ForEach(items.goals) { goal in
                                         GoalRowView(goal: goal)
                                             .environmentObject(themeManager)
@@ -198,7 +212,7 @@ public struct CalendarView: View {
 
                             // Tasks Section
                             if !items.tasks.isEmpty {
-                                DateSectionView(title: "Tasks", color: .orange) {
+                                DateSectionView(title: NSLocalizedString("calendar.section.tasks", comment: "Tasks section"), color: .orange) {
                                     ForEach(items.tasks) { task in
                                         TaskRowView(task: task)
                                             .environmentObject(themeManager)
@@ -215,13 +229,13 @@ public struct CalendarView: View {
                                             themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text("No items for this date")
+                                    Text(NSLocalizedString("calendar.empty.no_items", comment: "No items message"))
                                         .font(.subheadline)
                                         .foregroundColor(
                                             themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text("Tap + to add an event")
+                                    Text(NSLocalizedString("calendar.empty.add_hint", comment: "Add event hint"))
                                         .font(.caption)
                                         .foregroundColor(
                                             themeManager.currentTheme.secondaryTextColor
@@ -236,7 +250,7 @@ public struct CalendarView: View {
                 .background(themeManager.currentTheme.primaryBackgroundColor)
             }
             .background(themeManager.currentTheme.primaryBackgroundColor)
-            .navigationTitle("Calendar")
+            .navigationTitle(NSLocalizedString("calendar.title", comment: "Calendar title"))
             .sheet(isPresented: $showAddEvent) {
                 AddCalendarEventView(events: $events)
                     .environmentObject(themeManager)

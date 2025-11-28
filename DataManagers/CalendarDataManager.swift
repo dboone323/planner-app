@@ -108,8 +108,12 @@ final class CalendarDataManager: CalendarDataManaging {
     /// - Parameter days: Number of days from now.
     /// - Returns: Array of upcoming events.
     func upcomingEvents(within days: Int) -> [CalendarEvent] {
-        let futureDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
-        return load().filter { $0.date > Date() && $0.date <= futureDate }
+        let calendar = Calendar.current
+        let todayStart = calendar.startOfDay(for: Date())
+        let tomorrowStart = calendar.date(byAdding: .day, value: 1, to: todayStart)!
+        let futureDate = calendar.date(byAdding: .day, value: days, to: tomorrowStart) ?? Date()
+        
+        return load().filter { $0.date >= tomorrowStart && $0.date < futureDate }
             .sorted { $0.date < $1.date }
     }
 

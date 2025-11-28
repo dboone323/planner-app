@@ -32,6 +32,20 @@ final class PlannerAppUITests: XCTestCase {
     }
 
     @MainActor
+    func testScreenshot() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Take a screenshot
+        let screenshot = XCUIScreen.main.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        
+        XCTAssertNotNil(screenshot)
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
