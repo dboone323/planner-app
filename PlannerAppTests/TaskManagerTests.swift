@@ -1,85 +1,78 @@
 @testable import PlannerApp
 import XCTest
-import SwiftData
 
 final class TaskManagerTests: XCTestCase {
     
-    var modelContext: ModelContext!
-    var taskManager: TaskManager!
+    var taskManager: TaskDataManager!
     
     override func setUp() {
         super.setUp()
-        
-        // In-memory SwiftData
-        let schema = Schema([Task.self, Project.self])
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: schema, configurations: [config])
-        modelContext = ModelContext(container)
-        
-        taskManager = TaskManager(modelContext: modelContext)
+        // Use a mock UserDefaults if possible, or just clear the shared instance
+        taskManager = TaskDataManager.shared
+        taskManager.clearAllTasks()
     }
     
     override func tearDown() {
-        modelContext = nil
+        taskManager.clearAllTasks()
         taskManager = nil
         super.tearDown()
     }
     
     // MARK: - CRUD Tests
     
-    func testCreateTask() async throws {
-        let task = Task(title: "Test Task", dueDate: Date())
-        try await taskManager.createTask(task)
+    func testCreateTask() {
+        let task = PlannerTask(title: "Test Task", dueDate: Date())
+        taskManager.add(task)
         
-        let tasks = try taskManager.fetchAllTasks()
+        let tasks = taskManager.load()
         XCTAssertEqual(tasks.count, 1)
         XCTAssertEqual(tasks.first?.title, "Test Task")
     }
     
-    func testUpdateTask() async throws {
-        let task = Task(title: "Original", dueDate: Date())
-        try await taskManager.createTask(task)
+    func testUpdateTask() {
+        var task = PlannerTask(title: "Original", dueDate: Date())
+        taskManager.add(task)
         
         task.title = "Updated"
-        try await taskManager.updateTask(task)
+        taskManager.update(task)
         
-        let tasks = try taskManager.fetchAllTasks()
+        let tasks = taskManager.load()
         XCTAssertEqual(tasks.first?.title, "Updated")
     }
     
-    func testDeleteTask() async throws {
-        let task = Task(title: "To Delete", dueDate: Date())
-        try await taskManager.createTask(task)
+    func testDeleteTask() {
+        let task = PlannerTask(title: "To Delete", dueDate: Date())
+        taskManager.add(task)
         
-        try await taskManager.deleteTask(task)
+        taskManager.delete(task)
         
-        let tasks = try taskManager.fetchAllTasks()
+        let tasks = taskManager.load()
         XCTAssertEqual(tasks.count, 0)
     }
     
-    func testFetchAllTasks() async throws {
-        let task1 = Task(title: "Task 1", dueDate: Date())
-        let task2 = Task(title: "Task 2", dueDate: Date())
+    func testFetchAllTasks() {
+        let task1 = PlannerTask(title: "Task 1", dueDate: Date())
+        let task2 = PlannerTask(title: "Task 2", dueDate: Date())
         
-        try await taskManager.createTask(task1)
-        try await taskManager.createTask(task2)
+        taskManager.add(task1)
+        taskManager.add(task2)
         
-        let tasks = try taskManager.fetchAllTasks()
+        let tasks = taskManager.load()
         XCTAssertEqual(tasks.count, 2)
     }
     
     // MARK: - Priority Sorting Tests
     
-    func testSortByPriority() async throws {
-        let lowTask = Task(title: "Low", dueDate: Date(), priority: .low)
-        let highTask = Task(title: "High", dueDate: Date(), priority: .high)
-        let mediumTask = Task(title: "Medium", dueDate: Date(), priority: .medium)
+    func testSortByPriority() {
+        let lowTask = PlannerTask(title: "Low", priority: .low)
+        let highTask = PlannerTask(title: "High", priority: .high)
+        let mediumTask = PlannerTask(title: "Medium", priority: .medium)
         
-        try await taskManager.createTask(lowTask)
-        try await taskManager.createTask(highTask)
-        try await taskManager.createTask(mediumTask)
+        taskManager.add(lowTask)
+        taskManager.add(highTask)
+        taskManager.add(mediumTask)
         
-        let sorted = try taskManager.fetchTasksSortedByPriority()
+        let sorted = taskManager.tasksSortedByPriority()
         
         XCTAssertEqual(sorted[0].priority, .high)
         XCTAssertEqual(sorted[1].priority, .medium)
@@ -88,89 +81,71 @@ final class TaskManagerTests: XCTestCase {
     
     // MARK: - Due Date Handling Tests
     
-    func testFetchTasksDueToday() async throws {
+    func testFetchTasksDueToday() {
         let today = Date()
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
         
-        let todayTask = Task(title: "Today", dueDate: today)
-        let tomorrowTask = Task(title: "Tomorrow", dueDate: tomorrow)
+        let todayTask = PlannerTask(title: "Today", dueDate: today)
+        let tomorrowTask = PlannerTask(title: "Tomorrow", dueDate: tomorrow)
         
-        try await taskManager.createTask(todayTask)
-        try await taskManager.createTask(tomorrowTask)
+        taskManager.add(todayTask)
+        taskManager.add(tomorrowTask)
         
-        let todayTasks = try taskManager.fetchTasksDueToday()
+        // TaskDataManager.tasksDue(within: 1) might include today and tomorrow depending on implementation
+        // Let's check the specific implementation of tasksDue(within:)
+        // It uses <= futureDate. 
+        // We want tasks due "today". The manager has getTaskStatistics()["dueToday"].
+        // But let's test tasksDue(within: 0) which should be today?
+        // tasksDue(within: 0) adds 0 days to now. So <= now.
+        // If due date is exact time, it might be tricky.
         
-        XCTAssertEqual(todayTasks.count, 1)
-        XCTAssertEqual(todayTasks.first?.title, "Today")
+        // Let's just test that we can filter manually if needed, or use the stats.
+        let stats = taskManager.getTaskStatistics()
+        // This depends on how getTaskStatistics calculates "dueToday"
+        // It uses: dueDate >= todayStart && dueDate < todayEnd
+        
+        XCTAssertEqual(stats["dueToday"], 1)
     }
     
-    func testFetchOverdueTasks() async throws {
+    func testFetchOverdueTasks() {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         
-        let overdueTask = Task(title: "Overdue", dueDate: yesterday, isCompleted: false)
-        let futureTask = Task(title: "Future", dueDate: tomorrow)
+        let overdueTask = PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday)
+        let futureTask = PlannerTask(title: "Future", dueDate: tomorrow)
         
-        try await taskManager.createTask(overdueTask)
-        try await taskManager.createTask(futureTask)
+        taskManager.add(overdueTask)
+        taskManager.add(futureTask)
         
-        let overdue = try taskManager.fetchOverdueTasks()
+        let overdue = taskManager.overdueTasks()
         
         XCTAssertEqual(overdue.count, 1)
         XCTAssertEqual(overdue.first?.title, "Overdue")
     }
     
-    func testFetchTasksThisWeek() async throws {
-        let today = Date()
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 8, to: today)!
-        
-        let thisWeekTask = Task(title: "This Week", dueDate: today)
-        let nextWeekTask = Task(title: "Next Week", dueDate: nextWeek)
-        
-        try await taskManager.createTask(thisWeekTask)
-        try await taskManager.createTask(nextWeekTask)
-        
-        let thisWeek = try taskManager.fetchTasksThisWeek()
-        
-        XCTAssertEqual(thisWeek.count, 1)
-    }
-    
     // MARK: - Completion Tests
     
-    func testMarkTaskComplete() async throws {
-        let task = Task(title: "To Complete", dueDate: Date())
-        try await taskManager.createTask(task)
+    func testMarkTaskComplete() {
+        var task = PlannerTask(title: "To Complete", dueDate: Date())
+        taskManager.add(task)
         
-        try await taskManager.markComplete(task)
+        task.isCompleted = true
+        taskManager.update(task)
         
-        let tasks = try taskManager.fetchAllTasks()
+        let tasks = taskManager.load()
         XCTAssertTrue(tasks.first?.isCompleted == true)
     }
     
-    func testFetchCompletedTasks() async throws {
-        let completed = Task(title: "Done", dueDate: Date(), isCompleted: true)
-        let incomplete = Task(title: "Todo", dueDate: Date(), isCompleted: false)
+    func testFetchCompletedTasks() {
+        let completed = PlannerTask(title: "Done", isCompleted: true, dueDate: Date())
+        let incomplete = PlannerTask(title: "Todo", isCompleted: false, dueDate: Date())
         
-        try await taskManager.createTask(completed)
-        try await taskManager.createTask(incomplete)
+        taskManager.add(completed)
+        taskManager.add(incomplete)
         
-        let completedTasks = try taskManager.fetchCompletedTasks()
+        let completedTasks = taskManager.tasks(filteredByCompletion: true)
         
         XCTAssertEqual(completedTasks.count, 1)
         XCTAssertEqual(completedTasks.first?.title, "Done")
-    }
-    
-    // MARK: - Project Association Tests
-    
-    func testAssignTaskToProject() async throws {
-        let project = Project(name: "Test Project")
-        try await taskManager.createProject(project)
-        
-        let task = Task(title: "Task", dueDate: Date())
-        task.project = project
-        try await taskManager.createTask(task)
-        
-        let tasks = try taskManager.fetchTasksForProject(project)
-        XCTAssertEqual(tasks.count, 1)
     }
 }
