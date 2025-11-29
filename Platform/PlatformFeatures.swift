@@ -112,7 +112,7 @@ import SwiftUI
     }
 
     // Focus Modes integration
-    enum FocusModeManager {
+    enum PlatformFocusHelper {
         static func configureFocusModes() {
             // Configure focus mode filters
             // This would integrate with iOS Focus Modes API
@@ -478,7 +478,7 @@ class IOSFeatureProvider: PlatformFeatureProvider {
     func setupPlatformFeatures() {
         #if os(iOS)
             ShortcutsIntentHandler.setupShortcuts()
-            FocusModeManager.configureFocusModes()
+            PlatformFocusHelper.configureFocusModes()
         #endif
     }
 
