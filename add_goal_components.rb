@@ -3,7 +3,7 @@
 require 'xcodeproj'
 
 # Open the project
-project_path = '/Users/danielstevens/Desktop/Quantum-workspace/Projects/PlannerApp/PlannerApp.xcodeproj'
+project_path = '/Users/danielstevens/Desktop/github-projects/tools-automation/Projects/PlannerApp/PlannerApp.xcodeproj'
 project = Xcodeproj::Project.open(project_path)
 
 # Find the main target
