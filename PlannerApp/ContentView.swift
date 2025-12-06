@@ -21,7 +21,11 @@ public struct ContentView: View {
             ZStack {
                 // Background
                 #if os(iOS)
-                Color(UIColor.systemGroupedBackground)
+                #if os(iOS)
+                Color(uiColor: .systemGroupedBackground)
+                #else
+                Color.gray.opacity(0.1)
+                #endif
                     .ignoresSafeArea()
                 #else
                 Color.gray.opacity(0.1)
@@ -176,7 +180,11 @@ struct TasksWidgetView: View {
             Spacer()
         }
         .padding()
-        .background(Color(UIColor.systemBackground))
+        #if os(iOS)
+        .background(Color(uiColor: .systemBackground))
+        #else
+        .background(Color.white)
+        #endif
     }
 
     func priorityColor(_ priority: TaskPriority) -> Color {
