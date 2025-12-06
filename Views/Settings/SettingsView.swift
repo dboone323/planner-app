@@ -246,14 +246,10 @@ public struct NotificationToggleModifier: ViewModifier {
     @Binding var notificationsEnabled: Bool
 
     public func body(content: Content) -> some View {
-        
-            content.onChange(of: notificationsEnabled) { _, newValue in
-                if newValue {
-                    requestNotificationPermission()
-                }
+        content.onChange(of: notificationsEnabled) { _, newValue in
+            if newValue {
+                requestNotificationPermission()
             }
-        } else {
-            content
         }
     }
 

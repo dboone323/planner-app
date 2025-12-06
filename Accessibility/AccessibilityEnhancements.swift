@@ -264,11 +264,7 @@ public struct FocusChangeModifier: ViewModifier {
     let onFocusChange: ((Bool) -> Void)?
 
     public func body(content: Content) -> some View {
-        
-            content
-        } else {
-            content
-        }
+        content
     }
 }
 

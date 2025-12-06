@@ -135,14 +135,10 @@ public struct ProgressChangeModifier: ViewModifier {
     @Binding var animatedProgress: Double
 
     public func body(content: Content) -> some View {
-        
-            content.onChange(of: progress) { _, newValue in
-                withAnimation(.easeInOut(duration: 1.0)) {
-                    animatedProgress = newValue
-                }
+        content.onChange(of: progress) { _, newValue in
+            withAnimation(.easeInOut(duration: 1.0)) {
+                animatedProgress = newValue
             }
-        } else {
-            content
         }
     }
 }
