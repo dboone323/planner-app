@@ -20,7 +20,7 @@ class CalendarSyncManager {
     }
     
     private func requestAccess() async -> Bool {
-        if #available(iOS 17.0, *) {
+        
             return await eventStore.requestFullAccessToEvents()
         } else {
             return await withCheckedContinuation { continuation in

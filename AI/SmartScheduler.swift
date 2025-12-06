@@ -142,7 +142,7 @@ class SmartScheduler {
     // MARK: - Calendar Access
     
     private func requestCalendarAccess() async -> Bool {
-        if #available(iOS 17.0, *) {
+        
             let status = await eventStore.requestFullAccessToEvents()
             return status
         } else {

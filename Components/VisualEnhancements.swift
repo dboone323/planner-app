@@ -135,7 +135,7 @@ public struct ProgressChangeModifier: ViewModifier {
     @Binding var animatedProgress: Double
 
     public func body(content: Content) -> some View {
-        if #available(macOS 14.0, iOS 17.0, *) {
+        
             content.onChange(of: progress) { _, newValue in
                 withAnimation(.easeInOut(duration: 1.0)) {
                     animatedProgress = newValue
