@@ -9,7 +9,7 @@ import SwiftUI
 
 class PriorityManager {
     static let shared = PriorityManager()
-    
+
     func color(for priority: Priority) -> Color {
         switch priority {
         case .low: return .blue
@@ -18,7 +18,7 @@ class PriorityManager {
         case .critical: return .red
         }
     }
-    
+
     func icon(for priority: Priority) -> String {
         switch priority {
         case .low: return "arrow.down"
@@ -27,7 +27,7 @@ class PriorityManager {
         case .critical: return "exclamationmark.triangle.fill"
         }
     }
-    
+
     func sortTasks(_ tasks: [TaskItem]) -> [TaskItem] {
         // Sort by priority (descending) then due date (ascending)
         return tasks.sorted {

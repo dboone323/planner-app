@@ -24,7 +24,7 @@ struct Project: Identifiable {
 class WorkspaceManager: ObservableObject {
     @Published var currentWorkspace: Workspace?
     @Published var workspaces: [Workspace] = []
-    
+
     func createWorkspace(name: String, ownerId: UUID) {
         let newWorkspace = Workspace(name: name, ownerId: ownerId, projects: [])
         workspaces.append(newWorkspace)
@@ -32,12 +32,12 @@ class WorkspaceManager: ObservableObject {
             currentWorkspace = newWorkspace
         }
     }
-    
+
     func addProject(to workspaceId: UUID, name: String, color: String) {
         guard let index = workspaces.firstIndex(where: { $0.id == workspaceId }) else { return }
         let newProject = Project(name: name, color: color, tasks: [])
         workspaces[index].projects.append(newProject)
-        
+
         if currentWorkspace?.id == workspaceId {
             currentWorkspace = workspaces[index]
         }

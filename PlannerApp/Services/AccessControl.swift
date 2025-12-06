@@ -21,7 +21,7 @@ struct Permission {
 
 class AccessControl {
     static let shared = AccessControl()
-    
+
     func permissions(for role: Role) -> Permission {
         switch role {
         case .owner:
@@ -32,7 +32,7 @@ class AccessControl {
             return Permission(canEdit: false, canDelete: false, canInvite: false)
         }
     }
-    
+
     func canUser(userId: UUID, perform action: (Permission) -> Bool, in workspace: Workspace) -> Bool {
         // In a real app, check user's role in workspace
         // For prototype, assume owner

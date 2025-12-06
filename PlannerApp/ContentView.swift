@@ -11,11 +11,11 @@ public struct ContentView: View {
     @State private var tasks: [PlannerTask] = []
     @State private var showingAddTask = false
     @State private var refreshID = UUID() // Force refresh
-    
+
     private let dataManager = TaskDataManager.shared
-    
+
     public init() {}
-    
+
     public var body: some View {
         NavigationStack {
             ZStack {
@@ -27,7 +27,7 @@ public struct ContentView: View {
                 Color.gray.opacity(0.1)
                     .ignoresSafeArea()
                 #endif
-                
+
                 if tasks.isEmpty {
                     emptyStateView
                 } else {
@@ -37,7 +37,7 @@ public struct ContentView: View {
                                 TaskCardView(
                                     task: task,
                                     onToggle: { t in toggleTask(t) },
-                                    onEdit: { t in /* Edit implementation TODO */ }
+                                    onEdit: { _ in /* Edit implementation TODO */ }
                                 )
                             }
                         }
@@ -58,7 +58,7 @@ public struct ContentView: View {
             }
         }
     }
-    
+
     private var emptyStateView: some View {
         VStack(spacing: 20) {
             Image(systemName: "checklist")
@@ -71,7 +71,7 @@ public struct ContentView: View {
             Text("Tap + to add a new task")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            
+
             Button("Generate Sample Tasks") {
                 seedSampleData()
             }
@@ -80,9 +80,9 @@ public struct ContentView: View {
         }
         .padding()
     }
-    
+
     private func loadTasks() {
-        tasks = dataManager.load().sorted { 
+        tasks = dataManager.load().sorted {
             // Sort: High priority first, then due date
             if $0.priority.sortOrder != $1.priority.sortOrder {
                 return $0.priority.sortOrder > $1.priority.sortOrder
@@ -90,7 +90,7 @@ public struct ContentView: View {
             return ($0.dueDate ?? Date.distantFuture) < ($1.dueDate ?? Date.distantFuture)
         }
     }
-    
+
     private func toggleTask(_ task: PlannerTask) {
         var updatedTask = task
         updatedTask.isCompleted.toggle()
@@ -100,14 +100,14 @@ public struct ContentView: View {
             loadTasks()
         }
     }
-    
+
     private func seedSampleData() {
         let samples = [
             PlannerTask(title: "Review Design Specs", description: "Check color contrast and typography scale.", priority: .high, dueDate: Date().addingTimeInterval(3600 * 4)),
             PlannerTask(title: "Weekly Sync", description: "Team status update meeting.", priority: .medium, dueDate: Date().addingTimeInterval(3600 * 24)),
             PlannerTask(title: "Update Documentation", description: "Reflect recent API changes in the wiki.", priority: .low, dueDate: Date().addingTimeInterval(3600 * 48))
         ]
-        
+
         for t in samples {
             dataManager.add(t)
         }
@@ -125,7 +125,7 @@ import UIKit
 
 struct TasksWidgetView: View {
     let tasks: [PlannerTask]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -137,7 +137,7 @@ struct TasksWidgetView: View {
                 Image(systemName: "list.bullet.circle.fill")
                     .foregroundColor(.blue)
             }
-            
+
             if tasks.isEmpty {
                 VStack {
                     Spacer()
@@ -153,14 +153,14 @@ struct TasksWidgetView: View {
                             Circle()
                                 .fill(priorityColor(task.priority))
                                 .frame(width: 8, height: 8)
-                            
+
                             Text(task.title)
                                 .font(.caption2)
                                 .fontWeight(.medium)
                                 .lineLimit(1)
-                            
+
                             Spacer()
-                            
+
                             if let due = task.dueDate {
                                 Text(due, style: .time)
                                     .font(.caption2)
@@ -178,7 +178,7 @@ struct TasksWidgetView: View {
         .padding()
         .background(Color(UIColor.systemBackground))
     }
-    
+
     func priorityColor(_ priority: TaskPriority) -> Color {
         switch priority {
         case .high: return .red

@@ -9,7 +9,7 @@ import Foundation
 
 class FocusModeManager: ObservableObject {
     @Published var isFocusModeEnabled = false
-    
+
     func toggleFocusMode() {
         isFocusModeEnabled.toggle()
         if isFocusModeEnabled {

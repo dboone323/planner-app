@@ -90,7 +90,7 @@ public struct CalendarView: View {
         formatter.timeStyle = .short
         return formatter
     }()
-    
+
     private static let eventTimeFormatter24Hour: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
@@ -98,7 +98,7 @@ public struct CalendarView: View {
         formatter.locale = Locale(identifier: "en_GB")
         return formatter
     }()
-    
+
     private var currentEventTimeFormatter: DateFormatter {
         use24HourTime ? Self.eventTimeFormatter24Hour : Self.eventTimeFormatter
     }

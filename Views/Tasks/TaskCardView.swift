@@ -22,14 +22,14 @@ struct TaskCardView: View {
                         .foregroundColor(task.isCompleted ? .secondary : .primary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
-                    
+
                     Spacer()
-                    
+
                     if let dueDate = task.dueDate {
                         dueDateBadge(date: dueDate, isCompleted: task.isCompleted)
                     }
                 }
-                
+
                 // Description (if present)
                 if !task.description.isEmpty {
                     Text(task.description)
@@ -37,7 +37,7 @@ struct TaskCardView: View {
                         .foregroundColor(.secondary)
                         .lineLimit(2)
                 }
-                
+
                 // Footer: Priority and Actions
                 HStack {
                     Label(task.priority.displayName, systemImage: "flag.fill")
@@ -49,7 +49,7 @@ struct TaskCardView: View {
                         .cornerRadius(4)
 
                     Spacer()
-                    
+
                     Button(action: { onToggle(task) }) {
                         Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                             .font(.title2)
@@ -67,13 +67,13 @@ struct TaskCardView: View {
         #endif
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 1)
-        .onTapGesture { 
+        .onTapGesture {
             onEdit(task)
         }
     }
-    
+
     // MARK: - Helpers
-    
+
     private func priorityColor(_ priority: TaskPriority) -> Color {
         switch priority {
         case .high: return .red
@@ -81,7 +81,7 @@ struct TaskCardView: View {
         case .low: return .blue
         }
     }
-    
+
     private func dueDateBadge(date: Date, isCompleted: Bool) -> some View {
         let isOverdue = date < Date() && !isCompleted
         return Text(date.formatted(.relative(presentation: .named)))

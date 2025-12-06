@@ -112,7 +112,7 @@ final class CalendarDataManager: CalendarDataManaging {
         let todayStart = calendar.startOfDay(for: Date())
         let tomorrowStart = calendar.date(byAdding: .day, value: 1, to: todayStart)!
         let futureDate = calendar.date(byAdding: .day, value: days, to: tomorrowStart) ?? Date()
-        
+
         return load().filter { $0.date >= tomorrowStart && $0.date < futureDate }
             .sorted { $0.date < $1.date }
     }

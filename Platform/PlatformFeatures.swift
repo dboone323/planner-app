@@ -307,7 +307,7 @@ import SwiftUI
     }
 
     // Touch Bar support (for compatible Macs)
-    
+
     class TouchBarProvider: NSViewController {
         // Add NSTouchBarDelegate conformance
         override func makeTouchBar() -> NSTouchBar? {
@@ -325,7 +325,6 @@ import SwiftUI
         }
     }
 
-    
     extension TouchBarProvider: NSTouchBarDelegate {
         func touchBar(
             _: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier
@@ -387,7 +386,6 @@ import SwiftUI
         }
     }
 
-    
     extension NSTouchBarItem.Identifier {
         static let addTask = NSTouchBarItem.Identifier("com.plannerapp.addTask")
         static let addGoal = NSTouchBarItem.Identifier("com.plannerapp.addGoal")
