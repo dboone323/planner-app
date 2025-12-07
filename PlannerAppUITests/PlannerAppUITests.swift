@@ -15,8 +15,8 @@ final class PlannerAppUITests: XCTestCase {
         app = XCUIApplication()
         app.launch()
         
-        // Wait for app to fully load and render UI
-        sleep(5)
+        // Wait for app to fully load
+        waitForAppToLaunch()
     }
 
     override func tearDownWithError() throws {
@@ -24,6 +24,12 @@ final class PlannerAppUITests: XCTestCase {
     }
     
     // MARK: - Helper Functions
+    
+    /// Waits for app to be in running foreground state
+    private func waitForAppToLaunch() {
+        let launched = app.wait(for: .runningForeground, timeout: 60)
+        XCTAssertTrue(launched, "App failed to launch within 60 seconds")
+    }
     
     /// Captures a screenshot with a descriptive name
     private func captureScreenshot(named name: String) {
@@ -57,6 +63,26 @@ final class PlannerAppUITests: XCTestCase {
             }
         }
         return false
+    }
+    
+    /// Sets the app to light mode
+    private func setLightMode() {
+        // Force light mode by setting launch environment
+        app.terminate()
+        app.launchArguments = ["-AppleInterfaceStyle", "Light"]
+        app.launch()
+        waitForAppToLaunch()
+        sleep(2) // Grace period for theme change
+    }
+    
+    /// Sets the app to dark mode
+    private func setDarkMode() {
+        // Force dark mode by setting launch environment
+        app.terminate()
+        app.launchArguments = ["-AppleInterfaceStyle", "Dark"]
+        app.launch()
+        waitForAppToLaunch()
+        sleep(2) // Grace period for theme change
     }
 
     // MARK: - Launch Tests
@@ -246,6 +272,32 @@ final class PlannerAppUITests: XCTestCase {
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
+        }
+    }
+    
+    // MARK: - Appearance Mode Screenshots
+    
+    @MainActor
+    func testLightModeScreenshots() throws {
+        // Capture main screen in light mode
+        setLightMode()
+        captureScreenshot(named: "Light_Launch")
+        
+        // Try to navigate to another tab
+        if tapTab("Calendar") {
+            captureScreenshot(named: "Light_Calendar")
+        }
+    }
+    
+    @MainActor
+    func testDarkModeScreenshots() throws {
+        // Capture main screen in dark mode
+        setDarkMode()
+        captureScreenshot(named: "Dark_Launch")
+        
+        // Try to navigate to another tab
+        if tapTab("Calendar") {
+            captureScreenshot(named: "Dark_Calendar")
         }
     }
 }
