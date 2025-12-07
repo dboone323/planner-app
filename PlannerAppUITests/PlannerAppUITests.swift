@@ -8,14 +8,15 @@
 import XCTest
 
 final class PlannerAppUITests: XCTestCase {
-    let app = XCUIApplication()
+    var app: XCUIApplication!
     
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app = XCUIApplication()
         app.launch()
         
-        // Wait for app to fully load
-        sleep(2)
+        // Wait for app to fully load and render UI
+        sleep(5)
     }
 
     override func tearDownWithError() throws {
