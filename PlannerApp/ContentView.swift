@@ -21,11 +21,7 @@ public struct ContentView: View {
             ZStack {
                 // Background
                 #if os(iOS)
-                #if os(iOS)
                 Color(uiColor: .systemGroupedBackground)
-                #else
-                Color.gray.opacity(0.1)
-                #endif
                     .ignoresSafeArea()
                 #else
                 Color.gray.opacity(0.1)
