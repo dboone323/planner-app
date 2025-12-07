@@ -179,8 +179,8 @@ final class PlannerAppUITests: XCTestCase {
     
     @MainActor
     func testSettingsViewScreenshots() throws {
-        // Try navigating to Settings
-        let settingsItems = ["Settings", "gear", "Preferences", "Options"]
+        // Try navigating to Settings/More
+        let settingsItems = ["Settings", "More", "gear", "Preferences", "Options"]
         
         for item in settingsItems {
             if tapTab(item) || tapElement(item) {
