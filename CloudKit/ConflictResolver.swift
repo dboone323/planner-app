@@ -172,9 +172,16 @@ struct ConflictResolver {
                 let serverDate = conflict.serverRecord.modificationDate ?? Date.distantPast
 
                 if localDate > serverDate {
+                    #if DEBUG
+                    print("ConflictResolver: Preferring local value for '\(key)': \(localVal) over server: \(serverVal)")
+                    #endif
                     merged[key] = localVal
+                } else {
+                    #if DEBUG
+                    print("ConflictResolver: Keeping server value for '\(key)': \(serverVal) over local: \(localVal)")
+                    #endif
+                    merged[key] = serverVal  // Explicitly set for clarity
                 }
-                // Otherwise keep server value (already in merged)
             }
         }
 
