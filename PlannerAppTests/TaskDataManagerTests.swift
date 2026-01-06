@@ -224,12 +224,13 @@ final class TaskDataManagerTests: XCTestCase {
         let today = Date()
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-        let todayMidAfternoon = Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)!
+        // Use end of day to ensure this is always in the future during test day
+        let todayEndOfDay = Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: today)!
 
         manager.add(PlannerTask(title: "Complete", isCompleted: true))
         manager.add(PlannerTask(title: "Incomplete", isCompleted: false))
         manager.add(PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday))
-        manager.add(PlannerTask(title: "Due Today", isCompleted: false, dueDate: todayMidAfternoon))
+        manager.add(PlannerTask(title: "Due Today", isCompleted: false, dueDate: todayEndOfDay))
 
         let stats = manager.getTaskStatistics()
 

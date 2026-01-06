@@ -344,24 +344,22 @@ import SwiftUI
 
             case .search:
                 let item = NSCustomTouchBarItem(identifier: identifier)
-                item.view = NSButton(
-                    image: NSImage(
-                        systemSymbolName: "magnifyingglass", accessibilityDescription: "Search"
-                    )!,
-                    target: self, action: #selector(search)
-                )
-                (item.view as? NSButton)?.setAccessibilityLabel("Button")
+                if let image = NSImage(
+                    systemSymbolName: "magnifyingglass", accessibilityDescription: "Search"
+                ) {
+                    item.view = NSButton(image: image, target: self, action: #selector(search))
+                    (item.view as? NSButton)?.setAccessibilityLabel("Button")
+                }
                 return item
 
             case .calendar:
                 let item = NSCustomTouchBarItem(identifier: identifier)
-                item.view = NSButton(
-                    image: NSImage(
-                        systemSymbolName: "calendar", accessibilityDescription: "Calendar"
-                    )!,
-                    target: self, action: #selector(showCalendar)
-                )
-                (item.view as? NSButton)?.setAccessibilityLabel("Button")
+                if let image = NSImage(
+                    systemSymbolName: "calendar", accessibilityDescription: "Calendar"
+                ) {
+                    item.view = NSButton(image: image, target: self, action: #selector(showCalendar))
+                    (item.view as? NSButton)?.setAccessibilityLabel("Button")
+                }
                 return item
 
             default:
@@ -529,7 +527,9 @@ class MacOSFeatureProvider: PlatformFeatureProvider {
 
     func openSystemSettings() {
         #if os(macOS)
-            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:")!)
+            if let url = URL(string: "x-apple.systempreferences:") {
+                NSWorkspace.shared.open(url)
+            }
         #endif
     }
 }

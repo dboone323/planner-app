@@ -49,7 +49,14 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     /// The date the task was created.
     var createdAt: Date
     /// The date the task was last modified (optional).
+    /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
+    
+    // Sync properties
+    /// Calendar event identifier for sync
+    var calendarEventId: String?
+    /// Estimated duration in seconds
+    var estimatedDuration: TimeInterval
 
     // Sentiment analysis properties
     /// Sentiment of task description ("positive", "negative", or "neutral")
@@ -65,13 +72,16 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     ///   - isCompleted: Whether the task is completed (default: false).
     ///   - priority: The task priority (default: .medium).
     ///   - dueDate: The due date (optional).
+    ///   - estimatedDuration: Estimated duration in seconds (default: 3600).
+    ///   - calendarEventId: ID of synced calendar event (optional).
     ///   - createdAt: The creation date (default: now).
     ///   - modifiedAt: The last modified date (default: now).
     ///   - sentiment: The sentiment label (default: "neutral").
     ///   - sentimentScore: The sentiment score (default: 0.0).
     init(
         id: UUID = UUID(), title: String, description: String = "", isCompleted: Bool = false,
-        priority: TaskPriority = .medium, dueDate: Date? = nil, createdAt: Date = Date(),
+        priority: TaskPriority = .medium, dueDate: Date? = nil, estimatedDuration: TimeInterval = 3600,
+        calendarEventId: String? = nil, createdAt: Date = Date(),
         modifiedAt: Date? = Date(), sentiment: String = "neutral", sentimentScore: Double = 0.0
     ) {
         self.id = id
@@ -80,6 +90,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         self.isCompleted = isCompleted
         self.priority = priority
         self.dueDate = dueDate
+        self.estimatedDuration = estimatedDuration
+        self.calendarEventId = calendarEventId
         self.createdAt = createdAt
         self.modifiedAt = modifiedAt
         self.sentiment = sentiment
@@ -126,6 +138,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         record["isCompleted"] = self.isCompleted
         record["priority"] = self.priority.rawValue
         record["dueDate"] = self.dueDate
+        record["estimatedDuration"] = self.estimatedDuration
+        record["calendarEventId"] = self.calendarEventId
         record["createdAt"] = self.createdAt
         record["modifiedAt"] = self.modifiedAt
         record["sentiment"] = self.sentiment
@@ -158,6 +172,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
             priority: TaskPriority(rawValue: ckRecord["priority"] as? String ?? "medium")
                 ?? .medium,
             dueDate: ckRecord["dueDate"] as? Date,
+            estimatedDuration: ckRecord["estimatedDuration"] as? TimeInterval ?? 3600,
+            calendarEventId: ckRecord["calendarEventId"] as? String,
             createdAt: createdAt,
             modifiedAt: ckRecord["modifiedAt"] as? Date,
             sentiment: ckRecord["sentiment"] as? String ?? "neutral",

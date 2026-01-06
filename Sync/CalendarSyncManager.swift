@@ -1,10 +1,59 @@
 import Foundation
 import EventKit
 
+// Protocol for testing
+protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it as class dependency
+    func requestAccessToEvents() async -> Bool
+    // Update to @Sendable for Swift 6 strict concurrency
+    func requestAccess(to entityType: EKEntityType, completion: @escaping @Sendable (Bool, Error?) -> Void)
+    func calendars(for entityType: EKEntityType) -> [EKCalendar]
+    func saveCalendar(_ calendar: EKCalendar, commit: Bool) throws
+    func save(_ event: EKEvent, span: EKSpan) throws
+    func remove(_ event: EKEvent, span: EKSpan) throws
+    func event(withIdentifier identifier: String) -> EKEvent?
+    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
+    func events(matching predicate: NSPredicate) -> [EKEvent]
+    var defaultCalendarForNewEvents: EKCalendar? { get }
+    
+    func newEvent() -> EKEvent
+    func newCalendar() -> EKCalendar
+}
+
+extension EKEventStore: SyncEventStoreProtocol {
+    func newEvent() -> EKEvent {
+        return EKEvent(eventStore: self)
+    }
+    
+    func newCalendar() -> EKCalendar {
+        return EKCalendar(for: .event, eventStore: self)
+    }
+
+    func requestAccessToEvents() async -> Bool {
+        // Wrapper calls SDK method
+        do {
+            if #available(iOS 17.0, *) {
+                return try await self.requestFullAccessToEvents()
+            } else {
+                 return await withCheckedContinuation { continuation in
+                    self.requestAccess(to: .event) { granted, _ in
+                        continuation.resume(returning: granted)
+                    }
+                }
+            }
+        } catch {
+            return false
+        }
+    }
+}
+
 /// Calendar sync manager with bidirectional sync
 class CalendarSyncManager {
-    private let eventStore = EKEventStore()
+    private let eventStore: SyncEventStoreProtocol
     private let calendarIdentifier = "com.plannerapp.sync"
+    
+    init(eventStore: SyncEventStoreProtocol = EKEventStore()) {
+        self.eventStore = eventStore
+    }
     
     // MARK: - Setup
     
@@ -20,15 +69,8 @@ class CalendarSyncManager {
     }
     
     private func requestAccess() async -> Bool {
-        
-            return await eventStore.requestFullAccessToEvents()
-        } else {
-            return await withCheckedContinuation { continuation in
-                eventStore.requestAccess(to: .event) { granted, _ in
-                    continuation.resume(returning: granted)
-                }
-            }
-        }
+        // Simplified for protocol usage
+        return await eventStore.requestAccessToEvents()
     }
     
     private func findSyncCalendar() -> EKCalendar? {
@@ -38,7 +80,7 @@ class CalendarSyncManager {
     }
     
     private func createSyncCalendar() -> Bool {
-        let calendar = EKCalendar(for: .event, eventStore: eventStore)
+        let calendar = eventStore.newCalendar()
         calendar.title = "PlannerApp"
         calendar.source = eventStore.defaultCalendarForNewEvents?.source
         
@@ -53,7 +95,9 @@ class CalendarSyncManager {
     
     // MARK: - Sync Tasks to Calendar
     
-    func syncTaskToCalendar(_ task: Task) async throws {
+    // MARK: - Sync Tasks to Calendar
+    
+    func syncTaskToCalendar(_ task: inout PlannerTask) async throws {
         guard let calendar = findSyncCalendar() else {
             throw SyncError.calendarNotFound
         }
@@ -62,17 +106,17 @@ class CalendarSyncManager {
         if let existingEvent = findEvent(for: task) {
             try updateEvent(existingEvent, with: task)
         } else {
-            try createEvent(for: task, in: calendar)
+            try createEvent(for: &task, in: calendar)
         }
     }
     
-    private func createEvent(for task: Task, in calendar: EKCalendar) throws {
-        let event = EKEvent(eventStore: eventStore)
+    private func createEvent(for task: inout PlannerTask, in calendar: EKCalendar) throws {
+        let event = eventStore.newEvent()
         event.title = task.title
-        event.notes = task.notes
+        event.notes = task.description
         event.calendar = calendar
-        event.startDate = task.dueDate
-        event.endDate = task.dueDate.addingTimeInterval(task.estimatedDuration)
+        event.startDate = task.dueDate ?? Date()
+        event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
         event.isAllDay = task.isAllDay
         
         try eventStore.save(event, span: .thisEvent)
@@ -81,24 +125,24 @@ class CalendarSyncManager {
         task.calendarEventId = event.eventIdentifier
     }
     
-    private func updateEvent(_ event: EKEvent, with task: Task) throws {
+    private func updateEvent(_ event: EKEvent, with task: PlannerTask) throws {
         event.title = task.title
-        event.notes = task.notes
+        event.notes = task.description
         event.startDate = task.dueDate
-        event.endDate = task.dueDate.addingTimeInterval(task.estimatedDuration)
+        event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
         event.isAllDay = task.isAllDay
         
         try eventStore.save(event, span: .thisEvent)
     }
     
-    private func findEvent(for task: Task) -> EKEvent? {
+    private func findEvent(for task: PlannerTask) -> EKEvent? {
         guard let eventId = task.calendarEventId else { return nil }
         return eventStore.event(withIdentifier: eventId)
     }
     
     // MARK: - Delete from Calendar
     
-    func deleteTaskFromCalendar(_ task: Task) async throws {
+    func deleteTaskFromCalendar(_ task: inout PlannerTask) async throws {
         guard let event = findEvent(for: task) else { return }
         
         try eventStore.remove(event, span: .thisEvent)
@@ -107,19 +151,19 @@ class CalendarSyncManager {
     
     // MARK: - Bidirectional Sync
     
-    func performFullSync(tasks: [Task]) async throws -> SyncResult {
+    func performFullSync(tasks: inout [PlannerTask]) async throws -> SyncResult {
         var created = 0
         var updated = 0
         var deleted = 0
         
         // Sync tasks to calendar
-        for task in tasks {
-            if task.syncToCalendar {
-                if task.calendarEventId == nil {
-                    try await syncTaskToCalendar(task)
+        for index in tasks.indices {
+            if tasks[index].syncToCalendar {
+                if tasks[index].calendarEventId == nil {
+                    try await syncTaskToCalendar(&tasks[index])
                     created += 1
                 } else {
-                    try await syncTaskToCalendar(task)
+                    try await syncTaskToCalendar(&tasks[index])
                     updated += 1
                 }
             }
@@ -153,16 +197,16 @@ class CalendarSyncManager {
         return eventStore.events(matching: predicate)
     }
     
-    private func hasMatchingTask(for event: EKEvent, in tasks: [Task]) -> Bool {
-        tasks.contains { $0.calendarEventId == event.event Identifier }
+    private func hasMatchingTask(for event: EKEvent, in tasks: [PlannerTask]) -> Bool {
+        tasks.contains { $0.calendarEventId == event.eventIdentifier }
     }
     
-    private func createTask(from event: EKEvent) -> Task {
-        Task(
+    private func createTask(from event: EKEvent) -> PlannerTask {
+        PlannerTask(
             title: event.title ?? "",
+            description: event.notes ?? "",
             dueDate: event.startDate,
             estimatedDuration: event.endDate.timeIntervalSince(event.startDate),
-            notes: event.notes,
             calendarEventId: event.eventIdentifier
         )
     }
@@ -183,12 +227,7 @@ struct SyncResult {
 }
 
 // Mock Task extension for calendar sync
-extension Task {
-    var calendarEventId: String? {
-        get { nil } // Would be stored in SwiftData
-        set { }
-    }
-    
+extension PlannerTask {
     var syncToCalendar: Bool { true }
     var isAllDay: Bool { estimatedDuration == 0 }
 }

@@ -109,7 +109,7 @@ def create_missing_file(repo_path: Path, failure: "WorkflowFailure") -> bool:
     logger.info("📄 Creating missing files...")
 
     match = re.search(
-        r'No such file or directory: [\'\"]*([^\'\"]+)[\'\"]*', failure.error_message
+        r"No such file or directory: [\'\"]*([^\'\"]+)[\'\"]*", failure.error_message
     )
     if match:
         missing_file = match.group(1)
