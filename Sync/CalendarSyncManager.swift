@@ -154,7 +154,7 @@ class CalendarSyncManager {
     func performFullSync(tasks: inout [PlannerTask]) async throws -> SyncResult {
         var created = 0
         var updated = 0
-        var deleted = 0
+        let deleted = 0
         
         // Sync tasks to calendar
         for index in tasks.indices {

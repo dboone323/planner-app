@@ -1,0 +1,15 @@
+{
+  "originHash" : "fe7424b4e2657868824479db3e307cddd0b63c06c41b5b4342684793b437fe17",
+  "pins" : [
+    {
+      "identity" : "shared-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dboone323/shared-kit.git",
+      "state" : {
+        "revision" : "cc25f7ca1e2bebe6c619ae675be8a2503f24a044",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
