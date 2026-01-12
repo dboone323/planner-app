@@ -1,5 +1,6 @@
 // PlannerApp/Views/Tasks/TaskManagerView.swift (Updated with iOS enhancements)
 import Foundation
+import SwiftData
 import SwiftUI
 
 #if os(iOS)
@@ -14,17 +15,21 @@ public struct TaskManagerView: View {
     // Access shared ThemeManager and data arrays
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) var dismiss // Add dismiss capability
-    @State private var tasks: [PlannerTask] = [] // Holds all tasks loaded from storage
+    @Environment(\.modelContext) private var modelContext // SwiftData context
+    
+    // Use @Query for automatic data fetching from SwiftData
+    @Query(sort: \SDTask.createdAt, order: .reverse) private var sdTasks: [SDTask]
+    
     @State private var newTaskTitle = "" // State for the input field text
     @FocusState private var isInputFieldFocused: Bool // Tracks focus state of the input field
 
     // Computed properties to filter tasks into incomplete and completed lists
-    private var incompleteTasks: [PlannerTask] {
-        self.tasks.filter { !$0.isCompleted }.sortedById() // Use helper extension for sorting
+    private var incompleteTasks: [SDTask] {
+        self.sdTasks.filter { !$0.isCompleted }
     }
 
-    private var completedTasks: [PlannerTask] {
-        self.tasks.filter(\.isCompleted).sortedById() // Use helper extension for sorting
+    private var completedTasks: [SDTask] {
+        self.sdTasks.filter(\.isCompleted)
     }
 
     public var body: some View {
@@ -44,11 +49,10 @@ public struct TaskManagerView: View {
                 .environmentObject(self.themeManager)
 
                 // --- Task List ---
-                TaskListView(
+                SDTaskListView(
                     isInputFieldFocused: self.$isInputFieldFocused,
                     incompleteTasks: self.incompleteTasks,
                     completedTasks: self.completedTasks,
-                    tasks: self.$tasks,
                     onDeleteIncomplete: self.deleteTaskIncomplete,
                     onDeleteCompleted: self.deleteTaskCompleted
                 )
@@ -57,9 +61,8 @@ public struct TaskManagerView: View {
             // Ensure the primary background extends behind the navigation bar area if needed
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Tasks")
-            // Load tasks and perform auto-deletion check when view appears
+            // Perform auto-deletion check when view appears
             .onAppear {
-                self.loadTasks()
                 self.performAutoDeletionIfNeeded() // Check and perform auto-deletion
             }
             .toolbar {
@@ -90,54 +93,39 @@ public struct TaskManagerView: View {
         #endif
     }
 
-    // --- Data Functions ---
+    // --- Data Functions (SwiftData) ---
 
     // Adds a new task based on the input field text
     private func addTask() {
         let trimmedTitle = self.newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else { return } // Don't add empty tasks
 
-        // Create new PlannerTask instance. Ensure PlannerTask model has necessary initializers.
-        // If PlannerTask needs `completionDate`, initialize it as nil here.
-        let newTask = PlannerTask(title: trimmedTitle /* , completionDate: nil */ )
-        self.tasks.append(newTask) // Add to the local state array
+        // Create new SDTask and insert into context
+        let newTask = SDTask(title: trimmedTitle)
+        modelContext.insert(newTask)
         self.newTaskTitle = "" // Clear the input field
-        self.saveTasks() // Persist changes
         self.isInputFieldFocused = false // Dismiss keyboard
     }
 
     // Handles deletion from the incomplete tasks section
     private func deleteTaskIncomplete(at offsets: IndexSet) {
-        self.deleteTask(from: self.incompleteTasks, at: offsets) // Use helper function
+        self.deleteTask(from: self.incompleteTasks, at: offsets)
     }
 
     // Handles deletion from the completed tasks section
     private func deleteTaskCompleted(at offsets: IndexSet) {
-        self.deleteTask(from: self.completedTasks, at: offsets) // Use helper function
+        self.deleteTask(from: self.completedTasks, at: offsets)
     }
 
     // Helper function to delete tasks based on offsets from a filtered array
-    private func deleteTask(from sourceArray: [PlannerTask], at offsets: IndexSet) {
-        // Get the IDs of the tasks to be deleted from the source (filtered) array
-        let idsToDelete = offsets.map { sourceArray[$0].id }
-        // Remove tasks with matching IDs from the main `tasks` array
-        self.tasks.removeAll { idsToDelete.contains($0.id) }
-        self.saveTasks() // Persist changes
+    private func deleteTask(from sourceArray: [SDTask], at offsets: IndexSet) {
+        for index in offsets {
+            let task = sourceArray[index]
+            modelContext.delete(task)
+        }
     }
 
-    // Loads tasks from the data manager
-    private func loadTasks() {
-        self.tasks = TaskDataManager.shared.load()
-        print("Tasks loaded. Count: \(self.tasks.count)")
-    }
-
-    // Saves the current state of the `tasks` array to the data manager
-    private func saveTasks() {
-        TaskDataManager.shared.save(tasks: self.tasks)
-        print("Tasks saved.")
-    }
-
-    // --- Auto Deletion Logic ---
+    // --- Auto Deletion Logic (SwiftData) ---
     // Checks settings and performs auto-deletion if enabled
     private func performAutoDeletionIfNeeded() {
         // Read settings directly using AppStorage within this function scope
@@ -151,50 +139,27 @@ public struct TaskManagerView: View {
         }
 
         // Calculate the cutoff date based on the setting
-        guard Calendar.current.date(byAdding: .day, value: -autoDeleteDays, to: Date()) != nil
+        guard let cutoffDate = Calendar.current.date(byAdding: .day, value: -autoDeleteDays, to: Date())
         else {
             print("Could not calculate cutoff date for auto-deletion.")
             return
         }
 
-        let initialCount = self.tasks.count
-        // IMPORTANT: Requires Task model to have `completionDate: Date?`
-        self.tasks.removeAll { task in
-            // Ensure task is completed and has a completion date
-            guard task.isCompleted /* , let completionDate = task.completionDate */ else {
-                return false // Keep incomplete or tasks without completion date
-            }
-            // *** Uncomment the completionDate check above and ensure Task model supports it ***
-
-            // *** Placeholder Warning if completionDate is missing ***
-            print(
-                "Warning: Task model needs 'completionDate' for accurate auto-deletion based on date. Checking only 'isCompleted' status for now."
-            )
-            // If completionDate is missing, this would delete ALL completed tasks immediately
-            // return true // DO NOT UNCOMMENT without completionDate check
-            return false // Safely keep all tasks if completionDate logic is missing
-            // *** End Placeholder ***
-
-            // Actual logic: Remove if completion date is before the cutoff
-            // return completionDate < cutoffDate
+        // Find completed tasks older than cutoff date using modifiedAt
+        let tasksToDelete = sdTasks.filter { task in
+            guard task.isCompleted, let modifiedAt = task.modifiedAt else { return false }
+            return modifiedAt < cutoffDate
         }
 
-        // Save only if tasks were actually removed
-        if self.tasks.count < initialCount {
-            print(
-                "Auto-deleted \(initialCount - self.tasks.count) tasks older than \(autoDeleteDays) days."
-            )
-            self.saveTasks()
+        // Delete matching tasks
+        if !tasksToDelete.isEmpty {
+            for task in tasksToDelete {
+                modelContext.delete(task)
+            }
+            print("Auto-deleted \(tasksToDelete.count) tasks older than \(autoDeleteDays) days.")
         } else {
             print("No tasks found matching auto-deletion criteria.")
         }
     }
 }
 
-// --- Helper extension for sorting PlannerTask array ---
-extension [PlannerTask] {
-    // Sorts tasks stably based on their UUID string representation
-    func sortedById() -> [PlannerTask] {
-        sorted(by: { $0.id.uuidString < $1.id.uuidString })
-    }
-}
