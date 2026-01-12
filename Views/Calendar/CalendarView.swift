@@ -2,14 +2,20 @@
 // PlannerApp/Views/Calendar/CalendarView.swift
 
 import Foundation
+import SwiftData
 import SwiftUI
 
 public struct CalendarView: View {
     // Access shared ThemeManager and data
     @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.modelContext) private var modelContext
+    
+    // Use @Query for automatic SwiftData fetching
+    @Query(sort: \SDTask.dueDate) private var sdTasks: [SDTask]
+    @Query(sort: \SDGoal.targetDate) private var sdGoals: [SDGoal]
+    
+    // Events still use manual loading (not yet migrated to SwiftData)
     @State private var events: [CalendarEvent] = []
-    @State private var goals: [Goal] = []
-    @State private var tasks: [PlannerTask] = []
     @State private var showAddEvent = false
     @State private var selectedDate = Date()
     @State private var showingDateDetails = false
@@ -28,19 +34,19 @@ public struct CalendarView: View {
         }
     }
 
-    // Computed property to get dates with goals
+    // Computed property to get dates with goals (using SDGoal)
     private var goalDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = firstDayOfWeekSetting
-        return Set(goals.map { calendar.startOfDay(for: $0.targetDate) })
+        return Set(sdGoals.map { calendar.startOfDay(for: $0.targetDate) })
     }
 
-    // Computed property to get dates with tasks
+    // Computed property to get dates with tasks (using SDTask)
     private var taskDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = firstDayOfWeekSetting
         return Set(
-            tasks.compactMap { task in
+            sdTasks.compactMap { task in
                 guard let dueDate = task.dueDate else { return nil }
                 return calendar.startOfDay(for: dueDate)
             }
@@ -54,11 +60,11 @@ public struct CalendarView: View {
         return Set(events.map { calendar.startOfDay(for: $0.date) })
     }
 
-    // Structure for selected date items
+    // Structure for selected date items (using SwiftData types)
     private struct SelectedDateItems {
         let events: [CalendarEvent]
-        let goals: [Goal]
-        let tasks: [PlannerTask]
+        let goals: [SDGoal]
+        let tasks: [SDTask]
     }
 
     // Get items for selected date
@@ -71,11 +77,11 @@ public struct CalendarView: View {
             event.date >= startOfDay && event.date < endOfDay
         }
 
-        let dayGoals = goals.filter { goal in
+        let dayGoals = sdGoals.filter { goal in
             calendar.startOfDay(for: goal.targetDate) == startOfDay
         }
 
-        let dayTasks = tasks.filter { task in
+        let dayTasks = sdTasks.filter { task in
             guard let dueDate = task.dueDate else { return false }
             return calendar.startOfDay(for: dueDate) == startOfDay
         }
@@ -204,7 +210,7 @@ public struct CalendarView: View {
                             if !items.goals.isEmpty {
                                 DateSectionView(title: NSLocalizedString("calendar.section.goals", comment: "Goals section"), color: .green) {
                                     ForEach(items.goals) { goal in
-                                        GoalRowView(goal: goal)
+                                        SDGoalRowView(goal: goal)
                                             .environmentObject(themeManager)
                                     }
                                 }
@@ -214,7 +220,7 @@ public struct CalendarView: View {
                             if !items.tasks.isEmpty {
                                 DateSectionView(title: NSLocalizedString("calendar.section.tasks", comment: "Tasks section"), color: .orange) {
                                     ForEach(items.tasks) { task in
-                                        TaskRowView(task: task)
+                                        SDTaskRowView(task: task)
                                             .environmentObject(themeManager)
                                     }
                                 }
@@ -278,18 +284,18 @@ public struct CalendarView: View {
     // MARK: - Data Functions
 
     private func loadAllData() {
+        // Only load events manually - tasks and goals are auto-fetched via @Query
         events = CalendarDataManager.shared.load()
-        goals = GoalDataManager.shared.load()
-        tasks = TaskDataManager.shared.load()
         print(
-            "Calendar data loaded. Events: \(events.count), Goals: \(goals.count), Tasks: \(tasks.count)"
+            "Calendar data loaded. Events: \(events.count), Goals: \(sdGoals.count), Tasks: \(sdTasks.count)"
         )
     }
 
     private func saveEvents() {
         CalendarDataManager.shared.save(events: events)
         print("Calendar events saved.")
-        loadAllData()
+        // Reload events only
+        events = CalendarDataManager.shared.load()
     }
 }
 
