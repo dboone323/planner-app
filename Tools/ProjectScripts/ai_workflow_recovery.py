@@ -28,12 +28,9 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 # Import extracted modules
-from . import fix_handlers
-from . import git_operations
-
+from . import fix_handlers, git_operations
 
 # Configure logging
 logging.basicConfig(
@@ -57,7 +54,7 @@ class WorkflowFailure:
     confidence_score: float
     suggested_fix: str
     fix_applied: bool = False
-    fix_timestamp: Optional[datetime] = None
+    fix_timestamp: datetime | None = None
     retry_count: int = 0
 
 
@@ -70,7 +67,7 @@ class AILearningPattern:
     fix_template: str
     success_rate: float
     usage_count: int = 0
-    last_used: Optional[datetime] = None
+    last_used: datetime | None = None
 
 
 class AIWorkflowRecovery:
@@ -113,7 +110,7 @@ class AIWorkflowRecovery:
         _, repo = git_operations.get_repo_info(self.repo_path)
         return repo
 
-    def _load_learning_patterns(self) -> List[AILearningPattern]:
+    def _load_learning_patterns(self) -> list[AILearningPattern]:
         """Load AI learning patterns from storage"""
         patterns_file = (
             self.repo_path / ".ai_learning_system" / "workflow_patterns.json"
@@ -121,7 +118,7 @@ class AIWorkflowRecovery:
 
         if patterns_file.exists():
             try:
-                with open(patterns_file, "r") as f:
+                with open(patterns_file) as f:
                     data = json.load(f)
                     return [
                         AILearningPattern(**pattern)
@@ -183,7 +180,7 @@ class AIWorkflowRecovery:
         with open(patterns_file, "w") as f:
             json.dump(data, f, indent=2)
 
-    def analyze_workflow_failure(self, log_content: str) -> Optional[WorkflowFailure]:
+    def analyze_workflow_failure(self, log_content: str) -> WorkflowFailure | None:
         """Use AI to analyze workflow failure and suggest fixes"""
         logger.info("🧠 Analyzing workflow failure with AI...")
 
@@ -251,7 +248,7 @@ class AIWorkflowRecovery:
 
             if file_path.exists():
                 # Read file content
-                with open(file_path, "r") as f:
+                with open(file_path) as f:
                     lines = f.readlines()
 
                 # Apply common syntax fixes
@@ -302,7 +299,7 @@ class AIWorkflowRecovery:
 
                     # Remove unused import
                     if file_path.exists():
-                        with open(file_path, "r") as f:
+                        with open(file_path) as f:
                             lines = f.readlines()
 
                         if line_num <= len(lines):
@@ -388,7 +385,7 @@ class AIWorkflowRecovery:
         """Trigger a new workflow run using git_operations module"""
         return git_operations.trigger_workflow_rerun(self.repo_path)
 
-    def run_quality_check(self) -> Tuple[bool, str]:
+    def run_quality_check(self) -> tuple[bool, str]:
         """Run local quality check to verify fixes"""
         try:
             # Try python3 first, then fall back to python

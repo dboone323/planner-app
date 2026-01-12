@@ -44,7 +44,7 @@ def add_files_to_project():
         return False
 
     # Read the project file
-    with open(project_file, "r") as f:
+    with open(project_file) as f:
         content = f.read()
 
     # Find the PBXBuildFile section

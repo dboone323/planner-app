@@ -28,7 +28,7 @@ def get_files_in_project():
         "/Users/danielstevens/Desktop/PlannerApp/PlannerApp.xcodeproj/project.pbxproj"
     )
 
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         content = f.read()
 
     # Extract file paths from the project file
@@ -49,7 +49,7 @@ def add_files_to_project(missing_files):
         "/Users/danielstevens/Desktop/PlannerApp/PlannerApp.xcodeproj/project.pbxproj"
     )
 
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         content = f.read()
 
     # Find the PBXBuildFile section

@@ -48,7 +48,7 @@ def main():
         else:
             print(f"Found: {file_path}")
 
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         content = f.read()
 
     # Generate entries for each file

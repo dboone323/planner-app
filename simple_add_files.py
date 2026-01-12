@@ -26,7 +26,7 @@ print(f"Found {len(files_on_disk)} Swift files on disk")
 
 # Get files currently in project
 project_path = "PlannerApp.xcodeproj/project.pbxproj"
-with open(project_path, "r") as f:
+with open(project_path) as f:
     content = f.read()
 
 file_pattern = r"path = ([^;]+\.swift);"

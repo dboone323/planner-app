@@ -36,7 +36,7 @@ def fix_python_syntax(repo_path: Path, failure: "WorkflowFailure") -> bool:
         line_num = int(match.group(2))
 
         if file_path.exists():
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 lines = f.readlines()
 
             if line_num <= len(lines):
@@ -83,7 +83,7 @@ def fix_imports(repo_path: Path, failure: "WorkflowFailure") -> bool:
                 import_name = match.group(4)
 
                 if file_path.exists():
-                    with open(file_path, "r") as f:
+                    with open(file_path) as f:
                         lines = f.readlines()
 
                     if line_num <= len(lines):
