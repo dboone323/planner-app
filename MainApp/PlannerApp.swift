@@ -1,9 +1,29 @@
 // PlannerApp/MainApp/PlannerApp.swift (Updated)
 import Foundation
+import SwiftData
 import SwiftUI
 
 @main
 public struct PlannerApp: App {
+    // MARK: - SwiftData Configuration
+    
+    /// Shared model container for the entire app.
+    /// Configures automatic CloudKit sync.
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([SDTask.self, SDGoal.self])
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .automatic // Enables automatic CloudKit sync
+        )
+        
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+    
     // Create and keep alive a single instance of ThemeManager for the entire app.
     // @StateObject ensures it persists throughout the app's lifecycle.
     @StateObject private var themeManager = ThemeManager()
@@ -36,10 +56,16 @@ public struct PlannerApp: App {
                     MainTabView(selectedTabTag: self.$selectedTabTag)
                 )
                 .environmentObject(self.themeManager)
+                .onAppear {
+                    // Perform one-time legacy data migration
+                    LegacyDataMigrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
+                }
         }
+        .modelContainer(sharedModelContainer)
         #if os(macOS)
         .windowStyle(.hiddenTitleBar)
         .windowToolbarStyle(.unified)
         #endif
     }
 }
+
