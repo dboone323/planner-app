@@ -23,7 +23,7 @@ public enum RecurrenceType: String, Codable, CaseIterable {
 
 // MARK: - Task Template
 
-public struct TaskTemplate: Codable, Identifiable {
+public struct RecurringTaskTemplate: Codable, Identifiable {
     public var id: UUID
     public var title: String
     public var description: String
@@ -116,11 +116,11 @@ public struct TaskTemplate: Codable, Identifiable {
 
 // MARK: - Template Manager
 
-public final class TaskTemplateManager: ObservableObject {
+final class RecurringTaskTemplateManager: ObservableObject {
     
-    public static let shared = TaskTemplateManager()
+    static let shared = RecurringTaskTemplateManager()
     
-    @Published public var templates: [TaskTemplate] = []
+    @Published var templates: [RecurringTaskTemplate] = []
     
     private let userDefaults = UserDefaults.standard
     private let templatesKey = "taskTemplates"
@@ -131,19 +131,19 @@ public final class TaskTemplateManager: ObservableObject {
     
     // MARK: - CRUD
     
-    public func addTemplate(_ template: TaskTemplate) {
+    func addTemplate(_ template: RecurringTaskTemplate) {
         templates.append(template)
         saveTemplates()
     }
     
-    public func updateTemplate(_ template: TaskTemplate) {
+    func updateTemplate(_ template: RecurringTaskTemplate) {
         if let index = templates.firstIndex(where: { $0.id == template.id }) {
             templates[index] = template
             saveTemplates()
         }
     }
     
-    public func removeTemplate(id: UUID) {
+    func removeTemplate(id: UUID) {
         templates.removeAll { $0.id == id }
         saveTemplates()
     }
@@ -151,7 +151,7 @@ public final class TaskTemplateManager: ObservableObject {
     // MARK: - Generation
     
     /// Generates tasks from templates that are due.
-    public func generateDueTasks(in context: ModelContext) -> [SDTask] {
+    func generateDueTasks(in context: ModelContext) -> [SDTask] {
         let now = Date()
         var generated: [SDTask] = []
         
@@ -174,7 +174,7 @@ public final class TaskTemplateManager: ObservableObject {
             
             // Update template
             templates[i].lastGenerated = now
-            templates[i].nextDueDate = TaskTemplate.calculateNextDueDate(
+            templates[i].nextDueDate = RecurringTaskTemplate.calculateNextDueDate(
                 from: nextDue,
                 recurrence: templates[i].recurrence,
                 customDays: templates[i].customDays
@@ -199,7 +199,7 @@ public final class TaskTemplateManager: ObservableObject {
     
     private func loadTemplates() {
         if let data = userDefaults.data(forKey: templatesKey),
-           let loaded = try? JSONDecoder().decode([TaskTemplate].self, from: data) {
+           let loaded = try? JSONDecoder().decode([RecurringTaskTemplate].self, from: data) {
             templates = loaded
         }
     }
