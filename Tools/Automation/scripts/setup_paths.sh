@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Setup default environment variables for the tools-automation repository
 set -euo pipefail
 
