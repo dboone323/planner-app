@@ -2,11 +2,10 @@ import Foundation
 import SwiftData
 
 /// Handles one-time migration of legacy UserDefaults data to SwiftData.
-struct LegacyDataMigrator {
-    
+enum LegacyDataMigrator {
     /// UserDefaults key indicating migration is complete.
     private static let migrationCompleteKey = "swiftDataMigrationComplete_v1"
-    
+
     /// Migrates legacy tasks and goals from UserDefaults to SwiftData.
     /// This should be called once at app startup.
     /// - Parameter context: The SwiftData ModelContext to insert data into.
@@ -16,12 +15,12 @@ struct LegacyDataMigrator {
             print("[LegacyDataMigrator] Migration already complete, skipping.")
             return
         }
-        
+
         print("[LegacyDataMigrator] Starting legacy data migration...")
-        
+
         var tasksCount = 0
         var goalsCount = 0
-        
+
         // Migrate Tasks
         let legacyTasks = TaskDataManager.shared.load()
         for task in legacyTasks {
@@ -29,7 +28,7 @@ struct LegacyDataMigrator {
             context.insert(sdTask)
             tasksCount += 1
         }
-        
+
         // Migrate Goals
         let legacyGoals = GoalDataManager.shared.load()
         for goal in legacyGoals {
@@ -37,7 +36,7 @@ struct LegacyDataMigrator {
             context.insert(sdGoal)
             goalsCount += 1
         }
-        
+
         // Save and mark complete
         do {
             try context.save()
@@ -47,7 +46,7 @@ struct LegacyDataMigrator {
             print("[LegacyDataMigrator] Migration failed: \(error.localizedDescription)")
         }
     }
-    
+
     /// Resets the migration flag (for testing purposes).
     static func resetMigrationFlag() {
         UserDefaults.standard.removeObject(forKey: migrationCompleteKey)

@@ -63,8 +63,18 @@ final class PlannerAppTests: XCTestCase {
     }
 
     func testTaskPriority() throws {
-        let highPriorityTask = AppTask(title: "High Priority", description: "Urgent task", priority: .high, dueDate: Date())
-        let lowPriorityTask = AppTask(title: "Low Priority", description: "Optional task", priority: .low, dueDate: Date())
+        let highPriorityTask = AppTask(
+            title: "High Priority",
+            description: "Urgent task",
+            priority: .high,
+            dueDate: Date()
+        )
+        let lowPriorityTask = AppTask(
+            title: "Low Priority",
+            description: "Optional task",
+            priority: .low,
+            dueDate: Date()
+        )
 
         XCTAssertEqual(highPriorityTask.priority, TaskPriority.high)
         XCTAssertEqual(lowPriorityTask.priority, TaskPriority.low)
@@ -112,7 +122,12 @@ final class PlannerAppTests: XCTestCase {
 
         // Create test tasks
         let task1 = AppTask(title: "Test Task 1", description: "First test task", priority: .medium, dueDate: Date())
-        let task2 = AppTask(title: "Test Task 2", description: "Second test task", priority: .high, dueDate: Date().addingTimeInterval(86400))
+        let task2 = AppTask(
+            title: "Test Task 2",
+            description: "Second test task",
+            priority: .high,
+            dueDate: Date().addingTimeInterval(86400)
+        )
 
         // Save tasks
         manager.save(tasks: [task1, task2])
@@ -222,7 +237,11 @@ final class PlannerAppTests: XCTestCase {
 
         let dueToday = AppTask(title: "Due Today", description: "Urgent", dueDate: Date())
         let dueTomorrow = AppTask(title: "Due Tomorrow", description: "Soon", dueDate: Date().addingTimeInterval(86400))
-        let dueNextWeek = AppTask(title: "Due Next Week", description: "Later", dueDate: Date().addingTimeInterval(7 * 86400))
+        let dueNextWeek = AppTask(
+            title: "Due Next Week",
+            description: "Later",
+            dueDate: Date().addingTimeInterval(7 * 86400)
+        )
         let noDueDate = AppTask(title: "No Due Date", description: "Flexible")
 
         manager.save(tasks: [dueToday, dueTomorrow, dueNextWeek, noDueDate])
@@ -238,14 +257,23 @@ final class PlannerAppTests: XCTestCase {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
-        let overdueTask = AppTask(title: "Overdue", description: "Late", isCompleted: false, dueDate: Date().addingTimeInterval(-86400))
+        let overdueTask = AppTask(
+            title: "Overdue",
+            description: "Late",
+            isCompleted: false,
+            dueDate: Date().addingTimeInterval(-86400)
+        )
         let completedOverdueTask = AppTask(
             title: "Completed Overdue",
             description: "Done late",
             isCompleted: true,
             dueDate: Date().addingTimeInterval(-86400)
         )
-        let notOverdueTask = AppTask(title: "Not Overdue", description: "On time", dueDate: Date().addingTimeInterval(86400))
+        let notOverdueTask = AppTask(
+            title: "Not Overdue",
+            description: "On time",
+            dueDate: Date().addingTimeInterval(86400)
+        )
 
         manager.save(tasks: [overdueTask, completedOverdueTask, notOverdueTask])
 
@@ -400,7 +428,7 @@ final class PlannerAppTests: XCTestCase {
 
         // Add multiple tasks
         var tasks: [AppTask] = []
-        for index in 1 ... 10 {
+        for index in 1...10 {
             let task = AppTask(title: "Task \(index)", description: "Task \(index)", isCompleted: false)
             tasks.append(task)
         }
@@ -429,7 +457,11 @@ final class PlannerAppTests: XCTestCase {
     }
 
     func testGoalCompletion() throws {
-        var goal = Goal(title: "Completion Test", description: "Test completion", targetDate: Date().addingTimeInterval(86400))
+        var goal = Goal(
+            title: "Completion Test",
+            description: "Test completion",
+            targetDate: Date().addingTimeInterval(86400)
+        )
 
         XCTAssertFalse(goal.isCompleted)
 
@@ -458,7 +490,11 @@ final class PlannerAppTests: XCTestCase {
 
         // Add test data
         let task = AppTask(title: "Integration Task", description: "Test integration", isCompleted: false)
-        let goal = Goal(title: "Integration Goal", description: "Test goal", targetDate: Date().addingTimeInterval(86400))
+        let goal = Goal(
+            title: "Integration Goal",
+            description: "Test goal",
+            targetDate: Date().addingTimeInterval(86400)
+        )
         let event = CalendarEvent(title: "Integration Event", date: Date())
 
         TaskDataManager.shared.add(task)
@@ -587,7 +623,7 @@ final class PlannerAppTests: XCTestCase {
         let startTime = Date()
 
         // Simulate creating multiple tasks
-        for identifier in 1 ... 100 {
+        for identifier in 1...100 {
             let taskData: [String: Any] = ["id": identifier, "title": "Task \(identifier)"]
             XCTAssertEqual((taskData["id"] as? Int), identifier)
         }
@@ -603,7 +639,7 @@ final class PlannerAppTests: XCTestCase {
         let startTime = Date()
 
         // Simulate search through multiple items
-        for itemIndex in 1 ... 1000 {
+        for itemIndex in 1...1000 {
             let item = "Item \(itemIndex)"
             XCTAssertTrue(item.contains("Item"))
         }
@@ -620,8 +656,12 @@ final class PlannerAppTests: XCTestCase {
 
         // Simulate bulk task operations
         var tasks: [[String: Any]] = []
-        for taskIndex in 1 ... 500 {
-            let task: [String: Any] = ["id": taskIndex, "title": "Bulk Task \(taskIndex)", "completed": taskIndex % 2 == 0]
+        for taskIndex in 1...500 {
+            let task: [String: Any] = [
+                "id": taskIndex,
+                "title": "Bulk Task \(taskIndex)",
+                "completed": taskIndex % 2 == 0
+            ]
             tasks.append(task)
         }
 
@@ -683,7 +723,8 @@ final class PlannerAppTests: XCTestCase {
     func testCategoryTaskIntegration() throws {
         // Test integration between categories and tasks
         // let category = Category(name: "Integration", color: .purple, icon: "circle")
-        // let task = Task(title: "Category Task", description: "Test category task", dueDate: Date(), priority: .medium)
+        // let task = Task(title: "Category Task", description: "Test category task", dueDate: Date(), priority:
+        // .medium)
 
         // category.addTask(task)
 
@@ -800,7 +841,7 @@ final class PlannerAppTests: XCTestCase {
 
     func testLargeDataSets() throws {
         // Test handling of large data sets
-        let largeArray = Array(1 ... 10000)
+        let largeArray = Array(1...10000)
         let filteredArray = largeArray.filter { $0 % 2 == 0 }
 
         XCTAssertEqual(largeArray.count, 10000)

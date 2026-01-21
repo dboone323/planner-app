@@ -16,6 +16,7 @@ def get_files_on_disk():
         ["find", ".", "-name", "*.swift", "-not", "-path", "./DerivedData/*"],
         capture_output=True,
         text=True,
+        check=False,
         cwd="/Users/danielstevens/Desktop/PlannerApp",
     )
     files = [f.replace("./", "") for f in result.stdout.strip().split("\n") if f]
@@ -28,7 +29,7 @@ def get_files_in_project():
         "/Users/danielstevens/Desktop/PlannerApp/PlannerApp.xcodeproj/project.pbxproj"
     )
 
-    with open(project_path) as f:
+    with open(project_path, encoding="utf-8") as f:
         content = f.read()
 
     # Extract file paths from the project file
@@ -49,7 +50,7 @@ def add_files_to_project(missing_files):
         "/Users/danielstevens/Desktop/PlannerApp/PlannerApp.xcodeproj/project.pbxproj"
     )
 
-    with open(project_path) as f:
+    with open(project_path, encoding="utf-8") as f:
         content = f.read()
 
     # Find the PBXBuildFile section
@@ -87,8 +88,15 @@ def add_files_to_project(missing_files):
         build_file_uuid = generate_uuid()
 
         # Create entries
-        build_file_entry = f"\t\t{build_file_uuid} /* {filename} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
-        file_ref_entry = f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "{file_path}"; sourceTree = "<group>"; }};'
+        build_file_entry = (
+            f"\t\t{build_file_uuid} /* {filename} in Sources */ = "
+            f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
+        )
+        file_ref_entry = (
+            f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
+            f'lastKnownFileType = sourcecode.swift; path = "{file_path}"; '
+            f'sourceTree = "<group>"; }};'
+        )
         source_entry = f"\t\t\t\t{build_file_uuid} /* {filename} in Sources */,"
 
         new_build_files.append(build_file_entry)
@@ -139,7 +147,7 @@ def add_files_to_project(missing_files):
     content = content.replace(sources_section.group(1), new_sources_section)
 
     # Write the updated content
-    with open(project_path, "w") as f:
+    with open(project_path, "w", encoding="utf-8") as f:
         f.write(content)
 
     print(f"Added {len(missing_files)} files to the project:")
@@ -148,6 +156,7 @@ def add_files_to_project(missing_files):
 
 
 def main():
+    """Main entry point for adding all missing files to Xcode project."""
     print("Analyzing project files...")
 
     # Get files

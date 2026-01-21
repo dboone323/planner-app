@@ -28,14 +28,14 @@ struct ModernCard<Content: View>: View {
     }
 
     var body: some View {
-        self.content
-            .padding(self.padding)
+        content
+            .padding(padding)
             .background(
-                RoundedRectangle(cornerRadius: self.cornerRadius)
-                    .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .fill(themeManager.currentTheme.secondaryBackgroundColor)
                     .shadow(
                         color: Color.black.opacity(0.08),
-                        radius: self.shadowRadius,
+                        radius: shadowRadius,
                         x: 0,
                         y: 2
                     )
@@ -86,50 +86,50 @@ public struct ModernButton: View {
     }
 
     public var body: some View {
-        Button(action: self.action) {
-            Text(self.title)
-                .font(.system(size: self.size.fontSize, weight: .medium))
-                .foregroundColor(self.textColor)
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: size.fontSize, weight: .medium))
+                .foregroundColor(textColor)
                 .frame(maxWidth: .infinity)
-                .frame(height: self.size.height)
-                .padding(.horizontal, self.size.padding)
+                .frame(height: size.height)
+                .padding(.horizontal, size.padding)
         }
         .accessibilityLabel("Button")
-        .background(self.backgroundColor)
+        .background(backgroundColor)
         .cornerRadius(12)
-        .disabled(self.isDisabled)
-        .opacity(self.isDisabled ? 0.6 : 1.0)
+        .disabled(isDisabled)
+        .opacity(isDisabled ? 0.6 : 1.0)
     }
 
     private var backgroundColor: Color {
-        if self.isDisabled {
-            return self.themeManager.currentTheme.secondaryTextColor.opacity(0.3)
+        if isDisabled {
+            return themeManager.currentTheme.secondaryTextColor.opacity(0.3)
         }
 
-        if self.isDestructive {
-            return self.themeManager.currentTheme.destructiveColor
+        if isDestructive {
+            return themeManager.currentTheme.destructiveColor
         }
 
-        switch self.style {
+        switch style {
         case .primary:
-            return self.themeManager.currentTheme.primaryAccentColor
+            return themeManager.currentTheme.primaryAccentColor
         case .secondary:
-            return self.themeManager.currentTheme.secondaryAccentColor
+            return themeManager.currentTheme.secondaryAccentColor
         case .tertiary:
             return Color.clear
         }
     }
 
     private var textColor: Color {
-        if self.isDestructive || self.style == .primary {
+        if isDestructive || style == .primary {
             return Color.white
         }
 
-        switch self.style {
+        switch style {
         case .secondary:
-            return self.themeManager.currentTheme.primaryTextColor
+            return themeManager.currentTheme.primaryTextColor
         case .tertiary:
-            return self.themeManager.currentTheme.primaryAccentColor
+            return themeManager.currentTheme.primaryAccentColor
         default:
             return Color.white
         }
@@ -146,28 +146,28 @@ public struct ProgressBar: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            if self.showPercentage {
+            if showPercentage {
                 HStack {
                     Spacer()
-                    Text("\(Int(self.progress * 100))%")
+                    Text("\(Int(progress * 100))%")
                         .font(.caption)
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
                 }
             }
 
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: self.height / 2)
-                        .fill(self.themeManager.currentTheme.secondaryAccentColor.opacity(0.3))
-                        .frame(height: self.height)
+                    RoundedRectangle(cornerRadius: height / 2)
+                        .fill(themeManager.currentTheme.secondaryAccentColor.opacity(0.3))
+                        .frame(height: height)
 
-                    RoundedRectangle(cornerRadius: self.height / 2)
-                        .fill(self.themeManager.currentTheme.primaryAccentColor)
-                        .frame(width: geometry.size.width * CGFloat(self.progress), height: self.height)
-                        .animation(.easeInOut(duration: 0.3), value: self.progress)
+                    RoundedRectangle(cornerRadius: height / 2)
+                        .fill(themeManager.currentTheme.primaryAccentColor)
+                        .frame(width: geometry.size.width * CGFloat(progress), height: height)
+                        .animation(.easeInOut(duration: 0.3), value: progress)
                 }
             }
-            .frame(height: self.height)
+            .frame(height: height)
         }
     }
 }
@@ -185,28 +185,28 @@ public struct ModernTextField: View {
 
     public var body: some View {
         Group {
-            if self.isSecure {
-                SecureField(self.placeholder, text: self.$text)
+            if isSecure {
+                SecureField(placeholder, text: $text)
             } else {
-                TextField(self.placeholder, text: self.$text).accessibilityLabel("Text Field")
+                TextField(placeholder, text: $text).accessibilityLabel("Text Field")
                 #if os(iOS)
-                    .keyboardType(self.keyboardType)
+                    .keyboardType(keyboardType)
                 #endif
             }
         }
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .fill(themeManager.currentTheme.secondaryBackgroundColor)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(
-                            self.themeManager.currentTheme.secondaryAccentColor.opacity(0.3),
+                            themeManager.currentTheme.secondaryAccentColor.opacity(0.3),
                             lineWidth: 1
                         )
                 )
         )
-        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+        .foregroundColor(themeManager.currentTheme.primaryTextColor)
     }
 }
 

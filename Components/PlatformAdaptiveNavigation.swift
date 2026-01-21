@@ -285,7 +285,7 @@ public struct ExamplePlatformView: View {
         PlatformAdaptiveNavigation {
             ScrollView {
                 AdaptiveGrid {
-                    ForEach(0 ..< 6, id: \.self) { index in
+                    ForEach(0..<6, id: \.self) { index in
                         RoundedRectangle(cornerRadius: 12)
                             .fill(themeManager.currentTheme.secondaryBackgroundColor)
                             .frame(height: 120)

@@ -6,7 +6,7 @@ public struct TaskRowView: View {
     let task: PlannerTask
 
     private var priorityColor: Color {
-        switch self.task.priority {
+        switch task.priority {
         case .high:
             .red
         case .medium:
@@ -17,7 +17,7 @@ public struct TaskRowView: View {
     }
 
     private var priorityText: String {
-        switch self.task.priority {
+        switch task.priority {
         case .high:
             "High"
         case .medium:
@@ -29,50 +29,50 @@ public struct TaskRowView: View {
 
     private var isOverdue: Bool {
         guard let dueDate = task.dueDate else { return false }
-        return !self.task.isCompleted && dueDate < Date()
+        return !task.isCompleted && dueDate < Date()
     }
 
     public var body: some View {
         HStack(spacing: 12) {
             // Priority and status indicator
             VStack(alignment: .center, spacing: 2) {
-                if self.task.isCompleted {
+                if task.isCompleted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
                         .font(.title3)
-                } else if self.isOverdue {
+                } else if isOverdue {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.red)
                         .font(.title3)
                 } else {
                     Circle()
-                        .fill(self.priorityColor)
+                        .fill(priorityColor)
                         .frame(width: 8, height: 8)
                 }
 
-                Text(self.priorityText)
+                Text(priorityText)
                     .font(.caption2)
                     .fontWeight(.medium)
-                    .foregroundColor(self.task.isCompleted ? .green : (self.isOverdue ? .red : self.priorityColor))
+                    .foregroundColor(task.isCompleted ? .green : (isOverdue ? .red : priorityColor))
             }
             .frame(width: 50)
 
             // Task details
             VStack(alignment: .leading, spacing: 2) {
-                Text(self.task.title)
+                Text(task.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(self.task.isCompleted ?
-                        self.themeManager.currentTheme.secondaryTextColor :
-                        self.themeManager.currentTheme.primaryTextColor
+                    .foregroundColor(task.isCompleted
+                        ? themeManager.currentTheme.secondaryTextColor
+                        : themeManager.currentTheme.primaryTextColor
                     )
-                    .strikethrough(self.task.isCompleted)
+                    .strikethrough(task.isCompleted)
                     .lineLimit(2)
 
-                if !self.task.description.isEmpty {
-                    Text(self.task.description)
+                if !task.description.isEmpty {
+                    Text(task.description)
                         .font(.caption)
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
                         .lineLimit(1)
                 }
 
@@ -81,11 +81,11 @@ public struct TaskRowView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "clock")
                             .font(.caption2)
-                            .foregroundColor(self.isOverdue ? .red : self.themeManager.currentTheme.secondaryTextColor)
+                            .foregroundColor(isOverdue ? .red : themeManager.currentTheme.secondaryTextColor)
 
-                        Text("Due: \(self.dueDateFormatter.string(from: dueDate))")
+                        Text("Due: \(dueDateFormatter.string(from: dueDate))")
                             .font(.caption2)
-                            .foregroundColor(self.isOverdue ? .red : self.themeManager.currentTheme.secondaryTextColor)
+                            .foregroundColor(isOverdue ? .red : themeManager.currentTheme.secondaryTextColor)
                     }
                 }
             }

@@ -22,11 +22,13 @@ public struct JournalView: View {
     // Filtered and sorted entries
     private var filteredEntries: [JournalEntry] {
         // Apply text search filter
-        let searched = searchText.isEmpty ? journalEntries : journalEntries.filter {
-            $0.title.localizedCaseInsensitiveContains(searchText)
-                || $0.body.localizedCaseInsensitiveContains(searchText)
-                || $0.mood.contains(searchText)
-        }
+        let searched = searchText.isEmpty
+            ? journalEntries
+            : journalEntries.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText)
+                    || $0.body.localizedCaseInsensitiveContains(searchText)
+                    || $0.mood.contains(searchText)
+            }
 
         // Apply sentiment filter
         let sentimentFiltered: [JournalEntry] = switch sentimentFilter {

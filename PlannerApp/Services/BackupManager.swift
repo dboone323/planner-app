@@ -10,13 +10,13 @@ import Foundation
 class BackupManager {
     static let shared = BackupManager()
 
-    func createBackup(tasks: [TaskItem]) -> URL? {
+    func createBackup(tasks _: [TaskItem]) -> URL? {
         // Serialize tasks to JSON
         // Save to Documents/Backups
-        return nil // Placeholder
+        nil // Placeholder
     }
 
-    func restoreBackup(from url: URL) {
+    func restoreBackup(from _: URL) {
         // Restore logic
     }
 }

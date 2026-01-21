@@ -14,36 +14,36 @@ public struct JournalRow: View {
     public var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(self.entry.title)
+                Text(entry.title)
                     .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.primaryFontName, size: 17,
+                        themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.primaryFontName, size: 17,
                             weight: .medium
                         )
                     )
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
                     .lineLimit(1)
-                Text(self.entry.date, formatter: self.rowDateFormatter)
+                Text(entry.date, formatter: rowDateFormatter)
                     .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.secondaryFontName, size: 14
+                        themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.secondaryFontName, size: 14
                         )
                     )
-                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                Text(self.entry.body)
+                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                Text(entry.body)
                     .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.secondaryFontName, size: 13
+                        themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.secondaryFontName, size: 13
                         )
                     )
-                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor.opacity(0.8))
+                    .foregroundColor(themeManager.currentTheme.secondaryTextColor.opacity(0.8))
 
-                SentimentBadge(sentiment: self.entry.sentiment, score: self.entry.sentimentScore)
+                SentimentBadge(sentiment: entry.sentiment, score: entry.sentimentScore)
                     .padding(.top, 4)
                     .lineLimit(1)
             }
             Spacer()
-            Text(self.entry.mood)
+            Text(entry.mood)
                 .font(.system(size: 30))
         }
         .padding(.vertical, 5)

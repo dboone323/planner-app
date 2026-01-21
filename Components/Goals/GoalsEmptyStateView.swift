@@ -7,13 +7,13 @@ public struct GoalsEmptyStateView: View {
 
     public var body: some View {
         Text("No goals set yet. Tap '+' to add one!")
-            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
             .font(
-                self.themeManager.currentTheme.font(
-                    forName: self.themeManager.currentTheme.secondaryFontName, size: 15
+                themeManager.currentTheme.font(
+                    forName: themeManager.currentTheme.secondaryFontName, size: 15
                 )
             )
-            .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
+            .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
             .frame(maxWidth: .infinity, alignment: .center) // Center the text
     }
 }

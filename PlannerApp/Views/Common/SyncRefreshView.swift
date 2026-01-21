@@ -13,24 +13,24 @@ struct SyncRefreshableView<Content: View>: View {
     @Binding var lastSyncDate: Date?
     let onRefresh: () async -> Void
     let content: Content
-    
+
     init(
         isSyncing: Binding<Bool>,
         lastSyncDate: Binding<Date?>,
         onRefresh: @escaping () async -> Void,
         @ViewBuilder content: () -> Content
     ) {
-        self._isSyncing = isSyncing
-        self._lastSyncDate = lastSyncDate
+        _isSyncing = isSyncing
+        _lastSyncDate = lastSyncDate
         self.onRefresh = onRefresh
         self.content = content()
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
             // Sync status bar
             SyncStatusBar(isSyncing: isSyncing, lastSyncDate: lastSyncDate)
-            
+
             // Refreshable content
             content
                 .refreshable {
@@ -44,7 +44,7 @@ struct SyncRefreshableView<Content: View>: View {
 struct SyncStatusBar: View {
     let isSyncing: Bool
     let lastSyncDate: Date?
-    
+
     var body: some View {
         HStack(spacing: 8) {
             if isSyncing {
@@ -66,7 +66,7 @@ struct SyncStatusBar: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            
+
             Spacer()
         }
         .padding(.horizontal)
@@ -79,7 +79,7 @@ struct SyncStatusBar: View {
 struct ManualSyncButton: View {
     @Binding var isSyncing: Bool
     let action: () async -> Void
-    
+
     var body: some View {
         Button(action: {
             Task {
@@ -87,7 +87,7 @@ struct ManualSyncButton: View {
                 await action()
                 isSyncing = false
             }
-        }) {
+        }, label: {
             HStack {
                 if isSyncing {
                     ProgressView()
@@ -97,7 +97,7 @@ struct ManualSyncButton: View {
                 }
                 Text("Sync Now")
             }
-        }
+        })
         .disabled(isSyncing)
     }
 }
@@ -106,7 +106,7 @@ struct ManualSyncButton: View {
 struct SyncErrorAlert: ViewModifier {
     @Binding var error: Error?
     @Binding var showError: Bool
-    
+
     func body(content: Content) -> some View {
         content
             .alert("Sync Error", isPresented: $showError) {
@@ -131,12 +131,13 @@ extension View {
     SyncRefreshableView(
         isSyncing: .constant(false),
         lastSyncDate: .constant(Date().addingTimeInterval(-300)),
-        onRefresh: {}
-    ) {
-        List {
-            Text("Item 1")
-            Text("Item 2")
-            Text("Item 3")
+        onRefresh: {},
+        content: {
+            List {
+                Text("Item 1")
+                Text("Item 2")
+                Text("Item 3")
+            }
         }
-    }
+    )
 }

@@ -65,7 +65,8 @@ public struct SettingsView: View {
                     HStack {
                         Text("Name")
                         Spacer()
-                        TextField("Your Name", text: $userName).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                        TextField("Your Name", text: $userName).accessibilityLabel("Text Field")
+                            .accessibilityLabel("Text Field")
                             .multilineTextAlignment(.trailing)
                     }
                 }
@@ -80,25 +81,26 @@ public struct SettingsView: View {
                     }
                     .pickerStyle(.menu)
 
-                    Button(action: { showingThemePreview = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        HStack {
-                            Text("Theme Preview")
-                                .foregroundColor(themeManager.currentTheme.primaryTextColor)
-                            Spacer()
-                            Circle()
-                                .fill(themeManager.currentTheme.primaryAccentColor)
-                                .frame(width: 20, height: 20)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                    Button(action: { showingThemePreview = true }).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            HStack {
+                                Text("Theme Preview")
+                                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                                Spacer()
+                                Circle()
+                                    .fill(themeManager.currentTheme.primaryAccentColor)
+                                    .frame(width: 20, height: 20)
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                            }
                         }
-                    }
-                    .buttonStyle(.plain)
+                        .buttonStyle(.plain)
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
 
                 // Dashboard Section
                 Section("Dashboard") {
-                    Stepper("Items per section: \(dashboardItemLimit)", value: $dashboardItemLimit, in: 1 ... 10)
+                    Stepper("Items per section: \(dashboardItemLimit)", value: $dashboardItemLimit, in: 1...10)
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -141,7 +143,7 @@ public struct SettingsView: View {
                     Toggle("Auto-Delete Completed Tasks", isOn: $autoDeleteCompleted)
 
                     if autoDeleteCompleted {
-                        Stepper("Delete after: \(autoDeleteDays) days", value: $autoDeleteDays, in: 1 ... 90)
+                        Stepper("Delete after: \(autoDeleteDays) days", value: $autoDeleteDays, in: 1...90)
                     }
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
@@ -159,17 +161,18 @@ public struct SettingsView: View {
 
                 // Sync & Cloud Section
                 Section("Sync & Cloud") {
-                    Button(action: { showingCloudKitSheet = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        HStack {
-                            Image(systemName: "icloud")
-                                .foregroundColor(.blue)
-                            Text("iCloud Sync")
-                                .foregroundColor(themeManager.currentTheme.primaryTextColor)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                    Button(action: { showingCloudKitSheet = true }).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            HStack {
+                                Image(systemName: "icloud")
+                                    .foregroundColor(.blue)
+                                Text("iCloud Sync")
+                                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                            }
                         }
-                    }
 
                     Toggle("Auto Sync", isOn: $autoSyncEnabled)
 
@@ -233,7 +236,8 @@ public struct SettingsView: View {
                     .environmentObject(themeManager)
             }
             .alert("Notification Permissions", isPresented: $showingNotificationAlert) {
-                Button("Open Settings", action: openAppSettings).accessibilityLabel("Button").accessibilityLabel("Button")
+                Button("Open Settings", action: openAppSettings).accessibilityLabel("Button")
+                    .accessibilityLabel("Button")
                 Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
             } message: {
                 Text("Enable notifications in Settings to receive reminders.")

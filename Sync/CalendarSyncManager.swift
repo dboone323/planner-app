@@ -1,5 +1,5 @@
-import Foundation
 import EventKit
+import Foundation
 
 // Protocol for testing
 protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it as class dependency
@@ -14,27 +14,27 @@ protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it a
     func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
     func events(matching predicate: NSPredicate) -> [EKEvent]
     var defaultCalendarForNewEvents: EKCalendar? { get }
-    
+
     func newEvent() -> EKEvent
     func newCalendar() -> EKCalendar
 }
 
 extension EKEventStore: SyncEventStoreProtocol {
     func newEvent() -> EKEvent {
-        return EKEvent(eventStore: self)
+        EKEvent(eventStore: self)
     }
-    
+
     func newCalendar() -> EKCalendar {
-        return EKCalendar(for: .event, eventStore: self)
+        EKCalendar(for: .event, eventStore: self)
     }
 
     func requestAccessToEvents() async -> Bool {
         // Wrapper calls SDK method
         do {
             if #available(iOS 17.0, *) {
-                return try await self.requestFullAccessToEvents()
+                return try await requestFullAccessToEvents()
             } else {
-                 return await withCheckedContinuation { continuation in
+                return await withCheckedContinuation { continuation in
                     self.requestAccess(to: .event) { granted, _ in
                         continuation.resume(returning: granted)
                     }
@@ -50,40 +50,40 @@ extension EKEventStore: SyncEventStoreProtocol {
 class CalendarSyncManager {
     private let eventStore: SyncEventStoreProtocol
     private let calendarIdentifier = "com.plannerapp.sync"
-    
+
     init(eventStore: SyncEventStoreProtocol = EKEventStore()) {
         self.eventStore = eventStore
     }
-    
+
     // MARK: - Setup
-    
+
     func setupCalendar() async -> Bool {
         guard await requestAccess() else { return false }
-        
+
         // Create or get sync calendar
-        if let _ = findSyncCalendar() {
+        if findSyncCalendar() != nil {
             return true
         }
-        
+
         return createSyncCalendar()
     }
-    
+
     private func requestAccess() async -> Bool {
         // Simplified for protocol usage
-        return await eventStore.requestAccessToEvents()
+        await eventStore.requestAccessToEvents()
     }
-    
+
     private func findSyncCalendar() -> EKCalendar? {
         eventStore.calendars(for: .event).first { calendar in
             calendar.calendarIdentifier == calendarIdentifier
         }
     }
-    
+
     private func createSyncCalendar() -> Bool {
         let calendar = eventStore.newCalendar()
         calendar.title = "PlannerApp"
         calendar.source = eventStore.defaultCalendarForNewEvents?.source
-        
+
         do {
             try eventStore.saveCalendar(calendar, commit: true)
             return true
@@ -92,16 +92,16 @@ class CalendarSyncManager {
             return false
         }
     }
-    
+
     // MARK: - Sync Tasks to Calendar
-    
+
     // MARK: - Sync Tasks to Calendar
-    
+
     func syncTaskToCalendar(_ task: inout PlannerTask) async throws {
         guard let calendar = findSyncCalendar() else {
             throw SyncError.calendarNotFound
         }
-        
+
         // Check if event already exists
         if let existingEvent = findEvent(for: task) {
             try updateEvent(existingEvent, with: task)
@@ -109,7 +109,7 @@ class CalendarSyncManager {
             try createEvent(for: &task, in: calendar)
         }
     }
-    
+
     private func createEvent(for task: inout PlannerTask, in calendar: EKCalendar) throws {
         let event = eventStore.newEvent()
         event.title = task.title
@@ -118,89 +118,85 @@ class CalendarSyncManager {
         event.startDate = task.dueDate ?? Date()
         event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
         event.isAllDay = task.isAllDay
-        
+
         try eventStore.save(event, span: .thisEvent)
-        
+
         // Store event identifier in task
         task.calendarEventId = event.eventIdentifier
     }
-    
+
     private func updateEvent(_ event: EKEvent, with task: PlannerTask) throws {
         event.title = task.title
         event.notes = task.description
         event.startDate = task.dueDate
         event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
         event.isAllDay = task.isAllDay
-        
+
         try eventStore.save(event, span: .thisEvent)
     }
-    
+
     private func findEvent(for task: PlannerTask) -> EKEvent? {
         guard let eventId = task.calendarEventId else { return nil }
         return eventStore.event(withIdentifier: eventId)
     }
-    
+
     // MARK: - Delete from Calendar
-    
+
     func deleteTaskFromCalendar(_ task: inout PlannerTask) async throws {
         guard let event = findEvent(for: task) else { return }
-        
+
         try eventStore.remove(event, span: .thisEvent)
         task.calendarEventId = nil
     }
-    
+
     // MARK: - Bidirectional Sync
-    
+
     func performFullSync(tasks: inout [PlannerTask]) async throws -> SyncResult {
         var created = 0
         var updated = 0
         let deleted = 0
-        
+
         // Sync tasks to calendar
-        for index in tasks.indices {
-            if tasks[index].syncToCalendar {
-                if tasks[index].calendarEventId == nil {
-                    try await syncTaskToCalendar(&tasks[index])
-                    created += 1
-                } else {
-                    try await syncTaskToCalendar(&tasks[index])
-                    updated += 1
-                }
+        for index in tasks.indices where tasks[index].syncToCalendar {
+            if tasks[index].calendarEventId == nil {
+                try await syncTaskToCalendar(&tasks[index])
+                created += 1
+            } else {
+                try await syncTaskToCalendar(&tasks[index])
+                updated += 1
             }
         }
-        
+
         // Sync calendar events to tasks (import new events)
         let calendarEvents = fetchRecentEvents()
-        for event in calendarEvents {
-            if !hasMatchingTask(for: event, in: tasks) {
-                // Create new task from calendar event
-                _ = createTask(from: event)
-                created += 1
-            }
+        for event in calendarEvents where !hasMatchingTask(for: event, in: tasks) {
+            // Create new task from calendar event
+            _ = createTask(from: event)
+            created += 1
         }
-        
+
         return SyncResult(created: created, updated: updated, deleted: deleted)
     }
-    
+
     private func fetchRecentEvents() -> [EKEvent] {
         guard let calendar = findSyncCalendar() else { return [] }
-        
+
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 3, to: startDate)!
-        
+
         let predicate = eventStore.predicateForEvents(
             withStart: startDate,
             end: endDate,
             calendars: [calendar]
         )
-        
+
         return eventStore.events(matching: predicate)
     }
-    
+
     private func hasMatchingTask(for event: EKEvent, in tasks: [PlannerTask]) -> Bool {
         tasks.contains { $0.calendarEventId == event.eventIdentifier }
     }
-    
+
     private func createTask(from event: EKEvent) -> PlannerTask {
         PlannerTask(
             title: event.title ?? "",

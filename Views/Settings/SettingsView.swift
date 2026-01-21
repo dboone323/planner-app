@@ -32,7 +32,8 @@ public struct SettingsView: View {
                     HStack {
                         Text("Name")
                         Spacer()
-                        TextField("Your Name", text: $userName).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                        TextField("Your Name", text: $userName).accessibilityLabel("Text Field")
+                            .accessibilityLabel("Text Field")
                             .multilineTextAlignment(.trailing)
                     }
                 }
@@ -71,7 +72,7 @@ public struct SettingsView: View {
                 Section("Dashboard") {
                     Stepper(
                         "Items per section: \(dashboardItemLimit)", value: $dashboardItemLimit,
-                        in: 1 ... 10
+                        in: 1...10
                     )
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
@@ -216,7 +217,8 @@ public struct ThemeCard: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(
                             themeManager.currentTheme.name == theme.name
-                                ? theme.primaryAccentColor : Color.clear,
+                                ? theme.primaryAccentColor
+                                : Color.clear,
                             lineWidth: 2
                         )
                 )

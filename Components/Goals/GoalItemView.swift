@@ -89,9 +89,9 @@ public struct GoalItemView: View {
                                     size: 17, weight: goal.isCompleted ? .regular : .semibold
                                 )
                             )
-                            .foregroundColor(goal.isCompleted ?
-                                themeManager.currentTheme.secondaryTextColor :
-                                themeManager.currentTheme.primaryTextColor
+                            .foregroundColor(goal.isCompleted
+                                ? themeManager.currentTheme.secondaryTextColor
+                                : themeManager.currentTheme.primaryTextColor
                             )
                             .strikethrough(goal.isCompleted)
                     }
@@ -127,7 +127,9 @@ public struct GoalItemView: View {
                         } label: {
                             Image(systemName: goal.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .font(.system(size: 16))
-                                .foregroundColor(goal.isCompleted ? .green : themeManager.currentTheme.secondaryTextColor)
+                                .foregroundColor(goal.isCompleted
+                                    ? .green
+                                    : themeManager.currentTheme.secondaryTextColor)
                         }
                         .buttonStyle(.plain)
                     }
@@ -148,9 +150,9 @@ public struct GoalItemView: View {
                         size: 15
                     )
                 )
-                .foregroundColor(goal.isCompleted ?
-                    themeManager.currentTheme.secondaryTextColor.opacity(0.7) :
-                    themeManager.currentTheme.secondaryTextColor
+                .foregroundColor(goal.isCompleted
+                    ? themeManager.currentTheme.secondaryTextColor.opacity(0.7)
+                    : themeManager.currentTheme.secondaryTextColor
                 )
                 .lineLimit(2)
 
@@ -195,9 +197,9 @@ public struct GoalItemView: View {
         .padding(.horizontal, 16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(goal.isCompleted ?
-                    themeManager.currentTheme.secondaryBackgroundColor.opacity(0.5) :
-                    themeManager.currentTheme.secondaryBackgroundColor
+                .fill(goal.isCompleted
+                    ? themeManager.currentTheme.secondaryBackgroundColor.opacity(0.5)
+                    : themeManager.currentTheme.secondaryBackgroundColor
                 )
                 .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         )

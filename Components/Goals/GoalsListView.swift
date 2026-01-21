@@ -11,25 +11,25 @@ public struct GoalsListView: View {
 
     public var body: some View {
         List {
-            if self.goals.isEmpty {
+            if goals.isEmpty {
                 GoalsEmptyStateView()
-                    .environmentObject(self.themeManager)
+                    .environmentObject(themeManager)
             } else {
                 // Iterate over goals sorted by target date
-                ForEach(self.goals.sorted(by: { $0.targetDate < $1.targetDate })) { goal in
+                ForEach(goals.sorted(by: { $0.targetDate < $1.targetDate })) { goal in
                     GoalItemView(
                         goal: goal,
-                        onProgressUpdate: self.onProgressUpdate,
-                        onCompletionToggle: self.onCompletionToggle
+                        onProgressUpdate: onProgressUpdate,
+                        onCompletionToggle: onCompletionToggle
                     )
-                    .environmentObject(self.themeManager)
+                    .environmentObject(themeManager)
                 }
-                .onDelete(perform: self.onDelete) // Enable swipe-to-delete
+                .onDelete(perform: onDelete) // Enable swipe-to-delete
                 // Apply theme background to all rows in the list
-                .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
             }
         }
-        .background(self.themeManager.currentTheme.primaryBackgroundColor) // Apply theme background to List
+        .background(themeManager.currentTheme.primaryBackgroundColor) // Apply theme background to List
         .scrollContentBackground(.hidden) // Hide default List background style
     }
 }

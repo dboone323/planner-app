@@ -9,7 +9,6 @@
 import XCTest
 
 final class AppSettingKeysTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

@@ -9,7 +9,6 @@
 import XCTest
 
 final class PlatformAdaptiveNavigationTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

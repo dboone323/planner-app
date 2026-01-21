@@ -21,11 +21,11 @@ public struct ContentView: View {
             ZStack {
                 // Background
                 #if os(iOS)
-                Color(uiColor: .systemGroupedBackground)
-                    .ignoresSafeArea()
+                    Color(uiColor: .systemGroupedBackground)
+                        .ignoresSafeArea()
                 #else
-                Color.gray.opacity(0.1)
-                    .ignoresSafeArea()
+                    Color.gray.opacity(0.1)
+                        .ignoresSafeArea()
                 #endif
 
                 if tasks.isEmpty {
@@ -48,9 +48,9 @@ public struct ContentView: View {
             .navigationTitle("My Tasks")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { seedSampleData() }) {
+                    Button(action: { seedSampleData() }, label: {
                         Label("Add Sample", systemImage: "plus")
-                    }
+                    })
                 }
             }
             .onAppear {
@@ -103,9 +103,24 @@ public struct ContentView: View {
 
     private func seedSampleData() {
         let samples = [
-            PlannerTask(title: "Review Design Specs", description: "Check color contrast and typography scale.", priority: .high, dueDate: Date().addingTimeInterval(3600 * 4)),
-            PlannerTask(title: "Weekly Sync", description: "Team status update meeting.", priority: .medium, dueDate: Date().addingTimeInterval(3600 * 24)),
-            PlannerTask(title: "Update Documentation", description: "Reflect recent API changes in the wiki.", priority: .low, dueDate: Date().addingTimeInterval(3600 * 48))
+            PlannerTask(
+                title: "Review Design Specs",
+                description: "Check color contrast and typography scale.",
+                priority: .high,
+                dueDate: Date().addingTimeInterval(3600 * 4)
+            ),
+            PlannerTask(
+                title: "Weekly Sync",
+                description: "Team status update meeting.",
+                priority: .medium,
+                dueDate: Date().addingTimeInterval(3600 * 24)
+            ),
+            PlannerTask(
+                title: "Update Documentation",
+                description: "Reflect recent API changes in the wiki.",
+                priority: .low,
+                dueDate: Date().addingTimeInterval(3600 * 48)
+            )
         ]
 
         for t in samples {
@@ -118,7 +133,7 @@ public struct ContentView: View {
 }
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 // MARK: - Widget Support (Verification)
@@ -177,17 +192,17 @@ struct TasksWidgetView: View {
         }
         .padding()
         #if os(iOS)
-        .background(Color(uiColor: .systemBackground))
+            .background(Color(uiColor: .systemBackground))
         #else
-        .background(Color.white)
+            .background(Color.white)
         #endif
     }
 
     func priorityColor(_ priority: TaskPriority) -> Color {
         switch priority {
-        case .high: return .red
-        case .medium: return .orange
-        case .low: return .blue
+        case .high: .red
+        case .medium: .orange
+        case .low: .blue
         }
     }
 }

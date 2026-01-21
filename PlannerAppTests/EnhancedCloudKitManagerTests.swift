@@ -9,7 +9,6 @@
 import XCTest
 
 final class EnhancedCloudKitManagerTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

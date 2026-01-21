@@ -6,7 +6,7 @@ import SwiftUI
 public struct SDTaskListView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @FocusState.Binding var isInputFieldFocused: Bool
-    
+
     let incompleteTasks: [SDTask]
     let completedTasks: [SDTask]
     let onDeleteIncomplete: (IndexSet) -> Void

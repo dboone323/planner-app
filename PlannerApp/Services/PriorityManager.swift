@@ -12,25 +12,25 @@ class PriorityManager {
 
     func color(for priority: Priority) -> Color {
         switch priority {
-        case .low: return .blue
-        case .medium: return .yellow
-        case .high: return .orange
-        case .critical: return .red
+        case .low: .blue
+        case .medium: .yellow
+        case .high: .orange
+        case .critical: .red
         }
     }
 
     func icon(for priority: Priority) -> String {
         switch priority {
-        case .low: return "arrow.down"
-        case .medium: return "minus"
-        case .high: return "arrow.up"
-        case .critical: return "exclamationmark.triangle.fill"
+        case .low: "arrow.down"
+        case .medium: "minus"
+        case .high: "arrow.up"
+        case .critical: "exclamationmark.triangle.fill"
         }
     }
 
     func sortTasks(_ tasks: [TaskItem]) -> [TaskItem] {
         // Sort by priority (descending) then due date (ascending)
-        return tasks.sorted {
+        tasks.sorted {
             if $0.priority != $1.priority {
                 return $0.priority > $1.priority
             }

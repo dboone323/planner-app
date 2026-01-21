@@ -123,7 +123,10 @@ public struct DashboardView: View {
                             Spacer()
                         }
 
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+                        LazyVGrid(
+                            columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2),
+                            spacing: 16
+                        ) {
                             QuickActionCard(
                                 title: "Add Task",
                                 icon: "plus.circle.fill",
@@ -368,11 +371,11 @@ public struct DashboardView: View {
     private var greetingText: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5 ..< 12:
+        case 5..<12:
             return "Good Morning"
-        case 12 ..< 17:
+        case 12..<17:
             return "Good Afternoon"
-        case 17 ..< 22:
+        case 17..<22:
             return "Good Evening"
         default:
             return "Good Night"

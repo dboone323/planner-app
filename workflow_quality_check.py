@@ -6,6 +6,7 @@ import sys
 
 
 def main():
+    """Run the workflow quality check."""
     print("Workflow Quality Check - Basic Version")
     print("This is a placeholder for the actual quality check system")
     return 0

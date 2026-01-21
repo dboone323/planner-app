@@ -9,7 +9,6 @@
 import XCTest
 
 final class CalendarComponentsTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

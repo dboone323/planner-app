@@ -18,62 +18,62 @@ public struct TaskListView: View {
     public var body: some View {
         List {
             // --- Incomplete Tasks Section ---
-            Section("To Do (\(self.incompleteTasks.count))") {
-                if self.incompleteTasks.isEmpty {
+            Section("To Do (\(incompleteTasks.count))") {
+                if incompleteTasks.isEmpty {
                     // Message shown when no incomplete tasks exist
                     Text("No tasks yet!")
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
                         .font(
-                            self.themeManager.currentTheme.font(
-                                forName: self.themeManager.currentTheme.secondaryFontName,
+                            themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.secondaryFontName,
                                 size: 15
                             )
                         )
                 } else {
                     // Iterate over incomplete tasks and display using TaskRow
-                    ForEach(self.incompleteTasks) { task in
-                        TaskRow(taskItem: task, tasks: self.$tasks) // Pass task and binding to tasks array
-                            .environmentObject(self.themeManager) // Ensure TaskRow can access theme
+                    ForEach(incompleteTasks) { task in
+                        TaskRow(taskItem: task, tasks: $tasks) // Pass task and binding to tasks array
+                            .environmentObject(themeManager) // Ensure TaskRow can access theme
                     }
-                    .onDelete(perform: self.onDeleteIncomplete) // Enable swipe-to-delete
+                    .onDelete(perform: onDeleteIncomplete) // Enable swipe-to-delete
                 }
             }
-            .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor) // Theme row background
-            .foregroundColor(self.themeManager.currentTheme.primaryTextColor) // Theme row text color
+            .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor) // Theme row background
+            .foregroundColor(themeManager.currentTheme.primaryTextColor) // Theme row text color
             .headerProminence(.increased) // Style section header
 
             // --- Completed Tasks Section ---
-            Section("Completed (\(self.completedTasks.count))") {
-                if self.completedTasks.isEmpty {
+            Section("Completed (\(completedTasks.count))") {
+                if completedTasks.isEmpty {
                     // Message shown when no completed tasks exist
                     Text("No completed tasks.")
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
                         .font(
-                            self.themeManager.currentTheme.font(
-                                forName: self.themeManager.currentTheme.secondaryFontName,
+                            themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.secondaryFontName,
                                 size: 15
                             )
                         )
                 } else {
                     // Iterate over completed tasks
-                    ForEach(self.completedTasks) { task in
-                        TaskRow(taskItem: task, tasks: self.$tasks)
-                            .environmentObject(self.themeManager)
+                    ForEach(completedTasks) { task in
+                        TaskRow(taskItem: task, tasks: $tasks)
+                            .environmentObject(themeManager)
                     }
-                    .onDelete(perform: self.onDeleteCompleted) // Enable swipe-to-delete
+                    .onDelete(perform: onDeleteCompleted) // Enable swipe-to-delete
                 }
             }
-            .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
-            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+            .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
+            .foregroundColor(themeManager.currentTheme.primaryTextColor)
             .headerProminence(.increased)
         }
         // Apply theme background color to the List view itself
-        .background(self.themeManager.currentTheme.primaryBackgroundColor)
+        .background(themeManager.currentTheme.primaryBackgroundColor)
         // Hide the default List background style (e.g., plain/grouped)
         .scrollContentBackground(.hidden)
         // Add tap gesture to the List to dismiss keyboard when tapping outside the text field
         .onTapGesture {
-            self.isInputFieldFocused = false
+            isInputFieldFocused = false
             #if os(iOS)
                 UIApplication.shared.sendAction(
                     #selector(UIResponder.resignFirstResponder), to: nil, from: nil,

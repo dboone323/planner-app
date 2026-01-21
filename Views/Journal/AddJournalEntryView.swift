@@ -17,8 +17,8 @@ public struct AddJournalEntryView: View {
     let moods = ["😊", "😢", "😡", "😌", "😔", "🤩", "🥱", "🤔", "🥳", "😐"] // Expanded moods
 
     private var isFormValid: Bool {
-        !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            && !self.entryBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !entryBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     public var body: some View {
@@ -29,7 +29,7 @@ public struct AddJournalEntryView: View {
                     #if os(iOS)
                         HapticManager.lightImpact()
                     #endif
-                    self.dismiss()
+                    dismiss()
                 })
                 .accessibilityLabel("Button")
                 #if os(iOS)
@@ -49,15 +49,15 @@ public struct AddJournalEntryView: View {
                     #if os(iOS)
                         HapticManager.notificationSuccess()
                     #endif
-                    self.saveEntry()
-                    self.dismiss()
+                    saveEntry()
+                    dismiss()
                 })
                 .accessibilityLabel("Button")
                 #if os(iOS)
                     .buttonStyle(.iOSPrimary)
                 #endif
-                    .disabled(!self.isFormValid)
-                    .foregroundColor(self.isFormValid ? .blue : .gray)
+                    .disabled(!isFormValid)
+                    .foregroundColor(isFormValid ? .blue : .gray)
             }
             .padding()
             #if os(macOS)
@@ -70,36 +70,36 @@ public struct AddJournalEntryView: View {
             #endif
 
             Form {
-                TextField("Title", text: self.$title).accessibilityLabel("Text Field")
-                    .focused(self.$isTitleFocused)
+                TextField("Title", text: $title).accessibilityLabel("Text Field")
+                    .focused($isTitleFocused)
                 #if os(iOS)
                     .textInputAutocapitalization(.words)
                     .submitLabel(.next)
                     .onSubmit {
-                        self.isTitleFocused = false
-                        self.isEntryBodyFocused = true
+                        isTitleFocused = false
+                        isEntryBodyFocused = true
                     }
                 #endif
 
                 // Consider a Segmented Picker for fewer options or keep Wheel
-                Picker("Mood", selection: self.$mood) {
-                    ForEach(self.moods, id: \.self) { mood in
+                Picker("Mood", selection: $mood) {
+                    ForEach(moods, id: \.self) { mood in
                         Text(mood).tag(mood) // Ensure tag is set for selection
                     }
                 }
                 #if os(iOS)
                 .pickerStyle(.menu) // Better for iOS touch interaction
-                .onChange(of: self.mood) { _, _ in
+                .onChange(of: mood) { _, _ in
                     HapticManager.selectionChanged()
                 }
                 #endif
 
-                DatePicker("Date", selection: self.$date, displayedComponents: .date)
+                DatePicker("Date", selection: $date, displayedComponents: .date)
 
                 Section("Entry") { // Use Section header
-                    TextEditor(text: self.$entryBody) // Use entryBody state variable
+                    TextEditor(text: $entryBody) // Use entryBody state variable
                         .frame(height: 200) // Increased height
-                        .focused(self.$isEntryBodyFocused)
+                        .focused($isEntryBodyFocused)
                     #if os(iOS)
                         .scrollContentBackground(.hidden)
                     #endif
@@ -112,8 +112,8 @@ public struct AddJournalEntryView: View {
                     HStack {
                         Spacer()
                         Button("Done", action: {
-                            self.isTitleFocused = false
-                            self.isEntryBodyFocused = false
+                            isTitleFocused = false
+                            isEntryBodyFocused = false
                             UIApplication.shared.sendAction(
                                 #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
                                 for: nil
@@ -138,13 +138,13 @@ public struct AddJournalEntryView: View {
     private func saveEntry() {
         let newEntry = JournalEntry(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            body: self.entryBody.trimmingCharacters(in: .whitespacesAndNewlines), // Use entryBody
-            date: self.date,
-            mood: self.mood
+            body: entryBody.trimmingCharacters(in: .whitespacesAndNewlines), // Use entryBody
+            date: date,
+            mood: mood
         )
-        self.journalEntries.append(newEntry)
+        journalEntries.append(newEntry)
 
-        JournalDataManager.shared.save(entries: self.journalEntries)
+        JournalDataManager.shared.save(entries: journalEntries)
     }
 }
 

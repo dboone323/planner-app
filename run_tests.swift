@@ -516,7 +516,7 @@ runTest("testTaskCreationPerformance") {
     let startTime = Date()
 
     var tasks: [PlannerTask] = []
-    for taskIndex in 1 ... 100 {
+    for taskIndex in 1...100 {
         let task = PlannerTask(title: "Task \(taskIndex)", priority: .medium)
         tasks.append(task)
     }
@@ -532,7 +532,7 @@ runTest("testSearchPerformance") {
     let startTime = Date()
 
     var items: [String] = []
-    items += (1 ... 1000).map { "Item \($0)" }
+    items += (1...1000).map { "Item \($0)" }
 
     let searchResults = items.filter { $0.contains("Item") }
     let endTime = Date()
@@ -546,7 +546,7 @@ runTest("testBulkOperationsPerformance") {
     let startTime = Date()
 
     var tasks: [[String: Any]] = []
-    for taskIndex in 1 ... 500 {
+    for taskIndex in 1...500 {
         let task: [String: Any] = ["id": taskIndex, "title": "Bulk Task \(taskIndex)", "completed": taskIndex % 2 == 0]
         tasks.append(task)
     }
@@ -633,7 +633,7 @@ runTest("testInvalidDateHandling") {
 }
 
 runTest("testLargeDataSets") {
-    let largeArray = Array(1 ... 10000)
+    let largeArray = Array(1...10000)
     let filteredArray = largeArray.filter { $0 % 2 == 0 }
 
     assert(largeArray.count == 10000)

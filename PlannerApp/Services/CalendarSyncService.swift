@@ -25,7 +25,7 @@ extension EKEventStore: EventStoreProtocol {}
 class CalendarSyncService: ObservableObject {
     static let shared = CalendarSyncService()
     private let eventStore: EventStoreProtocol
-    
+
     init(eventStore: EventStoreProtocol = EKEventStore()) {
         self.eventStore = eventStore
     }

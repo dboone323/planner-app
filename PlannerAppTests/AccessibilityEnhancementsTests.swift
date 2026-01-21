@@ -9,7 +9,6 @@
 import XCTest
 
 final class AccessibilityEnhancementsTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

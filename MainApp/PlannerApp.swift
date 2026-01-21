@@ -6,7 +6,7 @@ import SwiftUI
 @main
 public struct PlannerApp: App {
     // MARK: - SwiftData Configuration
-    
+
     /// Shared model container for the entire app.
     /// Configures automatic CloudKit sync.
     var sharedModelContainer: ModelContainer = {
@@ -16,14 +16,14 @@ public struct PlannerApp: App {
             isStoredInMemoryOnly: false,
             cloudKitDatabase: .automatic // Enables automatic CloudKit sync
         )
-        
+
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    
+
     // Create and keep alive a single instance of ThemeManager for the entire app.
     // @StateObject ensures it persists throughout the app's lifecycle.
     @StateObject private var themeManager = ThemeManager()
@@ -49,13 +49,13 @@ public struct PlannerApp: App {
     public var body: some Scene {
         WindowGroup {
             // Apply the primary background color from the current theme to the entire window group.
-            self.themeManager.currentTheme.primaryBackgroundColor
+            themeManager.currentTheme.primaryBackgroundColor
                 .ignoresSafeArea()
                 .overlay(
                     // Use enhanced navigation for better cross-platform UX
-                    MainTabView(selectedTabTag: self.$selectedTabTag)
+                    MainTabView(selectedTabTag: $selectedTabTag)
                 )
-                .environmentObject(self.themeManager)
+                .environmentObject(themeManager)
                 .onAppear {
                     // Perform one-time legacy data migration
                     LegacyDataMigrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
@@ -63,9 +63,8 @@ public struct PlannerApp: App {
         }
         .modelContainer(sharedModelContainer)
         #if os(macOS)
-        .windowStyle(.hiddenTitleBar)
-        .windowToolbarStyle(.unified)
+            .windowStyle(.hiddenTitleBar)
+            .windowToolbarStyle(.unified)
         #endif
     }
 }
-

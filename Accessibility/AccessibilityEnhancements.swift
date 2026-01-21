@@ -52,7 +52,8 @@ public class AccessibilityManager: ObservableObject {
         #endif
     }
 
-    @objc private func accessibilitySettingsChanged() {
+    @objc
+    private func accessibilitySettingsChanged() {
         DispatchQueue.main.async {
             self.updateAccessibilitySettings()
         }

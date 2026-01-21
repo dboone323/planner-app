@@ -7,46 +7,46 @@ public struct UpcomingItemView: View {
     public var body: some View {
         HStack(spacing: 12) {
             VStack(spacing: 4) {
-                Text(self.dayFormatter.string(from: self.item.date))
+                Text(dayFormatter.string(from: item.date))
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
 
-                Text(self.dayNumberFormatter.string(from: self.item.date))
+                Text(dayNumberFormatter.string(from: item.date))
                     .font(.title3)
                     .fontWeight(.bold)
-                    .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
+                    .foregroundColor(themeManager.currentTheme.primaryAccentColor)
             }
             .frame(width: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(self.item.title)
+                Text(item.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
                 if let subtitle = item.subtitle {
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
                 }
 
-                Text(self.timeFormatter.string(from: self.item.date))
+                Text(timeFormatter.string(from: item.date))
                     .font(.caption2)
-                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
             }
 
             Spacer()
 
-            Image(systemName: self.item.icon)
-                .foregroundColor(self.item.color)
+            Image(systemName: item.icon)
+                .foregroundColor(item.color)
                 .font(.title3)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .fill(themeManager.currentTheme.secondaryBackgroundColor)
                 .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         )
     }

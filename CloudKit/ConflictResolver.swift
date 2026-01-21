@@ -41,16 +41,15 @@ struct SyncConflictInfo: Identifiable, Equatable {
 
 /// Strategy for resolving conflicts
 enum ConflictResolutionStrategy {
-    case useLocal           // Always use local version
-    case useServer          // Always use server version
-    case useNewest          // Use whichever was modified most recently
-    case merge              // Attempt to merge changes
-    case manual             // Require user decision
+    case useLocal // Always use local version
+    case useServer // Always use server version
+    case useNewest // Use whichever was modified most recently
+    case merge // Attempt to merge changes
+    case manual // Require user decision
 }
 
 /// Pure logic for conflict detection and resolution
-struct ConflictResolver {
-
+enum ConflictResolver {
     // MARK: - Conflict Detection
 
     /// Detect if there's a conflict between local and server records
@@ -74,7 +73,7 @@ struct ConflictResolver {
         let syncDate = lastSyncDate ?? Date.distantPast
 
         // Both modified after last sync = conflict
-        if localModified > syncDate && serverModified > syncDate {
+        if localModified > syncDate, serverModified > syncDate {
             let conflictType = determineConflictType(local: localRecord, server: serverRecord)
             return SyncConflictInfo(
                 recordID: localRecord.recordID,
@@ -121,19 +120,19 @@ struct ConflictResolver {
     ) -> CKRecord? {
         switch strategy {
         case .useLocal:
-            return conflict.localRecord
+            conflict.localRecord
 
         case .useServer:
-            return conflict.serverRecord
+            conflict.serverRecord
 
         case .useNewest:
-            return resolveByNewest(conflict: conflict)
+            resolveByNewest(conflict: conflict)
 
         case .merge:
-            return attemptMerge(conflict: conflict)
+            attemptMerge(conflict: conflict)
 
         case .manual:
-            return nil // Requires user intervention
+            nil // Requires user intervention
         }
     }
 
@@ -161,10 +160,10 @@ struct ConflictResolver {
             let serverValue = conflict.serverRecord[key]
 
             // If only one has a value, use that
-            if localValue == nil && serverValue != nil {
+            if localValue == nil, serverValue != nil {
                 // Server value already in merged
                 continue
-            } else if localValue != nil && serverValue == nil {
+            } else if localValue != nil, serverValue == nil {
                 merged[key] = localValue
             } else if let localVal = localValue, let serverVal = serverValue {
                 // Both have values - use the more recent one based on modification date
@@ -173,14 +172,18 @@ struct ConflictResolver {
 
                 if localDate > serverDate {
                     #if DEBUG
-                    print("ConflictResolver: Preferring local value for '\(key)': \(localVal) over server: \(serverVal)")
+                        print(
+                            "ConflictResolver: Preferring local value for '\(key)': \(localVal) over server: \(serverVal)"
+                        )
                     #endif
                     merged[key] = localVal
                 } else {
                     #if DEBUG
-                    print("ConflictResolver: Keeping server value for '\(key)': \(serverVal) over local: \(localVal)")
+                        print(
+                            "ConflictResolver: Keeping server value for '\(key)': \(serverVal) over local: \(localVal)"
+                        )
                     #endif
-                    merged[key] = serverVal  // Explicitly set for clarity
+                    merged[key] = serverVal // Explicitly set for clarity
                 }
             }
         }

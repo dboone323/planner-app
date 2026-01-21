@@ -9,7 +9,6 @@
 import XCTest
 
 final class EventRowViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

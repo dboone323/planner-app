@@ -1,36 +1,36 @@
-import Foundation
 import EventKit
+import Foundation
 
 /// Smart scheduling AI for PlannerApp
 class SmartScheduler {
     private let eventStore = EKEventStore()
-    
+
     // MARK: - Auto Time-Blocking
-    
+
     func scheduleTask(_ task: Task, preferences: SchedulingPreferences = .default) async -> ScheduledBlock? {
         // Request calendar access
         guard await requestCalendarAccess() else {
             return nil
         }
-        
+
         // Find optimal time slot
         let availableSlots = await findAvailableSlots(
             duration: task.estimatedDuration,
             dueDate: task.dueDate,
             preferences: preferences
         )
-        
+
         guard let bestSlot = selectBestSlot(availableSlots, for: task, preferences: preferences) else {
             return nil
         }
-        
+
         // Create calendar event
         let event = EKEvent(eventStore: eventStore)
         event.title = task.title
         event.startDate = bestSlot.start
         event.endDate = bestSlot.end
         event.calendar = eventStore.defaultCalendarForNewEvents
-        
+
         do {
             try eventStore.save(event, span: .thisEvent)
             return ScheduledBlock(task: task, start: bestSlot.start, end: bestSlot.end)
@@ -39,9 +39,9 @@ class SmartScheduler {
             return nil
         }
     }
-    
+
     // MARK: - Find Available Slots
-    
+
     private func findAvailableSlots(
         duration: TimeInterval,
         dueDate: Date,
@@ -49,15 +49,15 @@ class SmartScheduler {
     ) async -> [TimeSlot] {
         let calendar = Calendar.current
         let now = Date()
-        
+
         // Search window: now until due date
         var searchDate = now
         var availableSlots: [TimeSlot] = []
-        
+
         while searchDate < dueDate {
             // Check each day
             let dayStart = calendar.startOfDay(for: searchDate)
-            
+
             // Working hours based on preferences
             guard let workStart = calendar.date(
                 bySettingHour: preferences.workStartHour,
@@ -65,22 +65,23 @@ class SmartScheduler {
                 second: 0,
                 of: dayStart
             ),
-                  let workEnd = calendar.date(
-                bySettingHour: preferences.workEndHour,
-                minute: 0,
-                second: 0,
-                of: dayStart
-            ) else {
+                let workEnd = calendar.date(
+                    bySettingHour: preferences.workEndHour,
+                    minute: 0,
+                    second: 0,
+                    of: dayStart
+                )
+            else {
                 searchDate = calendar.date(byAdding: .day, value: 1, to: searchDate)!
                 continue
             }
-            
+
             // Get existing events for this day
             let existingEvents = getEvents(from: workStart, to: workEnd)
-            
+
             // Find gaps between events
             let gaps = findGaps(between: existingEvents, from: workStart, to: workEnd)
-            
+
             // Filter gaps that fit the task duration
             for gap in gaps where gap.duration >= duration {
                 availableSlots.append(TimeSlot(
@@ -88,61 +89,61 @@ class SmartScheduler {
                     end: calendar.date(byAdding: .second, value: Int(duration), to: gap.start)!
                 ))
             }
-            
+
             searchDate = calendar.date(byAdding: .day, value: 1, to: searchDate)!
         }
-        
+
         return availableSlots
     }
-    
+
     // MARK: - Select Best Slot
-    
+
     private func selectBestSlot(
         _ slots: [TimeSlot],
         for task: Task,
         preferences: SchedulingPreferences
     ) -> TimeSlot? {
         guard !slots.isEmpty else { return nil }
-        
+
         // Score each slot
         let scoredSlots = slots.map { slot -> (slot: TimeSlot, score: Double) in
             var score = 0.0
-            
+
             // Prefer earlier slots for high priority tasks
             if task.priority == .high {
                 let daysUntilSlot = Calendar.current.dateComponents([.day], from: Date(), to: slot.start).day ?? 0
                 score += Double(10 - min(10, daysUntilSlot))
             }
-            
+
             // Prefer morning for focus tasks
             if preferences.preferMorning {
                 let hour = Calendar.current.component(.hour, from: slot.start)
-                if hour >= 8 && hour <= 11 {
+                if hour >= 8, hour <= 11 {
                     score += 5.0
                 }
             }
-            
+
             // Avoid late evening
             let hour = Calendar.current.component(.hour, from: slot.start)
             if hour >= 18 {
                 score -= 3.0
             }
-            
+
             // Prefer contiguous blocks
             if slot.duration >= 7200 { // 2 hours
                 score += 2.0
             }
-            
+
             return (slot, score)
         }
-        
+
         return scoredSlots.max(by: { $0.score < $1.score })?.slot
     }
-    
+
     // MARK: - Calendar Access
-    
+
     private func requestCalendarAccess() async -> Bool {
-        
+        if #available(iOS 17.0, macOS 14.0, *) {
             let status = await eventStore.requestFullAccessToEvents()
             return status
         } else {
@@ -153,30 +154,30 @@ class SmartScheduler {
             }
         }
     }
-    
+
     private func getEvents(from start: Date, to end: Date) -> [EKEvent] {
         let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
         return eventStore.events(matching: predicate)
     }
-    
+
     private func findGaps(between events: [EKEvent], from: Date, to: Date) -> [TimeSlot] {
         var gaps: [TimeSlot] = []
         var currentTime = from
-        
+
         let sortedEvents = events.sorted { $0.startDate < $1.startDate }
-        
+
         for event in sortedEvents {
             if event.startDate > currentTime {
                 gaps.append(TimeSlot(start: currentTime, end: event.startDate))
             }
             currentTime = max(currentTime, event.endDate)
         }
-        
+
         // Final gap until end of work day
         if currentTime < to {
             gaps.append(TimeSlot(start: currentTime, end: to))
         }
-        
+
         return gaps
     }
 }
@@ -186,7 +187,7 @@ class SmartScheduler {
 struct TimeSlot {
     let start: Date
     let end: Date
-    
+
     var duration: TimeInterval {
         end.timeIntervalSince(start)
     }
@@ -203,7 +204,7 @@ struct SchedulingPreferences {
     let workEndHour: Int
     let preferMorning: Bool
     let avoidLateEvening: Bool
-    
+
     static let `default` = SchedulingPreferences(
         workStartHour: 9,
         workEndHour: 17,

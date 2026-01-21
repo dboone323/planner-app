@@ -60,9 +60,9 @@ public struct SDTaskRowView: View {
                 Text(task.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(task.isCompleted ?
-                        themeManager.currentTheme.secondaryTextColor :
-                        themeManager.currentTheme.primaryTextColor
+                    .foregroundColor(task.isCompleted
+                        ? themeManager.currentTheme.secondaryTextColor
+                        : themeManager.currentTheme.primaryTextColor
                     )
                     .strikethrough(task.isCompleted)
                     .lineLimit(2)

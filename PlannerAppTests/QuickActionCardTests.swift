@@ -9,7 +9,6 @@
 import XCTest
 
 final class QuickActionCardTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

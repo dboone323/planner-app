@@ -141,7 +141,10 @@ final class JournalDataManager: JournalDataManaging {
     func getJournalStatistics() -> [String: Any] {
         let entries = load()
         let total = entries.count
-        let thisWeek = self.entries(between: Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date(), and: Date()).count
+        let thisWeek = self.entries(
+            between: Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date(),
+            and: Date()
+        ).count
         let moods = uniqueMoods()
 
         return [

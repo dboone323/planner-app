@@ -6,45 +6,45 @@ import SwiftData
 @Model
 final class SDTask {
     // MARK: - Properties
-    
+
     /// Unique identifier for the task.
     @Attribute(.unique) var id: UUID
-    
+
     /// The title or summary of the task.
     var title: String
-    
+
     /// Detailed description of the task.
     var taskDescription: String
-    
+
     /// Whether the task is completed.
     var isCompleted: Bool
-    
+
     /// The priority of the task ("low", "medium", "high").
     var priority: String
-    
+
     /// The due date for the task (optional).
     var dueDate: Date?
-    
+
     /// The date the task was created.
     var createdAt: Date
-    
+
     /// The date the task was last modified.
     var modifiedAt: Date?
-    
+
     /// Calendar event identifier for sync.
     var calendarEventId: String?
-    
+
     /// Estimated duration in seconds.
     var estimatedDuration: TimeInterval
-    
+
     /// Sentiment of task description ("positive", "negative", or "neutral").
     var sentiment: String
-    
+
     /// Sentiment score from -1.0 (negative) to 1.0 (positive).
     var sentimentScore: Double
-    
+
     // MARK: - Initializer
-    
+
     /// Creates a new SDTask.
     init(
         id: UUID = UUID(),
@@ -73,32 +73,32 @@ final class SDTask {
         self.sentiment = sentiment
         self.sentimentScore = sentimentScore
     }
-    
+
     // MARK: - Convenience Methods
-    
+
     /// Updates sentiment based on description content.
     func analyzeSentiment() {
         let lower = taskDescription.lowercased()
         let positives = ["love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean"]
         let negatives = ["hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash"]
-        
+
         let positiveCount = positives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
         let negativeCount = negatives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
         let rawScore = Double(positiveCount - negativeCount)
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
-        
-        self.sentimentScore = normalizedScore
-        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
-        self.modifiedAt = Date()
+
+        sentimentScore = normalizedScore
+        sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        modifiedAt = Date()
     }
-    
+
     /// Priority as a sortable integer.
     var prioritySortOrder: Int {
         switch priority {
-        case "high": return 3
-        case "medium": return 2
-        case "low": return 1
-        default: return 0
+        case "high": 3
+        case "medium": 2
+        case "low": 1
+        default: 0
         }
     }
 }

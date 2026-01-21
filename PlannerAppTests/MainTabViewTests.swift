@@ -9,7 +9,6 @@
 import XCTest
 
 final class MainTabViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

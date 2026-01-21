@@ -8,5 +8,6 @@ import Foundation
 
 import CloudKit
 
-// DataManagers.swift is now empty. Data manager classes have been split into separate files for better type resolution and Xcode
+// DataManagers.swift is now empty. Data manager classes have been split into separate files for better type resolution
+// and Xcode
 // compatibility.

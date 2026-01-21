@@ -9,7 +9,6 @@
 import XCTest
 
 final class JournalEntrySentimentTests: XCTestCase {
-
     func testPositiveSentimentDetection() {
         var entry = JournalEntry(
             title: "Great Day",

@@ -8,31 +8,32 @@ public struct GoalsView: View {
     @State private var showAddGoal = false // State to control presentation of AddGoal sheet
 
     // Read date/time settings if needed for display (e.g., formatter locale)
-    @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false // Example, not used in formatter below
+    @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool =
+        false // Example, not used in formatter below
 
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                GoalsHeaderView(showAddGoal: self.$showAddGoal)
-                    .environmentObject(self.themeManager)
+                GoalsHeaderView(showAddGoal: $showAddGoal)
+                    .environmentObject(themeManager)
 
                 GoalsListView(
-                    goals: self.goals,
-                    onDelete: self.deleteGoal,
-                    onProgressUpdate: self.updateGoalProgress,
-                    onCompletionToggle: self.toggleGoalCompletion
+                    goals: goals,
+                    onDelete: deleteGoal,
+                    onProgressUpdate: updateGoalProgress,
+                    onCompletionToggle: toggleGoalCompletion
                 )
-                .environmentObject(self.themeManager)
+                .environmentObject(themeManager)
             }
-            .sheet(isPresented: self.$showAddGoal) {
+            .sheet(isPresented: $showAddGoal) {
                 // Present AddGoalView, passing binding and theme
-                AddGoalView(goals: self.$goals)
-                    .environmentObject(self.themeManager)
+                AddGoalView(goals: $goals)
+                    .environmentObject(themeManager)
                     // Save goals when the sheet is dismissed
-                    .onDisappear(perform: self.saveGoals)
+                    .onDisappear(perform: saveGoals)
             }
             // Load goals when the view appears
-            .onAppear(perform: self.loadGoals)
+            .onAppear(perform: loadGoals)
         } // End NavigationStack
         // Use stack navigation style
     }
@@ -42,52 +43,52 @@ public struct GoalsView: View {
     // Updates the progress of a specific goal
     private func updateGoalProgress(goalId: UUID, progress: Double) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
-            self.goals[index].progress = progress
-            self.goals[index].modifiedAt = Date()
-            self.saveGoals()
+            goals[index].progress = progress
+            goals[index].modifiedAt = Date()
+            saveGoals()
         }
     }
 
     // Toggles the completion status of a specific goal
     private func toggleGoalCompletion(goalId: UUID) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
-            let wasCompleted = self.goals[index].isCompleted
-            self.goals[index].isCompleted = !wasCompleted
+            let wasCompleted = goals[index].isCompleted
+            goals[index].isCompleted = !wasCompleted
 
             // If marking as completed, set progress to 100%
             if !wasCompleted {
-                self.goals[index].progress = 1.0
+                goals[index].progress = 1.0
             }
             // If unmarking as completed, set progress to 95% (allowing room for adjustment)
             else {
-                self.goals[index].progress = 0.95
+                goals[index].progress = 0.95
             }
 
-            self.goals[index].modifiedAt = Date()
-            self.saveGoals()
+            goals[index].modifiedAt = Date()
+            saveGoals()
         }
     }
 
     // Deletes goals based on offsets from the sorted list displayed
     private func deleteGoal(at offsets: IndexSet) {
         // Get the sorted list as it's displayed in the ForEach loop
-        let sortedGoals = self.goals.sorted(by: { $0.targetDate < $1.targetDate })
+        let sortedGoals = goals.sorted(by: { $0.targetDate < $1.targetDate })
         // Map the offsets to the actual IDs of the goals to be deleted
         let idsToDelete = offsets.map { sortedGoals[$0].id }
         // Remove goals with matching IDs from the main `goals` array
-        self.goals.removeAll { idsToDelete.contains($0.id) }
-        self.saveGoals() // Persist changes
+        goals.removeAll { idsToDelete.contains($0.id) }
+        saveGoals() // Persist changes
     }
 
     // Loads goals from the data manager
     private func loadGoals() {
-        self.goals = GoalDataManager.shared.load()
-        print("Goals loaded. Count: \(self.goals.count)")
+        goals = GoalDataManager.shared.load()
+        print("Goals loaded. Count: \(goals.count)")
     }
 
     // Saves the current state of the `goals` array to the data manager
     private func saveGoals() {
-        GoalDataManager.shared.save(goals: self.goals)
+        GoalDataManager.shared.save(goals: goals)
         print("Goals saved.")
     }
 }
@@ -97,6 +98,6 @@ public struct GoalsView_Previews: PreviewProvider {
     public static var previews: some View {
         GoalsView()
             // Provide ThemeManager for the preview
-            .environmentObject(ThemeManager())
+                .environmentObject(ThemeManager())
     }
 }

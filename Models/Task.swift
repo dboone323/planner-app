@@ -51,7 +51,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     /// The date the task was last modified (optional).
     /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
-    
+
     // Sync properties
     /// Calendar event identifier for sync
     var calendarEventId: String?
@@ -102,8 +102,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
 
     /// Update task description and trigger sentiment analysis
     mutating func updateDescription(_ newDescription: String) {
-        self.description = newDescription
-        self.modifiedAt = Date()
+        description = newDescription
+        modifiedAt = Date()
 
         // Analyze sentiment synchronously
         analyzeSentiment()
@@ -124,26 +124,26 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         let rawScore = Double(positiveCount - negativeCount)
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
 
-        self.sentimentScore = normalizedScore
-        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        sentimentScore = normalizedScore
+        sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion
 
     /// Converts this task to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: "Task", recordID: CKRecord.ID(recordName: self.id.uuidString))
-        record["title"] = self.title
-        record["description"] = self.description
-        record["isCompleted"] = self.isCompleted
-        record["priority"] = self.priority.rawValue
-        record["dueDate"] = self.dueDate
-        record["estimatedDuration"] = self.estimatedDuration
-        record["calendarEventId"] = self.calendarEventId
-        record["createdAt"] = self.createdAt
-        record["modifiedAt"] = self.modifiedAt
-        record["sentiment"] = self.sentiment
-        record["sentimentScore"] = self.sentimentScore
+        let record = CKRecord(recordType: "Task", recordID: CKRecord.ID(recordName: id.uuidString))
+        record["title"] = title
+        record["description"] = description
+        record["isCompleted"] = isCompleted
+        record["priority"] = priority.rawValue
+        record["dueDate"] = dueDate
+        record["estimatedDuration"] = estimatedDuration
+        record["calendarEventId"] = calendarEventId
+        record["createdAt"] = createdAt
+        record["modifiedAt"] = modifiedAt
+        record["sentiment"] = sentiment
+        record["sentimentScore"] = sentimentScore
         return record
     }
 

@@ -19,7 +19,7 @@ class TimeBlockService {
     static let shared = TimeBlockService()
 
     func createTimeBlock(for task: TaskItem, start: Date, durationMinutes: Int) -> TimeBlock {
-        return TimeBlock(
+        TimeBlock(
             taskId: task.id,
             startTime: start,
             duration: TimeInterval(durationMinutes * 60)

@@ -9,7 +9,6 @@
 import XCTest
 
 final class NetworkMonitorTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

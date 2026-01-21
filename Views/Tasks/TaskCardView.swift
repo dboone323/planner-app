@@ -50,35 +50,35 @@ struct TaskCardView: View {
 
                     Spacer()
 
-                    Button(action: { onToggle(task) }) {
+                    Button(action: { onToggle(task) }, label: {
                         Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                             .font(.title2)
                             .foregroundColor(task.isCompleted ? .green : .gray)
-                    }
+                    })
                     .buttonStyle(PlainButtonStyle())
                 }
             }
         }
         .padding(12)
         #if os(iOS)
-        .background(Color(UIColor.secondarySystemGroupedBackground))
+            .background(Color(UIColor.secondarySystemGroupedBackground))
         #else
-        .background(Color.gray.opacity(0.1))
+            .background(Color.gray.opacity(0.1))
         #endif
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 1)
-        .onTapGesture {
-            onEdit(task)
-        }
+            .cornerRadius(12)
+            .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 1)
+            .onTapGesture {
+                onEdit(task)
+            }
     }
 
     // MARK: - Helpers
 
     private func priorityColor(_ priority: TaskPriority) -> Color {
         switch priority {
-        case .high: return .red
-        case .medium: return .orange
-        case .low: return .blue
+        case .high: .red
+        case .medium: .orange
+        case .low: .blue
         }
     }
 

@@ -23,7 +23,7 @@ enum Priority: Int, Codable, Comparable {
     case critical = 3
 
     static func < (lhs: Priority, rhs: Priority) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        lhs.rawValue < rhs.rawValue
     }
 }
 
@@ -31,7 +31,7 @@ class TaskTemplateService {
     static let shared = TaskTemplateService()
 
     func getTemplates() -> [TaskTemplate] {
-        return [
+        [
             TaskTemplate(
                 name: "Bug Report",
                 defaultTitle: "Fix Bug: ",

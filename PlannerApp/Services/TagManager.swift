@@ -24,7 +24,7 @@ class TagManager {
     ]
 
     func getAllTags() -> [Tag] {
-        return tags
+        tags
     }
 
     func createTag(name: String, color: Color) -> Tag {
@@ -34,6 +34,6 @@ class TagManager {
     }
 
     func tags(for names: [String]) -> [Tag] {
-        return tags.filter { names.contains($0.name) }
+        tags.filter { names.contains($0.name) }
     }
 }

@@ -19,8 +19,8 @@ public struct AddGoalView: View {
 
     // Computed property to check if the form is valid for saving
     private var isFormValid: Bool {
-        !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-            !self.description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
@@ -28,16 +28,16 @@ public struct AddGoalView: View {
             // Header with buttons for better macOS compatibility
             HStack {
                 Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
-                    self.dismiss()
+                    dismiss()
                 }
-                .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
+                .foregroundColor(themeManager.currentTheme.primaryAccentColor)
 
                 Spacer()
 
                 Text("Add Goal")
                     .font(.headline)
                     .fontWeight(.semibold)
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
                 Spacer()
 
@@ -45,60 +45,72 @@ public struct AddGoalView: View {
                     // Create the new goal
                     let newGoal = Goal(
                         title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-                        description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
-                        targetDate: self.targetDate
+                        description: description.trimmingCharacters(in: .whitespacesAndNewlines),
+                        targetDate: targetDate
                     )
 
                     // Append the new goal to the array
-                    self.goals.append(newGoal)
+                    goals.append(newGoal)
 
                     // Save goals to the data manager
-                    GoalDataManager.shared.save(goals: self.goals)
+                    GoalDataManager.shared.save(goals: goals)
 
                     // Dismiss the sheet
-                    self.dismiss()
+                    dismiss()
                 }
-                .disabled(!self.isFormValid)
-                .foregroundColor(self.isFormValid ? self.themeManager.currentTheme.primaryAccentColor : self.themeManager.currentTheme
-                    .secondaryTextColor
+                .disabled(!isFormValid)
+                .foregroundColor(isFormValid
+                    ? themeManager.currentTheme.primaryAccentColor
+                    : themeManager.currentTheme
+                        .secondaryTextColor
                 )
             }
             .padding()
-            .background(self.themeManager.currentTheme.secondaryBackgroundColor)
+            .background(themeManager.currentTheme.secondaryBackgroundColor)
 
             // Use Form for standard iOS settings/input layout
             Form {
                 // Section for the main goal details
                 Section("Goal Details") {
                     // TextField for the goal title
-                    TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
-                        .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.primaryFontName, size: 16))
-                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    TextField("Goal Title", text: $title).accessibilityLabel("Text Field")
+                        .accessibilityLabel("Text Field")
+                        .font(themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.primaryFontName,
+                            size: 16
+                        ))
+                        .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
                     // TextEditor for the goal description
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Description")
                             .font(.caption)
-                            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
 
-                        TextEditor(text: self.$description)
+                        TextEditor(text: $description)
                             .frame(minHeight: 80)
-                            .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.secondaryFontName, size: 15))
-                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                            .focused(self.$isDescriptionFocused)
+                            .font(themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.secondaryFontName,
+                                size: 15
+                            ))
+                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .focused($isDescriptionFocused)
                     }
 
                     // DatePicker for the target date
-                    DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
-                        .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.primaryFontName, size: 16))
-                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    DatePicker("Target Date", selection: $targetDate, displayedComponents: .date)
+                        .font(themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.primaryFontName,
+                            size: 16
+                        ))
+                        .foregroundColor(themeManager.currentTheme.primaryTextColor)
                 }
-                .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
             }
-            .background(self.themeManager.currentTheme.primaryBackgroundColor)
+            .background(themeManager.currentTheme.primaryBackgroundColor)
             .scrollContentBackground(.hidden)
         }
-        .background(self.themeManager.currentTheme.primaryBackgroundColor)
+        .background(themeManager.currentTheme.primaryBackgroundColor)
     }
 }
 

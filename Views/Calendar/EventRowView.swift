@@ -12,7 +12,7 @@ public struct EventRowView: View {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: self.use24HourTime ? "en_GB" : "en_US")
+        formatter.locale = Locale(identifier: use24HourTime ? "en_GB" : "en_US")
         return formatter
     }
 
@@ -20,7 +20,7 @@ public struct EventRowView: View {
         HStack(spacing: 12) {
             // Time indicator
             VStack(alignment: .center, spacing: 2) {
-                Text(self.timeFormatter.string(from: self.event.date))
+                Text(timeFormatter.string(from: event.date))
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundColor(.blue)
@@ -33,10 +33,10 @@ public struct EventRowView: View {
 
             // Event details
             VStack(alignment: .leading, spacing: 2) {
-                Text(self.event.title)
+                Text(event.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
                     .lineLimit(2)
             }
 

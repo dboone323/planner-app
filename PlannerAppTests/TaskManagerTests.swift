@@ -2,7 +2,6 @@
 import XCTest
 
 final class TaskManagerTests: XCTestCase {
-
     var taskManager: TaskDataManager!
 
     override func setUp() {
@@ -93,7 +92,7 @@ final class TaskManagerTests: XCTestCase {
 
         // TaskDataManager.tasksDue(within: 1) might include today and tomorrow depending on implementation
         // Let's check the specific implementation of tasksDue(within:)
-        // It uses <= futureDate. 
+        // It uses <= futureDate.
         // We want tasks due "today". The manager has getTaskStatistics()["dueToday"].
         // But let's test tasksDue(within: 0) which should be today?
         // tasksDue(within: 0) adds 0 days to now. So <= now.

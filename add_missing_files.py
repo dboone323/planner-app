@@ -37,6 +37,7 @@ def generate_uuid():
 
 
 def add_files_to_project():
+    """Add missing Swift files to the Xcode project file."""
     project_file = "PlannerApp.xcodeproj/project.pbxproj"
 
     if not os.path.exists(project_file):
@@ -44,7 +45,7 @@ def add_files_to_project():
         return False
 
     # Read the project file
-    with open(project_file) as f:
+    with open(project_file, encoding="utf-8") as f:
         content = f.read()
 
     # Find the PBXBuildFile section
@@ -92,11 +93,18 @@ def add_files_to_project():
         file_ref_uuid = generate_uuid()
 
         # Create build file entry
-        build_file_entry = f"\t\t{build_file_uuid} /* {file_name} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {file_name} */; }};"
+        build_file_entry = (
+            f"\t\t{build_file_uuid} /* {file_name} in Sources */ = "
+            f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {file_name} */; }};"
+        )
         new_build_files.append(build_file_entry)
 
         # Create file reference entry
-        file_ref_entry = f'\t\t{file_ref_uuid} /* {file_name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {file_name}; sourceTree = "<group>"; }};'
+        file_ref_entry = (
+            f'\t\t{file_ref_uuid} /* {file_name} */ = {{isa = PBXFileReference; '
+            f'lastKnownFileType = sourcecode.swift; path = {file_name}; '
+            f'sourceTree = "<group>"; }};'
+        )
         new_file_refs.append(file_ref_entry)
 
         # Create source entry
@@ -145,7 +153,7 @@ def add_files_to_project():
         sources_files_end += len(entry) + 1
 
     # Write back to file
-    with open(project_file, "w") as f:
+    with open(project_file, "w", encoding="utf-8") as f:
         f.write(modified_content)
 
     print(f"Successfully added {len(new_build_files)} files to the project")

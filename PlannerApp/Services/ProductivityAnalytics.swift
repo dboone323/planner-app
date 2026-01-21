@@ -18,7 +18,7 @@ class ProductivityAnalytics {
 
     func calculateCompletionRate(tasks: [TaskItem]) -> Double {
         guard !tasks.isEmpty else { return 0.0 }
-        let completed = tasks.filter { $0.isCompleted }.count
+        let completed = tasks.filter(\.isCompleted).count
         return Double(completed) / Double(tasks.count)
     }
 

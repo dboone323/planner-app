@@ -9,7 +9,6 @@
 import XCTest
 
 final class ProgressUpdateSheetTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

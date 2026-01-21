@@ -16,54 +16,54 @@ public struct TaskManagerView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) var dismiss // Add dismiss capability
     @Environment(\.modelContext) private var modelContext // SwiftData context
-    
+
     // Use @Query for automatic data fetching from SwiftData
     @Query(sort: \SDTask.createdAt, order: .reverse) private var sdTasks: [SDTask]
-    
+
     @State private var newTaskTitle = "" // State for the input field text
     @FocusState private var isInputFieldFocused: Bool // Tracks focus state of the input field
 
     // Computed properties to filter tasks into incomplete and completed lists
     private var incompleteTasks: [SDTask] {
-        self.sdTasks.filter { !$0.isCompleted }
+        sdTasks.filter { !$0.isCompleted }
     }
 
     private var completedTasks: [SDTask] {
-        self.sdTasks.filter(\.isCompleted)
+        sdTasks.filter(\.isCompleted)
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             // Header with buttons for better macOS compatibility
             TaskManagerHeaderView()
-                .environmentObject(self.themeManager)
+                .environmentObject(themeManager)
 
             // Main container using VStack with no spacing for tight layout control
             VStack(spacing: 0) {
                 // --- Input Area ---
                 TaskInputView(
-                    newTaskTitle: self.$newTaskTitle,
-                    isInputFieldFocused: self.$isInputFieldFocused,
-                    onAddTask: self.addTask
+                    newTaskTitle: $newTaskTitle,
+                    isInputFieldFocused: $isInputFieldFocused,
+                    onAddTask: addTask
                 )
-                .environmentObject(self.themeManager)
+                .environmentObject(themeManager)
 
                 // --- Task List ---
                 SDTaskListView(
-                    isInputFieldFocused: self.$isInputFieldFocused,
-                    incompleteTasks: self.incompleteTasks,
-                    completedTasks: self.completedTasks,
-                    onDeleteIncomplete: self.deleteTaskIncomplete,
-                    onDeleteCompleted: self.deleteTaskCompleted
+                    isInputFieldFocused: $isInputFieldFocused,
+                    incompleteTasks: incompleteTasks,
+                    completedTasks: completedTasks,
+                    onDeleteIncomplete: deleteTaskIncomplete,
+                    onDeleteCompleted: deleteTaskCompleted
                 )
-                .environmentObject(self.themeManager)
+                .environmentObject(themeManager)
             } // End main VStack
             // Ensure the primary background extends behind the navigation bar area if needed
-            .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
+            .background(themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Tasks")
             // Perform auto-deletion check when view appears
             .onAppear {
-                self.performAutoDeletionIfNeeded() // Check and perform auto-deletion
+                performAutoDeletionIfNeeded() // Check and perform auto-deletion
             }
             .toolbar {
                 // Custom Edit button for macOS list reordering/deletion mode
@@ -77,14 +77,14 @@ public struct TaskManagerView: View {
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Spacer() // Push button to the right
-                        Button("Done", action: { self.isInputFieldFocused = false }) // Dismiss keyboard on tap
+                        Button("Done", action: { isInputFieldFocused = false }) // Dismiss keyboard on tap
                             .accessibilityLabel("Button")
                         // Uses theme accent color automatically
                     }
                 }
             }
             // Apply theme accent color to navigation bar items (Edit, Done buttons)
-            .accentColor(self.themeManager.currentTheme.primaryAccentColor)
+            .accentColor(themeManager.currentTheme.primaryAccentColor)
         } // End main VStack
         #if os(macOS)
         .frame(minWidth: 500, minHeight: 400)
@@ -97,24 +97,24 @@ public struct TaskManagerView: View {
 
     // Adds a new task based on the input field text
     private func addTask() {
-        let trimmedTitle = self.newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedTitle = newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else { return } // Don't add empty tasks
 
         // Create new SDTask and insert into context
         let newTask = SDTask(title: trimmedTitle)
         modelContext.insert(newTask)
-        self.newTaskTitle = "" // Clear the input field
-        self.isInputFieldFocused = false // Dismiss keyboard
+        newTaskTitle = "" // Clear the input field
+        isInputFieldFocused = false // Dismiss keyboard
     }
 
     // Handles deletion from the incomplete tasks section
     private func deleteTaskIncomplete(at offsets: IndexSet) {
-        self.deleteTask(from: self.incompleteTasks, at: offsets)
+        deleteTask(from: incompleteTasks, at: offsets)
     }
 
     // Handles deletion from the completed tasks section
     private func deleteTaskCompleted(at offsets: IndexSet) {
-        self.deleteTask(from: self.completedTasks, at: offsets)
+        deleteTask(from: completedTasks, at: offsets)
     }
 
     // Helper function to delete tasks based on offsets from a filtered array
@@ -162,4 +162,3 @@ public struct TaskManagerView: View {
         }
     }
 }
-

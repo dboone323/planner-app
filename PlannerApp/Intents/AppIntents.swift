@@ -14,23 +14,23 @@ import SwiftData
 struct AddTaskIntent: AppIntent {
     static var title: LocalizedStringResource = "Add Task"
     static var description = IntentDescription("Adds a new task to your planner")
-    
+
     @Parameter(title: "Task Title")
     var title: String
-    
+
     @Parameter(title: "Priority", default: "medium")
     var priority: String?
-    
+
     @Parameter(title: "Due Date")
     var dueDate: Date?
-    
+
     static var parameterSummary: some ParameterSummary {
         Summary("Add task '\(\.$title)'") {
             \.$priority
             \.$dueDate
         }
     }
-    
+
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // Create task with SwiftData
         let task = SDTask(
@@ -38,7 +38,7 @@ struct AddTaskIntent: AppIntent {
             priority: priority ?? "medium",
             dueDate: dueDate
         )
-        
+
         // In production, inject the model context
         // For now, return success dialog
         return .result(dialog: "Added '\(title)' to your tasks")
@@ -51,13 +51,13 @@ struct AddTaskIntent: AppIntent {
 struct CompleteTaskIntent: AppIntent {
     static var title: LocalizedStringResource = "Complete Task"
     static var description = IntentDescription("Marks a task as completed")
-    
+
     @Parameter(title: "Task Name")
     var taskName: String
-    
+
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // In production, search and update task
-        return .result(dialog: "Marked '\(taskName)' as complete")
+        .result(dialog: "Marked '\(taskName)' as complete")
     }
 }
 
@@ -67,10 +67,10 @@ struct CompleteTaskIntent: AppIntent {
 struct ListTasksIntent: AppIntent {
     static var title: LocalizedStringResource = "List Tasks"
     static var description = IntentDescription("Lists your pending tasks")
-    
+
     @Parameter(title: "Filter by Priority")
     var priority: String?
-    
+
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // In production, fetch from SwiftData
         let priorityText = priority != nil ? " with \(priority!) priority" : ""
@@ -84,15 +84,17 @@ struct ListTasksIntent: AppIntent {
 struct AddGoalIntent: AppIntent {
     static var title: LocalizedStringResource = "Add Goal"
     static var description = IntentDescription("Adds a new goal to your planner")
-    
+
     @Parameter(title: "Goal Title")
     var title: String
-    
+
     @Parameter(title: "Target Date")
     var targetDate: Date
-    
+
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        return .result(dialog: "Added goal '\(title)' with target date \(targetDate.formatted(date: .abbreviated, time: .omitted))")
+        .result(
+            dialog: "Added goal '\(title)' with target date \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+        )
     }
 }
 
@@ -111,7 +113,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             shortTitle: "Add Task",
             systemImageName: "plus.circle"
         )
-        
+
         AppShortcut(
             intent: CompleteTaskIntent(),
             phrases: [
@@ -121,7 +123,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             shortTitle: "Complete Task",
             systemImageName: "checkmark.circle"
         )
-        
+
         AppShortcut(
             intent: ListTasksIntent(),
             phrases: [
@@ -132,7 +134,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             shortTitle: "List Tasks",
             systemImageName: "list.bullet"
         )
-        
+
         AppShortcut(
             intent: AddGoalIntent(),
             phrases: [

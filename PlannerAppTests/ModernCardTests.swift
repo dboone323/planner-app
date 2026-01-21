@@ -9,7 +9,6 @@
 import XCTest
 
 final class ModernCardTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

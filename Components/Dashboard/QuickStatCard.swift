@@ -12,31 +12,31 @@ public struct QuickStatCard: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Image(systemName: self.icon)
-                    .foregroundColor(self.color)
+                Image(systemName: icon)
+                    .foregroundColor(color)
                     .font(.title3)
 
                 Spacer()
             }
 
-            Text(self.value)
+            Text(value)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
-            Text(self.title)
+            Text(title)
                 .font(.caption)
                 .fontWeight(.medium)
-                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
-            Text(self.subtitle)
+            Text(subtitle)
                 .font(.caption2)
-                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
         }
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .fill(themeManager.currentTheme.secondaryBackgroundColor)
                 .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         )
     }

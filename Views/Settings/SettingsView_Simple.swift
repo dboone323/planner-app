@@ -76,7 +76,8 @@ public struct SettingsView: View {
                     HStack {
                         Text("Name")
                             .foregroundColor(themeManager.currentTheme.secondaryTextColor)
-                        TextField("Enter your name", text: $userName).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                        TextField("Enter your name", text: $userName).accessibilityLabel("Text Field")
+                            .accessibilityLabel("Text Field")
                             .multilineTextAlignment(.trailing)
                             .foregroundColor(themeManager.currentTheme.primaryTextColor)
                     }
@@ -91,24 +92,25 @@ public struct SettingsView: View {
                         }
                     }
 
-                    Button(action: { showingThemePreview = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        HStack {
-                            Text("Theme Preview")
-                                .foregroundColor(themeManager.currentTheme.primaryTextColor)
-                            Spacer()
-                            Circle()
-                                .fill(themeManager.currentTheme.primaryAccentColor)
-                                .frame(width: 20, height: 20)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                    Button(action: { showingThemePreview = true }).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            HStack {
+                                Text("Theme Preview")
+                                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                                Spacer()
+                                Circle()
+                                    .fill(themeManager.currentTheme.primaryAccentColor)
+                                    .frame(width: 20, height: 20)
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                            }
                         }
-                    }
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
 
                 // --- Dashboard Section ---
                 Section("Dashboard") {
-                    Stepper("Items per section: \\(dashboardItemLimit)", value: $dashboardItemLimit, in: 1 ... 10)
+                    Stepper("Items per section: \\(dashboardItemLimit)", value: $dashboardItemLimit, in: 1...10)
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -156,7 +158,7 @@ public struct SettingsView: View {
                     Toggle("Auto-Delete Completed Tasks", isOn: $autoDeleteCompleted)
 
                     if autoDeleteCompleted {
-                        Stepper("Delete after: \\(autoDeleteDays) days", value: $autoDeleteDays, in: 1 ... 90)
+                        Stepper("Delete after: \\(autoDeleteDays) days", value: $autoDeleteDays, in: 1...90)
                     }
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
@@ -174,17 +176,18 @@ public struct SettingsView: View {
 
                 // --- Sync & Cloud Section ---
                 Section("Sync & Cloud") {
-                    Button(action: { showingCloudKitSheet = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        HStack {
-                            Image(systemName: "icloud")
-                                .foregroundColor(.blue)
-                            Text("iCloud Sync")
-                                .foregroundColor(themeManager.currentTheme.primaryTextColor)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                    Button(action: { showingCloudKitSheet = true }).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            HStack {
+                                Image(systemName: "icloud")
+                                    .foregroundColor(.blue)
+                                Text("iCloud Sync")
+                                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                            }
                         }
-                    }
 
                     Toggle("Auto Sync", isOn: $autoSyncEnabled)
 
@@ -221,7 +224,8 @@ public struct SettingsView: View {
                         .accessibilityLabel("Button")
                         .foregroundColor(themeManager.currentTheme.destructiveColor)
                         .alert("Confirm Deletion", isPresented: $showingClearDataConfirmation) {
-                            Button("Delete", role: .destructive, action: performClearOldData).accessibilityLabel("Button")
+                            Button("Delete", role: .destructive, action: performClearOldData)
+                                .accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
                             Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
                         } message: {
@@ -314,7 +318,8 @@ public struct SettingsView: View {
     }
 
     func openAppSettings() {
-        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications") else {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications")
+        else {
             print("Cannot open system preferences URL.")
             return
         }

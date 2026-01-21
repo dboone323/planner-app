@@ -17,8 +17,7 @@ protocol RecordMappable {
 }
 
 /// Pure mapping logic for CloudKit records - no I/O operations
-struct RecordMapper {
-
+enum RecordMapper {
     // MARK: - Task Mapping
 
     /// Map a CKRecord to a Task model
@@ -169,7 +168,8 @@ struct RecordMapper {
     /// Compare two records to determine which is newer
     static func isNewer(_ record1: CKRecord, than record2: CKRecord) -> Bool {
         guard let date1 = record1.modificationDate,
-              let date2 = record2.modificationDate else {
+              let date2 = record2.modificationDate
+        else {
             return false
         }
         return date1 > date2

@@ -136,7 +136,7 @@ public struct SentimentAnalyticsView: View {
                             }
                         }
                         .frame(height: 200)
-                        .chartYScale(domain: -1 ... 1)
+                        .chartYScale(domain: -1...1)
                         .chartXAxis {
                             AxisMarks(values: .automatic) { _ in
                                 AxisValueLabel(format: .dateTime.month().day())

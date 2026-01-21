@@ -9,7 +9,6 @@
 import XCTest
 
 final class ModernThemesTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

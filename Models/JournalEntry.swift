@@ -39,8 +39,8 @@ public struct JournalEntry: Identifiable, Codable {
 
     /// Update entry content and trigger sentiment analysis
     mutating func updateContent(_ newContent: String) {
-        self.body = newContent
-        self.modifiedAt = Date()
+        body = newContent
+        modifiedAt = Date()
 
         // Analyze sentiment synchronously
         analyzeSentiment()
@@ -61,8 +61,8 @@ public struct JournalEntry: Identifiable, Codable {
         let rawScore = Double(positiveCount - negativeCount)
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
 
-        self.sentimentScore = normalizedScore
-        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        sentimentScore = normalizedScore
+        sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion

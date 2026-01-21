@@ -25,15 +25,15 @@ class AccessControl {
     func permissions(for role: Role) -> Permission {
         switch role {
         case .owner:
-            return Permission(canEdit: true, canDelete: true, canInvite: true)
+            Permission(canEdit: true, canDelete: true, canInvite: true)
         case .editor:
-            return Permission(canEdit: true, canDelete: false, canInvite: false)
+            Permission(canEdit: true, canDelete: false, canInvite: false)
         case .viewer:
-            return Permission(canEdit: false, canDelete: false, canInvite: false)
+            Permission(canEdit: false, canDelete: false, canInvite: false)
         }
     }
 
-    func canUser(userId: UUID, perform action: (Permission) -> Bool, in workspace: Workspace) -> Bool {
+    func canUser(userId _: UUID, perform action: (Permission) -> Bool, in _: Workspace) -> Bool {
         // In a real app, check user's role in workspace
         // For prototype, assume owner
         let userRole = Role.owner

@@ -258,7 +258,8 @@ import SwiftUI
             setupQuickMenu()
         }
 
-        @objc private func showQuickMenu() {
+        @objc
+        private func showQuickMenu() {
             // Show quick actions menu
         }
 
@@ -288,20 +289,24 @@ import SwiftUI
             statusItem?.menu = menu
         }
 
-        @objc private func quickAddTask() {
+        @objc
+        private func quickAddTask() {
             // Implement quick add task
         }
 
-        @objc private func quickAddGoal() {
+        @objc
+        private func quickAddGoal() {
             // Implement quick add goal
         }
 
-        @objc private func showDashboard() {
+        @objc
+        private func showDashboard() {
             // Bring app to front
             NSApp.activate(ignoringOtherApps: true)
         }
 
-        @objc private func quitApp() {
+        @objc
+        private func quitApp() {
             NSApp.terminate(nil)
         }
     }
@@ -367,19 +372,23 @@ import SwiftUI
             }
         }
 
-        @objc private func addTask() {
+        @objc
+        private func addTask() {
             // Handle add task
         }
 
-        @objc private func addGoal() {
+        @objc
+        private func addGoal() {
             // Handle add goal
         }
 
-        @objc private func search() {
+        @objc
+        private func search() {
             // Handle search
         }
 
-        @objc private func showCalendar() {
+        @objc
+        private func showCalendar() {
             // Handle show calendar
         }
     }
@@ -491,8 +500,8 @@ class IOSFeatureProvider: PlatformFeatureProvider {
                 .compactMap({ $0 as? UIWindowScene })
                 .first(where: { $0.activationState == .foregroundActive }),
                 let rootViewController = windowScene.windows
-                .first(where: { $0.isKeyWindow })?
-                .rootViewController {
+                    .first(where: { $0.isKeyWindow })?
+                    .rootViewController {
                 rootViewController.present(activityViewController, animated: true)
             }
         #endif

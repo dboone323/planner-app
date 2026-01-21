@@ -9,7 +9,6 @@
 import XCTest
 
 final class TaskRowTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

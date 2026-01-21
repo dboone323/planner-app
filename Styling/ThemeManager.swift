@@ -19,14 +19,14 @@ public class ThemeManager: ObservableObject {
     // the `didSet` observer calls `updateCurrentTheme`.
     @AppStorage(AppSettingKeys.themeColorName) var currentThemeName: String = Theme.defaultTheme.name {
         didSet {
-            self.updateCurrentTheme()
+            updateCurrentTheme()
         }
     }
 
     init() {
         // Initial theme is set by the @Published property initializer above.
         // This ensures the theme is correct even before `selectedThemeName.didSet` is first called.
-        print("ThemeManager initialized. Current theme loaded: \(self.currentTheme.name)")
+        print("ThemeManager initialized. Current theme loaded: \(currentTheme.name)")
     }
 
     // Finds the Theme struct corresponding to the name stored in `currentThemeName`
@@ -37,9 +37,9 @@ public class ThemeManager: ObservableObject {
 
         // Only update the published property if the theme actually changed.
         // This prevents unnecessary UI refreshes if the picker selects the current theme again.
-        if newTheme != self.currentTheme {
-            self.currentTheme = newTheme
-            print("Theme updated to: \(self.currentTheme.name)") // For debugging
+        if newTheme != currentTheme {
+            currentTheme = newTheme
+            print("Theme updated to: \(currentTheme.name)") // For debugging
         }
     }
 
@@ -51,7 +51,7 @@ public class ThemeManager: ObservableObject {
 
     // Manually set a theme (used by ThemePreviewView)
     func setTheme(_ theme: Theme) {
-        self.currentThemeName = theme.name
+        currentThemeName = theme.name
         // The didSet observer will trigger updateCurrentTheme automatically
     }
 }

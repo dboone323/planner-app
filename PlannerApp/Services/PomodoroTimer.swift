@@ -5,8 +5,8 @@
 // Service for Pomodoro technique timer
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 class PomodoroTimer: ObservableObject {
     @Published var timeRemaining: Int = 25 * 60
@@ -20,9 +20,9 @@ class PomodoroTimer: ObservableObject {
 
         var duration: Int {
             switch self {
-            case .work: return 25 * 60
-            case .shortBreak: return 5 * 60
-            case .longBreak: return 15 * 60
+            case .work: 25 * 60
+            case .shortBreak: 5 * 60
+            case .longBreak: 15 * 60
             }
         }
     }

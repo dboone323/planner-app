@@ -15,71 +15,89 @@ public struct AddGoalView: View {
     @FocusState private var isDescriptionFocused: Bool
 
     private var isFormValid: Bool {
-        !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-            !self.description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
         NavigationView {
             Form {
                 Section("Goal Details") {
-                    TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
-                        .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.primaryFontName, size: 16))
-                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    TextField("Goal Title", text: $title).accessibilityLabel("Text Field")
+                        .accessibilityLabel("Text Field")
+                        .font(themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.primaryFontName,
+                            size: 16
+                        ))
+                        .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
                     VStack(alignment: .leading) {
                         Text("Description")
-                            .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.secondaryFontName, size: 14))
-                            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                            .font(themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.secondaryFontName,
+                                size: 14
+                            ))
+                            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
 
-                        TextEditor(text: self.$description)
+                        TextEditor(text: $description)
                             .frame(height: 100)
-                            .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.primaryFontName, size: 16))
-                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                            .focused(self.$isDescriptionFocused)
+                            .font(themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.primaryFontName,
+                                size: 16
+                            ))
+                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .focused($isDescriptionFocused)
                     }
 
-                    DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
-                        .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.primaryFontName, size: 16))
+                    DatePicker("Target Date", selection: $targetDate, displayedComponents: .date)
+                        .font(themeManager.currentTheme.font(
+                            forName: themeManager.currentTheme.primaryFontName,
+                            size: 16
+                        ))
 
-                    Picker("Priority", selection: self.$priority) {
+                    Picker("Priority", selection: $priority) {
                         ForEach(GoalPriority.allCases, id: \.self) { priority in
                             Text(priority.displayName).tag(priority)
                         }
                     }
 
                     VStack(alignment: .leading) {
-                        Text("Progress: \(Int(self.progress * 100))%")
-                            .font(self.themeManager.currentTheme.font(forName: self.themeManager.currentTheme.secondaryFontName, size: 14))
-                            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        Text("Progress: \(Int(progress * 100))%")
+                            .font(themeManager.currentTheme.font(
+                                forName: themeManager.currentTheme.secondaryFontName,
+                                size: 14
+                            ))
+                            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
 
-                        Slider(value: self.$progress, in: 0 ... 1)
-                            .accentColor(self.themeManager.currentTheme.primaryAccentColor)
+                        Slider(value: $progress, in: 0...1)
+                            .accentColor(themeManager.currentTheme.primaryAccentColor)
                     }
                 }
-                .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
+                .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
             }
-            .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
+            .background(themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .scrollContentBackground(.hidden)
-            .accentColor(self.themeManager.currentTheme.primaryAccentColor)
+            .accentColor(themeManager.currentTheme.primaryAccentColor)
             .navigationTitle("New Goal")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
-                        self.dismiss()
+                        dismiss()
                     }
-                    .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
+                    .foregroundColor(themeManager.currentTheme.primaryAccentColor)
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save").accessibilityLabel("Button").accessibilityLabel("Button") {
-                        self.saveGoal()
-                        self.dismiss()
+                        saveGoal()
+                        dismiss()
                     }
-                    .disabled(!self.isFormValid)
-                    .foregroundColor(self.isFormValid ? self.themeManager.currentTheme.primaryAccentColor : self.themeManager.currentTheme
-                        .secondaryTextColor
+                    .disabled(!isFormValid)
+                    .foregroundColor(isFormValid
+                        ? themeManager.currentTheme.primaryAccentColor
+                        : themeManager.currentTheme
+                            .secondaryTextColor
                     )
                 }
             }
@@ -89,13 +107,13 @@ public struct AddGoalView: View {
     private func saveGoal() {
         let newGoal = Goal(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
-            targetDate: self.targetDate,
-            priority: self.priority,
-            progress: self.progress
+            description: description.trimmingCharacters(in: .whitespacesAndNewlines),
+            targetDate: targetDate,
+            priority: priority,
+            progress: progress
         )
-        self.goals.append(newGoal)
-        GoalDataManager.shared.save(goals: self.goals)
+        goals.append(newGoal)
+        GoalDataManager.shared.save(goals: goals)
     }
 }
 

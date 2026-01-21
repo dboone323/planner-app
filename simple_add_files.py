@@ -18,6 +18,7 @@ result = subprocess.run(
     ["find", ".", "-name", "*.swift", "-not", "-path", "./DerivedData/*"],
     capture_output=True,
     text=True,
+    check=False,
 )
 files_on_disk = [
     f.replace("./", "") for f in result.stdout.strip().split("\n") if f.strip()
@@ -25,8 +26,9 @@ files_on_disk = [
 print(f"Found {len(files_on_disk)} Swift files on disk")
 
 # Get files currently in project
+# pylint: disable=invalid-name
 project_path = "PlannerApp.xcodeproj/project.pbxproj"
-with open(project_path) as f:
+with open(project_path, encoding='utf-8') as f:
     content = f.read()
 
 file_pattern = r"path = ([^;]+\.swift);"
@@ -77,8 +79,15 @@ for file_path in missing_files:
     build_file_uuid = uuid.uuid4().hex.upper()[:24]
 
     # Create entries
-    build_file_entry = f"\t\t{build_file_uuid} /* {filename} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
-    file_ref_entry = f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "{file_path}"; sourceTree = "<group>"; }};'
+    build_file_entry = (
+        f"\t\t{build_file_uuid} /* {filename} in Sources */ = "
+        f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
+    )
+    file_ref_entry = (
+        f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
+        f'lastKnownFileType = sourcecode.swift; path = "{file_path}"; '
+        f'sourceTree = "<group>"; }};'
+    )
     source_entry = f"\t\t\t\t{build_file_uuid} /* {filename} in Sources */,"
 
     new_build_files.append(build_file_entry)
@@ -139,7 +148,7 @@ if sources_section:
     print("Added source build phase entries")
 
 # Write the updated project file
-with open(project_path, "w") as f:
+with open(project_path, "w", encoding='utf-8') as f:
     f.write(content)
 
 print(f"Successfully added {len(missing_files)} files to the project!")

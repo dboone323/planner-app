@@ -125,7 +125,7 @@ public struct ProgressUpdateSheet: View {
                 .font(.headline)
                 .foregroundColor(themeManager.currentTheme.primaryTextColor)
 
-            Slider(value: $progress, in: 0 ... 1, step: 0.05)
+            Slider(value: $progress, in: 0...1, step: 0.05)
                 .tint(progressColor)
 
             HStack {
@@ -159,21 +159,21 @@ public struct ProgressUpdateSheet: View {
                             .padding(.vertical, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(progress >= value ?
-                                        themeManager.currentTheme.primaryAccentColor.opacity(0.2) :
-                                        themeManager.currentTheme.secondaryBackgroundColor
+                                    .fill(progress >= value
+                                        ? themeManager.currentTheme.primaryAccentColor.opacity(0.2)
+                                        : themeManager.currentTheme.secondaryBackgroundColor
                                     )
                             )
-                            .foregroundColor(progress >= value ?
-                                themeManager.currentTheme.primaryAccentColor :
-                                themeManager.currentTheme.primaryTextColor
+                            .foregroundColor(progress >= value
+                                ? themeManager.currentTheme.primaryAccentColor
+                                : themeManager.currentTheme.primaryTextColor
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(
-                                        progress >= value ?
-                                            themeManager.currentTheme.primaryAccentColor.opacity(0.5) :
-                                            Color.clear,
+                                        progress >= value
+                                            ? themeManager.currentTheme.primaryAccentColor.opacity(0.5)
+                                            : Color.clear,
                                         lineWidth: 1
                                     )
                             )

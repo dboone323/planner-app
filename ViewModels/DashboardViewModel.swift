@@ -72,7 +72,7 @@ public class DashboardViewModel: ObservableObject {
 
         // Get the current calendar and configure it with the user's setting for the first day of the week.
         var calendar = Calendar.current
-        calendar.firstWeekday = self.firstDayOfWeekSetting
+        calendar.firstWeekday = firstDayOfWeekSetting
 
         // Calculate date ranges needed for filtering (today, next week).
         let today = Date()
@@ -82,7 +82,7 @@ public class DashboardViewModel: ObservableObject {
               let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfToday)
         else {
             print("Error calculating date ranges for dashboard.")
-            self.resetData() // Clear displayed data if dates are invalid
+            resetData() // Clear displayed data if dates are invalid
             return
         }
 
@@ -108,27 +108,27 @@ public class DashboardViewModel: ObservableObject {
 
         // --- Update Total Counts ---
         // Store the counts *before* applying the display limit.
-        self.totalTodaysEventsCount = filteredTodaysEvents.count
-        self.totalIncompleteTasksCount = filteredIncompleteTasks.count
-        self.totalUpcomingGoalsCount = filteredUpcomingGoals.count
+        totalTodaysEventsCount = filteredTodaysEvents.count
+        totalIncompleteTasksCount = filteredIncompleteTasks.count
+        totalUpcomingGoalsCount = filteredUpcomingGoals.count
 
         // --- Update Full Data Arrays ---
         // Store complete arrays for Add* views to bind to
         self.allEvents = allEvents
         self.allGoals = allGoals
         // Load journal entries
-        self.allJournalEntries = JournalDataManager.shared.load()
+        allJournalEntries = JournalDataManager.shared.load()
 
         // --- Apply Limit and Update Published Arrays ---
         // Get the current limit value from @AppStorage.
-        let limit = self.dashboardItemLimit
+        let limit = dashboardItemLimit
         // Take only the first `limit` items from each filtered array.
-        self.todaysEvents = Array(filteredTodaysEvents.prefix(limit))
-        self.incompleteTasks = Array(filteredIncompleteTasks.prefix(limit))
-        self.upcomingGoals = Array(filteredUpcomingGoals.prefix(limit))
+        todaysEvents = Array(filteredTodaysEvents.prefix(limit))
+        incompleteTasks = Array(filteredIncompleteTasks.prefix(limit))
+        upcomingGoals = Array(filteredUpcomingGoals.prefix(limit))
 
         print(
-            "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
+            "Dashboard data fetched. Limit: \(limit). Today: \(totalTodaysEventsCount), Tasks: \(totalIncompleteTasksCount), Goals: \(totalUpcomingGoalsCount)"
         ) // Debugging log
     }
 
@@ -136,16 +136,16 @@ public class DashboardViewModel: ObservableObject {
     @MainActor
     func refreshData() async {
         // Call existing method
-        self.fetchDashboardData()
+        fetchDashboardData()
 
         // Update quick stats
-        self.updateQuickStats()
+        updateQuickStats()
 
         // Generate recent activities
-        self.generateRecentActivities()
+        generateRecentActivities()
 
         // Generate upcoming items
-        self.generateUpcomingItems()
+        generateUpcomingItems()
 
         print("Dashboard refresh completed") // Debugging log
     }
@@ -154,11 +154,11 @@ public class DashboardViewModel: ObservableObject {
         let allTasks = TaskDataManager.shared.load()
         let allGoals = GoalDataManager.shared.load()
 
-        self.totalTasks = allTasks.count
-        self.completedTasks = allTasks.count(where: { $0.isCompleted })
-        self.totalGoals = allGoals.count
-        self.completedGoals = 0 // Goal completion not yet implemented
-        self.todayEvents = self.totalTodaysEventsCount
+        totalTasks = allTasks.count
+        completedTasks = allTasks.count(where: { $0.isCompleted })
+        totalGoals = allGoals.count
+        completedGoals = 0 // Goal completion not yet implemented
+        todayEvents = totalTodaysEventsCount
     }
 
     private func generateRecentActivities() {
@@ -202,7 +202,7 @@ public class DashboardViewModel: ObservableObject {
             ))
         }
 
-        self.recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
+        recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
     }
 
     private func generateUpcomingItems() {
@@ -237,32 +237,32 @@ public class DashboardViewModel: ObservableObject {
             ))
         }
 
-        self.upcomingItems = items.sorted { $0.date < $1.date }
+        upcomingItems = items.sorted { $0.date < $1.date }
     }
 
     // Helper function to clear all published data, typically used on error.
     private func resetData() {
-        self.todaysEvents = []
-        self.incompleteTasks = []
-        self.upcomingGoals = []
-        self.totalTodaysEventsCount = 0
-        self.totalIncompleteTasksCount = 0
-        self.totalUpcomingGoalsCount = 0
+        todaysEvents = []
+        incompleteTasks = []
+        upcomingGoals = []
+        totalTodaysEventsCount = 0
+        totalIncompleteTasksCount = 0
+        totalUpcomingGoalsCount = 0
 
         // Reset modern dashboard data
-        self.recentActivities = []
-        self.upcomingItems = []
+        recentActivities = []
+        upcomingItems = []
 
         // Reset full data arrays
-        self.allGoals = []
-        self.allEvents = []
-        self.allJournalEntries = []
+        allGoals = []
+        allEvents = []
+        allJournalEntries = []
 
-        self.totalTasks = 0
-        self.completedTasks = 0
-        self.totalGoals = 0
-        self.completedGoals = 0
-        self.todayEvents = 0
+        totalTasks = 0
+        completedTasks = 0
+        totalGoals = 0
+        completedGoals = 0
+        todayEvents = 0
 
         print("Dashboard data reset.") // Debugging log
     }
