@@ -4,7 +4,6 @@ Tests for PlannerApp workflow_quality_check
 """
 import sys
 import os
-import pytest
 from unittest.mock import patch
 
 # Add root to path
@@ -18,5 +17,5 @@ import PlannerApp.workflow_quality_check as wqc
 
 def test_main():
     """Test main function returns 0."""
-    with patch('builtins.print'):
+    with patch("builtins.print"):
         assert wqc.main() == 0

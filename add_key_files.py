@@ -49,7 +49,7 @@ def main():
         else:
             print(f"Found: {file_path}")
 
-    with open(project_path, encoding='utf-8') as f:
+    with open(project_path, encoding="utf-8") as f:
         content = f.read()
 
     # Generate entries for each file
@@ -70,7 +70,7 @@ def main():
             f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
         )
         file_ref_entry = (
-            f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
+            f"\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; "
             f'lastKnownFileType = sourcecode.swift; path = "{file_path}"; '
             f'sourceTree = "<group>"; }};'
         )
@@ -136,7 +136,7 @@ def main():
         print("✓ Added source build phase entries")
 
     # Write the updated content
-    with open(project_path, "w", encoding='utf-8') as f:
+    with open(project_path, "w", encoding="utf-8") as f:
         f.write(content)
 
     print(f"\nSuccessfully added {len(missing_files)} files to the project!")

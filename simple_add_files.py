@@ -28,7 +28,7 @@ print(f"Found {len(files_on_disk)} Swift files on disk")
 # Get files currently in project
 # pylint: disable=invalid-name
 project_path = "PlannerApp.xcodeproj/project.pbxproj"
-with open(project_path, encoding='utf-8') as f:
+with open(project_path, encoding="utf-8") as f:
     content = f.read()
 
 file_pattern = r"path = ([^;]+\.swift);"
@@ -84,7 +84,7 @@ for file_path in missing_files:
         f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
     )
     file_ref_entry = (
-        f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
+        f"\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; "
         f'lastKnownFileType = sourcecode.swift; path = "{file_path}"; '
         f'sourceTree = "<group>"; }};'
     )
@@ -148,7 +148,7 @@ if sources_section:
     print("Added source build phase entries")
 
 # Write the updated project file
-with open(project_path, "w", encoding='utf-8') as f:
+with open(project_path, "w", encoding="utf-8") as f:
     f.write(content)
 
 print(f"Successfully added {len(missing_files)} files to the project!")

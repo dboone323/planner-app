@@ -93,7 +93,7 @@ def add_files_to_project(missing_files):
             f"{{isa = PBXBuildFile; fileRef = {file_ref_uuid} /* {filename} */; }};"
         )
         file_ref_entry = (
-            f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
+            f"\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; "
             f'lastKnownFileType = sourcecode.swift; path = "{file_path}"; '
             f'sourceTree = "<group>"; }};'
         )

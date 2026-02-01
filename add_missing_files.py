@@ -101,8 +101,8 @@ def add_files_to_project():
 
         # Create file reference entry
         file_ref_entry = (
-            f'\t\t{file_ref_uuid} /* {file_name} */ = {{isa = PBXFileReference; '
-            f'lastKnownFileType = sourcecode.swift; path = {file_name}; '
+            f"\t\t{file_ref_uuid} /* {file_name} */ = {{isa = PBXFileReference; "
+            f"lastKnownFileType = sourcecode.swift; path = {file_name}; "
             f'sourceTree = "<group>"; }};'
         )
         new_file_refs.append(file_ref_entry)
