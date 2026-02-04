@@ -29,9 +29,9 @@ PlannerApp helps users organize their daily tasks, manage projects, and track pr
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/dboone323/planner-app.git
-   ```
+    ```bash
+    git clone https://github.com/dboone323/planner-app.git
+    ```
 2. Open `PlannerApp.xcodeproj` in Xcode.
 3. Build and run (Cmd+R).
 

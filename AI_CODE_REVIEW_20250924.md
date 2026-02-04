@@ -1584,19 +1584,19 @@ struct CloudKitSyncView: View {
 ## Specific Action Items
 
 1. **Immediate Fixes Required:**
-   - Ensure all CloudKit operations are async and off-main-thread
-   - Implement proper error handling with user-friendly messages
-   - Add loading states and empty state views
+    - Ensure all CloudKit operations are async and off-main-thread
+    - Implement proper error handling with user-friendly messages
+    - Add loading states and empty state views
 
 2. **Medium-term Improvements:**
-   - Refactor to use proper MVVM architecture
-   - Implement protocol abstraction for testability
-   - Add unit tests for ViewModel and services
+    - Refactor to use proper MVVM architecture
+    - Implement protocol abstraction for testability
+    - Add unit tests for ViewModel and services
 
 3. **Long-term Enhancements:**
-   - Implement data caching strategy
-   - Add conflict resolution for concurrent edits
-   - Implement background sync with `CKDatabaseSubscription`
+    - Implement data caching strategy
+    - Add conflict resolution for concurrent edits
+    - Implement background sync with `CKDatabaseSubscription`
 
 Would you like me to provide more specific feedback if you share the actual code content? I can then analyze your exact implementation and provide tailored recommendations.
 

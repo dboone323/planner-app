@@ -16,26 +16,26 @@ This document outlines the steps needed to properly configure your PlannerApp fo
 4. Find your app's identifier and click on it
 5. Ensure "iCloud" capability is enabled
 6. Under iCloud, check "CloudKit" and configure containers:
-   - Click "+" to add a container
-   - Name format: `iCloud.com.yourcompany.PlannerApp`
-   - Description: "PlannerApp CloudKit Container"
-   - Click "Continue" and "Register"
+    - Click "+" to add a container
+    - Name format: `iCloud.com.yourcompany.PlannerApp`
+    - Description: "PlannerApp CloudKit Container"
+    - Click "Continue" and "Register"
 
 ## Step 2: Configure CloudKit Dashboard
 
 1. Go to [CloudKit Dashboard](https://icloud.developer.apple.com/dashboard/)
 2. Select your newly created container
 3. Configure schema for your record types:
-   - Create "Task" record type with fields:
-     - title (String)
-     - isCompleted (Int/Boolean)
-     - dueDate (Date/Time)
-     - createdAt (Date/Time)
-     - completedAt (Date/Time)
-     - modifiedAt (Date/Time)
-     - notes (String)
-     - priority (Int)
-   - Repeat for "Goal", "CalendarEvent", and "JournalEntry" record types
+    - Create "Task" record type with fields:
+        - title (String)
+        - isCompleted (Int/Boolean)
+        - dueDate (Date/Time)
+        - createdAt (Date/Time)
+        - completedAt (Date/Time)
+        - modifiedAt (Date/Time)
+        - notes (String)
+        - priority (Int)
+    - Repeat for "Goal", "CalendarEvent", and "JournalEntry" record types
 4. Configure indexes for better performance
 5. Set up security roles if needed
 
@@ -47,16 +47,16 @@ This document outlines the steps needed to properly configure your PlannerApp fo
 4. Ensure "iCloud" capability is added
 5. Check "CloudKit" and select your container
 6. Verify entitlements file contains:
-   ```xml
-   <key>com.apple.developer.icloud-container-identifiers</key>
-   <array>
-       <string>iCloud.com.yourcompany.PlannerApp</string>
-   </array>
-   <key>com.apple.developer.icloud-services</key>
-   <array>
-       <string>CloudKit</string>
-   </array>
-   ```
+    ```xml
+    <key>com.apple.developer.icloud-container-identifiers</key>
+    <array>
+        <string>iCloud.com.yourcompany.PlannerApp</string>
+    </array>
+    <key>com.apple.developer.icloud-services</key>
+    <array>
+        <string>CloudKit</string>
+    </array>
+    ```
 
 ## Step 4: Configure App Store Connect
 
@@ -64,8 +64,8 @@ This document outlines the steps needed to properly configure your PlannerApp fo
 2. Navigate to "My Apps" and select your app
 3. Go to "App Information"
 4. Under "iCloud Container Environment", select:
-   - Development: Use during TestFlight testing
-   - Production: Use for App Store distribution
+    - Development: Use during TestFlight testing
+    - Production: Use for App Store distribution
 5. Save changes
 
 ## Step 5: TestFlight Configuration

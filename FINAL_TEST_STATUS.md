@@ -10,19 +10,19 @@ All major issues have been successfully resolved. The PlannerApp now builds with
 
 - **Problem**: Add Goal, Add Event, Add Journal Entry sheets were not functioning properly
 - **Solution**:
-  - Fixed data binding in DashboardView from `.constant([])` to proper bindings (`$viewModel.allGoals`, `$viewModel.allEvents`, `$viewModel.allJournalEntries`)
-  - Added full data arrays to DashboardViewModel (`allGoals`, `allEvents`, `allJournalEntries`)
-  - Enhanced all Add\*View files with proper data persistence and dismiss functionality
-  - Added Foundation imports to resolve compilation issues
+    - Fixed data binding in DashboardView from `.constant([])` to proper bindings (`$viewModel.allGoals`, `$viewModel.allEvents`, `$viewModel.allJournalEntries`)
+    - Added full data arrays to DashboardViewModel (`allGoals`, `allEvents`, `allJournalEntries`)
+    - Enhanced all Add\*View files with proper data persistence and dismiss functionality
+    - Added Foundation imports to resolve compilation issues
 - **Status**: ✅ WORKING - All quick action sheets now properly save data and dismiss
 
 ### 2. macOS Window Layout Fixed
 
 - **Problem**: App only used a small slice of the window instead of full window area
 - **Solution**:
-  - Replaced all deprecated `NavigationView` instances with modern `NavigationStack`
-  - Fixed across 15+ view files including main navigation, settings, and all Add\* views
-  - Added iOS-specific compiler directives for `navigationBarTitleDisplayMode(.inline)`
+    - Replaced all deprecated `NavigationView` instances with modern `NavigationStack`
+    - Fixed across 15+ view files including main navigation, settings, and all Add\* views
+    - Added iOS-specific compiler directives for `navigationBarTitleDisplayMode(.inline)`
 - **Status**: ✅ WORKING - App now properly utilizes full macOS window width
 
 ### 3. Settings Page Width Utilization
@@ -35,11 +35,11 @@ All major issues have been successfully resolved. The PlannerApp now builds with
 
 - **Problem**: Calendar view lacked proper calendar widget and date highlighting
 - **Solution**:
-  - Complete rewrite of CalendarView.swift with interactive calendar grid
-  - Added date highlighting for dates with goals, events, and tasks
-  - Embedded all supporting components (CalendarGrid, CalendarDayView, DateSectionView, etc.)
-  - Fixed model property references to match actual model structure
-  - Added proper data loading and persistence functionality
+    - Complete rewrite of CalendarView.swift with interactive calendar grid
+    - Added date highlighting for dates with goals, events, and tasks
+    - Embedded all supporting components (CalendarGrid, CalendarDayView, DateSectionView, etc.)
+    - Fixed model property references to match actual model structure
+    - Added proper data loading and persistence functionality
 - **Status**: ✅ WORKING - Calendar now displays interactive calendar with date highlighting
 
 ## 🔧 TECHNICAL DETAILS
@@ -60,10 +60,10 @@ All major issues have been successfully resolved. The PlannerApp now builds with
 
 - **Before**: Basic calendar view without interactive features
 - **After**: Full calendar widget with:
-  - Month/year navigation
-  - Date highlighting for events/goals/tasks
-  - Detailed view for selected dates
-  - Proper data loading and display
+    - Month/year navigation
+    - Date highlighting for events/goals/tasks
+    - Detailed view for selected dates
+    - Proper data loading and display
 
 ### Platform Compatibility
 
