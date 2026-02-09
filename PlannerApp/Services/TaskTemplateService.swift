@@ -52,7 +52,7 @@ class TaskTemplateService {
                 defaultPriority: .low,
                 defaultTags: ["personal", "shopping"],
                 checklistItems: ["Milk", "Eggs", "Bread"]
-            )
+            ),
         ]
     }
 }

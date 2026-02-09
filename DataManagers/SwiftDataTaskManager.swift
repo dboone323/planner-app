@@ -109,17 +109,17 @@ final class SwiftDataTaskManager: ObservableObject {
         let calendar = Calendar.current
         let todayStart = calendar.startOfDay(for: Date())
         let todayEnd = calendar.date(byAdding: .day, value: 1, to: todayStart)!
-        let dueToday = tasks.filter { task in
+        let dueToday = tasks.count(where: { task in
             guard let dueDate = task.dueDate, !task.isCompleted else { return false }
             return dueDate >= todayStart && dueDate < todayEnd
-        }.count
+        })
 
         return [
             "total": tasks.count,
             "completed": completed,
             "incomplete": tasks.count - completed,
             "overdue": overdue,
-            "dueToday": dueToday
+            "dueToday": dueToday,
         ]
     }
 

@@ -245,11 +245,13 @@ public struct CalendarView: View {
     // MARK: - Calendar Navigation
 
     private func previousMonth() {
-        self.selectedDate = Calendar.current.date(byAdding: .month, value: -1, to: self.selectedDate) ?? self.selectedDate
+        self.selectedDate = Calendar.current.date(byAdding: .month, value: -1, to: self.selectedDate) ?? self
+            .selectedDate
     }
 
     private func nextMonth() {
-        self.selectedDate = Calendar.current.date(byAdding: .month, value: 1, to: self.selectedDate) ?? self.selectedDate
+        self.selectedDate = Calendar.current.date(byAdding: .month, value: 1, to: self.selectedDate) ?? self
+            .selectedDate
     }
 
     // MARK: - Data Functions
@@ -258,7 +260,9 @@ public struct CalendarView: View {
         self.events = CalendarDataManager.shared.load()
         self.goals = GoalDataManager.shared.load()
         self.tasks = TaskDataManager.shared.load()
-        print("Calendar data loaded. Events: \(self.events.count), Goals: \(self.goals.count), Tasks: \(self.tasks.count)")
+        print(
+            "Calendar data loaded. Events: \(self.events.count), Goals: \(self.goals.count), Tasks: \(self.tasks.count)"
+        )
     }
 
     private func saveEvents() {
@@ -278,7 +282,8 @@ extension Calendar {
         let firstWeekday = component(.weekday, from: monthStart)
         let daysFromPreviousMonth = (firstWeekday - firstDayOfWeek + 7) % 7
 
-        guard let calendarStart = self.date(byAdding: .day, value: -daysFromPreviousMonth, to: monthStart) else { return [] }
+        guard let calendarStart = self.date(byAdding: .day, value: -daysFromPreviousMonth, to: monthStart)
+        else { return [] }
 
         var dates: [Date] = []
         var currentDate = calendarStart

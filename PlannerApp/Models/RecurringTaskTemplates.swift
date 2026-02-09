@@ -29,8 +29,8 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
     public var description: String
     public var priority: String
     public var recurrence: RecurrenceType
-    public var customDays: Set<Int>?  // For custom recurrence (1=Sunday, 7=Saturday)
-    public var reminderOffset: TimeInterval?  // Seconds before due
+    public var customDays: Set<Int>? // For custom recurrence (1=Sunday, 7=Saturday)
+    public var reminderOffset: TimeInterval? // Seconds before due
     public var isActive: Bool
     public var lastGenerated: Date?
     public var nextDueDate: Date?
@@ -54,7 +54,8 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
         self.reminderOffset = reminderOffset
         self.isActive = isActive
         self.nextDueDate = Self.calculateNextDueDate(
-            from: Date(), recurrence: recurrence, customDays: customDays)
+            from: Date(), recurrence: recurrence, customDays: customDays
+        )
     }
 
     // MARK: - Date Calculation
@@ -157,8 +158,8 @@ final class RecurringTaskTemplateManager: ObservableObject {
 
         for i in self.templates.indices {
             guard self.templates[i].isActive,
-                let nextDue = templates[i].nextDueDate,
-                nextDue <= now
+                  let nextDue = templates[i].nextDueDate,
+                  nextDue <= now
             else {
                 continue
             }
@@ -200,7 +201,7 @@ final class RecurringTaskTemplateManager: ObservableObject {
 
     private func loadTemplates() {
         if let data = userDefaults.data(forKey: templatesKey),
-            let loaded = try? JSONDecoder().decode([RecurringTaskTemplate].self, from: data)
+           let loaded = try? JSONDecoder().decode([RecurringTaskTemplate].self, from: data)
         {
             self.templates = loaded
         }

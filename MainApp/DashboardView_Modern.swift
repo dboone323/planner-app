@@ -181,7 +181,9 @@ public struct DashboardView: View {
                         }
 
                         LazyVStack(spacing: 12) {
-                            ForEach(self.viewModel.recentActivities.prefix(self.dashboardItemLimit), id: \.id) { activity in
+                            ForEach(self.viewModel.recentActivities.prefix(self.dashboardItemLimit),
+                                    id: \.id)
+                            { activity in
                                 ActivityRowView(activity: activity)
                             }
 

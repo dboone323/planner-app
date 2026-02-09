@@ -52,7 +52,7 @@ public struct SettingsView: View {
     let reminderTimeOptions: [String: Double] = [
         "None": 0, "At time of event": 1, "5 minutes before": 300,
         "15 minutes before": 900, "30 minutes before": 1800, "1 hour before": 3600,
-        "1 day before": 86400
+        "1 day before": 86400,
     ]
 
     var sortedReminderKeys: [String] {
@@ -216,7 +216,8 @@ public struct SettingsView: View {
 
                 // --- Data Management Section ---
                 Section("Data Management") {
-                    Button("Export Data", action: self.exportData).accessibilityLabel("Button").accessibilityLabel("Button")
+                    Button("Export Data", action: self.exportData).accessibilityLabel("Button")
+                        .accessibilityLabel("Button")
                         .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
 
                     Button("Clear Old Completed Tasks...", action: { self.showingClearDataConfirmation = true })

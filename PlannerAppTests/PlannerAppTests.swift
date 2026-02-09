@@ -660,7 +660,7 @@ final class PlannerAppTests: XCTestCase {
             let task: [String: Any] = [
                 "id": taskIndex,
                 "title": "Bulk Task \(taskIndex)",
-                "completed": taskIndex % 2 == 0
+                "completed": taskIndex % 2 == 0,
             ]
             tasks.append(task)
         }

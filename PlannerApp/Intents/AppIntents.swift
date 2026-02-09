@@ -108,7 +108,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             phrases: [
                 "Add a task to \(.applicationName)",
                 "Create task in \(.applicationName)",
-                "New task in \(.applicationName)"
+                "New task in \(.applicationName)",
             ],
             shortTitle: "Add Task",
             systemImageName: "plus.circle"
@@ -118,7 +118,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             intent: CompleteTaskIntent(),
             phrases: [
                 "Complete task in \(.applicationName)",
-                "Mark task done in \(.applicationName)"
+                "Mark task done in \(.applicationName)",
             ],
             shortTitle: "Complete Task",
             systemImageName: "checkmark.circle"
@@ -129,7 +129,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             phrases: [
                 "Show my tasks in \(.applicationName)",
                 "List tasks from \(.applicationName)",
-                "What are my tasks in \(.applicationName)"
+                "What are my tasks in \(.applicationName)",
             ],
             shortTitle: "List Tasks",
             systemImageName: "list.bullet"
@@ -139,7 +139,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
             intent: AddGoalIntent(),
             phrases: [
                 "Add a goal to \(.applicationName)",
-                "Create goal in \(.applicationName)"
+                "Create goal in \(.applicationName)",
             ],
             shortTitle: "Add Goal",
             systemImageName: "target"

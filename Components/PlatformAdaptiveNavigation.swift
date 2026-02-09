@@ -306,11 +306,11 @@ public struct ExamplePlatformView: View {
                 primaryActions: [
                     .init(title: "Add Item", icon: "plus") {
                         self.showingAddItem = true
-                    }
+                    },
                 ],
                 secondaryActions: [
                     .init(title: "Sort", icon: "arrow.up.arrow.down") {},
-                    .init(title: "Filter", icon: "line.3.horizontal.decrease.circle") {}
+                    .init(title: "Filter", icon: "line.3.horizontal.decrease.circle") {},
                 ]
             )
             .platformSheet(isPresented: self.$showingAddItem) {

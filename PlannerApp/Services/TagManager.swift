@@ -20,7 +20,7 @@ class TagManager {
         Tag(name: "Work", color: .blue),
         Tag(name: "Personal", color: .green),
         Tag(name: "Urgent", color: .red),
-        Tag(name: "Waiting", color: .orange)
+        Tag(name: "Waiting", color: .orange),
     ]
 
     func getAllTags() -> [Tag] {

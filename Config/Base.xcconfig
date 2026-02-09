@@ -1,2 +1,2 @@
-#include "../../Config/WorkspaceBase.xcconfig"
-// PlannerApp specific overrides
+// Base build settings for PlannerApp
+// Project-specific overrides below

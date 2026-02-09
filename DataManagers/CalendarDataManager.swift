@@ -139,7 +139,7 @@ final class CalendarDataManager: CalendarDataManaging {
         return [
             "total": total,
             "today": today,
-            "thisWeek": thisWeek
+            "thisWeek": thisWeek,
         ]
     }
 }

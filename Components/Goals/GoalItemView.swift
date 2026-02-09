@@ -91,9 +91,8 @@ public struct GoalItemView: View {
                             )
                             .foregroundColor(self.goal.isCompleted
                                 ? self.themeManager.currentTheme.secondaryTextColor
-                                : self.themeManager.currentTheme.primaryTextColor
-                            )
-                            .strikethrough(self.goal.isCompleted)
+                                : self.themeManager.currentTheme.primaryTextColor)
+                                .strikethrough(self.goal.isCompleted)
                     }
 
                     // Priority badge
@@ -152,9 +151,8 @@ public struct GoalItemView: View {
                 )
                 .foregroundColor(self.goal.isCompleted
                     ? self.themeManager.currentTheme.secondaryTextColor.opacity(0.7)
-                    : self.themeManager.currentTheme.secondaryTextColor
-                )
-                .lineLimit(2)
+                    : self.themeManager.currentTheme.secondaryTextColor)
+                    .lineLimit(2)
 
             // Target Date and status
             HStack {
@@ -199,9 +197,8 @@ public struct GoalItemView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.goal.isCompleted
                     ? self.themeManager.currentTheme.secondaryBackgroundColor.opacity(0.5)
-                    : self.themeManager.currentTheme.secondaryBackgroundColor
-                )
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                    : self.themeManager.currentTheme.secondaryBackgroundColor)
+                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)

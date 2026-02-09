@@ -62,8 +62,7 @@ public struct AddGoalView: View {
                 .foregroundColor(self.isFormValid
                     ? self.themeManager.currentTheme.primaryAccentColor
                     : self.themeManager.currentTheme
-                    .secondaryTextColor
-                )
+                        .secondaryTextColor)
             }
             .padding()
             .background(self.themeManager.currentTheme.secondaryBackgroundColor)

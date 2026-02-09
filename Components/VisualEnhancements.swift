@@ -36,7 +36,7 @@ struct GlassMorphismCard<Content: View>: View {
                         LinearGradient(
                             gradient: Gradient(colors: [
                                 self.themeManager.currentTheme.primaryAccentColor.opacity(0.05),
-                                self.themeManager.currentTheme.secondaryAccentColor.opacity(0.02)
+                                self.themeManager.currentTheme.secondaryAccentColor.opacity(0.02),
                             ]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -49,7 +49,7 @@ struct GlassMorphismCard<Content: View>: View {
                         LinearGradient(
                             gradient: Gradient(colors: [
                                 Color.white.opacity(0.6),
-                                Color.white.opacity(0.1)
+                                Color.white.opacity(0.1),
                             ]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -95,7 +95,7 @@ public struct AnimatedProgressRing: View {
                     LinearGradient(
                         gradient: Gradient(colors: [
                             self.themeManager.currentTheme.primaryAccentColor,
-                            self.themeManager.currentTheme.secondaryAccentColor
+                            self.themeManager.currentTheme.secondaryAccentColor,
                         ]),
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -176,7 +176,7 @@ public struct FloatingActionButton: View {
                             LinearGradient(
                                 gradient: Gradient(colors: [
                                     self.themeManager.currentTheme.primaryAccentColor,
-                                    self.themeManager.currentTheme.primaryAccentColor.opacity(0.8)
+                                    self.themeManager.currentTheme.primaryAccentColor.opacity(0.8),
                                 ]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -326,7 +326,7 @@ public struct ShimmerView: View {
                             gradient: Gradient(colors: [
                                 Color.clear,
                                 Color.white.opacity(0.4),
-                                Color.clear
+                                Color.clear,
                             ]),
                             startPoint: .leading,
                             endPoint: .trailing

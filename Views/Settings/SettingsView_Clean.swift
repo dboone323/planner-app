@@ -138,7 +138,7 @@ public struct ThemePreviewSheet: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 150))
+                    GridItem(.adaptive(minimum: 150)),
                 ], spacing: 16) {
                     ForEach(Theme.availableThemes, id: \\.name) { theme in
                         ThemeCard(theme: theme)

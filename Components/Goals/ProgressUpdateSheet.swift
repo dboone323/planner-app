@@ -161,22 +161,20 @@ public struct ProgressUpdateSheet: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(self.progress >= value
                                         ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.2)
-                                        : self.themeManager.currentTheme.secondaryBackgroundColor
-                                    )
+                                        : self.themeManager.currentTheme.secondaryBackgroundColor)
                             )
                             .foregroundColor(self.progress >= value
                                 ? self.themeManager.currentTheme.primaryAccentColor
-                                : self.themeManager.currentTheme.primaryTextColor
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(
-                                        self.progress >= value
-                                            ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.5)
-                                            : Color.clear,
-                                        lineWidth: 1
-                                    )
-                            )
+                                : self.themeManager.currentTheme.primaryTextColor)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(
+                                            self.progress >= value
+                                                ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.5)
+                                                : Color.clear,
+                                            lineWidth: 1
+                                        )
+                                )
                     }
                     .buttonStyle(.plain)
                 }

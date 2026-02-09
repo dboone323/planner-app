@@ -17,45 +17,60 @@ public struct ContentView: View {
     public init() {}
 
     public var body: some View {
-        NavigationStack {
-            ZStack {
-                // Background
-                #if os(iOS)
-                    Color(uiColor: .systemGroupedBackground)
-                        .ignoresSafeArea()
-                #else
-                    Color.gray.opacity(0.1)
-                        .ignoresSafeArea()
-                #endif
+        TabView {
+            // Tasks Tab
+            NavigationStack {
+                ZStack {
+                    // Background
+                    #if os(iOS)
+                        Color(uiColor: .systemGroupedBackground)
+                            .ignoresSafeArea()
+                    #else
+                        Color.gray.opacity(0.1)
+                            .ignoresSafeArea()
+                    #endif
 
-                if self.tasks.isEmpty {
-                    self.emptyStateView
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 16) {
-                            ForEach(self.tasks) { task in
-                                TaskCardView(
-                                    task: task,
-                                    onToggle: { t in self.toggleTask(t) },
-                                    onEdit: { _ in /* Edit implementation TODO */ }
-                                )
+                    if self.tasks.isEmpty {
+                        self.emptyStateView
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 16) {
+                                ForEach(self.tasks) { task in
+                                    TaskCardView(
+                                        task: task,
+                                        onToggle: { t in self.toggleTask(t) },
+                                        onEdit: { _ in /* Edit implementation TODO */ }
+                                    )
+                                }
                             }
+                            .padding()
                         }
-                        .padding()
+                    }
+                }
+                .navigationTitle("My Tasks")
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(action: { self.seedSampleData() }, label: {
+                            Label("Add Sample", systemImage: "plus")
+                        })
                     }
                 }
             }
-            .navigationTitle("My Tasks")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: { self.seedSampleData() }, label: {
-                        Label("Add Sample", systemImage: "plus")
-                    })
+            .tabItem {
+                Label("Tasks", systemImage: "checklist")
+            }
+
+            // Projects Tab
+            ProjectsView()
+                .tabItem {
+                    Label("Projects", systemImage: "folder")
                 }
-            }
-            .onAppear {
-                self.loadTasks()
-            }
+
+            // Analytics Tab (placeholder for now)
+            AnalyticsView()
+                .tabItem {
+                    Label("Analytics", systemImage: "chart.bar")
+                }
         }
     }
 
@@ -120,7 +135,7 @@ public struct ContentView: View {
                 description: "Reflect recent API changes in the wiki.",
                 priority: .low,
                 dueDate: Date().addingTimeInterval(3600 * 48)
-            )
+            ),
         ]
 
         for t in samples {
@@ -210,7 +225,7 @@ struct TasksWidgetView: View {
 #Preview("Widget") {
     TasksWidgetView(tasks: [
         PlannerTask(title: "Urgent Fix", description: "", priority: .high, dueDate: Date()),
-        PlannerTask(title: "Client Call", description: "", priority: .medium, dueDate: Date().addingTimeInterval(3600))
+        PlannerTask(title: "Client Call", description: "", priority: .medium, dueDate: Date().addingTimeInterval(3600)),
     ])
     .frame(width: 170, height: 170)
     .cornerRadius(20)

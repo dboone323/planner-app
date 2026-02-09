@@ -48,7 +48,7 @@ public struct SettingsView: View {
         "15 minutes": 900,
         "30 minutes": 1800,
         "1 hour": 3600,
-        "1 day": 86400
+        "1 day": 86400,
     ]
 
     private var sortedReminderKeys: [String] {
@@ -100,7 +100,11 @@ public struct SettingsView: View {
 
                 // Dashboard Section
                 Section("Dashboard") {
-                    Stepper("Items per section: \(self.dashboardItemLimit)", value: self.$dashboardItemLimit, in: 1...10)
+                    Stepper(
+                        "Items per section: \(self.dashboardItemLimit)",
+                        value: self.$dashboardItemLimit,
+                        in: 1...10
+                    )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -201,7 +205,8 @@ public struct SettingsView: View {
 
                 // Data Management Section
                 Section("Data Management") {
-                    Button("Export Data", action: self.exportData).accessibilityLabel("Button").accessibilityLabel("Button")
+                    Button("Export Data", action: self.exportData).accessibilityLabel("Button")
+                        .accessibilityLabel("Button")
                         .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
 
                     Button("Clear Old Completed Tasks...", action: { self.showingClearDataConfirmation = true })

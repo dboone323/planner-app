@@ -2,7 +2,7 @@
 import Combine
 import Foundation
 import SwiftData
-import SwiftUI  // Needed for @AppStorage
+import SwiftUI // Needed for @AppStorage
 
 // MARK: - Data Structures
 
@@ -68,7 +68,7 @@ public class DashboardViewModel: ObservableObject {
     // --- AppStorage Links ---
     // Read settings directly from UserDefaults using @AppStorage.
     // The view model automatically uses the latest setting value.
-    @AppStorage(AppSettingKeys.dashboardItemLimit) private var dashboardItemLimit: Int = 3  // Default limit
+    @AppStorage(AppSettingKeys.dashboardItemLimit) private var dashboardItemLimit: Int = 3 // Default limit
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar
         .current.firstWeekday
 
@@ -76,7 +76,7 @@ public class DashboardViewModel: ObservableObject {
     // This function loads data from managers, filters it based on dates/status,
     // applies the user's limit, and updates the @Published properties.
     func fetchDashboardData() {
-        print("Fetching dashboard data...")  // Debugging log
+        print("Fetching dashboard data...") // Debugging log
 
         // Load all data from the respective data managers.
         let allEvents = CalendarDataManager.shared.load()
@@ -92,10 +92,10 @@ public class DashboardViewModel: ObservableObject {
         let startOfToday = calendar.startOfDay(for: today)
         // Use guard to safely unwrap optional dates. If calculation fails, reset data.
         guard let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday),
-            let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfToday)
+              let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfToday)
         else {
             print("Error calculating date ranges for dashboard.")
-            self.resetData()  // Clear displayed data if dates are invalid
+            self.resetData() // Clear displayed data if dates are invalid
             return
         }
 
@@ -104,7 +104,7 @@ public class DashboardViewModel: ObservableObject {
         let todaysEventsFiltered = allEvents.filter { event in
             event.date >= startOfToday && event.date < endOfToday
         }
-        let filteredTodaysEvents = todaysEventsFiltered.sorted(by: { $0.date < $1.date })  // Sort today's events by time
+        let filteredTodaysEvents = todaysEventsFiltered.sorted(by: { $0.date < $1.date }) // Sort today's events by time
 
         // Filter tasks that are not completed.
         let filteredIncompleteTasks = allTasks.filter { !$0.isCompleted }
@@ -118,7 +118,7 @@ public class DashboardViewModel: ObservableObject {
         }
         let filteredUpcomingGoals =
             upcomingGoalsFiltered
-            .sorted(by: { $0.targetDate < $1.targetDate })  // Sort upcoming goals by target date
+                .sorted(by: { $0.targetDate < $1.targetDate }) // Sort upcoming goals by target date
 
         // --- Update Total Counts ---
         // Store the counts *before* applying the display limit.
@@ -143,7 +143,7 @@ public class DashboardViewModel: ObservableObject {
 
         print(
             "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
-        )  // Debugging log
+        ) // Debugging log
     }
 
     // --- Navigation Methods ---
@@ -180,7 +180,7 @@ public class DashboardViewModel: ObservableObject {
         // Generate upcoming items
         self.generateUpcomingItems()
 
-        print("Dashboard refresh completed")  // Debugging log
+        print("Dashboard refresh completed") // Debugging log
     }
 
     private func updateQuickStats() {
@@ -190,7 +190,7 @@ public class DashboardViewModel: ObservableObject {
         self.totalTasks = allTasks.count
         self.completedTasks = allTasks.count(where: { $0.isCompleted })
         self.totalGoals = allGoals.count
-        self.completedGoals = 0  // Goal completion not yet implemented
+        self.completedGoals = 0 // Goal completion not yet implemented
         self.todayEvents = self.totalTodaysEventsCount
     }
 
@@ -303,6 +303,6 @@ public class DashboardViewModel: ObservableObject {
         self.completedGoals = 0
         self.todayEvents = 0
 
-        print("Dashboard data reset.")  // Debugging log
+        print("Dashboard data reset.") // Debugging log
     }
 }

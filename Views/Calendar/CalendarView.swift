@@ -290,13 +290,13 @@ public struct CalendarView: View {
     private func previousMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: -1, to: self.selectedDate)
-                ?? self.selectedDate
+            ?? self.selectedDate
     }
 
     private func nextMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: 1, to: self.selectedDate)
-                ?? self.selectedDate
+            ?? self.selectedDate
     }
 
     // MARK: - Data Functions

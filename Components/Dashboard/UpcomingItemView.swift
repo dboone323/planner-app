@@ -74,7 +74,7 @@ public struct UpcomingItemView: View {
     let sampleItem = UpcomingItem(
         title: "Team Meeting",
         subtitle: "Conference Room A",
-        date: Date().addingTimeInterval(3600),  // 1 hour from now
+        date: Date().addingTimeInterval(3600), // 1 hour from now
         icon: "calendar",
         color: .orange,
         destination: nil

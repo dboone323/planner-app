@@ -165,7 +165,7 @@ final class TaskDataManager: TaskDataManaging {
             "completed": completed,
             "incomplete": total - completed,
             "overdue": overdue,
-            "dueToday": dueToday
+            "dueToday": dueToday,
         ]
     }
 }

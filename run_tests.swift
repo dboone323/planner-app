@@ -474,7 +474,7 @@ runTest("testTaskSearch") {
 
 runTest("testTaskFiltering") {
     let highPriorityTasks = [
-        PlannerTask(title: "High 1", priority: .high), PlannerTask(title: "High 2", priority: .high)
+        PlannerTask(title: "High 1", priority: .high), PlannerTask(title: "High 2", priority: .high),
     ]
     let mediumPriorityTasks = [PlannerTask(title: "Medium 1", priority: .medium)]
 
@@ -484,7 +484,7 @@ runTest("testTaskFiltering") {
 
 runTest("testAdvancedFiltering") {
     let completedTasks = [
-        PlannerTask(title: "Done 1", isCompleted: true), PlannerTask(title: "Done 2", isCompleted: true)
+        PlannerTask(title: "Done 1", isCompleted: true), PlannerTask(title: "Done 2", isCompleted: true),
     ]
     let pendingTasks = [PlannerTask(title: "Pending 1", isCompleted: false)]
 

@@ -128,7 +128,10 @@ public struct CalendarDayView: View {
                 .clipShape(Circle())
                 .overlay(
                     Circle()
-                        .stroke(self.isSelected ? self.themeManager.currentTheme.primaryAccentColor : Color.clear, lineWidth: 2)
+                        .stroke(
+                            self.isSelected ? self.themeManager.currentTheme.primaryAccentColor : Color.clear,
+                            lineWidth: 2
+                        )
                 )
 
             // Indicator dots

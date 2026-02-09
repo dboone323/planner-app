@@ -94,7 +94,7 @@ final class SwiftDataGoalManager: ObservableObject {
             "total": goals.count,
             "completed": completed,
             "inProgress": goals.count - completed,
-            "averageProgress": avgProgress
+            "averageProgress": avgProgress,
         ]
     }
 

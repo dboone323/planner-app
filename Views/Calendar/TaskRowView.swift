@@ -64,10 +64,9 @@ public struct TaskRowView: View {
                     .fontWeight(.medium)
                     .foregroundColor(self.task.isCompleted
                         ? self.themeManager.currentTheme.secondaryTextColor
-                        : self.themeManager.currentTheme.primaryTextColor
-                    )
-                    .strikethrough(self.task.isCompleted)
-                    .lineLimit(2)
+                        : self.themeManager.currentTheme.primaryTextColor)
+                        .strikethrough(self.task.isCompleted)
+                        .lineLimit(2)
 
                 if !self.task.description.isEmpty {
                     Text(self.task.description)

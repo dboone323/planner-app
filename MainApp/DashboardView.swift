@@ -1,6 +1,6 @@
+import _Concurrency
 import Foundation
 import SwiftUI
-import _Concurrency
 
 public struct DashboardView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -275,52 +275,52 @@ public struct DashboardView: View {
                 }
             }
             #if os(iOS)
-                .coordinateSpace(name: "pullToRefresh")
+            .coordinateSpace(name: "pullToRefresh")
             #endif
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Dashboard")
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .navigationDestination(for: DashboardViewModel.Destination.self) { destination in
-                switch destination {
-                case .taskDetail(let id):
-                    Text("Task Detail for \(id.uuidString)")
-                case .goalDetail(let id):
-                    Text("Goal Detail for \(id.uuidString)")
-                case .calendarEvent(let id):
-                    Text("Event Detail for \(id.uuidString)")
-                case .settings:
-                    SettingsView()
-                }
-            }
-            .overlay(
-                Group {
-                    if self.showLoadingOverlay {
-                        ZStack {
-                            Color.black.opacity(0.3)
-                                .ignoresSafeArea()
-
-                            VStack(spacing: 16) {
-                                ProgressView()
-                                    .scaleEffect(1.5)
-                                    .tint(self.themeManager.currentTheme.primaryAccentColor)
-
-                                Text("Refreshing...")
-                                    .font(.subheadline)
-                                    .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor)
-                            }
-                            .padding(32)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
-                            )
-                        }
+                .navigationDestination(for: DashboardViewModel.Destination.self) { destination in
+                    switch destination {
+                    case let .taskDetail(id):
+                        Text("Task Detail for \(id.uuidString)")
+                    case let .goalDetail(id):
+                        Text("Goal Detail for \(id.uuidString)")
+                    case let .calendarEvent(id):
+                        Text("Event Detail for \(id.uuidString)")
+                    case .settings:
+                        SettingsView()
                     }
                 }
-            )
+                .overlay(
+                    Group {
+                        if self.showLoadingOverlay {
+                            ZStack {
+                                Color.black.opacity(0.3)
+                                    .ignoresSafeArea()
+
+                                VStack(spacing: 16) {
+                                    ProgressView()
+                                        .scaleEffect(1.5)
+                                        .tint(self.themeManager.currentTheme.primaryAccentColor)
+
+                                    Text("Refreshing...")
+                                        .font(.subheadline)
+                                        .foregroundColor(
+                                            self.themeManager.currentTheme.primaryTextColor)
+                                }
+                                .padding(32)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                )
+                            }
+                        }
+                    }
+                )
         }
         .onAppear {
             _Concurrency.Task { @MainActor in

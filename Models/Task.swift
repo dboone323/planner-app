@@ -52,6 +52,10 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
 
+    // Project association
+    /// ID of the project this task belongs to (optional).
+    var projectId: UUID?
+
     // Sync properties
     /// Calendar event identifier for sync
     var calendarEventId: String?
@@ -72,6 +76,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     ///   - isCompleted: Whether the task is completed (default: false).
     ///   - priority: The task priority (default: .medium).
     ///   - dueDate: The due date (optional).
+    ///   - projectId: ID of the project this task belongs to (optional).
     ///   - estimatedDuration: Estimated duration in seconds (default: 3600).
     ///   - calendarEventId: ID of synced calendar event (optional).
     ///   - createdAt: The creation date (default: now).
@@ -80,7 +85,8 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     ///   - sentimentScore: The sentiment score (default: 0.0).
     init(
         id: UUID = UUID(), title: String, description: String = "", isCompleted: Bool = false,
-        priority: TaskPriority = .medium, dueDate: Date? = nil, estimatedDuration: TimeInterval = 3600,
+        priority: TaskPriority = .medium, dueDate: Date? = nil, projectId: UUID? = nil,
+        estimatedDuration: TimeInterval = 3600,
         calendarEventId: String? = nil, createdAt: Date = Date(),
         modifiedAt: Date? = Date(), sentiment: String = "neutral", sentimentScore: Double = 0.0
     ) {
@@ -90,6 +96,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         self.isCompleted = isCompleted
         self.priority = priority
         self.dueDate = dueDate
+        self.projectId = projectId
         self.estimatedDuration = estimatedDuration
         self.calendarEventId = calendarEventId
         self.createdAt = createdAt
@@ -114,10 +121,10 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         // Inline keyword-based sentiment analysis
         let lower = self.description.lowercased()
         let positives = [
-            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean"
+            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean",
         ]
         let negatives = [
-            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash"
+            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash",
         ]
         let positiveCount = positives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
         let negativeCount = negatives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
@@ -138,6 +145,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         record["isCompleted"] = self.isCompleted
         record["priority"] = self.priority.rawValue
         record["dueDate"] = self.dueDate
+        record["projectId"] = self.projectId?.uuidString
         record["estimatedDuration"] = self.estimatedDuration
         record["calendarEventId"] = self.calendarEventId
         record["createdAt"] = self.createdAt
@@ -172,6 +180,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
             priority: TaskPriority(rawValue: ckRecord["priority"] as? String ?? "medium")
                 ?? .medium,
             dueDate: ckRecord["dueDate"] as? Date,
+            projectId: (ckRecord["projectId"] as? String).flatMap { UUID(uuidString: $0) },
             estimatedDuration: ckRecord["estimatedDuration"] as? TimeInterval ?? 3600,
             calendarEventId: ckRecord["calendarEventId"] as? String,
             createdAt: createdAt,

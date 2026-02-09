@@ -16,13 +16,13 @@ public struct ThemePreviewView: View {
         "Complete project proposal",
         "Review quarterly reports",
         "Schedule team meeting",
-        "Update documentation"
+        "Update documentation",
     ]
 
     let sampleGoals = [
         "Read 12 books this year",
         "Exercise 3x per week",
-        "Learn Swift programming"
+        "Learn Swift programming",
     ]
 
     public var body: some View {

@@ -149,7 +149,7 @@ public struct ThemePreviewSheet: View {
             ScrollView {
                 LazyVGrid(
                     columns: [
-                        GridItem(.adaptive(minimum: 150))
+                        GridItem(.adaptive(minimum: 150)),
                     ], spacing: 16
                 ) {
                     ForEach(Theme.availableThemes, id: \.name) { theme in

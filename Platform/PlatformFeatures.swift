@@ -287,7 +287,8 @@ import SwiftUI
             )
             menu.addItem(
                 NSMenuItem(
-                    title: "Quit PlannerApp", action: #selector(self.quitApp), keyEquivalent: "q")
+                    title: "Quit PlannerApp", action: #selector(self.quitApp), keyEquivalent: "q"
+                )
             )
 
             self.statusItem?.menu = menu
@@ -342,14 +343,16 @@ import SwiftUI
             case .addTask:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Task", target: self, action: #selector(self.addTask))
+                    title: "Add Task", target: self, action: #selector(self.addTask)
+                )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
 
             case .addGoal:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Goal", target: self, action: #selector(self.addGoal))
+                    title: "Add Goal", target: self, action: #selector(self.addGoal)
+                )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
 
@@ -369,7 +372,8 @@ import SwiftUI
                     systemSymbolName: "calendar", accessibilityDescription: "Calendar"
                 ) {
                     item.view = NSButton(
-                        image: image, target: self, action: #selector(self.showCalendar))
+                        image: image, target: self, action: #selector(self.showCalendar)
+                    )
                     (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 }
                 return item

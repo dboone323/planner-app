@@ -12,7 +12,8 @@ public struct AddGoalView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                    .accessibilityLabel("Text Field")
                 TextField("Description", text: self.$description).accessibilityLabel("Text Field")
                     .accessibilityLabel("Text Field")
                 DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)

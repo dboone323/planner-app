@@ -1,6 +1,6 @@
 import Foundation
 import SwiftData
-import SwiftUI  // For Color (used in TaskPriority logic if needed, but not in model)
+import SwiftUI // For Color (used in TaskPriority logic if needed, but not in model)
 
 /// The versioned schema definitions for PlannerApp.
 /// Note: This file replaces the standalone SDTask and SDGoal definitions.
@@ -74,7 +74,8 @@ enum PlannerSchemaV1: VersionedSchema {
             self.sentimentScore = normalizedScore
             self.sentiment =
                 normalizedScore > 0.2
-                ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+                    ? "positive"
+                    : (normalizedScore < -0.2 ? "negative" : "neutral")
             self.modifiedAt = Date()
         }
 
@@ -163,8 +164,9 @@ enum PlannerSchemaV1: VersionedSchema {
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
     static var stages: [MigrationStage] {
-        []  // No migrations yet
+        [] // No migrations yet
     }
+
     static var schemas: [any VersionedSchema.Type] {
         [PlannerSchemaV1.self]
     }

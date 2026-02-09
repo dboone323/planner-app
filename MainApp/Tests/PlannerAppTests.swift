@@ -39,11 +39,15 @@ class PlannerAppTests: XCTestCase {
         XCTAssertNotNil(scene, "Scene should not be nil")
 
         if let windowGroup = scene {
-            let views = windowGroup.content.children.map { $0 }
+            let views = windowGroup.content.children.map(\.self)
             XCTAssertEqual(views.count, 1, "There should be one view in the window group")
 
             if let overlayView = views.first as? MainTabView {
-                XCTAssertEqual(overlayView.selectedTabTag.wrappedValue, "dashboard", "Initial tab tag should be 'dashboard'")
+                XCTAssertEqual(
+                    overlayView.selectedTabTag.wrappedValue,
+                    "dashboard",
+                    "Initial tab tag should be 'dashboard'"
+                )
             } else {
                 XCTFail("Overlay view is not of type MainTabView")
             }

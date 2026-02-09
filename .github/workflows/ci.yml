@@ -73,12 +73,53 @@ jobs:
             -configuration Debug \
             -resultBundlePath TestResults-${{ matrix.name }}.xcresult \
             CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            -enableCodeCoverage YES
+
+      - name: Generate Coverage Report
+        if: matrix.name == 'iOS'
+        run: |
+          xcrun xccov view --report --json TestResults-${{ matrix.name }}.xcresult > coverage_report.json
+          xcrun xccov view --report TestResults-${{ matrix.name }}.xcresult
+
+      - name: Upload Coverage to Codecov
+        if: matrix.name == 'iOS'
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage_report.json
+          flags: ios
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Check Code Coverage Threshold
+        if: matrix.name == 'iOS'
+        run: |
+          COVERAGE=$(jq '.lineCoverage' coverage_report.json)
+          THRESHOLD=0.60
+          if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
+            echo "Code coverage $COVERAGE is below threshold $THRESHOLD"
+            exit 1
+          else
+            echo "Code coverage $COVERAGE meets threshold $THRESHOLD"
+          fi
+
+      - name: Run Performance Tests
+        if: matrix.name == 'iOS'
+        run: |
+          xcodebuild test \
+            -scheme PlannerApp \
+            -destination '${{ matrix.destination }}' \
+            -configuration Debug \
+            -only-testing:PlannerAppTests/PerformanceTests \
+            CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.name }}
-          path: TestResults-${{ matrix.name }}.xcresult
+          path: |
+            TestResults-${{ matrix.name }}.xcresult
+            coverage_report.json
           retention-days: 30

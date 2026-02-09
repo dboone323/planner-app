@@ -51,10 +51,10 @@ public struct JournalEntry: Identifiable, Codable {
         // Inline keyword-based sentiment analysis
         let lower = self.body.lowercased()
         let positives = [
-            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean"
+            "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean",
         ]
         let negatives = [
-            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash"
+            "hate", "bad", "terrible", "slow", "bug", "broken", "awful", "poor", "crash",
         ]
         let positiveCount = positives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
         let negativeCount = negatives.reduce(0) { $0 + (lower.contains($1) ? 1 : 0) }
@@ -93,7 +93,7 @@ public struct JournalEntry: Identifiable, Codable {
             throw NSError(
                 domain: "JournalEntryConversionError", code: 1,
                 userInfo: [
-                    NSLocalizedDescriptionKey: "Failed to convert CloudKit record to JournalEntry"
+                    NSLocalizedDescriptionKey: "Failed to convert CloudKit record to JournalEntry",
                 ]
             )
         }

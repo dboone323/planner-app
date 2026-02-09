@@ -25,7 +25,7 @@ public struct SentimentAnalyticsView: View {
         return [
             ("Positive", positive),
             ("Neutral", neutral),
-            ("Negative", negative)
+            ("Negative", negative),
         ]
     }
 
@@ -272,7 +272,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 mood: "😐",
                 sentiment: "neutral",
                 sentimentScore: 0.0
-            )
+            ),
         ]
 
         NavigationStack {

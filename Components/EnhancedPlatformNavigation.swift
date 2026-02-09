@@ -156,7 +156,7 @@ public struct IPadSidebarView: View {
         ("Goals", "target"),
         ("Calendar", "calendar"),
         ("Journal", "book"),
-        ("Settings", "gear")
+        ("Settings", "gear"),
     ]
 
     public var body: some View {
@@ -237,14 +237,14 @@ public struct MacOSToolbarButtons: View {
                     Label("Search", systemImage: "magnifyingglass")
                 }
                 .accessibilityLabel("Search Button")
-                .keyboardShortcut("f", modifiers: .command)
+                    .keyboardShortcut("f", modifiers: .command)
 
             Button {}
                 label: {
                     Label("Add Item", systemImage: "plus")
                 }
                 .accessibilityLabel("Add Item Button")
-                .keyboardShortcut("n", modifiers: .command)
+                    .keyboardShortcut("n", modifiers: .command)
 
             Menu {
                 Button("Export Data", action: {}).accessibilityLabel("Export Data Button")
