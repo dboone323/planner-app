@@ -1,9 +1,7 @@
 import Foundation
 import SwiftData
-import SwiftUI  // For Color (used in TaskPriority logic if needed, but not in model)
 
 /// The versioned schema definitions for PlannerApp.
-/// Note: This file replaces the standalone SDTask and SDGoal definitions.
 enum PlannerSchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)
 
@@ -12,7 +10,7 @@ enum PlannerSchemaV1: VersionedSchema {
     }
 
     @Model
-    final class SDTask: Hashable {
+    final class SDTask {
         @Attribute(.unique) var id: UUID
         var title: String
         var taskDescription: String
@@ -86,18 +84,10 @@ enum PlannerSchemaV1: VersionedSchema {
             default: 0
             }
         }
-
-        static func == (lhs: SDTask, rhs: SDTask) -> Bool {
-            lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.id)
-        }
     }
 
     @Model
-    final class SDGoal: Hashable {
+    final class SDGoal {
         @Attribute(.unique) var id: UUID
         var title: String
         var goalDescription: String
@@ -148,18 +138,10 @@ enum PlannerSchemaV1: VersionedSchema {
                 self.isCompleted = true
             }
         }
-
-        static func == (lhs: SDGoal, rhs: SDGoal) -> Bool {
-            lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.id)
-        }
     }
 }
 
-// MARK: - Legacy Migration Migration Plan
+// MARK: - Migration Plan
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
     static var stages: [MigrationStage] {
@@ -172,8 +154,6 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
 
 // MARK: - Typealiases
 
-// These typealiases ensure that existing code using SDTask and SDGoal continues to work
-// targeting the V1 schema.
 typealias SDTask = PlannerSchemaV1.SDTask
 typealias SDGoal = PlannerSchemaV1.SDGoal
 

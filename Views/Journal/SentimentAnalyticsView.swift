@@ -14,14 +14,14 @@ public struct SentimentAnalyticsView: View {
 
     // Computed analytics data
     private var averageSentiment: Double {
-        guard !entries.isEmpty else { return 0.0 }
-        return entries.reduce(0.0) { $0 + $1.sentimentScore } / Double(entries.count)
+        guard !self.entries.isEmpty else { return 0.0 }
+        return self.entries.reduce(0.0) { $0 + $1.sentimentScore } / Double(self.entries.count)
     }
 
     private var sentimentDistribution: [(String, Int)] {
-        let positive = entries.count(where: { $0.sentiment == "positive" })
-        let neutral = entries.count(where: { $0.sentiment == "neutral" })
-        let negative = entries.count(where: { $0.sentiment == "negative" })
+        let positive = self.entries.count(where: { $0.sentiment == "positive" })
+        let neutral = self.entries.count(where: { $0.sentiment == "neutral" })
+        let negative = self.entries.count(where: { $0.sentiment == "negative" })
         return [
             ("Positive", positive),
             ("Neutral", neutral),
@@ -30,7 +30,7 @@ public struct SentimentAnalyticsView: View {
     }
 
     private var topPositiveEntries: [JournalEntry] {
-        entries
+        self.entries
             .filter { $0.sentiment == "positive" }
             .sorted { $0.sentimentScore > $1.sentimentScore }
             .prefix(3)
@@ -38,7 +38,7 @@ public struct SentimentAnalyticsView: View {
     }
 
     private var topNegativeEntries: [JournalEntry] {
-        entries
+        self.entries
             .filter { $0.sentiment == "negative" }
             .sorted { $0.sentimentScore < $1.sentimentScore }
             .prefix(3)
@@ -67,36 +67,36 @@ public struct SentimentAnalyticsView: View {
                     Text("Sentiment Analytics")
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                     HStack {
                         Text("Overall Average:")
-                            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         Spacer()
                         SentimentBadge(
-                            sentiment: sentimentLabel(for: averageSentiment),
-                            score: averageSentiment
+                            sentiment: self.sentimentLabel(for: self.averageSentiment),
+                            score: self.averageSentiment
                         )
                     }
                 }
                 .padding()
-                .background(themeManager.currentTheme.secondaryBackgroundColor)
+                .background(self.themeManager.currentTheme.secondaryBackgroundColor)
                 .cornerRadius(12)
 
                 // Sentiment Distribution Chart
-                if !entries.isEmpty {
+                if !self.entries.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Sentiment Distribution")
                             .font(.headline)
-                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                         Chart {
-                            ForEach(sentimentDistribution, id: \.0) { item in
+                            ForEach(self.sentimentDistribution, id: \.0) { item in
                                 BarMark(
                                     x: .value("Sentiment", item.0),
                                     y: .value("Count", item.1)
                                 )
-                                .foregroundStyle(colorFor(sentiment: item.0))
+                                .foregroundStyle(self.colorFor(sentiment: item.0))
                             }
                         }
                         .frame(height: 200)
@@ -107,31 +107,31 @@ public struct SentimentAnalyticsView: View {
                         }
                     }
                     .padding()
-                    .background(themeManager.currentTheme.secondaryBackgroundColor)
+                    .background(self.themeManager.currentTheme.secondaryBackgroundColor)
                     .cornerRadius(12)
                 }
 
                 // Weekly Trend Chart
-                if weeklyAverages.count >= 2 {
+                if self.weeklyAverages.count >= 2 {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Weekly Sentiment Trend")
                             .font(.headline)
-                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                         Chart {
-                            ForEach(weeklyAverages, id: \.0) { dataPoint in
+                            ForEach(self.weeklyAverages, id: \.0) { dataPoint in
                                 LineMark(
                                     x: .value("Week", dataPoint.0),
                                     y: .value("Average Sentiment", dataPoint.1)
                                 )
-                                .foregroundStyle(themeManager.currentTheme.primaryAccentColor)
+                                .foregroundStyle(self.themeManager.currentTheme.primaryAccentColor)
                                 .interpolationMethod(.catmullRom)
 
                                 AreaMark(
                                     x: .value("Week", dataPoint.0),
                                     y: .value("Average Sentiment", dataPoint.1)
                                 )
-                                .foregroundStyle(themeManager.currentTheme.primaryAccentColor.opacity(0.2))
+                                .foregroundStyle(self.themeManager.currentTheme.primaryAccentColor.opacity(0.2))
                                 .interpolationMethod(.catmullRom)
                             }
                         }
@@ -144,47 +144,47 @@ public struct SentimentAnalyticsView: View {
                         }
                     }
                     .padding()
-                    .background(themeManager.currentTheme.secondaryBackgroundColor)
+                    .background(self.themeManager.currentTheme.secondaryBackgroundColor)
                     .cornerRadius(12)
                 }
 
                 // Top Positive Entries
-                if !topPositiveEntries.isEmpty {
+                if !self.topPositiveEntries.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Most Positive Entries")
                             .font(.headline)
-                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
-                        ForEach(topPositiveEntries) { entry in
+                        ForEach(self.topPositiveEntries) { entry in
                             EntryPreviewCard(entry: entry)
-                                .environmentObject(themeManager)
+                                .environmentObject(self.themeManager)
                         }
                     }
                     .padding()
-                    .background(themeManager.currentTheme.secondaryBackgroundColor)
+                    .background(self.themeManager.currentTheme.secondaryBackgroundColor)
                     .cornerRadius(12)
                 }
 
                 // Top Negative Entries
-                if !topNegativeEntries.isEmpty {
+                if !self.topNegativeEntries.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Entries Needing Attention")
                             .font(.headline)
-                            .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
-                        ForEach(topNegativeEntries) { entry in
+                        ForEach(self.topNegativeEntries) { entry in
                             EntryPreviewCard(entry: entry)
-                                .environmentObject(themeManager)
+                                .environmentObject(self.themeManager)
                         }
                     }
                     .padding()
-                    .background(themeManager.currentTheme.secondaryBackgroundColor)
+                    .background(self.themeManager.currentTheme.secondaryBackgroundColor)
                     .cornerRadius(12)
                 }
             }
             .padding()
         }
-        .background(themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
+        .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
         .navigationTitle("Sentiment Analytics")
     }
 
@@ -221,25 +221,25 @@ struct EntryPreviewCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(entry.title)
+                Text(self.entry.title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                 Spacer()
-                SentimentBadge(sentiment: entry.sentiment, score: entry.sentimentScore)
+                SentimentBadge(sentiment: self.entry.sentiment, score: self.entry.sentimentScore)
             }
 
-            Text(entry.body)
+            Text(self.entry.body)
                 .font(.caption)
-                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                 .lineLimit(2)
 
-            Text(entry.date, formatter: dateFormatter)
+            Text(self.entry.date, formatter: self.dateFormatter)
                 .font(.caption2)
-                .foregroundColor(themeManager.currentTheme.secondaryTextColor.opacity(0.7))
+                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor.opacity(0.7))
         }
         .padding(12)
-        .background(themeManager.currentTheme.primaryBackgroundColor)
+        .background(self.themeManager.currentTheme.primaryBackgroundColor)
         .cornerRadius(8)
     }
 }

@@ -3,8 +3,8 @@
 // PlannerAppTests
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class ProductivityAnalyticsTests: XCTestCase {
     // MARK: - Metric Collection

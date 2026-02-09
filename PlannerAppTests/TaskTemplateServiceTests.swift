@@ -3,8 +3,8 @@
 // PlannerAppTests
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class TaskTemplateServiceTests: XCTestCase {
     // MARK: - Template Operations

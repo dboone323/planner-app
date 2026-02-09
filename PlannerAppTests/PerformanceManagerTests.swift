@@ -5,8 +5,8 @@
 //  Comprehensive test suite for PerformanceManager
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class PerformanceManagerTests: XCTestCase {
     // MARK: - Initialization Tests

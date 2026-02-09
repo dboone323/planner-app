@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AddCalendarEventView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AddCalendarEventViewTests: XCTestCase {
     // MARK: - Initialization Tests

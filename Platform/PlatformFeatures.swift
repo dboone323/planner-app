@@ -28,8 +28,8 @@ import SwiftUI
                     .font(.headline.bold())
                     .foregroundColor(.primary)
 
-                if !tasks.isEmpty {
-                    ForEach(tasks.prefix(3), id: \.id) { task in
+                if !self.tasks.isEmpty {
+                    ForEach(self.tasks.prefix(3), id: \.id) { task in
                         HStack {
                             Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .foregroundColor(task.isCompleted ? .green : .gray)
@@ -41,12 +41,12 @@ import SwiftUI
                     }
                 }
 
-                if !goals.isEmpty {
+                if !self.goals.isEmpty {
                     Text("Active Goals")
                         .font(.caption.bold())
                         .foregroundColor(.secondary)
 
-                    ForEach(goals.prefix(2), id: \.id) { goal in
+                    ForEach(self.goals.prefix(2), id: \.id) { goal in
                         HStack {
                             Image(systemName: "target")
                                 .foregroundColor(.blue)
@@ -91,7 +91,7 @@ import SwiftUI
                     Text("Working on:")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    Text(taskTitle)
+                    Text(self.taskTitle)
                         .font(.body.bold())
                         .lineLimit(1)
                 }
@@ -99,9 +99,9 @@ import SwiftUI
                 Spacer()
 
                 VStack {
-                    Text("\(Int(progress * 100))%")
+                    Text("\(Int(self.progress * 100))%")
                         .font(.title2.bold())
-                    ProgressView(value: progress)
+                    ProgressView(value: self.progress)
                         .progressViewStyle(LinearProgressViewStyle())
                 }
                 .frame(width: 80)
@@ -139,24 +139,24 @@ import SwiftUI
             @ViewBuilder primary: () -> PrimaryContent,
             @ViewBuilder secondary: () -> SecondaryContent
         ) {
-            primaryContent = primary()
-            secondaryContent = secondary()
+            self.primaryContent = primary()
+            self.secondaryContent = secondary()
         }
 
         var body: some View {
-            if UIDevice.current.userInterfaceIdiom == .pad, horizontalSizeClass == .regular {
+            if UIDevice.current.userInterfaceIdiom == .pad, self.horizontalSizeClass == .regular {
                 HStack(spacing: 0) {
-                    primaryContent
+                    self.primaryContent
                         .frame(maxWidth: .infinity)
 
                     Divider()
 
-                    secondaryContent
+                    self.secondaryContent
                         .frame(maxWidth: .infinity)
                 }
             } else {
                 NavigationStack {
-                    primaryContent
+                    self.primaryContent
                 }
             }
         }
@@ -168,7 +168,8 @@ import SwiftUI
         let placeholder: String
 
         var body: some View {
-            TextField(placeholder, text: $text).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+            TextField(self.placeholder, text: self.$text).accessibilityLabel("Text Field")
+                .accessibilityLabel("Text Field")
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .onAppear {
                     // Enable Scribble for this text field
@@ -185,19 +186,19 @@ import SwiftUI
         let onDrop: (PlannerTask) -> Void
 
         var body: some View {
-            Text(task.title)
+            Text(self.task.title)
                 .padding()
                 .background(.ultraThinMaterial)
                 .cornerRadius(8)
-                .draggable(task) {
-                    Text(task.title)
+                .draggable(self.task) {
+                    Text(self.task.title)
                         .padding()
                         .background(.regularMaterial)
                         .cornerRadius(8)
                 }
                 .dropDestination(for: PlannerTask.self) { items, _ in
                     if let droppedTask = items.first {
-                        onDrop(droppedTask)
+                        self.onDrop(droppedTask)
                         return true
                     }
                     return false
@@ -211,8 +212,9 @@ import SwiftUI
 
         var body: some View {
             Color.clear
-                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) { notification in
-                    handleKeyboardShortcut(notification)
+                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) {
+                    notification in
+                    self.handleKeyboardShortcut(notification)
                 }
         }
 
@@ -245,17 +247,17 @@ import SwiftUI
         private var statusItem: NSStatusItem?
 
         func setupMenuBar() {
-            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+            self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
             if let button = statusItem?.button {
                 button.image = NSImage(
                     systemSymbolName: "calendar", accessibilityDescription: "PlannerApp"
                 )
-                button.action = #selector(showQuickMenu)
+                button.action = #selector(self.showQuickMenu)
                 button.target = self
             }
 
-            setupQuickMenu()
+            self.setupQuickMenu()
         }
 
         @objc
@@ -268,25 +270,27 @@ import SwiftUI
 
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Task", action: #selector(quickAddTask), keyEquivalent: ""
+                    title: "Quick Add Task", action: #selector(self.quickAddTask), keyEquivalent: ""
                 )
             )
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Goal", action: #selector(quickAddGoal), keyEquivalent: ""
+                    title: "Quick Add Goal", action: #selector(self.quickAddGoal), keyEquivalent: ""
                 )
             )
             menu.addItem(NSMenuItem.separator())
             menu.addItem(
                 NSMenuItem(
-                    title: "Show Dashboard", action: #selector(showDashboard), keyEquivalent: ""
+                    title: "Show Dashboard", action: #selector(self.showDashboard),
+                    keyEquivalent: ""
                 )
             )
             menu.addItem(
-                NSMenuItem(title: "Quit PlannerApp", action: #selector(quitApp), keyEquivalent: "q")
+                NSMenuItem(
+                    title: "Quit PlannerApp", action: #selector(self.quitApp), keyEquivalent: "q")
             )
 
-            statusItem?.menu = menu
+            self.statusItem?.menu = menu
         }
 
         @objc
@@ -323,7 +327,7 @@ import SwiftUI
                 .addGoal,
                 .search,
                 .flexibleSpace,
-                .calendar
+                .calendar,
             ]
 
             return touchBar
@@ -337,13 +341,15 @@ import SwiftUI
             switch identifier {
             case .addTask:
                 let item = NSCustomTouchBarItem(identifier: identifier)
-                item.view = NSButton(title: "Add Task", target: self, action: #selector(addTask))
+                item.view = NSButton(
+                    title: "Add Task", target: self, action: #selector(self.addTask))
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
 
             case .addGoal:
                 let item = NSCustomTouchBarItem(identifier: identifier)
-                item.view = NSButton(title: "Add Goal", target: self, action: #selector(addGoal))
+                item.view = NSButton(
+                    title: "Add Goal", target: self, action: #selector(self.addGoal))
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
 
@@ -352,7 +358,7 @@ import SwiftUI
                 if let image = NSImage(
                     systemSymbolName: "magnifyingglass", accessibilityDescription: "Search"
                 ) {
-                    item.view = NSButton(image: image, target: self, action: #selector(search))
+                    item.view = NSButton(image: image, target: self, action: #selector(self.search))
                     (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 }
                 return item
@@ -362,7 +368,8 @@ import SwiftUI
                 if let image = NSImage(
                     systemSymbolName: "calendar", accessibilityDescription: "Calendar"
                 ) {
-                    item.view = NSButton(image: image, target: self, action: #selector(showCalendar))
+                    item.view = NSButton(
+                        image: image, target: self, action: #selector(self.showCalendar))
                     (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 }
                 return item
@@ -501,7 +508,8 @@ class IOSFeatureProvider: PlatformFeatureProvider {
                 .first(where: { $0.activationState == .foregroundActive }),
                 let rootViewController = windowScene.windows
                     .first(where: { $0.isKeyWindow })?
-                    .rootViewController {
+                    .rootViewController
+            {
                 rootViewController.present(activityViewController, animated: true)
             }
         #endif

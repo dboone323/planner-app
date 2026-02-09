@@ -12,17 +12,17 @@ public struct GoalsHeaderView: View {
             Text("Goals")
                 .font(.title3)
                 .fontWeight(.semibold)
-                .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
             Spacer()
         }
         .padding()
-        .background(themeManager.currentTheme.secondaryBackgroundColor)
+        .background(self.themeManager.currentTheme.secondaryBackgroundColor)
         .navigationTitle("Goals")
         .toolbar {
             // Button to show the AddGoalView sheet
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    showAddGoal.toggle()
+                    self.showAddGoal.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -35,6 +35,6 @@ public struct GoalsHeaderView: View {
                 .accessibilityLabel("Button")
             }
         }
-        .accentColor(themeManager.currentTheme.primaryAccentColor)
+        .accentColor(self.themeManager.currentTheme.primaryAccentColor)
     }
 }

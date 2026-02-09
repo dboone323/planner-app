@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AddGoalView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AddGoalViewTests: XCTestCase {
     // MARK: - Initialization Tests

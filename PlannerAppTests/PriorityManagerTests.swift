@@ -3,8 +3,8 @@
 // PlannerAppTests
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class PriorityManagerTests: XCTestCase {
     // MARK: - Priority Calculation Tests

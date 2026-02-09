@@ -30,8 +30,8 @@ class PomodoroTimer: ObservableObject {
     private var timer: AnyCancellable?
 
     func start() {
-        isActive = true
-        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
+        self.isActive = true
+        self.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
             } else {
@@ -42,17 +42,17 @@ class PomodoroTimer: ObservableObject {
     }
 
     func stop() {
-        isActive = false
-        timer?.cancel()
+        self.isActive = false
+        self.timer?.cancel()
     }
 
     func reset() {
-        stop()
-        timeRemaining = mode.duration
+        self.stop()
+        self.timeRemaining = self.mode.duration
     }
 
     func setMode(_ newMode: TimerMode) {
-        mode = newMode
-        reset()
+        self.mode = newMode
+        self.reset()
     }
 }

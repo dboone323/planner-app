@@ -5,8 +5,8 @@
 //  Comprehensive test suite for GoalsHeaderView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class GoalsHeaderViewTests: XCTestCase {
     // MARK: - Initialization Tests

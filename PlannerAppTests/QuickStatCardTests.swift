@@ -5,8 +5,8 @@
 //  Comprehensive test suite for QuickStatCard
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class QuickStatCardTests: XCTestCase {
     // MARK: - Initialization Tests

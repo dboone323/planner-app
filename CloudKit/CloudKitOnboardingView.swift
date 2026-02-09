@@ -30,23 +30,23 @@ public struct CloudKitOnboardingView: View {
 
                 // Benefits explanation
                 VStack(alignment: .leading, spacing: 16) {
-                    benefitRow(
+                    self.benefitRow(
                         icon: "iphone.and.arrow.forward", title: "Sync Across Devices",
                         description:
                         "Access your tasks, goals, and events on all your Apple devices."
                     )
 
-                    benefitRow(
+                    self.benefitRow(
                         icon: "lock.shield", title: "Private & Secure",
                         description: "Your data is encrypted and protected by your Apple ID."
                     )
 
-                    benefitRow(
+                    self.benefitRow(
                         icon: "arrow.clockwise.icloud", title: "Automatic Backup",
                         description: "Never lose your important information with automatic backups."
                     )
 
-                    benefitRow(
+                    self.benefitRow(
                         icon: "person.crop.circle", title: "Just for You",
                         description: "Your data is only visible to you, never shared with others."
                     )
@@ -63,7 +63,7 @@ public struct CloudKitOnboardingView: View {
                 // Action buttons
                 VStack(spacing: 12) {
                     Button {
-                        requestiCloudAccess()
+                        self.requestiCloudAccess()
                     } label: {
                         Text("Enable iCloud Sync")
                             .fontWeight(.semibold)
@@ -74,16 +74,16 @@ public struct CloudKitOnboardingView: View {
                             .cornerRadius(12)
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .disabled(isRequestingPermission)
+                    .disabled(self.isRequestingPermission)
                     .overlay {
-                        if isRequestingPermission {
+                        if self.isRequestingPermission {
                             ProgressView()
                                 .tint(.white)
                         }
                     }
 
                     Button {
-                        skipOnboarding()
+                        self.skipOnboarding()
                     } label: {
                         Text("Maybe Later")
                             .padding()
@@ -95,14 +95,14 @@ public struct CloudKitOnboardingView: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .alert("This is a New Device", isPresented: $showingMergeOptions) {
+            .alert("This is a New Device", isPresented: self.$showingMergeOptions) {
                 Button("Merge from iCloud", action: {
-                    mergeFromiCloud()
+                    self.mergeFromiCloud()
                 })
                 .accessibilityLabel("Button")
 
                 Button("Start Fresh", action: {
-                    startFresh()
+                    self.startFresh()
                 })
                 .accessibilityLabel("Button")
             } message: {
@@ -131,17 +131,17 @@ public struct CloudKitOnboardingView: View {
     }
 
     private func requestiCloudAccess() {
-        isRequestingPermission = true
+        self.isRequestingPermission = true
 
         _Concurrency.Task {
-            await cloudKit.requestiCloudAccess()
-            await cloudKit.checkAccountStatus()
+            await self.cloudKit.requestiCloudAccess()
+            await self.cloudKit.checkAccountStatus()
 
             DispatchQueue.main.async {
-                isRequestingPermission = false
+                self.isRequestingPermission = false
 
-                if cloudKit.isSignedInToiCloud {
-                    showingMergeOptions = true
+                if self.cloudKit.isSignedInToiCloud {
+                    self.showingMergeOptions = true
                 }
             }
         }
@@ -149,23 +149,23 @@ public struct CloudKitOnboardingView: View {
 
     private func mergeFromiCloud() {
         _Concurrency.Task {
-            await cloudKit.handleNewDeviceLogin()
-            completeOnboarding()
+            await self.cloudKit.handleNewDeviceLogin()
+            self.completeOnboarding()
         }
     }
 
     private func startFresh() {
         UserDefaults.standard.set(true, forKey: "HasCompletedInitialSync")
-        completeOnboarding()
+        self.completeOnboarding()
     }
 
     private func skipOnboarding() {
-        completeOnboarding()
+        self.completeOnboarding()
     }
 
     private func completeOnboarding() {
-        hasCompletedOnboarding = true
-        dismiss()
+        self.hasCompletedOnboarding = true
+        self.dismiss()
     }
 }
 

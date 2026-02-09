@@ -41,7 +41,7 @@ struct AddTaskIntent: AppIntent {
 
         // In production, inject the model context
         // For now, return success dialog
-        return .result(dialog: "Added '\(title)' to your tasks")
+        return .result(dialog: "Added '\(self.title)' to your tasks")
     }
 }
 
@@ -57,7 +57,7 @@ struct CompleteTaskIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // In production, search and update task
-        .result(dialog: "Marked '\(taskName)' as complete")
+        .result(dialog: "Marked '\(self.taskName)' as complete")
     }
 }
 
@@ -73,7 +73,7 @@ struct ListTasksIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // In production, fetch from SwiftData
-        let priorityText = priority != nil ? " with \(priority!) priority" : ""
+        let priorityText = self.priority != nil ? " with \(self.priority!) priority" : ""
         return .result(dialog: "You have tasks\(priorityText). Check the app for details.")
     }
 }
@@ -93,7 +93,7 @@ struct AddGoalIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         .result(
-            dialog: "Added goal '\(title)' with target date \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+            dialog: "Added goal '\(self.title)' with target date \(self.targetDate.formatted(date: .abbreviated, time: .omitted))"
         )
     }
 }

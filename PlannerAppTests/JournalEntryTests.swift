@@ -5,8 +5,8 @@
 //  Comprehensive test suite for JournalEntry
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalEntryTests: XCTestCase {
     // MARK: - Initialization Tests

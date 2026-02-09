@@ -5,8 +5,8 @@
 //  Comprehensive test suite for Task
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class TaskTests: XCTestCase {
     // MARK: - Initialization Tests

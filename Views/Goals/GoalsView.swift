@@ -14,26 +14,26 @@ public struct GoalsView: View {
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                GoalsHeaderView(showAddGoal: $showAddGoal)
-                    .environmentObject(themeManager)
+                GoalsHeaderView(showAddGoal: self.$showAddGoal)
+                    .environmentObject(self.themeManager)
 
                 GoalsListView(
-                    goals: goals,
-                    onDelete: deleteGoal,
-                    onProgressUpdate: updateGoalProgress,
-                    onCompletionToggle: toggleGoalCompletion
+                    goals: self.goals,
+                    onDelete: self.deleteGoal,
+                    onProgressUpdate: self.updateGoalProgress,
+                    onCompletionToggle: self.toggleGoalCompletion
                 )
-                .environmentObject(themeManager)
+                .environmentObject(self.themeManager)
             }
-            .sheet(isPresented: $showAddGoal) {
+            .sheet(isPresented: self.$showAddGoal) {
                 // Present AddGoalView, passing binding and theme
-                AddGoalView(goals: $goals)
-                    .environmentObject(themeManager)
+                AddGoalView(goals: self.$goals)
+                    .environmentObject(self.themeManager)
                     // Save goals when the sheet is dismissed
-                    .onDisappear(perform: saveGoals)
+                    .onDisappear(perform: self.saveGoals)
             }
             // Load goals when the view appears
-            .onAppear(perform: loadGoals)
+            .onAppear(perform: self.loadGoals)
         } // End NavigationStack
         // Use stack navigation style
     }
@@ -43,52 +43,52 @@ public struct GoalsView: View {
     // Updates the progress of a specific goal
     private func updateGoalProgress(goalId: UUID, progress: Double) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
-            goals[index].progress = progress
-            goals[index].modifiedAt = Date()
-            saveGoals()
+            self.goals[index].progress = progress
+            self.goals[index].modifiedAt = Date()
+            self.saveGoals()
         }
     }
 
     // Toggles the completion status of a specific goal
     private func toggleGoalCompletion(goalId: UUID) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
-            let wasCompleted = goals[index].isCompleted
-            goals[index].isCompleted = !wasCompleted
+            let wasCompleted = self.goals[index].isCompleted
+            self.goals[index].isCompleted = !wasCompleted
 
             // If marking as completed, set progress to 100%
             if !wasCompleted {
-                goals[index].progress = 1.0
+                self.goals[index].progress = 1.0
             }
             // If unmarking as completed, set progress to 95% (allowing room for adjustment)
             else {
-                goals[index].progress = 0.95
+                self.goals[index].progress = 0.95
             }
 
-            goals[index].modifiedAt = Date()
-            saveGoals()
+            self.goals[index].modifiedAt = Date()
+            self.saveGoals()
         }
     }
 
     // Deletes goals based on offsets from the sorted list displayed
     private func deleteGoal(at offsets: IndexSet) {
         // Get the sorted list as it's displayed in the ForEach loop
-        let sortedGoals = goals.sorted(by: { $0.targetDate < $1.targetDate })
+        let sortedGoals = self.goals.sorted(by: { $0.targetDate < $1.targetDate })
         // Map the offsets to the actual IDs of the goals to be deleted
         let idsToDelete = offsets.map { sortedGoals[$0].id }
         // Remove goals with matching IDs from the main `goals` array
-        goals.removeAll { idsToDelete.contains($0.id) }
-        saveGoals() // Persist changes
+        self.goals.removeAll { idsToDelete.contains($0.id) }
+        self.saveGoals() // Persist changes
     }
 
     // Loads goals from the data manager
     private func loadGoals() {
-        goals = GoalDataManager.shared.load()
-        print("Goals loaded. Count: \(goals.count)")
+        self.goals = GoalDataManager.shared.load()
+        print("Goals loaded. Count: \(self.goals.count)")
     }
 
     // Saves the current state of the `goals` array to the data manager
     private func saveGoals() {
-        GoalDataManager.shared.save(goals: goals)
+        GoalDataManager.shared.save(goals: self.goals)
         print("Goals saved.")
     }
 }
@@ -98,6 +98,6 @@ public struct GoalsView_Previews: PreviewProvider {
     public static var previews: some View {
         GoalsView()
             // Provide ThemeManager for the preview
-                .environmentObject(ThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

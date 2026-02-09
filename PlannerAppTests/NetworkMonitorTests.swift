@@ -5,8 +5,8 @@
 //  Comprehensive test suite for NetworkMonitor
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class NetworkMonitorTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -20,7 +20,7 @@ struct PlatformAdaptiveNavigation<Content: View>: View {
             NavigationSplitView {
                 SidebarView()
             } detail: {
-                content
+                self.content
             }
             .navigationSplitViewStyle(.balanced)
         #elseif os(iOS)
@@ -29,12 +29,12 @@ struct PlatformAdaptiveNavigation<Content: View>: View {
                 NavigationSplitView {
                     SidebarView()
                 } detail: {
-                    content
+                    self.content
                 }
             } else {
                 // iPhone layout
                 NavigationStack {
-                    content
+                    self.content
                 }
             }
         #endif
@@ -67,7 +67,7 @@ public struct SidebarView: View {
 
     public var body: some View {
         #if os(macOS)
-            List(Tab.allCases, id: \.self, selection: $selectedTab) { tab in
+            List(Tab.allCases, id: \.self, selection: self.$selectedTab) { tab in
                 NavigationLink(value: tab) {
                     Label(tab.rawValue, systemImage: tab.icon)
                 }
@@ -112,11 +112,11 @@ public struct PlatformToolbar: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
-            .navigationTitle(title)
+            .navigationTitle(self.title)
             .toolbar {
                 #if os(macOS)
                     ToolbarItemGroup(placement: .primaryAction) {
-                        ForEach(primaryActions, id: \.title) { action in
+                        ForEach(self.primaryActions, id: \.title) { action in
                             Button(action: action.action) {
                                 Label(action.title, systemImage: action.icon)
                             }
@@ -127,7 +127,7 @@ public struct PlatformToolbar: ViewModifier {
 
                     ToolbarItemGroup(placement: .secondaryAction) {
                         Menu("More") {
-                            ForEach(secondaryActions, id: \.title) { action in
+                            ForEach(self.secondaryActions, id: \.title) { action in
                                 Button(action.title, action: action.action)
                                     .accessibilityLabel("Button")
                             }
@@ -135,16 +135,16 @@ public struct PlatformToolbar: ViewModifier {
                     }
                 #else
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        ForEach(primaryActions, id: \.title) { action in
+                        ForEach(self.primaryActions, id: \.title) { action in
                             Button(action: action.action) {
                                 Image(systemName: action.icon)
                             }
                             .accessibilityLabel("Button")
                         }
 
-                        if !secondaryActions.isEmpty {
+                        if !self.secondaryActions.isEmpty {
                             Menu {
-                                ForEach(secondaryActions, id: \.title) { action in
+                                ForEach(self.secondaryActions, id: \.title) { action in
                                     Button(action.title, action: action.action)
                                         .accessibilityLabel("Button")
                                 }
@@ -187,12 +187,12 @@ struct PlatformContextMenu<MenuContent: View>: ViewModifier {
         #if os(macOS)
             content
                 .contextMenu {
-                    menuContent
+                    self.menuContent
                 }
         #else
             content
                 .contextMenu {
-                    menuContent
+                    self.menuContent
                 }
         #endif
     }
@@ -220,7 +220,7 @@ struct AdaptiveGrid<Content: View>: View {
         #if os(macOS)
             return Array(repeating: .init(.flexible()), count: 3)
         #else
-            if horizontalSizeClass == .regular {
+            if self.horizontalSizeClass == .regular {
                 // iPad or iPhone landscape
                 return Array(repeating: .init(.flexible()), count: 2)
             } else {
@@ -231,8 +231,8 @@ struct AdaptiveGrid<Content: View>: View {
     }
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 16) {
-            content
+        LazyVGrid(columns: self.columns, spacing: 16) {
+            self.content
         }
     }
 }
@@ -245,21 +245,21 @@ struct PlatformSheet<SheetContent: View>: ViewModifier {
 
     init(isPresented: Binding<Bool>, @ViewBuilder content: () -> SheetContent) {
         _isPresented = isPresented
-        sheetContent = content()
+        self.sheetContent = content()
     }
 
     func body(content: Content) -> some View {
         #if os(macOS)
             content
-                .sheet(isPresented: $isPresented) {
-                    sheetContent
+                .sheet(isPresented: self.$isPresented) {
+                    self.sheetContent
                         .frame(minWidth: 400, minHeight: 300)
                 }
         #else
             content
-                .sheet(isPresented: $isPresented) {
+                .sheet(isPresented: self.$isPresented) {
                     NavigationStack {
-                        sheetContent
+                        self.sheetContent
                     }
                 }
         #endif
@@ -287,11 +287,11 @@ public struct ExamplePlatformView: View {
                 AdaptiveGrid {
                     ForEach(0..<6, id: \.self) { index in
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(themeManager.currentTheme.secondaryBackgroundColor)
+                            .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
                             .frame(height: 120)
                             .overlay(
                                 Text("Item \(index + 1)")
-                                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                             )
                             .platformContextMenu {
                                 Button("Edit", action: {}).accessibilityLabel("Button")
@@ -305,7 +305,7 @@ public struct ExamplePlatformView: View {
                 title: "Example View",
                 primaryActions: [
                     .init(title: "Add Item", icon: "plus") {
-                        showingAddItem = true
+                        self.showingAddItem = true
                     }
                 ],
                 secondaryActions: [
@@ -313,19 +313,19 @@ public struct ExamplePlatformView: View {
                     .init(title: "Filter", icon: "line.3.horizontal.decrease.circle") {}
                 ]
             )
-            .platformSheet(isPresented: $showingAddItem) {
+            .platformSheet(isPresented: self.$showingAddItem) {
                 Text("Add Item Sheet")
                     .navigationTitle("Add Item")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cancel", action: {
-                                showingAddItem = false
+                                self.showingAddItem = false
                             })
                             .accessibilityLabel("Button")
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Save", action: {
-                                showingAddItem = false
+                                self.showingAddItem = false
                             })
                             .accessibilityLabel("Button")
                         }

@@ -37,6 +37,6 @@ class AccessControl {
         // In a real app, check user's role in workspace
         // For prototype, assume owner
         let userRole = Role.owner
-        return action(permissions(for: userRole))
+        return action(self.permissions(for: userRole))
     }
 }

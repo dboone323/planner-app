@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DashboardView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DashboardViewTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for PlatformAdaptiveNavigation
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class PlatformAdaptiveNavigationTests: XCTestCase {
     // MARK: - Initialization Tests

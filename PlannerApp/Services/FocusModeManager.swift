@@ -11,8 +11,8 @@ class FocusModeManager: ObservableObject {
     @Published var isFocusModeEnabled = false
 
     func toggleFocusMode() {
-        isFocusModeEnabled.toggle()
-        if isFocusModeEnabled {
+        self.isFocusModeEnabled.toggle()
+        if self.isFocusModeEnabled {
             // Enable Do Not Disturb logic (mock)
             print("Focus Mode ON: Notifications silenced")
         } else {

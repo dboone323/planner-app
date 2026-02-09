@@ -9,23 +9,23 @@ public struct QuickActionCard: View {
     @EnvironmentObject var themeManager: ThemeManager
 
     public var body: some View {
-        Button(action: action) {
+        Button(action: self.action) {
             VStack(spacing: 12) {
-                Image(systemName: icon)
+                Image(systemName: self.icon)
                     .font(.title2)
-                    .foregroundColor(color)
+                    .foregroundColor(self.color)
 
-                Text(title)
+                Text(self.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 20)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(themeManager.currentTheme.secondaryBackgroundColor)
+                    .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
                     .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
             )
         }

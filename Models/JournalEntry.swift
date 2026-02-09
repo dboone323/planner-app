@@ -39,17 +39,17 @@ public struct JournalEntry: Identifiable, Codable {
 
     /// Update entry content and trigger sentiment analysis
     mutating func updateContent(_ newContent: String) {
-        body = newContent
-        modifiedAt = Date()
+        self.body = newContent
+        self.modifiedAt = Date()
 
         // Analyze sentiment synchronously
-        analyzeSentiment()
+        self.analyzeSentiment()
     }
 
     /// Analyze sentiment of entry body using keyword-based scoring
     mutating func analyzeSentiment() {
         // Inline keyword-based sentiment analysis
-        let lower = body.lowercased()
+        let lower = self.body.lowercased()
         let positives = [
             "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast", "clean"
         ]
@@ -61,8 +61,8 @@ public struct JournalEntry: Identifiable, Codable {
         let rawScore = Double(positiveCount - negativeCount)
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
 
-        sentimentScore = normalizedScore
-        sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        self.sentimentScore = normalizedScore
+        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion
@@ -70,15 +70,15 @@ public struct JournalEntry: Identifiable, Codable {
     /// Convert to CloudKit record for syncing
     func toCKRecord() -> CKRecord {
         let record = CKRecord(
-            recordType: "JournalEntry", recordID: CKRecord.ID(recordName: id.uuidString)
+            recordType: "JournalEntry", recordID: CKRecord.ID(recordName: self.id.uuidString)
         )
-        record["title"] = title
-        record["body"] = body
-        record["date"] = date
-        record["mood"] = mood
-        record["modifiedAt"] = modifiedAt
-        record["sentiment"] = sentiment
-        record["sentimentScore"] = sentimentScore
+        record["title"] = self.title
+        record["body"] = self.body
+        record["date"] = self.date
+        record["mood"] = self.mood
+        record["modifiedAt"] = self.modifiedAt
+        record["sentiment"] = self.sentiment
+        record["sentimentScore"] = self.sentimentScore
         return record
     }
 

@@ -1,41 +1,41 @@
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 class PomodoroTimerTests: XCTestCase {
     var timer: PomodoroTimer!
 
     override func setUp() {
         super.setUp()
-        timer = PomodoroTimer()
+        self.timer = PomodoroTimer()
     }
 
     func testInitialState() {
-        XCTAssertEqual(timer.timeRemaining, 25 * 60)
-        XCTAssertFalse(timer.isActive)
-        XCTAssertEqual(timer.mode, .work)
+        XCTAssertEqual(self.timer.timeRemaining, 25 * 60)
+        XCTAssertFalse(self.timer.isActive)
+        XCTAssertEqual(self.timer.mode, .work)
     }
 
     func testStart() {
-        timer.start()
-        XCTAssertTrue(timer.isActive)
+        self.timer.start()
+        XCTAssertTrue(self.timer.isActive)
     }
 
     func testStop() {
-        timer.start()
-        timer.stop()
-        XCTAssertFalse(timer.isActive)
+        self.timer.start()
+        self.timer.stop()
+        XCTAssertFalse(self.timer.isActive)
     }
 
     func testReset() {
-        timer.timeRemaining = 10
-        timer.reset()
-        XCTAssertEqual(timer.timeRemaining, 25 * 60)
-        XCTAssertFalse(timer.isActive)
+        self.timer.timeRemaining = 10
+        self.timer.reset()
+        XCTAssertEqual(self.timer.timeRemaining, 25 * 60)
+        XCTAssertFalse(self.timer.isActive)
     }
 
     func testSetMode() {
-        timer.setMode(.shortBreak)
-        XCTAssertEqual(timer.mode, .shortBreak)
-        XCTAssertEqual(timer.timeRemaining, 5 * 60)
+        self.timer.setMode(.shortBreak)
+        XCTAssertEqual(self.timer.mode, .shortBreak)
+        XCTAssertEqual(self.timer.timeRemaining, 5 * 60)
     }
 }

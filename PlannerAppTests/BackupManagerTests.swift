@@ -3,8 +3,8 @@
 // PlannerAppTests
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class BackupManagerTests: XCTestCase {
     // MARK: - Backup Creation Tests

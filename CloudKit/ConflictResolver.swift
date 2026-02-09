@@ -74,7 +74,7 @@ enum ConflictResolver {
 
         // Both modified after last sync = conflict
         if localModified > syncDate, serverModified > syncDate {
-            let conflictType = determineConflictType(local: localRecord, server: serverRecord)
+            let conflictType = self.determineConflictType(local: localRecord, server: serverRecord)
             return SyncConflictInfo(
                 recordID: localRecord.recordID,
                 localRecord: localRecord,
@@ -126,10 +126,10 @@ enum ConflictResolver {
             conflict.serverRecord
 
         case .useNewest:
-            resolveByNewest(conflict: conflict)
+            self.resolveByNewest(conflict: conflict)
 
         case .merge:
-            attemptMerge(conflict: conflict)
+            self.attemptMerge(conflict: conflict)
 
         case .manual:
             nil // Requires user intervention
@@ -203,7 +203,7 @@ enum ConflictResolver {
         strategy: ConflictResolutionStrategy
     ) -> [CKRecord] {
         conflicts.compactMap { conflict in
-            resolve(conflict: conflict, strategy: strategy)
+            self.resolve(conflict: conflict, strategy: strategy)
         }
     }
 
@@ -224,7 +224,7 @@ enum ConflictResolver {
             let serverValue = conflict.serverRecord[key]
 
             // Check if values are different
-            if !valuesAreEqual(localValue, serverValue) {
+            if !self.valuesAreEqual(localValue, serverValue) {
                 differences[key] = (local: localValue, server: serverValue)
             }
         }

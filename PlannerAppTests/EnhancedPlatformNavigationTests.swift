@@ -5,8 +5,8 @@
 //  Comprehensive test suite for EnhancedPlatformNavigation
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class EnhancedPlatformNavigationTests: XCTestCase {
     // MARK: - Initialization Tests

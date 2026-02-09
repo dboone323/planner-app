@@ -1,5 +1,5 @@
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AddJournalEntryViewTests: XCTestCase {
     func testInitialization() {

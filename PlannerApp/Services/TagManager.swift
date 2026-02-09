@@ -24,16 +24,16 @@ class TagManager {
     ]
 
     func getAllTags() -> [Tag] {
-        tags
+        self.tags
     }
 
     func createTag(name: String, color: Color) -> Tag {
         let newTag = Tag(name: name, color: color)
-        tags.append(newTag)
+        self.tags.append(newTag)
         return newTag
     }
 
     func tags(for names: [String]) -> [Tag] {
-        tags.filter { names.contains($0.name) }
+        self.tags.filter { names.contains($0.name) }
     }
 }

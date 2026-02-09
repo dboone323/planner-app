@@ -5,8 +5,8 @@
 //  Comprehensive test suite for GoalsView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class GoalsViewTests: XCTestCase {
     // MARK: - Initialization Tests

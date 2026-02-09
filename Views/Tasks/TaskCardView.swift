@@ -9,30 +9,30 @@ struct TaskCardView: View {
         HStack(alignment: .top, spacing: 12) {
             // Priority Indicator Strip
             RoundedRectangle(cornerRadius: 2)
-                .fill(priorityColor(task.priority))
+                .fill(self.priorityColor(self.task.priority))
                 .frame(width: 4)
                 .padding(.vertical, 4)
 
             VStack(alignment: .leading, spacing: 8) {
                 // Header: Title and Due Date
                 HStack(alignment: .top) {
-                    Text(task.title)
+                    Text(self.task.title)
                         .font(.headline)
-                        .strikethrough(task.isCompleted)
-                        .foregroundColor(task.isCompleted ? .secondary : .primary)
+                        .strikethrough(self.task.isCompleted)
+                        .foregroundColor(self.task.isCompleted ? .secondary : .primary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Spacer()
 
                     if let dueDate = task.dueDate {
-                        dueDateBadge(date: dueDate, isCompleted: task.isCompleted)
+                        self.dueDateBadge(date: dueDate, isCompleted: self.task.isCompleted)
                     }
                 }
 
                 // Description (if present)
-                if !task.description.isEmpty {
-                    Text(task.description)
+                if !self.task.description.isEmpty {
+                    Text(self.task.description)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .lineLimit(2)
@@ -40,20 +40,20 @@ struct TaskCardView: View {
 
                 // Footer: Priority and Actions
                 HStack {
-                    Label(task.priority.displayName, systemImage: "flag.fill")
+                    Label(self.task.priority.displayName, systemImage: "flag.fill")
                         .font(.caption2)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(priorityColor(task.priority).opacity(0.1))
-                        .foregroundColor(priorityColor(task.priority))
+                        .background(self.priorityColor(self.task.priority).opacity(0.1))
+                        .foregroundColor(self.priorityColor(self.task.priority))
                         .cornerRadius(4)
 
                     Spacer()
 
-                    Button(action: { onToggle(task) }, label: {
-                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                    Button(action: { self.onToggle(self.task) }, label: {
+                        Image(systemName: self.task.isCompleted ? "checkmark.circle.fill" : "circle")
                             .font(.title2)
-                            .foregroundColor(task.isCompleted ? .green : .gray)
+                            .foregroundColor(self.task.isCompleted ? .green : .gray)
                     })
                     .buttonStyle(PlainButtonStyle())
                 }
@@ -68,7 +68,7 @@ struct TaskCardView: View {
             .cornerRadius(12)
             .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 1)
             .onTapGesture {
-                onEdit(task)
+                self.onEdit(self.task)
             }
     }
 

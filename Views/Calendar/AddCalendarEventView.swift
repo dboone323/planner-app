@@ -12,7 +12,7 @@ public struct AddCalendarEventView: View {
     @FocusState private var isTitleFocused: Bool
 
     private var isTitleValid: Bool {
-        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     public var body: some View {
@@ -23,7 +23,7 @@ public struct AddCalendarEventView: View {
                     #if os(iOS)
                         HapticManager.lightImpact()
                     #endif
-                    dismiss()
+                    self.dismiss()
                 })
                 .accessibilityLabel("Button")
                 #if os(iOS)
@@ -43,15 +43,15 @@ public struct AddCalendarEventView: View {
                     #if os(iOS)
                         HapticManager.notificationSuccess()
                     #endif
-                    saveEvent()
-                    dismiss()
+                    self.saveEvent()
+                    self.dismiss()
                 })
                 .accessibilityLabel("Button")
                 #if os(iOS)
                     .buttonStyle(.iOSPrimary)
                 #endif
-                    .disabled(!isTitleValid)
-                    .foregroundColor(isTitleValid ? .blue : .gray)
+                    .disabled(!self.isTitleValid)
+                    .foregroundColor(self.isTitleValid ? .blue : .gray)
             }
             .padding()
             #if os(macOS)
@@ -64,17 +64,17 @@ public struct AddCalendarEventView: View {
             #endif
 
             Form {
-                TextField("Event Title", text: $title).accessibilityLabel("Text Field")
-                    .focused($isTitleFocused)
+                TextField("Event Title", text: self.$title).accessibilityLabel("Text Field")
+                    .focused(self.$isTitleFocused)
                 #if os(iOS)
                     .textInputAutocapitalization(.words)
                     .submitLabel(.done)
                     .onSubmit {
-                        isTitleFocused = false
+                        self.isTitleFocused = false
                     }
                 #endif
                 DatePicker(
-                    "Event Date", selection: $date, displayedComponents: [.date, .hourAndMinute]
+                    "Event Date", selection: self.$date, displayedComponents: [.date, .hourAndMinute]
                 )
             }
             #if os(iOS)
@@ -84,7 +84,7 @@ public struct AddCalendarEventView: View {
                     HStack {
                         Spacer()
                         Button("Done", action: {
-                            isTitleFocused = false
+                            self.isTitleFocused = false
                             UIApplication.shared.sendAction(
                                 #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
                                 for: nil
@@ -109,11 +109,11 @@ public struct AddCalendarEventView: View {
     private func saveEvent() {
         let newEvent = CalendarEvent(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            date: date
+            date: self.date
         )
-        events.append(newEvent)
+        self.events.append(newEvent)
 
-        CalendarDataManager.shared.save(events: events)
+        CalendarDataManager.shared.save(events: self.events)
     }
 }
 

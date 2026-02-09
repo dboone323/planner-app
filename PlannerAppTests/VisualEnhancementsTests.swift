@@ -5,8 +5,8 @@
 //  Comprehensive test suite for VisualEnhancements
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class VisualEnhancementsTests: XCTestCase {
     // MARK: - Initialization Tests

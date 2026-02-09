@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CalendarEvent
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class CalendarEventTests: XCTestCase {
     // MARK: - Initialization Tests

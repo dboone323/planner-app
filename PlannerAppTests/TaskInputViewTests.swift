@@ -5,8 +5,8 @@
 //  Comprehensive test suite for TaskInputView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class TaskInputViewTests: XCTestCase {
     // MARK: - Initialization Tests

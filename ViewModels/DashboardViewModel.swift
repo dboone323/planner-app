@@ -1,7 +1,8 @@
 // PlannerApp/ViewModels/DashboardViewModel.swift (Updated)
 import Combine
 import Foundation
-import SwiftUI // Needed for @AppStorage
+import SwiftData
+import SwiftUI  // Needed for @AppStorage
 
 // MARK: - Data Structures
 
@@ -21,11 +22,22 @@ public struct UpcomingItem: Identifiable {
     let date: Date
     let icon: String
     let color: Color
+    let destination: DashboardViewModel.Destination?
 }
 
 // ObservableObject makes this class publish changes to its @Published properties.
 public class DashboardViewModel: ObservableObject {
+    /// Navigation destination for routing within the dashboard or app.
+    public enum Destination: Hashable {
+        case taskDetail(UUID)
+        case goalDetail(UUID)
+        case calendarEvent(UUID)
+        case settings
+    }
+
     // --- Published Properties for View Updates ---
+    @Published var navigationPath = NavigationPath()
+
     // These arrays hold the data to be displayed on the dashboard, limited by user settings.
     @Published var todaysEvents: [CalendarEvent] = []
     @Published var incompleteTasks: [PlannerTask] = []
@@ -56,14 +68,15 @@ public class DashboardViewModel: ObservableObject {
     // --- AppStorage Links ---
     // Read settings directly from UserDefaults using @AppStorage.
     // The view model automatically uses the latest setting value.
-    @AppStorage(AppSettingKeys.dashboardItemLimit) private var dashboardItemLimit: Int = 3 // Default limit
-    @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar.current.firstWeekday
+    @AppStorage(AppSettingKeys.dashboardItemLimit) private var dashboardItemLimit: Int = 3  // Default limit
+    @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar
+        .current.firstWeekday
 
     // --- Data Fetching and Filtering ---
     // This function loads data from managers, filters it based on dates/status,
     // applies the user's limit, and updates the @Published properties.
     func fetchDashboardData() {
-        print("Fetching dashboard data...") // Debugging log
+        print("Fetching dashboard data...")  // Debugging log
 
         // Load all data from the respective data managers.
         let allEvents = CalendarDataManager.shared.load()
@@ -72,17 +85,17 @@ public class DashboardViewModel: ObservableObject {
 
         // Get the current calendar and configure it with the user's setting for the first day of the week.
         var calendar = Calendar.current
-        calendar.firstWeekday = firstDayOfWeekSetting
+        calendar.firstWeekday = self.firstDayOfWeekSetting
 
         // Calculate date ranges needed for filtering (today, next week).
         let today = Date()
         let startOfToday = calendar.startOfDay(for: today)
         // Use guard to safely unwrap optional dates. If calculation fails, reset data.
         guard let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday),
-              let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfToday)
+            let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfToday)
         else {
             print("Error calculating date ranges for dashboard.")
-            resetData() // Clear displayed data if dates are invalid
+            self.resetData()  // Clear displayed data if dates are invalid
             return
         }
 
@@ -91,7 +104,7 @@ public class DashboardViewModel: ObservableObject {
         let todaysEventsFiltered = allEvents.filter { event in
             event.date >= startOfToday && event.date < endOfToday
         }
-        let filteredTodaysEvents = todaysEventsFiltered.sorted(by: { $0.date < $1.date }) // Sort today's events by time
+        let filteredTodaysEvents = todaysEventsFiltered.sorted(by: { $0.date < $1.date })  // Sort today's events by time
 
         // Filter tasks that are not completed.
         let filteredIncompleteTasks = allTasks.filter { !$0.isCompleted }
@@ -103,62 +116,82 @@ public class DashboardViewModel: ObservableObject {
             let goalTargetStartOfDay = calendar.startOfDay(for: goal.targetDate)
             return goalTargetStartOfDay >= startOfToday && goalTargetStartOfDay < endOfWeek
         }
-        let filteredUpcomingGoals = upcomingGoalsFiltered
-            .sorted(by: { $0.targetDate < $1.targetDate }) // Sort upcoming goals by target date
+        let filteredUpcomingGoals =
+            upcomingGoalsFiltered
+            .sorted(by: { $0.targetDate < $1.targetDate })  // Sort upcoming goals by target date
 
         // --- Update Total Counts ---
         // Store the counts *before* applying the display limit.
-        totalTodaysEventsCount = filteredTodaysEvents.count
-        totalIncompleteTasksCount = filteredIncompleteTasks.count
-        totalUpcomingGoalsCount = filteredUpcomingGoals.count
+        self.totalTodaysEventsCount = filteredTodaysEvents.count
+        self.totalIncompleteTasksCount = filteredIncompleteTasks.count
+        self.totalUpcomingGoalsCount = filteredUpcomingGoals.count
 
         // --- Update Full Data Arrays ---
         // Store complete arrays for Add* views to bind to
         self.allEvents = allEvents
         self.allGoals = allGoals
         // Load journal entries
-        allJournalEntries = JournalDataManager.shared.load()
+        self.allJournalEntries = JournalDataManager.shared.load()
 
         // --- Apply Limit and Update Published Arrays ---
         // Get the current limit value from @AppStorage.
-        let limit = dashboardItemLimit
+        let limit = self.dashboardItemLimit
         // Take only the first `limit` items from each filtered array.
-        todaysEvents = Array(filteredTodaysEvents.prefix(limit))
-        incompleteTasks = Array(filteredIncompleteTasks.prefix(limit))
-        upcomingGoals = Array(filteredUpcomingGoals.prefix(limit))
+        self.todaysEvents = Array(filteredTodaysEvents.prefix(limit))
+        self.incompleteTasks = Array(filteredIncompleteTasks.prefix(limit))
+        self.upcomingGoals = Array(filteredUpcomingGoals.prefix(limit))
 
         print(
-            "Dashboard data fetched. Limit: \(limit). Today: \(totalTodaysEventsCount), Tasks: \(totalIncompleteTasksCount), Goals: \(totalUpcomingGoalsCount)"
-        ) // Debugging log
+            "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
+        )  // Debugging log
+    }
+
+    // --- Navigation Methods ---
+
+    /// Navigates to a specific destination.
+    func navigate(to destination: Destination) {
+        self.navigationPath.append(destination)
+    }
+
+    /// Clears the entire navigation path.
+    func clearNavigation() {
+        self.navigationPath = NavigationPath()
+    }
+
+    /// Navigates back one level.
+    func navigateBack() {
+        if !self.navigationPath.isEmpty {
+            self.navigationPath.removeLast()
+        }
     }
 
     // New method for modern dashboard
     @MainActor
     func refreshData() async {
         // Call existing method
-        fetchDashboardData()
+        self.fetchDashboardData()
 
         // Update quick stats
-        updateQuickStats()
+        self.updateQuickStats()
 
         // Generate recent activities
-        generateRecentActivities()
+        self.generateRecentActivities()
 
         // Generate upcoming items
-        generateUpcomingItems()
+        self.generateUpcomingItems()
 
-        print("Dashboard refresh completed") // Debugging log
+        print("Dashboard refresh completed")  // Debugging log
     }
 
     private func updateQuickStats() {
         let allTasks = TaskDataManager.shared.load()
         let allGoals = GoalDataManager.shared.load()
 
-        totalTasks = allTasks.count
-        completedTasks = allTasks.count(where: { $0.isCompleted })
-        totalGoals = allGoals.count
-        completedGoals = 0 // Goal completion not yet implemented
-        todayEvents = totalTodaysEventsCount
+        self.totalTasks = allTasks.count
+        self.completedTasks = allTasks.count(where: { $0.isCompleted })
+        self.totalGoals = allGoals.count
+        self.completedGoals = 0  // Goal completion not yet implemented
+        self.todayEvents = self.totalTodaysEventsCount
     }
 
     private func generateRecentActivities() {
@@ -168,41 +201,43 @@ public class DashboardViewModel: ObservableObject {
         let allTasks = TaskDataManager.shared.load()
         let completedTasksFilter = allTasks.filter { task in
             // Only include tasks that are actually completed AND were created or completed recently
-            task.isCompleted &&
-                (Calendar.current.isDateInYesterday(task.createdAt) ||
-                    Calendar.current.isDateInToday(task.createdAt)
-                )
+            task.isCompleted
+                && (Calendar.current.isDateInYesterday(task.createdAt)
+                    || Calendar.current.isDateInToday(task.createdAt))
         }
         let recentCompletedTasks = completedTasksFilter.prefix(3)
 
         for task in recentCompletedTasks {
-            activities.append(DashboardActivity(
-                title: "Completed Task",
-                subtitle: task.title,
-                icon: "checkmark.circle.fill",
-                color: .green,
-                timestamp: task.createdAt
-            ))
+            activities.append(
+                DashboardActivity(
+                    title: "Completed Task",
+                    subtitle: task.title,
+                    icon: "checkmark.circle.fill",
+                    color: .green,
+                    timestamp: task.createdAt
+                ))
         }
 
         // Add recent events
         let allEvents = CalendarDataManager.shared.load()
         let recentEventsFilter = allEvents.filter { event in
-            Calendar.current.isDateInYesterday(event.date) || Calendar.current.isDateInToday(event.date)
+            Calendar.current.isDateInYesterday(event.date)
+                || Calendar.current.isDateInToday(event.date)
         }
         let recentEvents = recentEventsFilter.prefix(2)
 
         for event in recentEvents {
-            activities.append(DashboardActivity(
-                title: "Event",
-                subtitle: event.title,
-                icon: "calendar",
-                color: .orange,
-                timestamp: event.date
-            ))
+            activities.append(
+                DashboardActivity(
+                    title: "Event",
+                    subtitle: event.title,
+                    icon: "calendar",
+                    color: .orange,
+                    timestamp: event.date
+                ))
         }
 
-        recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
+        self.recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
     }
 
     private func generateUpcomingItems() {
@@ -214,13 +249,15 @@ public class DashboardViewModel: ObservableObject {
         let futureEvents = futureEventsFilter.prefix(3)
 
         for event in futureEvents {
-            items.append(UpcomingItem(
-                title: event.title,
-                subtitle: "Event",
-                date: event.date,
-                icon: "calendar",
-                color: .orange
-            ))
+            items.append(
+                UpcomingItem(
+                    title: event.title,
+                    subtitle: "Event",
+                    date: event.date,
+                    icon: "calendar",
+                    color: .orange,
+                    destination: .calendarEvent(event.id)
+                ))
         }
 
         // Add upcoming goals
@@ -228,42 +265,44 @@ public class DashboardViewModel: ObservableObject {
         let futureGoals = allGoals.filter { $0.targetDate > Date() }.prefix(2)
 
         for goal in futureGoals {
-            items.append(UpcomingItem(
-                title: goal.title,
-                subtitle: "Goal deadline",
-                date: goal.targetDate,
-                icon: "target",
-                color: .green
-            ))
+            items.append(
+                UpcomingItem(
+                    title: goal.title,
+                    subtitle: "Goal deadline",
+                    date: goal.targetDate,
+                    icon: "target",
+                    color: .green,
+                    destination: .goalDetail(goal.id)
+                ))
         }
 
-        upcomingItems = items.sorted { $0.date < $1.date }
+        self.upcomingItems = items.sorted { $0.date < $1.date }
     }
 
     // Helper function to clear all published data, typically used on error.
     private func resetData() {
-        todaysEvents = []
-        incompleteTasks = []
-        upcomingGoals = []
-        totalTodaysEventsCount = 0
-        totalIncompleteTasksCount = 0
-        totalUpcomingGoalsCount = 0
+        self.todaysEvents = []
+        self.incompleteTasks = []
+        self.upcomingGoals = []
+        self.totalTodaysEventsCount = 0
+        self.totalIncompleteTasksCount = 0
+        self.totalUpcomingGoalsCount = 0
 
         // Reset modern dashboard data
-        recentActivities = []
-        upcomingItems = []
+        self.recentActivities = []
+        self.upcomingItems = []
 
         // Reset full data arrays
-        allGoals = []
-        allEvents = []
-        allJournalEntries = []
+        self.allGoals = []
+        self.allEvents = []
+        self.allJournalEntries = []
 
-        totalTasks = 0
-        completedTasks = 0
-        totalGoals = 0
-        completedGoals = 0
-        todayEvents = 0
+        self.totalTasks = 0
+        self.completedTasks = 0
+        self.totalGoals = 0
+        self.completedGoals = 0
+        self.todayEvents = 0
 
-        print("Dashboard data reset.") // Debugging log
+        print("Dashboard data reset.")  // Debugging log
     }
 }

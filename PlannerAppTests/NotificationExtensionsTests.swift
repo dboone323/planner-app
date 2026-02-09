@@ -5,8 +5,8 @@
 //  Comprehensive test suite for NotificationExtensions
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class NotificationExtensionsTests: XCTestCase {
     // MARK: - Initialization Tests

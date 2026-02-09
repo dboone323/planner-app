@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AppSettingKeys
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AppSettingKeysTests: XCTestCase {
     // MARK: - Initialization Tests

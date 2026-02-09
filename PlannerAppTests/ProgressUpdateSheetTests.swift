@@ -5,8 +5,8 @@
 //  Comprehensive test suite for ProgressUpdateSheet
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class ProgressUpdateSheetTests: XCTestCase {
     // MARK: - Initialization Tests

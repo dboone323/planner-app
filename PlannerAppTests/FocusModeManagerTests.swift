@@ -5,63 +5,63 @@
 // Tests for focus mode state management
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class FocusModeManagerTests: XCTestCase {
     var manager: FocusModeManager!
 
     override func setUpWithError() throws {
-        manager = FocusModeManager()
+        self.manager = FocusModeManager()
     }
 
     // MARK: - Initial State Tests
 
     func testInitialStateIsOff() {
-        XCTAssertFalse(manager.isFocusModeEnabled)
+        XCTAssertFalse(self.manager.isFocusModeEnabled)
     }
 
     // MARK: - Toggle Tests
 
     func testToggleTurnsOn() {
         // Given: Focus mode is off
-        XCTAssertFalse(manager.isFocusModeEnabled)
+        XCTAssertFalse(self.manager.isFocusModeEnabled)
 
         // When: Toggle
-        manager.toggleFocusMode()
+        self.manager.toggleFocusMode()
 
         // Then: Should be on
-        XCTAssertTrue(manager.isFocusModeEnabled)
+        XCTAssertTrue(self.manager.isFocusModeEnabled)
     }
 
     func testToggleTurnsOff() {
         // Given: Focus mode is on
-        manager.toggleFocusMode()
-        XCTAssertTrue(manager.isFocusModeEnabled)
+        self.manager.toggleFocusMode()
+        XCTAssertTrue(self.manager.isFocusModeEnabled)
 
         // When: Toggle again
-        manager.toggleFocusMode()
+        self.manager.toggleFocusMode()
 
         // Then: Should be off
-        XCTAssertFalse(manager.isFocusModeEnabled)
+        XCTAssertFalse(self.manager.isFocusModeEnabled)
     }
 
     func testDoubleToggleReturnsToOriginal() {
-        let original = manager.isFocusModeEnabled
-        manager.toggleFocusMode()
-        manager.toggleFocusMode()
-        XCTAssertEqual(manager.isFocusModeEnabled, original)
+        let original = self.manager.isFocusModeEnabled
+        self.manager.toggleFocusMode()
+        self.manager.toggleFocusMode()
+        XCTAssertEqual(self.manager.isFocusModeEnabled, original)
     }
 
     func testMultipleToggles() {
         // Toggle 5 times should end up in on state
         for _ in 0..<5 {
-            manager.toggleFocusMode()
+            self.manager.toggleFocusMode()
         }
-        XCTAssertTrue(manager.isFocusModeEnabled)
+        XCTAssertTrue(self.manager.isFocusModeEnabled)
 
         // Toggle once more should turn off
-        manager.toggleFocusMode()
-        XCTAssertFalse(manager.isFocusModeEnabled)
+        self.manager.toggleFocusMode()
+        XCTAssertFalse(self.manager.isFocusModeEnabled)
     }
 }

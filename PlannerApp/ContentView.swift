@@ -28,15 +28,15 @@ public struct ContentView: View {
                         .ignoresSafeArea()
                 #endif
 
-                if tasks.isEmpty {
-                    emptyStateView
+                if self.tasks.isEmpty {
+                    self.emptyStateView
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 16) {
-                            ForEach(tasks) { task in
+                            ForEach(self.tasks) { task in
                                 TaskCardView(
                                     task: task,
-                                    onToggle: { t in toggleTask(t) },
+                                    onToggle: { t in self.toggleTask(t) },
                                     onEdit: { _ in /* Edit implementation TODO */ }
                                 )
                             }
@@ -48,13 +48,13 @@ public struct ContentView: View {
             .navigationTitle("My Tasks")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { seedSampleData() }, label: {
+                    Button(action: { self.seedSampleData() }, label: {
                         Label("Add Sample", systemImage: "plus")
                     })
                 }
             }
             .onAppear {
-                loadTasks()
+                self.loadTasks()
             }
         }
     }
@@ -73,7 +73,7 @@ public struct ContentView: View {
                 .foregroundColor(.secondary)
 
             Button("Generate Sample Tasks") {
-                seedSampleData()
+                self.seedSampleData()
             }
             .buttonStyle(.borderedProminent)
             .padding(.top)
@@ -82,7 +82,7 @@ public struct ContentView: View {
     }
 
     private func loadTasks() {
-        tasks = dataManager.load().sorted {
+        self.tasks = self.dataManager.load().sorted {
             // Sort: High priority first, then due date
             if $0.priority.sortOrder != $1.priority.sortOrder {
                 return $0.priority.sortOrder > $1.priority.sortOrder
@@ -94,10 +94,10 @@ public struct ContentView: View {
     private func toggleTask(_ task: PlannerTask) {
         var updatedTask = task
         updatedTask.isCompleted.toggle()
-        dataManager.update(updatedTask)
+        self.dataManager.update(updatedTask)
         // Animate removal or change?
         withAnimation {
-            loadTasks()
+            self.loadTasks()
         }
     }
 
@@ -124,10 +124,10 @@ public struct ContentView: View {
         ]
 
         for t in samples {
-            dataManager.add(t)
+            self.dataManager.add(t)
         }
         withAnimation {
-            loadTasks()
+            self.loadTasks()
         }
     }
 }
@@ -153,7 +153,7 @@ struct TasksWidgetView: View {
                     .foregroundColor(.blue)
             }
 
-            if tasks.isEmpty {
+            if self.tasks.isEmpty {
                 VStack {
                     Spacer()
                     Text("No tasks due")
@@ -163,10 +163,10 @@ struct TasksWidgetView: View {
                 }
             } else {
                 VStack(spacing: 8) {
-                    ForEach(tasks.prefix(3)) { task in
+                    ForEach(self.tasks.prefix(3)) { task in
                         HStack {
                             Circle()
-                                .fill(priorityColor(task.priority))
+                                .fill(self.priorityColor(task.priority))
                                 .frame(width: 8, height: 8)
 
                             Text(task.title)

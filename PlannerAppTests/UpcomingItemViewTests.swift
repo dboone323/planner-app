@@ -5,8 +5,8 @@
 //  Comprehensive test suite for UpcomingItemView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class UpcomingItemViewTests: XCTestCase {
     // MARK: - Initialization Tests

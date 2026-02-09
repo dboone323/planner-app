@@ -5,8 +5,8 @@
 //  Comprehensive test suite for MainTabView_Enhanced
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class MainTabViewEnhancedTests: XCTestCase {
     // MARK: - Initialization Tests

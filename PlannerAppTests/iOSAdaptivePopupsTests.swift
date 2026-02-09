@@ -5,8 +5,8 @@
 //  Comprehensive test suite for iOSAdaptivePopups
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class IOSAdaptivePopupsTests: XCTestCase {
     // MARK: - Initialization Tests

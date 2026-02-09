@@ -83,15 +83,15 @@ public struct Goal: Identifiable, Codable {
 
     /// Converts this goal to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: "Goal", recordID: CKRecord.ID(recordName: id.uuidString))
-        record["title"] = title
-        record["description"] = description
-        record["targetDate"] = targetDate
-        record["createdAt"] = createdAt
-        record["modifiedAt"] = modifiedAt
-        record["isCompleted"] = isCompleted
-        record["priority"] = priority.rawValue
-        record["progress"] = progress
+        let record = CKRecord(recordType: "Goal", recordID: CKRecord.ID(recordName: self.id.uuidString))
+        record["title"] = self.title
+        record["description"] = self.description
+        record["targetDate"] = self.targetDate
+        record["createdAt"] = self.createdAt
+        record["modifiedAt"] = self.modifiedAt
+        record["isCompleted"] = self.isCompleted
+        record["priority"] = self.priority.rawValue
+        record["progress"] = self.progress
         return record
     }
 

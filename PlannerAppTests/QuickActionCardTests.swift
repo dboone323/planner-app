@@ -5,8 +5,8 @@
 //  Comprehensive test suite for QuickActionCard
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class QuickActionCardTests: XCTestCase {
     // MARK: - Initialization Tests

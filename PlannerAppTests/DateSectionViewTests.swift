@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DateSectionView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DateSectionViewTests: XCTestCase {
     // MARK: - Initialization Tests

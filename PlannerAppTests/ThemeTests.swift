@@ -5,8 +5,8 @@
 //  Comprehensive test suite for Theme
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class ThemeTests: XCTestCase {
     // MARK: - Initialization Tests

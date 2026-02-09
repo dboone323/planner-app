@@ -3,8 +3,8 @@
 // PlannerAppTests
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DarkModeSupportTests: XCTestCase {
     // MARK: - Color Tests

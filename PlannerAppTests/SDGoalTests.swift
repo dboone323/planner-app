@@ -5,9 +5,9 @@
 // Unit tests for the SDGoal SwiftData model.
 //
 
-@testable import PlannerApp
 import SwiftData
 import XCTest
+@testable import PlannerApp
 
 final class SDGoalTests: XCTestCase {
     var container: ModelContainer!
@@ -15,13 +15,13 @@ final class SDGoalTests: XCTestCase {
 
     override func setUpWithError() throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
-        context = ModelContext(container)
+        self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
+        self.context = ModelContext(self.container)
     }
 
     override func tearDownWithError() throws {
-        container = nil
-        context = nil
+        self.container = nil
+        self.context = nil
     }
 
     // MARK: - Initialization Tests
@@ -67,8 +67,8 @@ final class SDGoalTests: XCTestCase {
             progress: 0.25
         )
 
-        context.insert(goal)
-        try context.save()
+        self.context.insert(goal)
+        try self.context.save()
 
         // Fetch back
         let descriptor = FetchDescriptor<SDGoal>(
@@ -83,13 +83,13 @@ final class SDGoalTests: XCTestCase {
 
     func testSDGoalUpdate() throws {
         let goal = SDGoal(title: "Original Goal", targetDate: Date())
-        context.insert(goal)
-        try context.save()
+        self.context.insert(goal)
+        try self.context.save()
 
         // Update progress
         goal.progress = 0.75
         goal.title = "Updated Goal"
-        try context.save()
+        try self.context.save()
 
         // Verify
         let descriptor = FetchDescriptor<SDGoal>()
@@ -101,11 +101,11 @@ final class SDGoalTests: XCTestCase {
 
     func testSDGoalDeletion() throws {
         let goal = SDGoal(title: "To Delete", targetDate: Date())
-        context.insert(goal)
-        try context.save()
+        self.context.insert(goal)
+        try self.context.save()
 
-        context.delete(goal)
-        try context.save()
+        self.context.delete(goal)
+        try self.context.save()
 
         let descriptor = FetchDescriptor<SDGoal>()
         let fetched = try context.fetch(descriptor)
@@ -164,9 +164,9 @@ final class SDGoalTests: XCTestCase {
         let active = SDGoal(title: "In Progress", targetDate: Date(), isCompleted: false, progress: 0.5)
         let done = SDGoal(title: "Completed", targetDate: Date(), isCompleted: true, progress: 1.0)
 
-        context.insert(active)
-        context.insert(done)
-        try context.save()
+        self.context.insert(active)
+        self.context.insert(done)
+        try self.context.save()
 
         let descriptor = FetchDescriptor<SDGoal>(
             predicate: #Predicate { !$0.isCompleted }

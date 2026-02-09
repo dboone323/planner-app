@@ -35,6 +35,40 @@ PlannerApp helps users organize their daily tasks, manage projects, and track pr
 2. Open `PlannerApp.xcodeproj` in Xcode.
 3. Build and run (Cmd+R).
 
+## Testing
+
+### Run all tests
+
+```bash
+make test
+```
+
+### iOS only (iPhone 17 Simulator)
+
+```bash
+make test-ios
+```
+
+### macOS only
+
+```bash
+make test-macos
+```
+
+### Code Quality
+
+Run linting:
+
+```bash
+make lint
+```
+
+Auto-format code:
+
+```bash
+make format
+```
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.

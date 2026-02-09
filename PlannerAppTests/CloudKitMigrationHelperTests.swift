@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CloudKitMigrationHelper
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class CloudKitMigrationHelperTests: XCTestCase {
     // MARK: - Initialization Tests

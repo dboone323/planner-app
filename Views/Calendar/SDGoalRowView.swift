@@ -8,7 +8,7 @@ public struct SDGoalRowView: View {
     let goal: SDGoal
 
     private var priorityColor: Color {
-        switch goal.priority {
+        switch self.goal.priority {
         case "high": .red
         case "medium": .orange
         case "low": .green
@@ -17,7 +17,7 @@ public struct SDGoalRowView: View {
     }
 
     private var priorityText: String {
-        switch goal.priority {
+        switch self.goal.priority {
         case "high": "High"
         case "medium": "Medium"
         case "low": "Low"
@@ -30,46 +30,46 @@ public struct SDGoalRowView: View {
             // Priority indicator
             VStack(alignment: .center, spacing: 2) {
                 Circle()
-                    .fill(priorityColor)
+                    .fill(self.priorityColor)
                     .frame(width: 8, height: 8)
 
-                Text(priorityText)
+                Text(self.priorityText)
                     .font(.caption2)
                     .fontWeight(.medium)
-                    .foregroundColor(priorityColor)
+                    .foregroundColor(self.priorityColor)
             }
             .frame(width: 50)
 
             // Goal details
             VStack(alignment: .leading, spacing: 4) {
-                Text(goal.title)
+                Text(self.goal.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                     .lineLimit(2)
 
-                if !goal.goalDescription.isEmpty {
-                    Text(goal.goalDescription)
+                if !self.goal.goalDescription.isEmpty {
+                    Text(self.goal.goalDescription)
                         .font(.caption)
-                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         .lineLimit(1)
                 }
 
                 // Progress bar
-                if goal.progress > 0 {
+                if self.goal.progress > 0 {
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
                             Text("Progress")
                                 .font(.caption2)
-                                .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                             Spacer()
-                            Text("\(Int(goal.progress * 100))%")
+                            Text("\(Int(self.goal.progress * 100))%")
                                 .font(.caption2)
                                 .fontWeight(.medium)
                                 .foregroundColor(.green)
                         }
 
-                        ProgressView(value: goal.progress)
+                        ProgressView(value: self.goal.progress)
                             .progressViewStyle(LinearProgressViewStyle(tint: .green))
                             .scaleEffect(y: 0.8)
                     }
@@ -79,7 +79,7 @@ public struct SDGoalRowView: View {
             Spacer()
 
             // Completion status
-            if goal.isCompleted {
+            if self.goal.isCompleted {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
                     .font(.title3)

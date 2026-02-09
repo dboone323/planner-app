@@ -9,16 +9,22 @@ public struct PlannerApp: App {
 
     /// Shared model container for the entire app.
     /// Configures automatic CloudKit sync.
+    /// Shared model container for the entire app.
+    /// Configures automatic CloudKit sync and schema migration.
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([SDTask.self, SDGoal.self])
+        let schema = Schema(versionedSchema: PlannerSchemaV1.self)
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false,
-            cloudKitDatabase: .automatic // Enables automatic CloudKit sync
+            cloudKitDatabase: .automatic
         )
 
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(
+                for: schema,
+                migrationPlan: PlannerMigrationPlan.self,
+                configurations: [modelConfiguration]
+            )
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
@@ -37,31 +43,33 @@ public struct PlannerApp: App {
     // is selected right from the start.
     public init() {
         // Read the saved default view identifier from UserDefaults.
-        let initialTab = UserDefaults.standard.string(forKey: AppSettingKeys.defaultView)
+        let initialTab =
+            UserDefaults.standard.string(forKey: AppSettingKeys.defaultView)
             // Use the Dashboard tag as a fallback if nothing is saved.
             ?? MainTabView.TabTags.dashboard
         // Initialize the @State variable with the value read from UserDefaults.
         // The underscore syntax is used here because we are initializing the State wrapper itself.
         _selectedTabTag = State(initialValue: initialTab)
-        print("App starting. Initial tab set to: \(initialTab)") // Debugging log
+        print("App starting. Initial tab set to: \(initialTab)")  // Debugging log
     }
 
     public var body: some Scene {
         WindowGroup {
             // Apply the primary background color from the current theme to the entire window group.
-            themeManager.currentTheme.primaryBackgroundColor
+            self.themeManager.currentTheme.primaryBackgroundColor
                 .ignoresSafeArea()
                 .overlay(
                     // Use enhanced navigation for better cross-platform UX
-                    MainTabView(selectedTabTag: $selectedTabTag)
+                    MainTabView(selectedTabTag: self.$selectedTabTag)
                 )
-                .environmentObject(themeManager)
+                .environmentObject(self.themeManager)
                 .onAppear {
                     // Perform one-time legacy data migration
-                    LegacyDataMigrator.migrateIfNeeded(context: sharedModelContainer.mainContext)
+                    LegacyDataMigrator.migrateIfNeeded(
+                        context: self.sharedModelContainer.mainContext)
                 }
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(self.sharedModelContainer)
         #if os(macOS)
             .windowStyle(.hiddenTitleBar)
             .windowToolbarStyle(.unified)

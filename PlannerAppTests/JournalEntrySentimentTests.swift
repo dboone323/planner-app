@@ -5,8 +5,8 @@
 //  Test suite for journal entry sentiment analysis
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalEntrySentimentTests: XCTestCase {
     func testPositiveSentimentDetection() {

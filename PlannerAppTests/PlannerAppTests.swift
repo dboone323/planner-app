@@ -26,8 +26,8 @@ final class PlannerAppTests: XCTestCase {
             // Example: Task.self, Project.self, Category.self
         ])
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        modelContainer = try ModelContainer(for: schema, configurations: [configuration])
-        modelContext = ModelContext(modelContainer)
+        self.modelContainer = try ModelContainer(for: schema, configurations: [configuration])
+        self.modelContext = ModelContext(self.modelContainer)
 
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: bundleIdentifier)
@@ -46,8 +46,8 @@ final class PlannerAppTests: XCTestCase {
         GoalDataManager.shared.clearAllGoals()
         CalendarDataManager.shared.clearAllEvents()
 
-        modelContainer = nil
-        modelContext = nil
+        self.modelContainer = nil
+        self.modelContext = nil
     }
 
     // MARK: - Task Model Tests

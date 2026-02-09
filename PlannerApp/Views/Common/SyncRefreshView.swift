@@ -29,12 +29,12 @@ struct SyncRefreshableView<Content: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             // Sync status bar
-            SyncStatusBar(isSyncing: isSyncing, lastSyncDate: lastSyncDate)
+            SyncStatusBar(isSyncing: self.isSyncing, lastSyncDate: self.lastSyncDate)
 
             // Refreshable content
-            content
+            self.content
                 .refreshable {
-                    await onRefresh()
+                    await self.onRefresh()
                 }
         }
     }
@@ -47,7 +47,7 @@ struct SyncStatusBar: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            if isSyncing {
+            if self.isSyncing {
                 ProgressView()
                     .scaleEffect(0.8)
                 Text("Syncing...")
@@ -83,13 +83,13 @@ struct ManualSyncButton: View {
     var body: some View {
         Button(action: {
             Task {
-                isSyncing = true
-                await action()
-                isSyncing = false
+                self.isSyncing = true
+                await self.action()
+                self.isSyncing = false
             }
         }, label: {
             HStack {
-                if isSyncing {
+                if self.isSyncing {
                     ProgressView()
                         .scaleEffect(0.8)
                 } else {
@@ -98,7 +98,7 @@ struct ManualSyncButton: View {
                 Text("Sync Now")
             }
         })
-        .disabled(isSyncing)
+        .disabled(self.isSyncing)
     }
 }
 
@@ -109,13 +109,13 @@ struct SyncErrorAlert: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .alert("Sync Error", isPresented: $showError) {
+            .alert("Sync Error", isPresented: self.$showError) {
                 Button("OK", role: .cancel) {}
                 Button("Retry") {
                     // Trigger retry
                 }
             } message: {
-                Text(error?.localizedDescription ?? "Unknown error occurred")
+                Text(self.error?.localizedDescription ?? "Unknown error occurred")
             }
     }
 }

@@ -26,9 +26,9 @@ public struct MainTabView: View {
 
     public var body: some View {
         // TabView container. The `selection` parameter is bound to `selectedTabTag`.
-        TabView(selection: $selectedTabTag) {
+        TabView(selection: self.$selectedTabTag) {
             // --- Dashboard Tab ---
-            DashboardView(selectedTabTag: $selectedTabTag)
+            DashboardView(selectedTabTag: self.$selectedTabTag)
                 .tabItem { Label(TabTags.dashboard, systemImage: "house") } // Text and icon for the tab item
                 .tag(TabTags.dashboard) // Assign a unique tag to identify this tab
 
@@ -62,13 +62,13 @@ public struct MainTabView: View {
                 .tag(TabTags.settings)
         }
         // Apply the theme's primary accent color to the selected tab item's icon and text tint.
-        .accentColor(themeManager.currentTheme.primaryAccentColor)
+        .accentColor(self.themeManager.currentTheme.primaryAccentColor)
         // Attempt to influence the appearance of unselected tabs by setting the color scheme.
         // This is an indirect way, as direct styling of unselected items is limited.
         // It tells SwiftUI whether the overall view context is light or dark.
         .environment(
             \.colorScheme,
-            themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light
+            self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light
         )
         #if os(macOS)
         // Ensure full window utilization on macOS
@@ -119,6 +119,6 @@ public struct MainTabView_Previews: PreviewProvider {
         // Provide a constant binding for the preview (doesn't change).
         MainTabView(selectedTabTag: .constant(MainTabView.TabTags.dashboard))
             // Provide the ThemeManager environment object for the preview.
-                .environmentObject(ThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

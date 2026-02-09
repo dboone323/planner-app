@@ -5,8 +5,8 @@
 //  Comprehensive test suite for ModernCard
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class ModernCardTests: XCTestCase {
     // MARK: - Initialization Tests

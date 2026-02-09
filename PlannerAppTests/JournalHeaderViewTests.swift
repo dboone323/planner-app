@@ -5,8 +5,8 @@
 //  Comprehensive test suite for JournalHeaderView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalHeaderViewTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DataManagers
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DataManagersTests: XCTestCase {
     // MARK: - Initialization Tests

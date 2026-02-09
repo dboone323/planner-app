@@ -21,25 +21,25 @@ final class SwiftDataTaskManager: ObservableObject {
         let descriptor = FetchDescriptor<SDTask>(
             sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Adds a new task.
     func add(_ task: SDTask) {
-        modelContext.insert(task)
-        saveContext()
+        self.modelContext.insert(task)
+        self.saveContext()
     }
 
     /// Updates an existing task (SwiftData handles this automatically via observation).
     func update(_ task: SDTask) {
         task.modifiedAt = Date()
-        saveContext()
+        self.saveContext()
     }
 
     /// Deletes a task.
     func delete(_ task: SDTask) {
-        modelContext.delete(task)
-        saveContext()
+        self.modelContext.delete(task)
+        self.saveContext()
     }
 
     /// Finds a task by ID.
@@ -47,7 +47,7 @@ final class SwiftDataTaskManager: ObservableObject {
         let predicate = #Predicate<SDTask> { $0.id == id }
         var descriptor = FetchDescriptor<SDTask>(predicate: predicate)
         descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
+        return try? self.modelContext.fetch(descriptor).first
     }
 
     // MARK: - Filtered Queries
@@ -59,7 +59,7 @@ final class SwiftDataTaskManager: ObservableObject {
             predicate: predicate,
             sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Gets incomplete tasks due within a specified number of days.
@@ -69,7 +69,7 @@ final class SwiftDataTaskManager: ObservableObject {
             task.dueDate != nil && task.dueDate! <= futureDate && !task.isCompleted
         }
         let descriptor = FetchDescriptor<SDTask>(predicate: predicate)
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Gets overdue incomplete tasks.
@@ -79,32 +79,32 @@ final class SwiftDataTaskManager: ObservableObject {
             task.dueDate != nil && task.dueDate! < now && !task.isCompleted
         }
         let descriptor = FetchDescriptor<SDTask>(predicate: predicate)
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Gets tasks sorted by priority (high to low).
     func tasksSortedByPriority() -> [SDTask] {
         // Note: SwiftData doesn't support computed property sorts directly,
         // so we fetch all and sort in-memory.
-        load().sorted { $0.prioritySortOrder > $1.prioritySortOrder }
+        self.load().sorted { $0.prioritySortOrder > $1.prioritySortOrder }
     }
 
     /// Clears all tasks.
     func clearAllTasks() {
-        let tasks = load()
+        let tasks = self.load()
         for task in tasks {
-            modelContext.delete(task)
+            self.modelContext.delete(task)
         }
-        saveContext()
+        self.saveContext()
     }
 
     // MARK: - Statistics
 
     /// Gets task statistics.
     func getTaskStatistics() -> [String: Int] {
-        let tasks = load()
+        let tasks = self.load()
         let completed = tasks.filter(\.isCompleted).count
-        let overdue = overdueTasks().count
+        let overdue = self.overdueTasks().count
 
         let calendar = Calendar.current
         let todayStart = calendar.startOfDay(for: Date())
@@ -127,7 +127,7 @@ final class SwiftDataTaskManager: ObservableObject {
 
     private func saveContext() {
         do {
-            try modelContext.save()
+            try self.modelContext.save()
         } catch {
             print("[SwiftDataTaskManager] Save failed: \(error.localizedDescription)")
         }

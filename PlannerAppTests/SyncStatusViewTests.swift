@@ -5,8 +5,8 @@
 //  Comprehensive test suite for SyncStatusView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class SyncStatusViewTests: XCTestCase {
     // MARK: - Initialization Tests

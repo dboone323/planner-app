@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CloudKitOnboardingView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class CloudKitOnboardingViewTests: XCTestCase {
     // MARK: - Initialization Tests

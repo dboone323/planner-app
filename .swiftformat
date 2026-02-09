@@ -1,0 +1,12 @@
+# SwiftFormat configuration
+--swiftversion 5.9
+--indent 4
+--allman false
+--self insert
+--importgrouping testable-bottom
+--commas inline
+--trimwhitespace always
+--ranges nospace
+--wraparguments beforefirst
+--wrapcollections beforefirst
+--empty void

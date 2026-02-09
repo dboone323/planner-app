@@ -5,8 +5,8 @@
 //  Comprehensive test suite for JournalEmptyStateView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalEmptyStateViewTests: XCTestCase {
     // MARK: - Initialization Tests

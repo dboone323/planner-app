@@ -11,7 +11,7 @@ enum LegacyDataMigrator {
     /// - Parameter context: The SwiftData ModelContext to insert data into.
     @MainActor
     static func migrateIfNeeded(context: ModelContext) {
-        guard !UserDefaults.standard.bool(forKey: migrationCompleteKey) else {
+        guard !UserDefaults.standard.bool(forKey: self.migrationCompleteKey) else {
             print("[LegacyDataMigrator] Migration already complete, skipping.")
             return
         }
@@ -40,7 +40,7 @@ enum LegacyDataMigrator {
         // Save and mark complete
         do {
             try context.save()
-            UserDefaults.standard.set(true, forKey: migrationCompleteKey)
+            UserDefaults.standard.set(true, forKey: self.migrationCompleteKey)
             print("[LegacyDataMigrator] Migration complete: \(tasksCount) tasks, \(goalsCount) goals.")
         } catch {
             print("[LegacyDataMigrator] Migration failed: \(error.localizedDescription)")
@@ -49,6 +49,6 @@ enum LegacyDataMigrator {
 
     /// Resets the migration flag (for testing purposes).
     static func resetMigrationFlag() {
-        UserDefaults.standard.removeObject(forKey: migrationCompleteKey)
+        UserDefaults.standard.removeObject(forKey: self.migrationCompleteKey)
     }
 }

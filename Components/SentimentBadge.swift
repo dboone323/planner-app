@@ -18,21 +18,21 @@ public struct SentimentBadge: View {
 
     public var body: some View {
         HStack(spacing: 4) {
-            Image(systemName: sentimentIcon)
+            Image(systemName: self.sentimentIcon)
                 .font(.caption2)
-            Text(sentiment.capitalized)
+            Text(self.sentiment.capitalized)
                 .font(.caption2)
                 .fontWeight(.medium)
         }
-        .foregroundStyle(sentimentColor)
+        .foregroundStyle(self.sentimentColor)
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(sentimentColor.opacity(0.15))
+        .background(self.sentimentColor.opacity(0.15))
         .clipShape(Capsule())
     }
 
     private var sentimentIcon: String {
-        switch sentiment.lowercased() {
+        switch self.sentiment.lowercased() {
         case "positive":
             "face.smiling"
         case "negative":
@@ -43,7 +43,7 @@ public struct SentimentBadge: View {
     }
 
     private var sentimentColor: Color {
-        switch sentiment.lowercased() {
+        switch self.sentiment.lowercased() {
         case "positive":
             .green
         case "negative":

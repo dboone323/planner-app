@@ -1,6 +1,6 @@
 import CloudKit
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 class ConflictResolverTests: XCTestCase {
     func createRecord(id: String, modified _: Date, title: String) -> CKRecord {
@@ -27,16 +27,16 @@ class ConflictResolverTests: XCTestCase {
     }
 
     func testDetectConflict_IdenticalRecords_ReturnsNil() {
-        let record = createRecord(id: "1", modified: Date(), title: "Test")
+        let record = self.createRecord(id: "1", modified: Date(), title: "Test")
         let conflict = ConflictResolver.detectConflict(localRecord: record, serverRecord: record, lastSyncDate: Date())
         XCTAssertNil(conflict)
     }
 
     func testDetermineConflictType_Deleted() {
-        let local = createRecord(id: "1", modified: Date(), title: "Local")
+        let local = self.createRecord(id: "1", modified: Date(), title: "Local")
         local["isDeleted"] = true
 
-        let server = createRecord(id: "1", modified: Date(), title: "Server")
+        let server = self.createRecord(id: "1", modified: Date(), title: "Server")
 
         // Force tags to differ
         // server["dummy"] = "change" -> changes changeTag? No.

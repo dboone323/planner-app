@@ -5,8 +5,8 @@
 //  Comprehensive test suite for TaskListView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class TaskListViewTests: XCTestCase {
     // MARK: - Initialization Tests

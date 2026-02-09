@@ -15,38 +15,38 @@ public final class AppearanceManager: ObservableObject {
     @Published public var useSystemAppearance: Bool = true
 
     private init() {
-        loadPreferences()
+        self.loadPreferences()
     }
 
     public func setDarkMode() {
-        colorScheme = .dark
-        useSystemAppearance = false
-        savePreferences()
+        self.colorScheme = .dark
+        self.useSystemAppearance = false
+        self.savePreferences()
     }
 
     public func setLightMode() {
-        colorScheme = .light
-        useSystemAppearance = false
-        savePreferences()
+        self.colorScheme = .light
+        self.useSystemAppearance = false
+        self.savePreferences()
     }
 
     public func setSystemMode() {
-        colorScheme = nil
-        useSystemAppearance = true
-        savePreferences()
+        self.colorScheme = nil
+        self.useSystemAppearance = true
+        self.savePreferences()
     }
 
     private func loadPreferences() {
-        useSystemAppearance = UserDefaults.standard.bool(forKey: "useSystemAppearance")
-        if !useSystemAppearance {
+        self.useSystemAppearance = UserDefaults.standard.bool(forKey: "useSystemAppearance")
+        if !self.useSystemAppearance {
             let isDark = UserDefaults.standard.bool(forKey: "isDarkMode")
-            colorScheme = isDark ? .dark : .light
+            self.colorScheme = isDark ? .dark : .light
         }
     }
 
     private func savePreferences() {
-        UserDefaults.standard.set(useSystemAppearance, forKey: "useSystemAppearance")
-        UserDefaults.standard.set(colorScheme == .dark, forKey: "isDarkMode")
+        UserDefaults.standard.set(self.useSystemAppearance, forKey: "useSystemAppearance")
+        UserDefaults.standard.set(self.colorScheme == .dark, forKey: "isDarkMode")
     }
 }
 
@@ -123,7 +123,7 @@ struct DarkModeViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .preferredColorScheme(manager.colorScheme)
+            .preferredColorScheme(self.manager.colorScheme)
     }
 }
 

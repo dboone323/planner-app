@@ -5,8 +5,8 @@
 //  Comprehensive test suite for JournalDataManager
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalDataManagerTests: XCTestCase {
     // MARK: - Initialization Tests

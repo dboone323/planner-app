@@ -16,20 +16,20 @@ public struct TaskManagerHeaderView: View {
                 #if os(iOS)
                     HapticManager.lightImpact()
                 #endif
-                dismiss()
+                self.dismiss()
             }
             .accessibilityLabel("Button")
             #if os(iOS)
                 .buttonStyle(.iOSSecondary)
             #endif
-                .foregroundColor(themeManager.currentTheme.primaryAccentColor)
+                .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
 
             Spacer()
 
             Text("Task Manager")
                 .font(.title3)
                 .fontWeight(.semibold)
-                .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
             Spacer()
 
@@ -39,13 +39,13 @@ public struct TaskManagerHeaderView: View {
                     Text("")
                 }
                 .accessibilityLabel("Button")
-                    .disabled(true)
-                    .opacity(0)
+                .disabled(true)
+                .opacity(0)
             #if os(iOS)
                 .frame(minWidth: 60, minHeight: 44)
             #endif
         }
         .padding()
-        .background(themeManager.currentTheme.secondaryBackgroundColor)
+        .background(self.themeManager.currentTheme.secondaryBackgroundColor)
     }
 }

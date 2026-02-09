@@ -5,8 +5,8 @@
 //  Comprehensive test suite for EnhancedCloudKitManager
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class EnhancedCloudKitManagerTests: XCTestCase {
     // MARK: - Initialization Tests

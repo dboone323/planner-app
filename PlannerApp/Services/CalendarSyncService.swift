@@ -33,7 +33,7 @@ class CalendarSyncService: ObservableObject {
     @Published var isAuthorized = false
 
     func requestAccess() {
-        eventStore.requestFullAccessToEvents { granted, _ in
+        self.eventStore.requestFullAccessToEvents { granted, _ in
             DispatchQueue.main.async {
                 self.isAuthorized = granted
             }
@@ -41,13 +41,13 @@ class CalendarSyncService: ObservableObject {
     }
 
     func fetchEvents(for date: Date) -> [EKEvent] {
-        guard isAuthorized else { return [] }
+        guard self.isAuthorized else { return [] }
 
         let calendar = Calendar.current
         let start = calendar.startOfDay(for: date)
         guard let end = calendar.date(byAdding: .day, value: 1, to: start) else { return [] }
 
-        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
-        return eventStore.events(matching: predicate)
+        let predicate = self.eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
+        return self.eventStore.events(matching: predicate)
     }
 }

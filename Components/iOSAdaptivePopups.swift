@@ -149,19 +149,19 @@ struct IOSFormField<Content: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(label)
+            Text(self.label)
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
 
-            content
+            self.content
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
-                .background(backgroundColor)
+                .background(self.backgroundColor)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(strokeColor, lineWidth: 1)
+                        .stroke(self.strokeColor, lineWidth: 1)
                 )
         }
         .padding(.vertical, 4)
@@ -180,7 +180,7 @@ struct IOSPrimaryButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body.weight(.semibold))
-            .foregroundColor(isDestructive ? .red : .blue)
+            .foregroundColor(self.isDestructive ? .red : .blue)
             .frame(minWidth: 60, minHeight: 44)
             .contentShape(Rectangle())
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)

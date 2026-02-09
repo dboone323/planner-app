@@ -16,35 +16,35 @@ public struct SDTaskListView: View {
         List {
             // --- Incomplete Tasks Section ---
             Section {
-                ForEach(incompleteTasks) { task in
+                ForEach(self.incompleteTasks) { task in
                     SDTaskRow(taskItem: task)
-                        .environmentObject(themeManager)
-                        .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
+                        .environmentObject(self.themeManager)
+                        .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
                 }
-                .onDelete(perform: onDeleteIncomplete)
+                .onDelete(perform: self.onDeleteIncomplete)
             } header: {
                 Text("To Do")
-                    .font(themeManager.currentTheme.font(
-                        forName: themeManager.currentTheme.primaryFontName, size: 14
+                    .font(self.themeManager.currentTheme.font(
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 14
                     ))
-                    .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
             }
 
             // --- Completed Tasks Section ---
-            if !completedTasks.isEmpty {
+            if !self.completedTasks.isEmpty {
                 Section {
-                    ForEach(completedTasks) { task in
+                    ForEach(self.completedTasks) { task in
                         SDTaskRow(taskItem: task)
-                            .environmentObject(themeManager)
-                            .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
+                            .environmentObject(self.themeManager)
+                            .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
                     }
-                    .onDelete(perform: onDeleteCompleted)
+                    .onDelete(perform: self.onDeleteCompleted)
                 } header: {
                     Text("Completed")
-                        .font(themeManager.currentTheme.font(
-                            forName: themeManager.currentTheme.primaryFontName, size: 14
+                        .font(self.themeManager.currentTheme.font(
+                            forName: self.themeManager.currentTheme.primaryFontName, size: 14
                         ))
-                        .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                 }
             }
         }
@@ -54,10 +54,10 @@ public struct SDTaskListView: View {
         .listStyle(.sidebar)
         #endif
         .scrollContentBackground(.hidden)
-        .background(themeManager.currentTheme.primaryBackgroundColor)
+        .background(self.themeManager.currentTheme.primaryBackgroundColor)
         .onTapGesture {
             // Dismiss keyboard when tapping outside input field
-            isInputFieldFocused = false
+            self.isInputFieldFocused = false
         }
     }
 }

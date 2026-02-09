@@ -5,9 +5,9 @@
 // Unit tests for the SDTask SwiftData model.
 //
 
-@testable import PlannerApp
 import SwiftData
 import XCTest
+@testable import PlannerApp
 
 final class SDTaskTests: XCTestCase {
     var container: ModelContainer!
@@ -15,13 +15,13 @@ final class SDTaskTests: XCTestCase {
 
     override func setUpWithError() throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
-        context = ModelContext(container)
+        self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
+        self.context = ModelContext(self.container)
     }
 
     override func tearDownWithError() throws {
-        container = nil
-        context = nil
+        self.container = nil
+        self.context = nil
     }
 
     // MARK: - Initialization Tests
@@ -64,8 +64,8 @@ final class SDTaskTests: XCTestCase {
             priority: "high"
         )
 
-        context.insert(task)
-        try context.save()
+        self.context.insert(task)
+        try self.context.save()
 
         // Fetch back
         let descriptor = FetchDescriptor<SDTask>(
@@ -82,13 +82,13 @@ final class SDTaskTests: XCTestCase {
 
     func testSDTaskUpdate() throws {
         let task = SDTask(title: "Original Title")
-        context.insert(task)
-        try context.save()
+        self.context.insert(task)
+        try self.context.save()
 
         // Update
         task.title = "Updated Title"
         task.isCompleted = true
-        try context.save()
+        try self.context.save()
 
         // Verify
         let descriptor = FetchDescriptor<SDTask>()
@@ -100,12 +100,12 @@ final class SDTaskTests: XCTestCase {
 
     func testSDTaskDeletion() throws {
         let task = SDTask(title: "To Delete")
-        context.insert(task)
-        try context.save()
+        self.context.insert(task)
+        try self.context.save()
 
         // Delete
-        context.delete(task)
-        try context.save()
+        self.context.delete(task)
+        try self.context.save()
 
         // Verify
         let descriptor = FetchDescriptor<SDTask>()
@@ -132,9 +132,9 @@ final class SDTaskTests: XCTestCase {
         let completed = SDTask(title: "Done", isCompleted: true)
         let pending = SDTask(title: "Pending", isCompleted: false)
 
-        context.insert(completed)
-        context.insert(pending)
-        try context.save()
+        self.context.insert(completed)
+        self.context.insert(pending)
+        try self.context.save()
 
         // Fetch only completed
         let descriptor = FetchDescriptor<SDTask>(

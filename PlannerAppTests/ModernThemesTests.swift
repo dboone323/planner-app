@@ -5,8 +5,8 @@
 //  Comprehensive test suite for ModernThemes
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class ModernThemesTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for Dependencies
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DependenciesTests: XCTestCase {
     // MARK: - Initialization Tests

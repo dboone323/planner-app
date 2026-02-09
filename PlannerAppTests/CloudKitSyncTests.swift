@@ -6,9 +6,9 @@
 //
 
 import CloudKit
-@testable import PlannerApp
 import SwiftData
 import XCTest
+@testable import PlannerApp
 
 final class CloudKitSyncTests: XCTestCase {
     var container: ModelContainer!
@@ -17,13 +17,13 @@ final class CloudKitSyncTests: XCTestCase {
     override func setUpWithError() throws {
         // Use in-memory container for testing without CloudKit
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
-        context = ModelContext(container)
+        self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
+        self.context = ModelContext(self.container)
     }
 
     override func tearDownWithError() throws {
-        container = nil
-        context = nil
+        self.container = nil
+        self.context = nil
     }
 
     // MARK: - CloudKit Configuration Tests
@@ -42,8 +42,8 @@ final class CloudKitSyncTests: XCTestCase {
 
     func testTaskModifiedAtUpdatesOnChange() throws {
         let task = SDTask(title: "Sync Test Task")
-        context.insert(task)
-        try context.save()
+        self.context.insert(task)
+        try self.context.save()
 
         let originalModifiedAt = task.modifiedAt
 
@@ -51,21 +51,21 @@ final class CloudKitSyncTests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.1)
         task.title = "Updated Title"
         task.modifiedAt = Date()
-        try context.save()
+        try self.context.save()
 
         XCTAssertNotEqual(task.modifiedAt, originalModifiedAt)
     }
 
     func testGoalModifiedAtUpdatesOnProgress() throws {
         let goal = SDGoal(title: "Sync Test Goal", targetDate: Date())
-        context.insert(goal)
-        try context.save()
+        self.context.insert(goal)
+        try self.context.save()
 
         XCTAssertNil(goal.modifiedAt)
 
         // Update progress
         goal.updateProgress(0.5)
-        try context.save()
+        try self.context.save()
 
         XCTAssertNotNil(goal.modifiedAt)
     }
@@ -77,9 +77,9 @@ final class CloudKitSyncTests: XCTestCase {
 
         for i in 0..<taskCount {
             let task = SDTask(title: "Bulk Task \(i)")
-            context.insert(task)
+            self.context.insert(task)
         }
-        try context.save()
+        try self.context.save()
 
         let descriptor = FetchDescriptor<SDTask>()
         let fetched = try context.fetch(descriptor)
@@ -92,9 +92,9 @@ final class CloudKitSyncTests: XCTestCase {
 
         for i in 0..<goalCount {
             let goal = SDGoal(title: "Bulk Goal \(i)", targetDate: Date())
-            context.insert(goal)
+            self.context.insert(goal)
         }
-        try context.save()
+        try self.context.save()
 
         let descriptor = FetchDescriptor<SDGoal>()
         let fetched = try context.fetch(descriptor)
@@ -108,15 +108,15 @@ final class CloudKitSyncTests: XCTestCase {
         let uuid = UUID()
 
         let task1 = SDTask(id: uuid, title: "First Task")
-        context.insert(task1)
-        try context.save()
+        self.context.insert(task1)
+        try self.context.save()
 
         // Attempt to insert duplicate ID should cause constraint issue
         let task2 = SDTask(id: uuid, title: "Duplicate Task")
-        context.insert(task2)
+        self.context.insert(task2)
 
         // SwiftData should handle unique constraint
-        XCTAssertThrowsError(try context.save())
+        XCTAssertThrowsError(try self.context.save())
     }
 
     // MARK: - Data Integrity Tests
@@ -127,16 +127,16 @@ final class CloudKitSyncTests: XCTestCase {
             taskDescription: "Original Description",
             priority: "low"
         )
-        context.insert(task)
-        try context.save()
+        self.context.insert(task)
+        try self.context.save()
 
         // Multiple updates
         task.priority = "medium"
-        try context.save()
+        try self.context.save()
 
         task.priority = "high"
         task.isCompleted = true
-        try context.save()
+        try self.context.save()
 
         // Verify final state
         let descriptor = FetchDescriptor<SDTask>(

@@ -5,79 +5,79 @@
 // Tests for tag management functionality
 //
 
-@testable import PlannerApp
 import SwiftUI
 import XCTest
+@testable import PlannerApp
 
 final class TagManagerTests: XCTestCase {
     var manager: TagManager!
 
     override func setUpWithError() throws {
-        manager = TagManager.shared
+        self.manager = TagManager.shared
     }
 
     // MARK: - Initial State Tests
 
     func testDefaultTagsExist() {
-        let tags = manager.getAllTags()
+        let tags = self.manager.getAllTags()
         XCTAssertFalse(tags.isEmpty)
     }
 
     func testWorkTagExists() {
-        let tags = manager.getAllTags()
+        let tags = self.manager.getAllTags()
         XCTAssertTrue(tags.contains { $0.name == "Work" })
     }
 
     func testPersonalTagExists() {
-        let tags = manager.getAllTags()
+        let tags = self.manager.getAllTags()
         XCTAssertTrue(tags.contains { $0.name == "Personal" })
     }
 
     func testUrgentTagExists() {
-        let tags = manager.getAllTags()
+        let tags = self.manager.getAllTags()
         XCTAssertTrue(tags.contains { $0.name == "Urgent" })
     }
 
     func testWaitingTagExists() {
-        let tags = manager.getAllTags()
+        let tags = self.manager.getAllTags()
         XCTAssertTrue(tags.contains { $0.name == "Waiting" })
     }
 
     // MARK: - Create Tag Tests
 
     func testCreateTagReturnsNewTag() {
-        let newTag = manager.createTag(name: "Testing", color: .purple)
+        let newTag = self.manager.createTag(name: "Testing", color: .purple)
         XCTAssertEqual(newTag.name, "Testing")
         XCTAssertEqual(newTag.color, .purple)
     }
 
     func testCreateTagAddsToList() {
-        let initialCount = manager.getAllTags().count
-        _ = manager.createTag(name: "NewTag", color: .gray)
-        XCTAssertEqual(manager.getAllTags().count, initialCount + 1)
+        let initialCount = self.manager.getAllTags().count
+        _ = self.manager.createTag(name: "NewTag", color: .gray)
+        XCTAssertEqual(self.manager.getAllTags().count, initialCount + 1)
     }
 
     func testCreatedTagIsRetrievable() {
-        _ = manager.createTag(name: "Findable", color: .pink)
-        let tags = manager.getAllTags()
+        _ = self.manager.createTag(name: "Findable", color: .pink)
+        let tags = self.manager.getAllTags()
         XCTAssertTrue(tags.contains { $0.name == "Findable" })
     }
 
     // MARK: - Filter Tags Tests
 
     func testTagsForNames() {
-        let filtered = manager.tags(for: ["Work", "Urgent"])
+        let filtered = self.manager.tags(for: ["Work", "Urgent"])
         XCTAssertEqual(filtered.count, 2)
         XCTAssertTrue(filtered.allSatisfy { $0.name == "Work" || $0.name == "Urgent" })
     }
 
     func testTagsForEmptyNames() {
-        let filtered = manager.tags(for: [])
+        let filtered = self.manager.tags(for: [])
         XCTAssertTrue(filtered.isEmpty)
     }
 
     func testTagsForNonexistentNames() {
-        let filtered = manager.tags(for: ["Nonexistent"])
+        let filtered = self.manager.tags(for: ["Nonexistent"])
         XCTAssertTrue(filtered.isEmpty)
     }
 

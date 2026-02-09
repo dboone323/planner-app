@@ -11,16 +11,16 @@ public struct AddGoalView: View {
     public var body: some View {
         NavigationView {
             Form {
-                TextField("Goal Title", text: $title).accessibilityLabel("Text Field")
-                TextField("Description", text: $description).accessibilityLabel("Text Field")
-                DatePicker("Target Date", selection: $targetDate, displayedComponents: .date)
+                TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                TextField("Description", text: self.$description).accessibilityLabel("Text Field")
+                DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
             }
             .navigationTitle("New Goal")
         }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", action: {
-                    dismiss()
+                    self.dismiss()
                 })
                 .accessibilityLabel("Button")
             }
@@ -29,12 +29,12 @@ public struct AddGoalView: View {
                     let newGoal = Goal(
                         title: title, description: description, targetDate: targetDate
                     )
-                    goals.append(newGoal)
-                    GoalDataManager.shared.save(goals: goals)
-                    dismiss()
+                    self.goals.append(newGoal)
+                    GoalDataManager.shared.save(goals: self.goals)
+                    self.dismiss()
                 })
                 .accessibilityLabel("Button")
-                .disabled(title.isEmpty || description.isEmpty)
+                .disabled(self.title.isEmpty || self.description.isEmpty)
             }
         }
     }

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for GoalsEmptyStateView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class GoalsEmptyStateViewTests: XCTestCase {
     // MARK: - Initialization Tests

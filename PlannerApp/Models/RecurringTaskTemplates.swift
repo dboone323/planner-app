@@ -29,8 +29,8 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
     public var description: String
     public var priority: String
     public var recurrence: RecurrenceType
-    public var customDays: Set<Int>? // For custom recurrence (1=Sunday, 7=Saturday)
-    public var reminderOffset: TimeInterval? // Seconds before due
+    public var customDays: Set<Int>?  // For custom recurrence (1=Sunday, 7=Saturday)
+    public var reminderOffset: TimeInterval?  // Seconds before due
     public var isActive: Bool
     public var lastGenerated: Date?
     public var nextDueDate: Date?
@@ -53,7 +53,8 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
         self.customDays = customDays
         self.reminderOffset = reminderOffset
         self.isActive = isActive
-        nextDueDate = Self.calculateNextDueDate(from: Date(), recurrence: recurrence, customDays: customDays)
+        self.nextDueDate = Self.calculateNextDueDate(
+            from: Date(), recurrence: recurrence, customDays: customDays)
     }
 
     // MARK: - Date Calculation
@@ -125,26 +126,26 @@ final class RecurringTaskTemplateManager: ObservableObject {
     private let templatesKey = "taskTemplates"
 
     private init() {
-        loadTemplates()
+        self.loadTemplates()
     }
 
     // MARK: - CRUD
 
     func addTemplate(_ template: RecurringTaskTemplate) {
-        templates.append(template)
-        saveTemplates()
+        self.templates.append(template)
+        self.saveTemplates()
     }
 
     func updateTemplate(_ template: RecurringTaskTemplate) {
         if let index = templates.firstIndex(where: { $0.id == template.id }) {
-            templates[index] = template
-            saveTemplates()
+            self.templates[index] = template
+            self.saveTemplates()
         }
     }
 
     func removeTemplate(id: UUID) {
-        templates.removeAll { $0.id == id }
-        saveTemplates()
+        self.templates.removeAll { $0.id == id }
+        self.saveTemplates()
     }
 
     // MARK: - Generation
@@ -154,18 +155,18 @@ final class RecurringTaskTemplateManager: ObservableObject {
         let now = Date()
         var generated: [SDTask] = []
 
-        for i in templates.indices {
-            guard templates[i].isActive,
-                  let nextDue = templates[i].nextDueDate,
-                  nextDue <= now
+        for i in self.templates.indices {
+            guard self.templates[i].isActive,
+                let nextDue = templates[i].nextDueDate,
+                nextDue <= now
             else {
                 continue
             }
 
             let task = SDTask(
                 title: templates[i].title,
-                taskDescription: templates[i].description,
-                priority: templates[i].priority,
+                taskDescription: self.templates[i].description,
+                priority: self.templates[i].priority,
                 dueDate: nextDue
             )
 
@@ -173,17 +174,17 @@ final class RecurringTaskTemplateManager: ObservableObject {
             generated.append(task)
 
             // Update template
-            templates[i].lastGenerated = now
-            templates[i].nextDueDate = RecurringTaskTemplate.calculateNextDueDate(
+            self.templates[i].lastGenerated = now
+            self.templates[i].nextDueDate = RecurringTaskTemplate.calculateNextDueDate(
                 from: nextDue,
-                recurrence: templates[i].recurrence,
-                customDays: templates[i].customDays
+                recurrence: self.templates[i].recurrence,
+                customDays: self.templates[i].customDays
             )
         }
 
         if !generated.isEmpty {
             try? context.save()
-            saveTemplates()
+            self.saveTemplates()
         }
 
         return generated
@@ -193,14 +194,15 @@ final class RecurringTaskTemplateManager: ObservableObject {
 
     private func saveTemplates() {
         if let data = try? JSONEncoder().encode(templates) {
-            userDefaults.set(data, forKey: templatesKey)
+            self.userDefaults.set(data, forKey: self.templatesKey)
         }
     }
 
     private func loadTemplates() {
         if let data = userDefaults.data(forKey: templatesKey),
-           let loaded = try? JSONDecoder().decode([RecurringTaskTemplate].self, from: data) {
-            templates = loaded
+            let loaded = try? JSONDecoder().decode([RecurringTaskTemplate].self, from: data)
+        {
+            self.templates = loaded
         }
     }
 }

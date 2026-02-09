@@ -9,7 +9,7 @@ class SmartScheduler {
 
     func scheduleTask(_ task: Task, preferences: SchedulingPreferences = .default) async -> ScheduledBlock? {
         // Request calendar access
-        guard await requestCalendarAccess() else {
+        guard await self.requestCalendarAccess() else {
             return nil
         }
 
@@ -29,10 +29,10 @@ class SmartScheduler {
         event.title = task.title
         event.startDate = bestSlot.start
         event.endDate = bestSlot.end
-        event.calendar = eventStore.defaultCalendarForNewEvents
+        event.calendar = self.eventStore.defaultCalendarForNewEvents
 
         do {
-            try eventStore.save(event, span: .thisEvent)
+            try self.eventStore.save(event, span: .thisEvent)
             return ScheduledBlock(task: task, start: bestSlot.start, end: bestSlot.end)
         } catch {
             print("Error creating event: \(error)")
@@ -77,10 +77,10 @@ class SmartScheduler {
             }
 
             // Get existing events for this day
-            let existingEvents = getEvents(from: workStart, to: workEnd)
+            let existingEvents = self.getEvents(from: workStart, to: workEnd)
 
             // Find gaps between events
-            let gaps = findGaps(between: existingEvents, from: workStart, to: workEnd)
+            let gaps = self.findGaps(between: existingEvents, from: workStart, to: workEnd)
 
             // Filter gaps that fit the task duration
             for gap in gaps where gap.duration >= duration {
@@ -148,7 +148,7 @@ class SmartScheduler {
             return status
         } else {
             return await withCheckedContinuation { continuation in
-                eventStore.requestAccess(to: .event) { granted, _ in
+                self.eventStore.requestAccess(to: .event) { granted, _ in
                     continuation.resume(returning: granted)
                 }
             }
@@ -156,8 +156,8 @@ class SmartScheduler {
     }
 
     private func getEvents(from start: Date, to end: Date) -> [EKEvent] {
-        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
-        return eventStore.events(matching: predicate)
+        let predicate = self.eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
+        return self.eventStore.events(matching: predicate)
     }
 
     private func findGaps(between events: [EKEvent], from: Date, to: Date) -> [TimeSlot] {
@@ -189,7 +189,7 @@ struct TimeSlot {
     let end: Date
 
     var duration: TimeInterval {
-        end.timeIntervalSince(start)
+        self.end.timeIntervalSince(self.start)
     }
 }
 

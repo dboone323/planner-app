@@ -25,45 +25,45 @@ public struct TaskManagerView: View {
 
     // Computed properties to filter tasks into incomplete and completed lists
     private var incompleteTasks: [SDTask] {
-        sdTasks.filter { !$0.isCompleted }
+        self.sdTasks.filter { !$0.isCompleted }
     }
 
     private var completedTasks: [SDTask] {
-        sdTasks.filter(\.isCompleted)
+        self.sdTasks.filter(\.isCompleted)
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             // Header with buttons for better macOS compatibility
             TaskManagerHeaderView()
-                .environmentObject(themeManager)
+                .environmentObject(self.themeManager)
 
             // Main container using VStack with no spacing for tight layout control
             VStack(spacing: 0) {
                 // --- Input Area ---
                 TaskInputView(
-                    newTaskTitle: $newTaskTitle,
-                    isInputFieldFocused: $isInputFieldFocused,
-                    onAddTask: addTask
+                    newTaskTitle: self.$newTaskTitle,
+                    isInputFieldFocused: self.$isInputFieldFocused,
+                    onAddTask: self.addTask
                 )
-                .environmentObject(themeManager)
+                .environmentObject(self.themeManager)
 
                 // --- Task List ---
                 SDTaskListView(
-                    isInputFieldFocused: $isInputFieldFocused,
-                    incompleteTasks: incompleteTasks,
-                    completedTasks: completedTasks,
-                    onDeleteIncomplete: deleteTaskIncomplete,
-                    onDeleteCompleted: deleteTaskCompleted
+                    isInputFieldFocused: self.$isInputFieldFocused,
+                    incompleteTasks: self.incompleteTasks,
+                    completedTasks: self.completedTasks,
+                    onDeleteIncomplete: self.deleteTaskIncomplete,
+                    onDeleteCompleted: self.deleteTaskCompleted
                 )
-                .environmentObject(themeManager)
+                .environmentObject(self.themeManager)
             } // End main VStack
             // Ensure the primary background extends behind the navigation bar area if needed
-            .background(themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
+            .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Tasks")
             // Perform auto-deletion check when view appears
             .onAppear {
-                performAutoDeletionIfNeeded() // Check and perform auto-deletion
+                self.performAutoDeletionIfNeeded() // Check and perform auto-deletion
             }
             .toolbar {
                 // Custom Edit button for macOS list reordering/deletion mode
@@ -77,14 +77,14 @@ public struct TaskManagerView: View {
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Spacer() // Push button to the right
-                        Button("Done", action: { isInputFieldFocused = false }) // Dismiss keyboard on tap
+                        Button("Done", action: { self.isInputFieldFocused = false }) // Dismiss keyboard on tap
                             .accessibilityLabel("Button")
                         // Uses theme accent color automatically
                     }
                 }
             }
             // Apply theme accent color to navigation bar items (Edit, Done buttons)
-            .accentColor(themeManager.currentTheme.primaryAccentColor)
+            .accentColor(self.themeManager.currentTheme.primaryAccentColor)
         } // End main VStack
         #if os(macOS)
         .frame(minWidth: 500, minHeight: 400)
@@ -97,31 +97,31 @@ public struct TaskManagerView: View {
 
     // Adds a new task based on the input field text
     private func addTask() {
-        let trimmedTitle = newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedTitle = self.newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else { return } // Don't add empty tasks
 
         // Create new SDTask and insert into context
         let newTask = SDTask(title: trimmedTitle)
-        modelContext.insert(newTask)
-        newTaskTitle = "" // Clear the input field
-        isInputFieldFocused = false // Dismiss keyboard
+        self.modelContext.insert(newTask)
+        self.newTaskTitle = "" // Clear the input field
+        self.isInputFieldFocused = false // Dismiss keyboard
     }
 
     // Handles deletion from the incomplete tasks section
     private func deleteTaskIncomplete(at offsets: IndexSet) {
-        deleteTask(from: incompleteTasks, at: offsets)
+        self.deleteTask(from: self.incompleteTasks, at: offsets)
     }
 
     // Handles deletion from the completed tasks section
     private func deleteTaskCompleted(at offsets: IndexSet) {
-        deleteTask(from: completedTasks, at: offsets)
+        self.deleteTask(from: self.completedTasks, at: offsets)
     }
 
     // Helper function to delete tasks based on offsets from a filtered array
     private func deleteTask(from sourceArray: [SDTask], at offsets: IndexSet) {
         for index in offsets {
             let task = sourceArray[index]
-            modelContext.delete(task)
+            self.modelContext.delete(task)
         }
     }
 
@@ -146,7 +146,7 @@ public struct TaskManagerView: View {
         }
 
         // Find completed tasks older than cutoff date using modifiedAt
-        let tasksToDelete = sdTasks.filter { task in
+        let tasksToDelete = self.sdTasks.filter { task in
             guard task.isCompleted, let modifiedAt = task.modifiedAt else { return false }
             return modifiedAt < cutoffDate
         }
@@ -154,7 +154,7 @@ public struct TaskManagerView: View {
         // Delete matching tasks
         if !tasksToDelete.isEmpty {
             for task in tasksToDelete {
-                modelContext.delete(task)
+                self.modelContext.delete(task)
             }
             print("Auto-deleted \(tasksToDelete.count) tasks older than \(autoDeleteDays) days.")
         } else {

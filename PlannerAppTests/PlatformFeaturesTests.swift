@@ -5,8 +5,8 @@
 //  Comprehensive test suite for PlatformFeatures
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class PlatformFeaturesTests: XCTestCase {
     // MARK: - Initialization Tests

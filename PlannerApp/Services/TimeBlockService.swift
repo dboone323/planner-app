@@ -12,7 +12,7 @@ struct TimeBlock: Identifiable {
     let taskId: UUID
     let startTime: Date
     let duration: TimeInterval
-    var endTime: Date { startTime.addingTimeInterval(duration) }
+    var endTime: Date { self.startTime.addingTimeInterval(self.duration) }
 }
 
 class TimeBlockService {

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for TaskManagerHeaderView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class TaskManagerHeaderViewTests: XCTestCase {
     // MARK: - Initialization Tests

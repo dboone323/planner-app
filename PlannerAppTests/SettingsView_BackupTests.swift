@@ -1,5 +1,5 @@
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class SettingsViewBackupTests: XCTestCase {
     func testInitialization() {

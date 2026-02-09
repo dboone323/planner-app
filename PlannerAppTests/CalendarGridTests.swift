@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CalendarGrid
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class CalendarGridTests: XCTestCase {
     // MARK: - Initialization Tests

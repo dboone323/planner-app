@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DataManagerError
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DataManagerErrorTests: XCTestCase {
     // MARK: - Initialization Tests

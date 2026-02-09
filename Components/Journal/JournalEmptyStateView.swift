@@ -5,14 +5,14 @@ public struct JournalEmptyStateView: View {
     let message: String
 
     public var body: some View {
-        Text(message)
-            .foregroundColor(themeManager.currentTheme.secondaryTextColor)
+        Text(self.message)
+            .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
             .font(
-                themeManager.currentTheme.font(
-                    forName: themeManager.currentTheme.secondaryFontName, size: 15
+                self.themeManager.currentTheme.font(
+                    forName: self.themeManager.currentTheme.secondaryFontName, size: 15
                 )
             )
-            .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
+            .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.vertical)
     }

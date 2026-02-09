@@ -5,8 +5,8 @@
 //  Comprehensive test suite for EventRowView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class EventRowViewTests: XCTestCase {
     // MARK: - Initialization Tests

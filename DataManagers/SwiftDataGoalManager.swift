@@ -20,25 +20,25 @@ final class SwiftDataGoalManager: ObservableObject {
         let descriptor = FetchDescriptor<SDGoal>(
             sortBy: [SortDescriptor(\.targetDate)]
         )
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Adds a new goal.
     func add(_ goal: SDGoal) {
-        modelContext.insert(goal)
-        saveContext()
+        self.modelContext.insert(goal)
+        self.saveContext()
     }
 
     /// Updates an existing goal.
     func update(_ goal: SDGoal) {
         goal.modifiedAt = Date()
-        saveContext()
+        self.saveContext()
     }
 
     /// Deletes a goal.
     func delete(_ goal: SDGoal) {
-        modelContext.delete(goal)
-        saveContext()
+        self.modelContext.delete(goal)
+        self.saveContext()
     }
 
     /// Finds a goal by ID.
@@ -46,7 +46,7 @@ final class SwiftDataGoalManager: ObservableObject {
         let predicate = #Predicate<SDGoal> { $0.id == id }
         var descriptor = FetchDescriptor<SDGoal>(predicate: predicate)
         descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
+        return try? self.modelContext.fetch(descriptor).first
     }
 
     // MARK: - Filtered Queries
@@ -58,35 +58,35 @@ final class SwiftDataGoalManager: ObservableObject {
             predicate: predicate,
             sortBy: [SortDescriptor(\.targetDate)]
         )
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Gets goals sorted by priority.
     func goalsSortedByPriority() -> [SDGoal] {
-        load().sorted { $0.prioritySortOrder > $1.prioritySortOrder }
+        self.load().sorted { $0.prioritySortOrder > $1.prioritySortOrder }
     }
 
     /// Gets goals with progress above a threshold.
     func goalsWithProgress(above threshold: Double) -> [SDGoal] {
         let predicate = #Predicate<SDGoal> { $0.progress >= threshold }
         let descriptor = FetchDescriptor<SDGoal>(predicate: predicate)
-        return (try? modelContext.fetch(descriptor)) ?? []
+        return (try? self.modelContext.fetch(descriptor)) ?? []
     }
 
     /// Clears all goals.
     func clearAllGoals() {
-        let goals = load()
+        let goals = self.load()
         for goal in goals {
-            modelContext.delete(goal)
+            self.modelContext.delete(goal)
         }
-        saveContext()
+        self.saveContext()
     }
 
     // MARK: - Statistics
 
     /// Gets goal statistics.
     func getGoalStatistics() -> [String: Any] {
-        let goals = load()
+        let goals = self.load()
         let completed = goals.filter(\.isCompleted).count
         let avgProgress = goals.isEmpty ? 0.0 : goals.reduce(0.0) { $0 + $1.progress } / Double(goals.count)
 
@@ -102,7 +102,7 @@ final class SwiftDataGoalManager: ObservableObject {
 
     private func saveContext() {
         do {
-            try modelContext.save()
+            try self.modelContext.save()
         } catch {
             print("[SwiftDataGoalManager] Save failed: \(error.localizedDescription)")
         }

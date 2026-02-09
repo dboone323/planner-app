@@ -5,8 +5,8 @@
 //  Comprehensive test suite for JournalListView
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class JournalListViewTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -17,41 +17,41 @@ public struct SDTaskRow: View {
     public var body: some View {
         HStack {
             // Checkmark icon (filled if completed, empty circle otherwise)
-            Image(systemName: taskItem.isCompleted ? "checkmark.circle.fill" : "circle")
+            Image(systemName: self.taskItem.isCompleted ? "checkmark.circle.fill" : "circle")
                 .foregroundColor(
-                    taskItem.isCompleted
-                        ? themeManager.currentTheme.completedColor
-                        : themeManager.currentTheme.secondaryTextColor
+                    self.taskItem.isCompleted
+                        ? self.themeManager.currentTheme.completedColor
+                        : self.themeManager.currentTheme.secondaryTextColor
                 )
                 .font(.title3)
-                .onTapGesture { toggleCompletion() }
+                .onTapGesture { self.toggleCompletion() }
 
             // Task title text
-            Text(taskItem.title)
+            Text(self.taskItem.title)
                 .font(
-                    themeManager.currentTheme.font(
-                        forName: themeManager.currentTheme.primaryFontName, size: 16
+                    self.themeManager.currentTheme.font(
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 16
                     )
                 )
                 .strikethrough(
-                    taskItem.isCompleted, color: themeManager.currentTheme.secondaryTextColor
+                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor
                 )
                 .foregroundColor(
-                    taskItem.isCompleted
-                        ? themeManager.currentTheme.secondaryTextColor
-                        : themeManager.currentTheme.primaryTextColor
+                    self.taskItem.isCompleted
+                        ? self.themeManager.currentTheme.secondaryTextColor
+                        : self.themeManager.currentTheme.primaryTextColor
                 )
 
             Spacer()
         }
         .contentShape(Rectangle())
-        .onTapGesture { toggleCompletion() }
+        .onTapGesture { self.toggleCompletion() }
     }
 
     /// Toggles the completion status of the task
     private func toggleCompletion() {
         #if os(iOS)
-            if taskItem.isCompleted {
+            if self.taskItem.isCompleted {
                 HapticManager.lightImpact()
             } else {
                 HapticManager.notificationSuccess()
@@ -59,8 +59,8 @@ public struct SDTaskRow: View {
         #endif
 
         // SwiftData automatically tracks changes to @Model objects
-        taskItem.isCompleted.toggle()
-        taskItem.modifiedAt = Date()
-        print("Toggled task '\(taskItem.title)' to \(taskItem.isCompleted)")
+        self.taskItem.isCompleted.toggle()
+        self.taskItem.modifiedAt = Date()
+        print("Toggled task '\(self.taskItem.title)' to \(self.taskItem.isCompleted)")
     }
 }

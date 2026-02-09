@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AccessibilityEnhancements
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AccessibilityEnhancementsTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DashboardView_Modern
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class DashboardViewModernTests: XCTestCase {
     // MARK: - Initialization Tests

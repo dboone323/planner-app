@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AddGoalView_Minimal
 //
 
-@testable import PlannerApp
 import XCTest
+@testable import PlannerApp
 
 final class AddGoalViewMinimalTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -18,38 +18,38 @@ public struct TaskRow: View {
     public var body: some View {
         HStack {
             // Checkmark icon (filled if completed, empty circle otherwise)
-            Image(systemName: taskItem.isCompleted ? "checkmark.circle.fill" : "circle")
+            Image(systemName: self.taskItem.isCompleted ? "checkmark.circle.fill" : "circle")
                 // Apply theme colors based on completion status
-                    .foregroundColor(
-                        taskItem.isCompleted
-                            ? themeManager.currentTheme.completedColor
-                            : themeManager.currentTheme.secondaryTextColor
-                    )
-                    .font(.title3) // Make icon slightly larger
-                    .onTapGesture { toggleCompletion() } // Toggle completion on icon tap
+                .foregroundColor(
+                    self.taskItem.isCompleted
+                        ? self.themeManager.currentTheme.completedColor
+                        : self.themeManager.currentTheme.secondaryTextColor
+                )
+                .font(.title3) // Make icon slightly larger
+                .onTapGesture { self.toggleCompletion() } // Toggle completion on icon tap
 
             // Task title text
-            Text(taskItem.title)
+            Text(self.taskItem.title)
                 .font(
-                    themeManager.currentTheme.font(
-                        forName: themeManager.currentTheme.primaryFontName, size: 16
+                    self.themeManager.currentTheme.font(
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 16
                     )
                 )
                 // Apply strikethrough effect if completed
                 .strikethrough(
-                    taskItem.isCompleted, color: themeManager.currentTheme.secondaryTextColor
+                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor
                 )
                 // Apply theme text color based on completion status
                 .foregroundColor(
-                    taskItem.isCompleted
-                        ? themeManager.currentTheme.secondaryTextColor
-                        : themeManager.currentTheme.primaryTextColor
+                    self.taskItem.isCompleted
+                        ? self.themeManager.currentTheme.secondaryTextColor
+                        : self.themeManager.currentTheme.primaryTextColor
                 )
 
             Spacer() // Push content to the left
         }
         .contentShape(Rectangle()) // Make the entire HStack tappable
-        .onTapGesture { toggleCompletion() } // Toggle completion on row tap
+        .onTapGesture { self.toggleCompletion() } // Toggle completion on row tap
         // Row background color is applied by the parent List section modifier
     }
 
@@ -59,7 +59,7 @@ public struct TaskRow: View {
         if let index = tasks.firstIndex(where: { $0.id == taskItem.id }) {
             #if os(iOS)
                 // Add haptic feedback for task completion
-                if tasks[index].isCompleted {
+                if self.tasks[index].isCompleted {
                     HapticManager.lightImpact()
                 } else {
                     HapticManager.notificationSuccess()
@@ -67,12 +67,12 @@ public struct TaskRow: View {
             #endif
 
             // Toggle the boolean state
-            tasks[index].isCompleted.toggle()
+            self.tasks[index].isCompleted.toggle()
             // ** IMPORTANT: Update completionDate if Task model supports it **
             // tasks[index].completionDate = tasks[index].isCompleted ? Date() : nil
             // Persist the change immediately
-            TaskDataManager.shared.save(tasks: tasks)
-            print("Toggled task '\(tasks[index].title)' to \(tasks[index].isCompleted)")
+            TaskDataManager.shared.save(tasks: self.tasks)
+            print("Toggled task '\(self.tasks[index].title)' to \(self.tasks[index].isCompleted)")
         }
     }
 }
