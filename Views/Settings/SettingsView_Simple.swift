@@ -122,7 +122,8 @@ public struct SettingsView: View {
                 Section("Dashboard") {
                     Stepper(
                         "Items per section: \\(dashboardItemLimit)",
-                        value: self.$dashboardItemLimit, in: 1...10)
+                        value: self.$dashboardItemLimit, in: 1...10
+                    )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -172,7 +173,8 @@ public struct SettingsView: View {
                     if self.autoDeleteCompleted {
                         Stepper(
                             "Delete after: \\(autoDeleteDays) days", value: self.$autoDeleteDays,
-                            in: 1...90)
+                            in: 1...90
+                        )
                     }
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -181,7 +183,8 @@ public struct SettingsView: View {
                 Section("Security") {
                     if self.canUseBiometrics {
                         Toggle(
-                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled)
+                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled
+                        )
                     } else {
                         Text("Biometric authentication not available on this device.")
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
@@ -345,7 +348,7 @@ public struct SettingsView: View {
         guard
             let url = URL(
                 string:
-                    "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications")
+                "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications")
         else {
             print("Cannot open system preferences URL.")
             return

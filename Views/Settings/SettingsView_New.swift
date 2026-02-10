@@ -27,7 +27,7 @@ public struct SettingsView: View {
     @AppStorage(AppSettingKeys.enableAnalytics) private var enableAnalytics: Bool = false
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeek: Int = Calendar.current
         .firstWeekday
-    @AppStorage(AppSettingKeys.defaultReminderTime) private var defaultReminderTime: Int = 900  // 15 minutes
+    @AppStorage(AppSettingKeys.defaultReminderTime) private var defaultReminderTime: Int = 900 // 15 minutes
     @AppStorage(AppSettingKeys.defaultView) private var defaultView: String = "Dashboard"
     @AppStorage(AppSettingKeys.autoDeleteDays) private var autoDeleteDays: Int = 7
     @AppStorage(AppSettingKeys.syncFrequency) private var syncFrequency: String = "hourly"
@@ -158,7 +158,8 @@ public struct SettingsView: View {
                     if self.autoDeleteCompleted {
                         Stepper(
                             "Delete after: \(self.autoDeleteDays) days",
-                            value: self.$autoDeleteDays, in: 1...90)
+                            value: self.$autoDeleteDays, in: 1...90
+                        )
                     }
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -167,7 +168,8 @@ public struct SettingsView: View {
                 Section("Security") {
                     if self.canUseBiometrics {
                         Toggle(
-                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled)
+                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled
+                        )
                     } else {
                         Text("Biometric authentication not available on this device.")
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
@@ -430,7 +432,8 @@ public struct ThemeCard: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(
-                        self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2)
+                        self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2
+                    )
             )
             .cornerRadius(12)
         }

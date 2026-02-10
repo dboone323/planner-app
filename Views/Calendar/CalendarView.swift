@@ -168,7 +168,8 @@ public struct CalendarView: View {
                             )
                             .accessibilityLabel(
                                 NSLocalizedString(
-                                    "calendar.next_month", comment: "Next month button")
+                                    "calendar.next_month", comment: "Next month button"
+                                )
                             )
                             .accessibilityHint(
                                 NSLocalizedString(
@@ -225,7 +226,8 @@ public struct CalendarView: View {
                             if !items.events.isEmpty {
                                 DateSectionView(
                                     title: NSLocalizedString(
-                                        "calendar.section.events", comment: "Events section"),
+                                        "calendar.section.events", comment: "Events section"
+                                    ),
                                     color: .blue
                                 ) {
                                     ForEach(items.events) { event in
@@ -239,7 +241,8 @@ public struct CalendarView: View {
                             if !items.goals.isEmpty {
                                 DateSectionView(
                                     title: NSLocalizedString(
-                                        "calendar.section.goals", comment: "Goals section"),
+                                        "calendar.section.goals", comment: "Goals section"
+                                    ),
                                     color: .green
                                 ) {
                                     ForEach(items.goals) { goal in
@@ -253,7 +256,8 @@ public struct CalendarView: View {
                             if !items.tasks.isEmpty {
                                 DateSectionView(
                                     title: NSLocalizedString(
-                                        "calendar.section.tasks", comment: "Tasks section"),
+                                        "calendar.section.tasks", comment: "Tasks section"
+                                    ),
                                     color: .orange
                                 ) {
                                     ForEach(items.tasks) { task in
@@ -274,7 +278,8 @@ public struct CalendarView: View {
 
                                     Text(
                                         NSLocalizedString(
-                                            "calendar.empty.no_items", comment: "No items message")
+                                            "calendar.empty.no_items", comment: "No items message"
+                                        )
                                     )
                                     .font(.subheadline)
                                     .foregroundColor(
@@ -283,7 +288,8 @@ public struct CalendarView: View {
 
                                     Text(
                                         NSLocalizedString(
-                                            "calendar.empty.add_hint", comment: "Add event hint")
+                                            "calendar.empty.add_hint", comment: "Add event hint"
+                                        )
                                     )
                                     .font(.caption)
                                     .foregroundColor(
@@ -315,13 +321,13 @@ public struct CalendarView: View {
     private func previousMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: -1, to: self.selectedDate)
-            ?? self.selectedDate
+                ?? self.selectedDate
     }
 
     private func nextMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: 1, to: self.selectedDate)
-            ?? self.selectedDate
+                ?? self.selectedDate
     }
 
     // MARK: - Data Functions

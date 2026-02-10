@@ -59,7 +59,8 @@ struct ProjectsView: View {
                         action: { showingAddProject = true },
                         label: {
                             Label("Add Project", systemImage: "plus")
-                        })
+                        }
+                    )
                 }
             }
             .sheet(isPresented: $showingAddProject) {
@@ -314,7 +315,8 @@ struct AddProjectView: View {
                         isOn: Binding(
                             get: { targetCompletionDate != nil },
                             set: { if !$0 { targetCompletionDate = nil } }
-                        ))
+                        )
+                    )
 
                     if targetCompletionDate != nil {
                         DatePicker(

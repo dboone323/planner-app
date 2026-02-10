@@ -13,8 +13,8 @@ public struct JournalDetailView: View {
     // Formatter for the date displayed prominently in the detail view
     private var detailDateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long  // e.g., April 29, 2025
-        formatter.timeStyle = .short  // e.g., 1:47 PM or 13:47
+        formatter.dateStyle = .long // e.g., April 29, 2025
+        formatter.timeStyle = .short // e.g., 1:47 PM or 13:47
         // Set locale based on 24-hour setting
         formatter.locale = Locale(identifier: self.use24HourTime ? "en_GB" : "en_US")
         return formatter
@@ -24,12 +24,12 @@ public struct JournalDetailView: View {
         // Use ScrollView to allow content longer than the screen height
         ScrollView {
             // Main content laid out vertically
-            VStack(alignment: .leading, spacing: 15) {  // Add spacing between elements
+            VStack(alignment: .leading, spacing: 15) { // Add spacing between elements
                 // Mood Emoji Section
                 HStack {
                     Text(self.entry.mood)
-                        .font(.system(size: 60))  // Make emoji large
-                    Spacer()  // Push emoji to the left (or center if desired)
+                        .font(.system(size: 60)) // Make emoji large
+                    Spacer() // Push emoji to the left (or center if desired)
                 }
 
                 // Title Section
@@ -45,7 +45,7 @@ public struct JournalDetailView: View {
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                 // Date Section
-                Text(self.entry.date, formatter: self.detailDateFormatter)  // Use the detailed formatter
+                Text(self.entry.date, formatter: self.detailDateFormatter) // Use the detailed formatter
                     // Apply theme font (secondary, smaller size) and color
                     .font(
                         self.themeManager.currentTheme.font(
@@ -68,11 +68,11 @@ public struct JournalDetailView: View {
                         )
                     )
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                    .lineSpacing(5)  // Add extra space between lines for readability
-            }  // End VStack
-            .padding()  // Add padding around the entire content VStack
-        }  // End ScrollView
-        .navigationTitle("Entry Details")  // Set navigation bar title
+                    .lineSpacing(5) // Add extra space between lines for readability
+            } // End VStack
+            .padding() // Add padding around the entire content VStack
+        } // End ScrollView
+        .navigationTitle("Entry Details") // Set navigation bar title
         // Apply theme background color to the ScrollView's content area
         .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
         // Apply theme accent color for potential interactive elements (though none here)
