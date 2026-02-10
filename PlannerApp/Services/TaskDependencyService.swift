@@ -19,7 +19,7 @@ struct TaskDependency: Identifiable, Codable {
     let type: DependencyType
 }
 
-class TaskDependencyService {
+class TaskDependencyService: @unchecked Sendable {
     static let shared = TaskDependencyService()
 
     func canComplete(taskId: UUID, dependencies: [TaskDependency], taskStatusProvider: (UUID) -> Bool) -> Bool {

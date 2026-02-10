@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class PriorityManager {
+class PriorityManager: @unchecked Sendable {
     static let shared = PriorityManager()
 
     func color(for priority: Priority) -> Color {

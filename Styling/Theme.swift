@@ -16,7 +16,7 @@ import SwiftUI
 #endif
 
 // Defines the properties of a visual theme
-public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
+public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for comparison
     public let id = UUID()
     let name: String
 

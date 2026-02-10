@@ -9,7 +9,7 @@ extension NSNotification.Name {
     static let networkStatusChanged = NSNotification.Name("networkStatusChanged")
 }
 
-class NetworkMonitor {
+class NetworkMonitor: @unchecked Sendable {
     static let shared = NetworkMonitor()
 
     private let monitor = NWPathMonitor()

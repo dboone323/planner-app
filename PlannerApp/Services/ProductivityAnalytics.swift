@@ -13,7 +13,7 @@ struct DailyStats {
     let focusMinutes: Int
 }
 
-class ProductivityAnalytics {
+class ProductivityAnalytics: @unchecked Sendable {
     static let shared = ProductivityAnalytics()
 
     func calculateCompletionRate(tasks: [TaskItem]) -> Double {

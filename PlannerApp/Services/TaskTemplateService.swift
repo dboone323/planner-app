@@ -27,7 +27,7 @@ enum Priority: Int, Codable, Comparable {
     }
 }
 
-class TaskTemplateService {
+class TaskTemplateService: @unchecked Sendable {
     static let shared = TaskTemplateService()
 
     func getTemplates() -> [TaskTemplate] {
