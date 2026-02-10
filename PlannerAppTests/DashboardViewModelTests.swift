@@ -123,7 +123,7 @@ final class DashboardViewModelTests: XCTestCase {
 
     func testFetchDashboardDataRespectsLimit() {
         // Add 5 incomplete tasks
-        for i in 1...5 {
+        for i in 1 ... 5 {
             TaskDataManager.shared.add(PlannerTask(title: "Task \(i)", isCompleted: false))
         }
 
@@ -213,7 +213,7 @@ final class DashboardViewModelTests: XCTestCase {
 
     func testHandlesLargeDatasets() {
         // Add 100 tasks
-        for i in 1...100 {
+        for i in 1 ... 100 {
             TaskDataManager.shared.add(PlannerTask(title: "Task \(i)", isCompleted: false))
         }
 

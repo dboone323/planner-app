@@ -975,7 +975,7 @@ extension EnhancedCloudKitManager {
         let batchSize = 100
         for batch in stride(from: 0, to: tasks.count, by: batchSize) {
             let endIndex = min(batch + batchSize, tasks.count)
-            let batchTasks = Array(tasks[batch..<endIndex])
+            let batchTasks = Array(tasks[batch ..< endIndex])
             let records = batchTasks.map { $0.toCKRecord() }
 
             _ = try await self.database.modifyRecords(
@@ -993,7 +993,7 @@ extension EnhancedCloudKitManager {
         let batchSize = 100
         for batch in stride(from: 0, to: goals.count, by: batchSize) {
             let endIndex = min(batch + batchSize, goals.count)
-            let batchGoals = Array(goals[batch..<endIndex])
+            let batchGoals = Array(goals[batch ..< endIndex])
             let records = batchGoals.map { $0.toCKRecord() }
 
             _ = try await self.database.modifyRecords(

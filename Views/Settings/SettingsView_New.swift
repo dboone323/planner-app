@@ -112,7 +112,7 @@ public struct SettingsView: View {
                     Stepper(
                         "Items per section: \(self.dashboardItemLimit)",
                         value: self.$dashboardItemLimit,
-                        in: 1...10
+                        in: 1 ... 10
                     )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -158,7 +158,7 @@ public struct SettingsView: View {
                     if self.autoDeleteCompleted {
                         Stepper(
                             "Delete after: \(self.autoDeleteDays) days",
-                            value: self.$autoDeleteDays, in: 1...90
+                            value: self.$autoDeleteDays, in: 1 ... 90
                         )
                     }
                 }

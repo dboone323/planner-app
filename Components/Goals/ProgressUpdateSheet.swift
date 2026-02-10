@@ -125,7 +125,7 @@ public struct ProgressUpdateSheet: View {
                 .font(.headline)
                 .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
-            Slider(value: self.$progress, in: 0...1, step: 0.05)
+            Slider(value: self.$progress, in: 0 ... 1, step: 0.05)
                 .tint(self.progressColor)
 
             HStack {

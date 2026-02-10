@@ -288,7 +288,7 @@ extension Calendar {
         var dates: [Date] = []
         var currentDate = calendarStart
 
-        for _ in 0..<42 {
+        for _ in 0 ..< 42 {
             dates.append(currentDate)
             guard let nextDate = self.date(byAdding: .day, value: 1, to: currentDate) else { break }
             currentDate = nextDate

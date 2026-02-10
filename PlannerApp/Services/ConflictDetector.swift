@@ -14,8 +14,8 @@ class ConflictDetector: @unchecked Sendable {
         var conflicts: Set<UUID> = []
         let sortedBlocks = blocks.sorted { $0.startTime < $1.startTime }
 
-        for i in 0..<sortedBlocks.count {
-            for j in (i + 1)..<sortedBlocks.count {
+        for i in 0 ..< sortedBlocks.count {
+            for j in (i + 1) ..< sortedBlocks.count {
                 let block1 = sortedBlocks[i]
                 let block2 = sortedBlocks[j]
 

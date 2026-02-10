@@ -75,7 +75,7 @@ final class CloudKitSyncTests: XCTestCase {
     func testBulkTaskInsertion() throws {
         let taskCount = 100
 
-        for i in 0..<taskCount {
+        for i in 0 ..< taskCount {
             let task = SDTask(title: "Bulk Task \(i)")
             self.context.insert(task)
         }
@@ -90,7 +90,7 @@ final class CloudKitSyncTests: XCTestCase {
     func testBulkGoalInsertion() throws {
         let goalCount = 50
 
-        for i in 0..<goalCount {
+        for i in 0 ..< goalCount {
             let goal = SDGoal(title: "Bulk Goal \(i)", targetDate: Date())
             self.context.insert(goal)
         }
