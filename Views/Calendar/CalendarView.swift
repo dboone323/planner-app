@@ -20,12 +20,12 @@ public struct CalendarView: View {
     @State private var selectedDate = Date()
     @State private var showingDateDetails = false
 
-    // Settings from UserDefaults
+    /// Settings from UserDefaults
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar
         .current.firstWeekday
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
-    // Computed property to group events by the start of their day
+    /// Computed property to group events by the start of their day
     private var groupedEvents: [Date: [CalendarEvent]] {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
@@ -34,14 +34,14 @@ public struct CalendarView: View {
         }
     }
 
-    // Computed property to get dates with goals (using SDGoal)
+    /// Computed property to get dates with goals (using SDGoal)
     private var goalDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Set(self.sdGoals.map { calendar.startOfDay(for: $0.targetDate) })
     }
 
-    // Computed property to get dates with tasks (using SDTask)
+    /// Computed property to get dates with tasks (using SDTask)
     private var taskDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
@@ -53,21 +53,21 @@ public struct CalendarView: View {
         )
     }
 
-    // Computed property to get dates with events
+    /// Computed property to get dates with events
     private var eventDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Set(self.events.map { calendar.startOfDay(for: $0.date) })
     }
 
-    // Structure for selected date items (using SwiftData types)
+    /// Structure for selected date items (using SwiftData types)
     private struct SelectedDateItems {
         let events: [CalendarEvent]
         let goals: [SDGoal]
         let tasks: [SDTask]
     }
 
-    // Get items for selected date
+    /// Get items for selected date
     private var selectedDateItems: SelectedDateItems {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: self.selectedDate)
@@ -89,7 +89,7 @@ public struct CalendarView: View {
         return SelectedDateItems(events: dayEvents, goals: dayGoals, tasks: dayTasks)
     }
 
-    // Date Formatters - Cached for performance
+    /// Date Formatters - Cached for performance
     private static let eventTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .none

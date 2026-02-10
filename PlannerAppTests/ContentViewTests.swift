@@ -7,19 +7,19 @@ public class ContentViewTests: XCTestCase {
 
     func testContentViewInitialization() {
         // Test basic initialization
-        /// - Pending: Implement initialization test for ContentView
+        // - Pending: Implement initialization test for ContentView
         XCTAssertTrue(true, "Placeholder test for ContentView")
     }
 
     func testContentViewProperties() {
         // Test property access and validation
-        /// - Pending: Implement property tests for ContentView
+        // - Pending: Implement property tests for ContentView
         XCTAssertTrue(true, "Placeholder test for ContentView properties")
     }
 
     func testContentViewMethods() {
         // Test method functionality
-        /// - Pending: Implement method tests for ContentView
+        // - Pending: Implement method tests for ContentView
         XCTAssertTrue(true, "Placeholder test for ContentView methods")
     }
 }

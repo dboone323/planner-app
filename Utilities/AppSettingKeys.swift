@@ -3,15 +3,15 @@
 
 import Foundation
 
-// Centralized keys for UserDefaults settings accessed via @AppStorage
+/// Centralized keys for UserDefaults settings accessed via @AppStorage
 enum AppSettingKeys {
-    // Profile
+    /// Profile
     static let userName = "userDisplayName"
 
-    // Dashboard
+    /// Dashboard
     static let dashboardItemLimit = "dashboardItemLimit"
 
-    // Appearance
+    /// Appearance
     static let themeColorName = "themeColorName"
     // Note: themeFontName is not used in this simplified ThemeManager,
     // font is tied to the selected color theme name. Add if needed.

@@ -21,7 +21,7 @@ public struct DashboardView: View {
     @State private var showAddEvent = false
     @State private var showAddJournal = false
 
-    // Date formatters
+    /// Date formatters
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -173,7 +173,7 @@ public struct DashboardView: View {
                             Spacer()
 
                             Button("View All").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                /// - Pending: Navigate to activities view
+                                // - Pending: Navigate to activities view
                                 print("View All tapped")
                             }
                             .font(.caption)
@@ -218,7 +218,7 @@ public struct DashboardView: View {
                             Spacer()
 
                             Button("View Calendar").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                /// - Pending: Navigate to calendar
+                                // - Pending: Navigate to calendar
                                 print("View Calendar tapped")
                             }
                             .font(.caption)

@@ -13,11 +13,11 @@ import SwiftUI
 // Import utilities and models
 import Foundation
 
-// Typealias to prevent conflict with Task model
+/// Typealias to prevent conflict with Task model
 typealias AsyncTask = _Concurrency.Task
 // typealias PlannerTask = Task
 
-// Conflict type for sync conflicts
+/// Conflict type for sync conflicts
 enum ConflictType {
     case modified
     case deleted
@@ -94,7 +94,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         let type: ConflictType
     }
 
-    // Enhanced CloudKit error types for better user feedback
+    /// Enhanced CloudKit error types for better user feedback
     enum CloudKitError: Error, Identifiable {
         case notSignedIn
         case networkIssue
@@ -109,7 +109,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
         var id: String { self.localizedDescription }
 
-        // Provide a user-friendly message
+        /// Provide a user-friendly message
         var localizedDescription: String {
             switch self {
             case .notSignedIn:
@@ -135,7 +135,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             }
         }
 
-        // Provide a detailed explanation
+        /// Provide a detailed explanation
         var explanation: String {
             switch self {
             case .notSignedIn:
@@ -161,7 +161,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             }
         }
 
-        // Provide a recovery suggestion
+        /// Provide a recovery suggestion
         var recoverySuggestion: String {
             switch self {
             case .notSignedIn:
@@ -199,7 +199,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             }
         }
 
-        // Suggest an action the user can take
+        /// Suggest an action the user can take
         var actionLabel: String {
             switch self {
             case .notSignedIn:
@@ -221,7 +221,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             }
         }
 
-        // Convert from CKError to CloudKitError
+        /// Convert from CKError to CloudKitError
         static func fromCKError(_ error: Error) -> CloudKitError {
             guard let ckError = error as? CKError else {
                 return .unknownError(error)
@@ -693,7 +693,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         }
     }
 
-    // Methods to handle CloudKit errors
+    /// Methods to handle CloudKit errors
     func handleError(_ error: Error) {
         let cloudKitError = CloudKitError.fromCKError(error)
         self.errorMessage = cloudKitError.localizedDescription
@@ -717,7 +717,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         }
     }
 
-    // Auto-retry logic when network becomes available
+    /// Auto-retry logic when network becomes available
     private func scheduleRetryWhenNetworkAvailable() {
         // Ensure NetworkMonitor.shared is accessible
         // If NetworkMonitor is in the same module, it should be directly usable.
@@ -750,7 +750,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         // Implementation would retry operations that failed due to network issues
     }
 
-    // Reset sync state when account changes
+    /// Reset sync state when account changes
     private func resetSyncState() {
         // Reset change tokens and other sync state
         AsyncTask { @MainActor in
@@ -763,13 +763,13 @@ public class EnhancedCloudKitManager: ObservableObject {
         // Implementation would reset all CloudKit change tokens
     }
 
-    // Adjust sync behavior for low storage
+    /// Adjust sync behavior for low storage
     private func adjustSyncForLowStorage() {
         // Prioritize essential data and reduce optional data when storage is low
         // For example, sync text data but skip images/attachments
     }
 
-    // Monitor iCloud account changes
+    /// Monitor iCloud account changes
     func monitorAccountStatus() {
         NotificationCenter.default.addObserver(forName: .CKAccountChanged, object: nil, queue: .main) { [weak self] _ in
             AsyncTask { @MainActor [weak self] in
@@ -819,8 +819,8 @@ public class EnhancedCloudKitManager: ObservableObject {
         print("Uploading \(entries.count) journal entries to CloudKit")
     }
 
-    // Placeholder local fetch/save methods - these should call your DataManagers
-    // These need to be implemented properly by interacting with your existing DataManagers
+    /// Placeholder local fetch/save methods - these should call your DataManagers
+    /// These need to be implemented properly by interacting with your existing DataManagers
     private func fetchLocalTasks() async throws -> [PlannerTask] {
         TaskDataManager.shared.load()
     }

@@ -11,7 +11,7 @@ import UserNotifications
 #endif
 
 public struct SettingsView: View {
-    // Import ThemeManager properly
+    /// Import ThemeManager properly
     @EnvironmentObject var themeManager: ThemeManager
 
     // State properties with AppStorage keys
@@ -40,7 +40,7 @@ public struct SettingsView: View {
     @State private var showingCloudKitSheet = false
     @State private var showingThemePreview = false
 
-    // Computed properties
+    /// Computed properties
     private var canUseBiometrics: Bool {
         let context = LAContext()
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)

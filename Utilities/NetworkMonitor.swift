@@ -4,7 +4,7 @@
 import Foundation
 import Network
 
-// Add the extension to define the notification name
+/// Add the extension to define the notification name
 extension NSNotification.Name {
     static let networkStatusChanged = NSNotification.Name("networkStatusChanged")
 }

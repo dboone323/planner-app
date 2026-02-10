@@ -126,7 +126,7 @@ extension View {
     }
 }
 
-/// Preview
+// Preview
 #Preview {
     SyncRefreshableView(
         isSyncing: .constant(false),

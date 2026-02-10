@@ -2,15 +2,15 @@
 import SwiftUI
 
 public struct JournalDetailView: View {
-    // Access shared ThemeManager
+    /// Access shared ThemeManager
     @EnvironmentObject var themeManager: ThemeManager
-    // The specific journal entry to display
+    /// The specific journal entry to display
     var entry: JournalEntry
 
-    // Read settings if needed (e.g., for date formatting)
+    /// Read settings if needed (e.g., for date formatting)
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
-    // Formatter for the date displayed prominently in the detail view
+    /// Formatter for the date displayed prominently in the detail view
     private var detailDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long // e.g., April 29, 2025
@@ -80,7 +80,7 @@ public struct JournalDetailView: View {
     }
 }
 
-// --- Preview Provider ---
+/// --- Preview Provider ---
 public struct JournalDetailView_Previews: PreviewProvider {
     public static var previews: some View {
         // Embed in NavigationStack for the preview to show the title bar

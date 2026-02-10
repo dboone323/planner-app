@@ -39,7 +39,7 @@ class PriorityManager: @unchecked Sendable {
     }
 }
 
-// Placeholder TaskItem struct
+/// Placeholder TaskItem struct
 struct TaskItem: Identifiable {
     let id = UUID()
     let title: String

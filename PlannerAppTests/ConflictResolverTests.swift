@@ -48,9 +48,9 @@ class ConflictResolverTests: XCTestCase {
         // OR, just verify compilation for now.
     }
 
-    // Due to CKRecord limitations (readonly system fields),
-    // we limit these tests to ensuring the files exist and compile.
-    // Real logic verification requires a wrapper or integration test with CloudKit simulation.
+    /// Due to CKRecord limitations (readonly system fields),
+    /// we limit these tests to ensuring the files exist and compile.
+    /// Real logic verification requires a wrapper or integration test with CloudKit simulation.
     func testCompilationSucceeds() {
         XCTAssertTrue(true)
     }

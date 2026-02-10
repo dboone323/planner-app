@@ -8,15 +8,15 @@ import SwiftUI
 // Include AppSettingKeys from Utilities directory
 
 public class ThemeManager: ObservableObject {
-    // Published property holding the currently active theme. Views observe this.
-    // Initialize by finding the theme matching the name currently stored in UserDefaults.
+    /// Published property holding the currently active theme. Views observe this.
+    /// Initialize by finding the theme matching the name currently stored in UserDefaults.
     @Published var currentTheme: Theme = .availableThemes.first {
         $0.name == UserDefaults.standard.string(forKey: AppSettingKeys.themeColorName)
     } ?? Theme.defaultTheme // Fallback to default theme if no match or nothing saved
 
-    // Monitors UserDefaults for changes to the theme name setting.
-    // When the value in UserDefaults changes (e.g., via the Picker in SettingsView),
-    // the `didSet` observer calls `updateCurrentTheme`.
+    /// Monitors UserDefaults for changes to the theme name setting.
+    /// When the value in UserDefaults changes (e.g., via the Picker in SettingsView),
+    /// the `didSet` observer calls `updateCurrentTheme`.
     @AppStorage(AppSettingKeys.themeColorName) var currentThemeName: String = Theme.defaultTheme.name {
         didSet {
             self.updateCurrentTheme()
@@ -29,8 +29,8 @@ public class ThemeManager: ObservableObject {
         print("ThemeManager initialized. Current theme loaded: \(self.currentTheme.name)")
     }
 
-    // Finds the Theme struct corresponding to the name stored in `currentThemeName`
-    // and updates the `currentTheme` published property if it has changed.
+    /// Finds the Theme struct corresponding to the name stored in `currentThemeName`
+    /// and updates the `currentTheme` published property if it has changed.
     private func updateCurrentTheme() {
         // Find the theme matching the name stored in `currentThemeName`.
         let newTheme = Theme.availableThemes.first { $0.name == self.currentThemeName } ?? Theme.defaultTheme
@@ -43,13 +43,13 @@ public class ThemeManager: ObservableObject {
         }
     }
 
-    // Static computed property to easily get the names of available themes,
-    // useful for populating Pickers in the UI.
+    /// Static computed property to easily get the names of available themes,
+    /// useful for populating Pickers in the UI.
     static var availableThemeNames: [String] {
         Theme.availableThemes.map(\.name)
     }
 
-    // Manually set a theme (used by ThemePreviewView)
+    /// Manually set a theme (used by ThemePreviewView)
     func setTheme(_ theme: Theme) {
         self.currentThemeName = theme.name
         // The didSet observer will trigger updateCurrentTheme automatically

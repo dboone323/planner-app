@@ -17,13 +17,13 @@ public struct TaskManagerView: View {
     @Environment(\.dismiss) var dismiss // Add dismiss capability
     @Environment(\.modelContext) private var modelContext // SwiftData context
 
-    // Use @Query for automatic data fetching from SwiftData
+    /// Use @Query for automatic data fetching from SwiftData
     @Query(sort: \SDTask.createdAt, order: .reverse) private var sdTasks: [SDTask]
 
     @State private var newTaskTitle = "" // State for the input field text
     @FocusState private var isInputFieldFocused: Bool // Tracks focus state of the input field
 
-    // Computed properties to filter tasks into incomplete and completed lists
+    /// Computed properties to filter tasks into incomplete and completed lists
     private var incompleteTasks: [SDTask] {
         self.sdTasks.filter { !$0.isCompleted }
     }
@@ -95,7 +95,7 @@ public struct TaskManagerView: View {
 
     // --- Data Functions (SwiftData) ---
 
-    // Adds a new task based on the input field text
+    /// Adds a new task based on the input field text
     private func addTask() {
         let trimmedTitle = self.newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else { return } // Don't add empty tasks
@@ -107,17 +107,17 @@ public struct TaskManagerView: View {
         self.isInputFieldFocused = false // Dismiss keyboard
     }
 
-    // Handles deletion from the incomplete tasks section
+    /// Handles deletion from the incomplete tasks section
     private func deleteTaskIncomplete(at offsets: IndexSet) {
         self.deleteTask(from: self.incompleteTasks, at: offsets)
     }
 
-    // Handles deletion from the completed tasks section
+    /// Handles deletion from the completed tasks section
     private func deleteTaskCompleted(at offsets: IndexSet) {
         self.deleteTask(from: self.completedTasks, at: offsets)
     }
 
-    // Helper function to delete tasks based on offsets from a filtered array
+    /// Helper function to delete tasks based on offsets from a filtered array
     private func deleteTask(from sourceArray: [SDTask], at offsets: IndexSet) {
         for index in offsets {
             let task = sourceArray[index]
@@ -125,8 +125,8 @@ public struct TaskManagerView: View {
         }
     }
 
-    // --- Auto Deletion Logic (SwiftData) ---
-    // Checks settings and performs auto-deletion if enabled
+    /// --- Auto Deletion Logic (SwiftData) ---
+    /// Checks settings and performs auto-deletion if enabled
     private func performAutoDeletionIfNeeded() {
         // Read settings directly using AppStorage within this function scope
         @AppStorage(AppSettingKeys.autoDeleteCompleted) var autoDeleteEnabled = false

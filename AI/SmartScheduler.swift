@@ -213,7 +213,7 @@ struct SchedulingPreferences {
     )
 }
 
-// Mock Task for this implementation
+/// Mock Task for this implementation
 struct Task {
     let title: String
     let estimatedDuration: TimeInterval

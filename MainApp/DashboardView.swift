@@ -20,7 +20,7 @@ public struct DashboardView: View {
     @State private var showAddEvent = false
     @State private var showAddJournal = false
 
-    // Date formatters
+    /// Date formatters
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

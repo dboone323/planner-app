@@ -7,7 +7,7 @@ public struct GoalsView: View {
     @State private var goals: [Goal] = [] // Holds all goals
     @State private var showAddGoal = false // State to control presentation of AddGoal sheet
 
-    // Read date/time settings if needed for display (e.g., formatter locale)
+    /// Read date/time settings if needed for display (e.g., formatter locale)
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool =
         false // Example, not used in formatter below
 
@@ -40,7 +40,7 @@ public struct GoalsView: View {
 
     // --- Data Functions ---
 
-    // Updates the progress of a specific goal
+    /// Updates the progress of a specific goal
     private func updateGoalProgress(goalId: UUID, progress: Double) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
             self.goals[index].progress = progress
@@ -49,7 +49,7 @@ public struct GoalsView: View {
         }
     }
 
-    // Toggles the completion status of a specific goal
+    /// Toggles the completion status of a specific goal
     private func toggleGoalCompletion(goalId: UUID) {
         if let index = goals.firstIndex(where: { $0.id == goalId }) {
             let wasCompleted = self.goals[index].isCompleted
@@ -69,7 +69,7 @@ public struct GoalsView: View {
         }
     }
 
-    // Deletes goals based on offsets from the sorted list displayed
+    /// Deletes goals based on offsets from the sorted list displayed
     private func deleteGoal(at offsets: IndexSet) {
         // Get the sorted list as it's displayed in the ForEach loop
         let sortedGoals = self.goals.sorted(by: { $0.targetDate < $1.targetDate })
@@ -80,20 +80,20 @@ public struct GoalsView: View {
         self.saveGoals() // Persist changes
     }
 
-    // Loads goals from the data manager
+    /// Loads goals from the data manager
     private func loadGoals() {
         self.goals = GoalDataManager.shared.load()
         print("Goals loaded. Count: \(self.goals.count)")
     }
 
-    // Saves the current state of the `goals` array to the data manager
+    /// Saves the current state of the `goals` array to the data manager
     private func saveGoals() {
         GoalDataManager.shared.save(goals: self.goals)
         print("Goals saved.")
     }
 }
 
-// --- Preview Provider ---
+/// --- Preview Provider ---
 public struct GoalsView_Previews: PreviewProvider {
     public static var previews: some View {
         GoalsView()

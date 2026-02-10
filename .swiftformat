@@ -1,10 +1,7 @@
 # Unified SwiftFormat Configuration
 # Version: 0.53+
 # Swift: 6.0
-# Updated: February 9, 2026
-#
-# This is the standard configuration for all projects in the tools-automation workspace.
-# Apply this to all projects: cp UNIFIED_SWIFTFORMAT_TEMPLATE project-name/.swiftformat
+# Updated: February 10, 2026
 
 # Swift version
 --swiftversion 6.0
@@ -86,6 +83,10 @@
 --enable void
 --enable trailingCommas
 --enable strongifiedSelf
+--enable docComments
+--enable redundantReturn
+--enable redundantType
+--enable spaceAroundOperators
 
 # Disabled Rules
 --disable andOperator
@@ -93,7 +94,6 @@
 --disable blankLinesAtEndOfScope
 --disable redundantSelf
 --disable wrapEnumCases
---disable spaceAroundOperators
 
 # Exclusions
---exclude .build,Package.swift,node_modules,.swiftpm
+--exclude .build,Package.swift,node_modules,.swiftpm,Tools

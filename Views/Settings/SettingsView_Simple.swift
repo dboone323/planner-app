@@ -11,7 +11,7 @@ import UserNotifications
 #endif
 
 public struct SettingsView: View {
-    // Environment Object to access the shared ThemeManager instance
+    /// Environment Object to access the shared ThemeManager instance
     @EnvironmentObject var themeManager: ThemeManager
 
     // --- AppStorage properties to bind UI controls directly to UserDefaults ---
@@ -24,7 +24,7 @@ public struct SettingsView: View {
     @AppStorage(AppSettingKeys.notificationsEnabled) private var notificationsEnabled: Bool = true
     @AppStorage(AppSettingKeys.defaultReminderTime) private var defaultReminderTime: Double = 3600
 
-    // Date & Time Settings
+    /// Date & Time Settings
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeek: Int = Calendar.current
         .firstWeekday
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
@@ -34,7 +34,7 @@ public struct SettingsView: View {
     @AppStorage(AppSettingKeys.autoDeleteDays) private var autoDeleteDays: Int = 30
     @AppStorage(AppSettingKeys.defaultView) private var defaultView: String = "Dashboard"
 
-    // Journal Security
+    /// Journal Security
     @AppStorage(AppSettingKeys.journalBiometricsEnabled) private var journalBiometricsEnabled:
         Bool = false
 
@@ -52,7 +52,7 @@ public struct SettingsView: View {
     @State private var showingCloudKitSheet = false
     @State private var showingThemePreview = false
 
-    // --- Options for Pickers ---
+    /// --- Options for Pickers ---
     let reminderTimeOptions: [String: Double] = [
         "None": 0, "At time of event": 1, "5 minutes before": 300,
         "15 minutes before": 900, "30 minutes before": 1800, "1 hour before": 3600,
@@ -67,7 +67,7 @@ public struct SettingsView: View {
 
     let defaultViewOptions = ["Dashboard", "Tasks", "Calendar", "Goals", "Journal"]
 
-    // --- Biometric Check ---
+    /// --- Biometric Check ---
     var canUseBiometrics: Bool {
         let context = LAContext()
         var error: NSError?
@@ -314,7 +314,7 @@ public struct SettingsView: View {
         .accentColor(self.themeManager.currentTheme.primaryAccentColor)
     }
 
-    // --- Action Handlers ---
+    /// --- Action Handlers ---
     func handleNotificationToggle(enabled: Bool) {
         if enabled {
             self.requestNotificationPermission()
@@ -384,7 +384,7 @@ public struct SettingsView: View {
     }
 }
 
-// --- Helper extension for getting App Version ---
+/// --- Helper extension for getting App Version ---
 extension Bundle {
     var appVersion: String? {
         infoDictionary?["CFBundleShortVersionString"] as? String

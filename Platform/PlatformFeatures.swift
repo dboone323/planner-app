@@ -17,7 +17,7 @@ import SwiftUI
 // MARK: - iOS Specific Features
 
 #if os(iOS)
-    // Widget support for iOS
+    /// Widget support for iOS
     struct PlannerWidget: View {
         let tasks: [PlannerTask]
         let goals: [Goal]
@@ -64,7 +64,7 @@ import SwiftUI
         }
     }
 
-    // Shortcuts support
+    /// Shortcuts support
     enum ShortcutsIntentHandler {
         static func setupShortcuts() {
             // This would typically be implemented in a separate Intents extension
@@ -80,7 +80,7 @@ import SwiftUI
         }
     }
 
-    // Live Activities support (iOS 16+)
+    /// Live Activities support (iOS 16+)
     struct TaskProgressActivity: View {
         let taskTitle: String
         let progress: Double
@@ -111,7 +111,7 @@ import SwiftUI
         }
     }
 
-    // Focus Modes integration
+    /// Focus Modes integration
     enum PlatformFocusHelper {
         static func configureFocusModes() {
             // Configure focus mode filters
@@ -128,7 +128,7 @@ import SwiftUI
 // MARK: - iPadOS Specific Features
 
 #if os(iOS)
-    // Split View support for iPad
+    /// Split View support for iPad
     struct SplitViewContainer<PrimaryContent: View, SecondaryContent: View>: View {
         let primaryContent: PrimaryContent
         let secondaryContent: SecondaryContent
@@ -162,7 +162,7 @@ import SwiftUI
         }
     }
 
-    // Scribble support for Apple Pencil
+    /// Scribble support for Apple Pencil
     struct ScribbleTextField: View {
         @Binding var text: String
         let placeholder: String
@@ -180,7 +180,7 @@ import SwiftUI
         }
     }
 
-    // Drag and Drop support
+    /// Drag and Drop support
     struct DragDropTaskView: View {
         let task: PlannerTask
         let onDrop: (PlannerTask) -> Void
@@ -206,7 +206,7 @@ import SwiftUI
         }
     }
 
-    // External keyboard support
+    /// External keyboard support
     struct KeyboardShortcutHandler: View {
         @State private var isCommandKeyPressed = false
 
@@ -241,7 +241,7 @@ import SwiftUI
 // MARK: - macOS Specific Features
 
 #if os(macOS)
-    // Menu bar integration
+    /// Menu bar integration
     class MenuBarManager: ObservableObject {
         private var statusItem: NSStatusItem?
 
@@ -318,7 +318,7 @@ import SwiftUI
     // Touch Bar support (for compatible Macs)
 
     class TouchBarProvider: NSViewController {
-        // Add NSTouchBarDelegate conformance
+        /// Add NSTouchBarDelegate conformance
         override func makeTouchBar() -> NSTouchBar? {
             let touchBar = NSTouchBar()
             touchBar.delegate = self
@@ -411,7 +411,7 @@ import SwiftUI
         static let calendar = NSTouchBarItem.Identifier("com.plannerapp.calendar")
     }
 
-    // Multiple windows support
+    /// Multiple windows support
     enum WindowManager {
         static func openNewWindow(content: AnyView) {
             let windowController = NSWindowController(
@@ -438,7 +438,7 @@ import SwiftUI
         }
     }
 
-    // File system integration
+    /// File system integration
     enum FileExportManager {
         static func exportToFile(_ data: some Codable, fileName: String) {
             let panel = NSSavePanel()
@@ -488,7 +488,7 @@ protocol PlatformFeatureProvider {
     func openSystemSettings()
 }
 
-// Platform-specific implementations
+/// Platform-specific implementations
 class IOSFeatureProvider: PlatformFeatureProvider {
     func setupPlatformFeatures() {
         #if os(iOS)

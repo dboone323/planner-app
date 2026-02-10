@@ -8,7 +8,7 @@ public struct AddCalendarEventView: View {
     @State private var title = ""
     @State private var date = Date()
 
-    // Focus state for iOS keyboard management
+    /// Focus state for iOS keyboard management
     @FocusState private var isTitleFocused: Bool
 
     private var isTitleValid: Bool {

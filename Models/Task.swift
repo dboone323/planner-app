@@ -52,17 +52,17 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
 
-    // Project association
+    /// Project association
     /// ID of the project this task belongs to (optional).
     var projectId: UUID?
 
-    // Sync properties
+    /// Sync properties
     /// Calendar event identifier for sync
     var calendarEventId: String?
     /// Estimated duration in seconds
     var estimatedDuration: TimeInterval
 
-    // Sentiment analysis properties
+    /// Sentiment analysis properties
     /// Sentiment of task description ("positive", "negative", or "neutral")
     var sentiment: String
     /// Sentiment score from -1.0 (negative) to 1.0 (positive)

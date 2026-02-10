@@ -25,7 +25,7 @@ public struct UpcomingItem: Identifiable {
     let destination: DashboardViewModel.Destination?
 }
 
-// ObservableObject makes this class publish changes to its @Published properties.
+/// ObservableObject makes this class publish changes to its @Published properties.
 public class DashboardViewModel: ObservableObject {
     /// Navigation destination for routing within the dashboard or app.
     public enum Destination: Hashable {
@@ -35,7 +35,7 @@ public class DashboardViewModel: ObservableObject {
         case settings
     }
 
-    // --- Published Properties for View Updates ---
+    /// --- Published Properties for View Updates ---
     @Published var navigationPath = NavigationPath()
 
     // These arrays hold the data to be displayed on the dashboard, limited by user settings.
@@ -72,9 +72,9 @@ public class DashboardViewModel: ObservableObject {
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar
         .current.firstWeekday
 
-    // --- Data Fetching and Filtering ---
-    // This function loads data from managers, filters it based on dates/status,
-    // applies the user's limit, and updates the @Published properties.
+    /// --- Data Fetching and Filtering ---
+    /// This function loads data from managers, filters it based on dates/status,
+    /// applies the user's limit, and updates the @Published properties.
     func fetchDashboardData() {
         print("Fetching dashboard data...") // Debugging log
 
@@ -165,7 +165,7 @@ public class DashboardViewModel: ObservableObject {
         }
     }
 
-    // New method for modern dashboard
+    /// New method for modern dashboard
     @MainActor
     func refreshData() async {
         // Call existing method
@@ -279,7 +279,7 @@ public class DashboardViewModel: ObservableObject {
         self.upcomingItems = items.sorted { $0.date < $1.date }
     }
 
-    // Helper function to clear all published data, typically used on error.
+    /// Helper function to clear all published data, typically used on error.
     private func resetData() {
         self.todaysEvents = []
         self.incompleteTasks = []

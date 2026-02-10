@@ -10,7 +10,7 @@ import SwiftUI
 extension Theme {
     // MARK: - Modern Enhanced Themes
 
-    // Modern productivity theme with better contrast
+    /// Modern productivity theme with better contrast
     static let productivityPro = Theme(
         name: "Productivity Pro",
         primaryAccentColor: Color(red: 0.17, green: 0.35, blue: 0.63), // Professional Blue
@@ -25,7 +25,7 @@ extension Theme {
         secondaryFontName: nil
     )
 
-    // Nature-inspired theme with warm colors
+    /// Nature-inspired theme with warm colors
     static let natureInspired = Theme(
         name: "Nature Inspired",
         primaryAccentColor: Color(red: 0.18, green: 0.31, blue: 0.09), // Forest Green
@@ -40,7 +40,7 @@ extension Theme {
         secondaryFontName: nil
     )
 
-    // High contrast theme for better accessibility
+    /// High contrast theme for better accessibility
     static let highContrast = Theme(
         name: "High Contrast",
         primaryAccentColor: Color(red: 0.0, green: 0.0, blue: 1.0), // Pure Blue
@@ -55,7 +55,7 @@ extension Theme {
         secondaryFontName: nil
     )
 
-    // Modern gradient theme
+    /// Modern gradient theme
     static let modernGradient = Theme(
         name: "Modern Gradient",
         primaryAccentColor: Color(red: 0.38, green: 0.42, blue: 0.98), // iOS Blue
@@ -70,7 +70,7 @@ extension Theme {
         secondaryFontName: nil
     )
 
-    // Updated list including new themes
+    /// Updated list including new themes
     static let allAvailableThemes: [Theme] = [
         defaultTheme,
         productivityPro,
@@ -89,7 +89,7 @@ extension Theme {
 // MARK: - Gradient Support Extensions
 
 extension Color {
-    // Create gradient colors for modern effects
+    /// Create gradient colors for modern effects
     static func gradient(from startColor: Color, to endColor: Color) -> LinearGradient {
         LinearGradient(
             gradient: Gradient(colors: [startColor, endColor]),
@@ -98,7 +98,7 @@ extension Color {
         )
     }
 
-    // Glass morphism effect
+    /// Glass morphism effect
     var glassMorphism: some View {
         opacity(0.7)
             .background(.ultraThinMaterial)

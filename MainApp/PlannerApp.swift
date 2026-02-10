@@ -30,17 +30,17 @@ public struct PlannerApp: App {
         }
     }()
 
-    // Create and keep alive a single instance of ThemeManager for the entire app.
-    // @StateObject ensures it persists throughout the app's lifecycle.
+    /// Create and keep alive a single instance of ThemeManager for the entire app.
+    /// @StateObject ensures it persists throughout the app's lifecycle.
     @StateObject private var themeManager = ThemeManager()
 
-    // State variable to hold the tag of the currently selected tab.
-    // This is needed to programmatically set the initial tab based on user settings.
+    /// State variable to hold the tag of the currently selected tab.
+    /// This is needed to programmatically set the initial tab based on user settings.
     @State private var selectedTabTag: String
 
-    // Custom initializer to read the default view setting from UserDefaults
-    // *before* the main body view is created. This ensures the correct tab
-    // is selected right from the start.
+    /// Custom initializer to read the default view setting from UserDefaults
+    /// *before* the main body view is created. This ensures the correct tab
+    /// is selected right from the start.
     public init() {
         // Read the saved default view identifier from UserDefaults.
         let initialTab =
