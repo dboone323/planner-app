@@ -1018,8 +1018,7 @@ extension EnhancedCloudKitManager {
 
     /// Fetch record zones
     func fetchZones() async throws -> [CKRecordZone] {
-        let zones = try await database.allRecordZones()
-        return zones
+        try await database.allRecordZones()
     }
 
     /// Delete a zone and all its records

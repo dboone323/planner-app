@@ -26,7 +26,7 @@ final class SDGoalTests: XCTestCase {
 
     // MARK: - Initialization Tests
 
-    func testSDGoalInitialization() throws {
+    func testSDGoalInitialization() {
         let targetDate = Date().addingTimeInterval(86400 * 30) // 30 days from now
         let goal = SDGoal(
             title: "Test Goal",
@@ -46,7 +46,7 @@ final class SDGoalTests: XCTestCase {
         XCTAssertNotNil(goal.createdAt)
     }
 
-    func testSDGoalDefaultValues() throws {
+    func testSDGoalDefaultValues() {
         let goal = SDGoal(title: "Minimal Goal", targetDate: Date())
 
         XCTAssertEqual(goal.title, "Minimal Goal")
@@ -115,7 +115,7 @@ final class SDGoalTests: XCTestCase {
 
     // MARK: - Progress Tests
 
-    func testSDGoalUpdateProgress() throws {
+    func testSDGoalUpdateProgress() {
         let goal = SDGoal(title: "Progress Test", targetDate: Date())
 
         goal.updateProgress(0.5)
@@ -124,7 +124,7 @@ final class SDGoalTests: XCTestCase {
         XCTAssertNotNil(goal.modifiedAt)
     }
 
-    func testSDGoalAutoCompleteAtFullProgress() throws {
+    func testSDGoalAutoCompleteAtFullProgress() {
         let goal = SDGoal(title: "Complete Test", targetDate: Date())
 
         goal.updateProgress(1.0)
@@ -132,14 +132,14 @@ final class SDGoalTests: XCTestCase {
         XCTAssertTrue(goal.isCompleted)
     }
 
-    func testSDGoalProgressClampedToMax() throws {
+    func testSDGoalProgressClampedToMax() {
         let goal = SDGoal(title: "Clamp Test", targetDate: Date())
 
         goal.updateProgress(1.5)
         XCTAssertEqual(goal.progress, 1.0, accuracy: 0.001)
     }
 
-    func testSDGoalProgressClampedToMin() throws {
+    func testSDGoalProgressClampedToMin() {
         let goal = SDGoal(title: "Clamp Test", targetDate: Date())
 
         goal.updateProgress(-0.5)
@@ -148,7 +148,7 @@ final class SDGoalTests: XCTestCase {
 
     // MARK: - Priority Tests
 
-    func testSDGoalPrioritySortOrder() throws {
+    func testSDGoalPrioritySortOrder() {
         let low = SDGoal(title: "Low", targetDate: Date(), priority: "low")
         let medium = SDGoal(title: "Medium", targetDate: Date(), priority: "medium")
         let high = SDGoal(title: "High", targetDate: Date(), priority: "high")

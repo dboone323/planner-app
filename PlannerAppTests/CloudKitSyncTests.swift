@@ -28,7 +28,7 @@ final class CloudKitSyncTests: XCTestCase {
 
     // MARK: - CloudKit Configuration Tests
 
-    func testCloudKitContainerConfiguration() throws {
+    func testCloudKitContainerConfiguration() {
         // Verify CloudKit-enabled configuration can be created
         let cloudConfig = ModelConfiguration(
             isStoredInMemoryOnly: false,
