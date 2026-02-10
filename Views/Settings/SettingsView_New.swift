@@ -1,13 +1,14 @@
 // filepath: /Users/danielstevens/Desktop/PlannerApp/Views/Settings/SettingsView.swift
 // PlannerApp/Views/Settings/SettingsView.swift
 
+import Foundation
 import LocalAuthentication
 import SwiftUI
 import UserNotifications
+
 #if os(macOS)
     import AppKit
 #endif
-import Foundation
 
 public struct SettingsView: View {
     // Import ThemeManager properly
@@ -19,12 +20,14 @@ public struct SettingsView: View {
     @AppStorage(AppSettingKeys.notificationsEnabled) private var notificationsEnabled: Bool = true
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
     @AppStorage(AppSettingKeys.autoDeleteCompleted) private var autoDeleteCompleted: Bool = false
-    @AppStorage(AppSettingKeys.journalBiometricsEnabled) private var journalBiometricsEnabled: Bool = false
+    @AppStorage(AppSettingKeys.journalBiometricsEnabled) private var journalBiometricsEnabled:
+        Bool = false
     @AppStorage(AppSettingKeys.autoSyncEnabled) private var autoSyncEnabled: Bool = true
     @AppStorage(AppSettingKeys.enableHapticFeedback) private var enableHapticFeedback: Bool = true
     @AppStorage(AppSettingKeys.enableAnalytics) private var enableAnalytics: Bool = false
-    @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeek: Int = Calendar.current.firstWeekday
-    @AppStorage(AppSettingKeys.defaultReminderTime) private var defaultReminderTime: Int = 900 // 15 minutes
+    @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeek: Int = Calendar.current
+        .firstWeekday
+    @AppStorage(AppSettingKeys.defaultReminderTime) private var defaultReminderTime: Int = 900  // 15 minutes
     @AppStorage(AppSettingKeys.defaultView) private var defaultView: String = "Dashboard"
     @AppStorage(AppSettingKeys.autoDeleteDays) private var autoDeleteDays: Int = 7
     @AppStorage(AppSettingKeys.syncFrequency) private var syncFrequency: String = "hourly"
@@ -52,7 +55,9 @@ public struct SettingsView: View {
     ]
 
     private var sortedReminderKeys: [String] {
-        self.reminderTimeOptions.keys.sorted { self.reminderTimeOptions[$0]! < self.reminderTimeOptions[$1]! }
+        self.reminderTimeOptions.keys.sorted {
+            self.reminderTimeOptions[$0]! < self.reminderTimeOptions[$1]!
+        }
     }
 
     private let defaultViewOptions = ["Dashboard", "Tasks", "Calendar", "Goals", "Journal"]
@@ -65,9 +70,11 @@ public struct SettingsView: View {
                     HStack {
                         Text("Name")
                         Spacer()
-                        TextField("Your Name", text: self.$userName).accessibilityLabel("Text Field")
-                            .accessibilityLabel("Text Field")
-                            .multilineTextAlignment(.trailing)
+                        TextField("Your Name", text: self.$userName).accessibilityLabel(
+                            "Text Field"
+                        )
+                        .accessibilityLabel("Text Field")
+                        .multilineTextAlignment(.trailing)
                     }
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -85,13 +92,15 @@ public struct SettingsView: View {
                         .accessibilityLabel("Button") {
                             HStack {
                                 Text("Theme Preview")
-                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.primaryTextColor)
                                 Spacer()
                                 Circle()
                                     .fill(self.themeManager.currentTheme.primaryAccentColor)
                                     .frame(width: 20, height: 20)
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor)
                             }
                         }
                         .buttonStyle(.plain)
@@ -147,7 +156,9 @@ public struct SettingsView: View {
                     Toggle("Auto-Delete Completed Tasks", isOn: self.$autoDeleteCompleted)
 
                     if self.autoDeleteCompleted {
-                        Stepper("Delete after: \(self.autoDeleteDays) days", value: self.$autoDeleteDays, in: 1...90)
+                        Stepper(
+                            "Delete after: \(self.autoDeleteDays) days",
+                            value: self.$autoDeleteDays, in: 1...90)
                     }
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -155,7 +166,8 @@ public struct SettingsView: View {
                 // Security Section
                 Section("Security") {
                     if self.canUseBiometrics {
-                        Toggle("Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled)
+                        Toggle(
+                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled)
                     } else {
                         Text("Biometric authentication not available on this device.")
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
@@ -165,18 +177,20 @@ public struct SettingsView: View {
 
                 // Sync & Cloud Section
                 Section("Sync & Cloud") {
-                    Button(action: { self.showingCloudKitSheet = true }).accessibilityLabel("Button")
-                        .accessibilityLabel("Button") {
-                            HStack {
-                                Image(systemName: "icloud")
-                                    .foregroundColor(.blue)
-                                Text("iCloud Sync")
-                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                            }
+                    Button(action: { self.showingCloudKitSheet = true }).accessibilityLabel(
+                        "Button"
+                    )
+                    .accessibilityLabel("Button") {
+                        HStack {
+                            Image(systemName: "icloud")
+                                .foregroundColor(.blue)
+                            Text("iCloud Sync")
+                                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         }
+                    }
 
                     Toggle("Auto Sync", isOn: self.$autoSyncEnabled)
 
@@ -209,10 +223,13 @@ public struct SettingsView: View {
                         .accessibilityLabel("Button")
                         .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
 
-                    Button("Clear Old Completed Tasks...", action: { self.showingClearDataConfirmation = true })
-                        .accessibilityLabel("Button")
-                        .accessibilityLabel("Button")
-                        .foregroundColor(self.themeManager.currentTheme.destructiveColor)
+                    Button(
+                        "Clear Old Completed Tasks...",
+                        action: { self.showingClearDataConfirmation = true }
+                    )
+                    .accessibilityLabel("Button")
+                    .accessibilityLabel("Button")
+                    .foregroundColor(self.themeManager.currentTheme.destructiveColor)
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -243,17 +260,23 @@ public struct SettingsView: View {
             .alert("Notification Permissions", isPresented: self.$showingNotificationAlert) {
                 Button("Open Settings", action: self.openAppSettings).accessibilityLabel("Button")
                     .accessibilityLabel("Button")
-                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
+                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel(
+                    "Button"
+                ) {}
             } message: {
                 Text("Enable notifications in Settings to receive reminders.")
             }
             .alert("Confirm Deletion", isPresented: self.$showingClearDataConfirmation) {
-                Button("Delete", role: .destructive, action: self.performClearOldData).accessibilityLabel("Button")
+                Button("Delete", role: .destructive, action: self.performClearOldData)
                     .accessibilityLabel("Button")
-                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
+                    .accessibilityLabel("Button")
+                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel(
+                    "Button"
+                ) {}
             } message: {
                 Text(
-                    "Are you sure you want to permanently delete completed tasks older than \(self.autoDeleteDays) days? This cannot be undone."
+                    "Are you sure you want to permanently delete completed tasks older than "
+                        + "\(self.autoDeleteDays) days? This cannot be undone."
                 )
             }
         }
@@ -288,7 +311,8 @@ public struct SettingsView: View {
                 UIApplication.shared.open(settingsURL)
             }
         #elseif os(macOS)
-            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+            NSWorkspace.shared.open(
+                URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
         #endif
     }
 
@@ -296,7 +320,8 @@ public struct SettingsView: View {
         let csvString = "Type,ID,Title\nSample,1,Test Data\n"
         guard let data = csvString.data(using: .utf8) else { return }
 
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("PlannerExport.csv")
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "PlannerExport.csv")
         do {
             try data.write(to: tempURL, options: .atomic)
             self.exportURL = tempURL
@@ -346,7 +371,10 @@ public struct ThemePreviewSheet: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(Theme.availableThemes, id: \.name) { theme in
-                        ThemeCard(theme: theme, isSelected: theme.name == self.themeManager.currentTheme.name) {
+                        ThemeCard(
+                            theme: theme,
+                            isSelected: theme.name == self.themeManager.currentTheme.name
+                        ) {
                             self.themeManager.setTheme(theme)
                         }
                     }
@@ -401,7 +429,8 @@ public struct ThemeCard: View {
             .background(self.theme.secondaryBackgroundColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2)
+                    .stroke(
+                        self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2)
             )
             .cornerRadius(12)
         }

@@ -47,20 +47,21 @@ public struct SettingsView: View {
                     }
                     .pickerStyle(.menu)
 
-                    Button(action: { self.showingThemePreview = true }).accessibilityLabel("Button")
-                        .accessibilityLabel("Button") {
-                            HStack {
-                                Text("Theme Preview")
-                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                                Spacer()
-                                Circle()
-                                    .fill(self.themeManager.currentTheme.primaryAccentColor)
-                                    .frame(width: 20, height: 20)
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                            }
+                    Button(action: { self.showingThemePreview = true }, label: {
+                        HStack {
+                            Text("Theme Preview")
+                                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                            Spacer()
+                            Circle()
+                                .fill(self.themeManager.currentTheme.primaryAccentColor)
+                                .frame(width: 20, height: 20)
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         }
-                        .buttonStyle(.plain)
+                    })
+                    .accessibilityLabel("Button")
+                    .accessibilityLabel("Button")
+                    .buttonStyle(.plain)
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
 

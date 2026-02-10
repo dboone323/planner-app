@@ -136,32 +136,45 @@ public struct CalendarView: View {
                         Spacer()
 
                         HStack(spacing: 12) {
-                            Button(action: self.previousMonth, label: {
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(
-                                        self.themeManager.currentTheme.primaryAccentColor
-                                    )
-                            })
-                            .accessibilityLabel(NSLocalizedString(
-                                "calendar.previous_month",
-                                comment: "Previous month button"
-                            ))
-                            .accessibilityHint(NSLocalizedString(
-                                "calendar.previous_month.hint",
-                                comment: "Previous month hint"
-                            ))
+                            Button(
+                                action: self.previousMonth,
+                                label: {
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(
+                                            self.themeManager.currentTheme.primaryAccentColor
+                                        )
+                                }
+                            )
+                            .accessibilityLabel(
+                                NSLocalizedString(
+                                    "calendar.previous_month",
+                                    comment: "Previous month button"
+                                )
+                            )
+                            .accessibilityHint(
+                                NSLocalizedString(
+                                    "calendar.previous_month.hint",
+                                    comment: "Previous month hint"
+                                ))
 
-                            Button(action: self.nextMonth, label: {
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(
-                                        self.themeManager.currentTheme.primaryAccentColor
-                                    )
-                            })
-                            .accessibilityLabel(NSLocalizedString("calendar.next_month", comment: "Next month button"))
-                            .accessibilityHint(NSLocalizedString(
-                                "calendar.next_month.hint",
-                                comment: "Next month hint"
-                            ))
+                            Button(
+                                action: self.nextMonth,
+                                label: {
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(
+                                            self.themeManager.currentTheme.primaryAccentColor
+                                        )
+                                }
+                            )
+                            .accessibilityLabel(
+                                NSLocalizedString(
+                                    "calendar.next_month", comment: "Next month button")
+                            )
+                            .accessibilityHint(
+                                NSLocalizedString(
+                                    "calendar.next_month.hint",
+                                    comment: "Next month hint"
+                                ))
                         }
                     }
                     .padding(.horizontal, 20)
@@ -195,8 +208,11 @@ public struct CalendarView: View {
                                 .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
                                 .font(.title2)
                         }
-                        .accessibilityLabel(NSLocalizedString("calendar.add_event", comment: "Add event button"))
-                        .accessibilityHint(NSLocalizedString("calendar.add_event.hint", comment: "Add event hint"))
+                        .accessibilityLabel(
+                            NSLocalizedString("calendar.add_event", comment: "Add event button")
+                        )
+                        .accessibilityHint(
+                            NSLocalizedString("calendar.add_event.hint", comment: "Add event hint"))
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -208,7 +224,8 @@ public struct CalendarView: View {
                             // Events Section
                             if !items.events.isEmpty {
                                 DateSectionView(
-                                    title: NSLocalizedString("calendar.section.events", comment: "Events section"),
+                                    title: NSLocalizedString(
+                                        "calendar.section.events", comment: "Events section"),
                                     color: .blue
                                 ) {
                                     ForEach(items.events) { event in
@@ -221,7 +238,8 @@ public struct CalendarView: View {
                             // Goals Section
                             if !items.goals.isEmpty {
                                 DateSectionView(
-                                    title: NSLocalizedString("calendar.section.goals", comment: "Goals section"),
+                                    title: NSLocalizedString(
+                                        "calendar.section.goals", comment: "Goals section"),
                                     color: .green
                                 ) {
                                     ForEach(items.goals) { goal in
@@ -234,7 +252,8 @@ public struct CalendarView: View {
                             // Tasks Section
                             if !items.tasks.isEmpty {
                                 DateSectionView(
-                                    title: NSLocalizedString("calendar.section.tasks", comment: "Tasks section"),
+                                    title: NSLocalizedString(
+                                        "calendar.section.tasks", comment: "Tasks section"),
                                     color: .orange
                                 ) {
                                     ForEach(items.tasks) { task in
@@ -253,17 +272,23 @@ public struct CalendarView: View {
                                             self.themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text(NSLocalizedString("calendar.empty.no_items", comment: "No items message"))
-                                        .font(.subheadline)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(
+                                        NSLocalizedString(
+                                            "calendar.empty.no_items", comment: "No items message")
+                                    )
+                                    .font(.subheadline)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
 
-                                    Text(NSLocalizedString("calendar.empty.add_hint", comment: "Add event hint"))
-                                        .font(.caption)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(
+                                        NSLocalizedString(
+                                            "calendar.empty.add_hint", comment: "Add event hint")
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                                 }
                                 .padding(.vertical, 40)
                             }
@@ -290,13 +315,13 @@ public struct CalendarView: View {
     private func previousMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: -1, to: self.selectedDate)
-                ?? self.selectedDate
+            ?? self.selectedDate
     }
 
     private func nextMonth() {
         self.selectedDate =
             Calendar.current.date(byAdding: .month, value: 1, to: self.selectedDate)
-                ?? self.selectedDate
+            ?? self.selectedDate
     }
 
     // MARK: - Data Functions
@@ -305,7 +330,8 @@ public struct CalendarView: View {
         // Only load events manually - tasks and goals are auto-fetched via @Query
         self.events = CalendarDataManager.shared.load()
         print(
-            "Calendar data loaded. Events: \(self.events.count), Goals: \(self.sdGoals.count), Tasks: \(self.sdTasks.count)"
+            "Calendar data loaded. Events: \(self.events.count), "
+                + "Goals: \(self.sdGoals.count), Tasks: \(self.sdTasks.count)"
         )
     }
 

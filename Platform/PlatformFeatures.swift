@@ -212,8 +212,7 @@ import SwiftUI
 
         var body: some View {
             Color.clear
-                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) {
-                    notification in
+                .onReceive(NotificationCenter.default.publisher(for: .init("KeyboardShortcut"))) { notification in
                     self.handleKeyboardShortcut(notification)
                 }
         }
@@ -511,8 +510,8 @@ class IOSFeatureProvider: PlatformFeatureProvider {
                 .compactMap({ $0 as? UIWindowScene })
                 .first(where: { $0.activationState == .foregroundActive }),
                 let rootViewController = windowScene.windows
-                .first(where: { $0.isKeyWindow })?
-                .rootViewController
+                    .first(where: { $0.isKeyWindow })?
+                    .rootViewController
             {
                 rootViewController.present(activityViewController, animated: true)
             }

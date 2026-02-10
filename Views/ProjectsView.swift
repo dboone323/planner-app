@@ -55,9 +55,11 @@ struct ProjectsView: View {
             .navigationTitle("Projects")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { showingAddProject = true }) {
-                        Label("Add Project", systemImage: "plus")
-                    }
+                    Button(
+                        action: { showingAddProject = true },
+                        label: {
+                            Label("Add Project", systemImage: "plus")
+                        })
                 }
             }
             .sheet(isPresented: $showingAddProject) {
@@ -307,10 +309,12 @@ struct AddProjectView: View {
                 }
 
                 Section("Timeline") {
-                    Toggle("Set target completion date", isOn: Binding(
-                        get: { targetCompletionDate != nil },
-                        set: { if !$0 { targetCompletionDate = nil } }
-                    ))
+                    Toggle(
+                        "Set target completion date",
+                        isOn: Binding(
+                            get: { targetCompletionDate != nil },
+                            set: { if !$0 { targetCompletionDate = nil } }
+                        ))
 
                     if targetCompletionDate != nil {
                         DatePicker(
