@@ -1,5 +1,6 @@
 #!/bin/bash
-# Simple MCP health check for PlannerApp
+# shellcheck disable=SC2154
+# Simple MCP health check for HabitQuest
 # Verifies connectivity to MCP server and Ollama
 
 set -e
