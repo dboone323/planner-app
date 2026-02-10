@@ -23,6 +23,9 @@ jobs:
           key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.swift') }}
           restore-keys: |
             ${{ runner.os }}-deriveddata-
+      
+      - name: Install Linters
+        run: brew install swiftlint swiftformat
 
       - name: SwiftLint
         run: swiftlint --strict
