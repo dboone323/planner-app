@@ -39,8 +39,8 @@ public struct TaskManagerHeaderView: View {
                     Text("")
                 }
                 .accessibilityLabel("Button")
-                .disabled(true)
-                .opacity(0)
+                    .disabled(true)
+                    .opacity(0)
             #if os(iOS)
                 .frame(minWidth: 60, minHeight: 44)
             #endif

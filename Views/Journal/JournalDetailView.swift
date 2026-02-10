@@ -35,25 +35,25 @@ public struct JournalDetailView: View {
                 // Title Section
                 Text(self.entry.title)
                     // Apply theme font (primary, large title size, bold) and color
-                    .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 30,
-                            weight: .bold
+                        .font(
+                            self.themeManager.currentTheme.font(
+                                forName: self.themeManager.currentTheme.primaryFontName,
+                                size: 30,
+                                weight: .bold
+                            )
                         )
-                    )
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                 // Date Section
                 Text(self.entry.date, formatter: self.detailDateFormatter) // Use the detailed formatter
                     // Apply theme font (secondary, smaller size) and color
-                    .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.secondaryFontName,
-                            size: 16
+                        .font(
+                            self.themeManager.currentTheme.font(
+                                forName: self.themeManager.currentTheme.secondaryFontName,
+                                size: 16
+                            )
                         )
-                    )
-                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
                 // Divider line (uses system/theme appropriate color)
                 Divider()
@@ -61,14 +61,14 @@ public struct JournalDetailView: View {
                 // Body Text Section
                 Text(self.entry.body)
                     // Apply theme font (primary, body size) and color
-                    .font(
-                        self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 17
+                        .font(
+                            self.themeManager.currentTheme.font(
+                                forName: self.themeManager.currentTheme.primaryFontName,
+                                size: 17
+                            )
                         )
-                    )
-                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                    .lineSpacing(5) // Add extra space between lines for readability
+                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                        .lineSpacing(5) // Add extra space between lines for readability
             } // End VStack
             .padding() // Add padding around the entire content VStack
         } // End ScrollView

@@ -98,6 +98,6 @@ public struct GoalsView_Previews: PreviewProvider {
     public static var previews: some View {
         GoalsView()
             // Provide ThemeManager for the preview
-            .environmentObject(ThemeManager())
+                .environmentObject(ThemeManager())
     }
 }
