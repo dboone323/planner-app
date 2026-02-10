@@ -69,6 +69,7 @@ jobs:
             Tools/Automation
             .build
             .swiftpm
+            Tools/ProjectScripts
 
       - name: Security audit for Python dependencies
         run: |
