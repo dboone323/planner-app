@@ -81,25 +81,17 @@ public struct CalendarView: View {
         return SelectedDateItems(events: dayEvents, goals: dayGoals, tasks: dayTasks)
     }
 
-    /// Date Formatters
+    /// Date Formatters (delegated to shared formatters)
     private var eventTimeFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: self.use24HourTime ? "en_GB" : "en_US")
-        return formatter
+        AppDateFormatters.timeFormatter(use24Hour: self.use24HourTime)
     }
 
     private var monthYearFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        return formatter
+        AppDateFormatters.monthYearFormatter
     }
 
     private var selectedDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        return formatter
+        AppDateFormatters.fullDateFormatter
     }
 
     var body: some View {
@@ -209,19 +201,11 @@ public struct CalendarView: View {
 
                             // Empty State
                             if items.events.isEmpty, items.goals.isEmpty, items.tasks.isEmpty {
-                                VStack(spacing: 12) {
-                                    Image(systemName: "calendar")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("No items for this date")
-                                        .font(.subheadline)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("Tap + to add an event")
-                                        .font(.caption)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                                }
+                                EmptyStateView(
+                                    imageSystemName: "calendar",
+                                    title: "No items for this date",
+                                    subtitle: "Tap + to add an event"
+                                )
                                 .padding(.vertical, 40)
                             }
                         }

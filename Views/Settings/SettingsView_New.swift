@@ -119,10 +119,13 @@ public struct SettingsView: View {
 
                 // Notifications Section
                 Section("Notifications") {
-                    Toggle("Enable Reminders", isOn: self.$notificationsEnabled)
-                        .onChange(of: self.notificationsEnabled) { _, newValue in
-                            self.handleNotificationToggle(enabled: newValue)
-                        }
+                    SettingRow(title: "Enable Reminders") {
+                        Toggle("", isOn: self.$notificationsEnabled)
+                            .labelsHidden()
+                    }
+                    .onChange(of: self.notificationsEnabled) { _, newValue in
+                        self.handleNotificationToggle(enabled: newValue)
+                    }
 
                     Picker("Default Reminder", selection: self.$defaultReminderTime) {
                         ForEach(self.sortedReminderKeys, id: \.self) { key in
@@ -141,7 +144,9 @@ public struct SettingsView: View {
                         Text("Monday").tag(2)
                     }
 
-                    Toggle("Use 24-Hour Time", isOn: self.$use24HourTime)
+                    SettingRow(title: "Use 24-Hour Time") {
+                        Toggle("", isOn: self.$use24HourTime).labelsHidden()
+                    }
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
 
@@ -153,7 +158,9 @@ public struct SettingsView: View {
                         }
                     }
 
-                    Toggle("Auto-Delete Completed Tasks", isOn: self.$autoDeleteCompleted)
+                    SettingRow(title: "Auto-Delete Completed Tasks") {
+                        Toggle("", isOn: self.$autoDeleteCompleted).labelsHidden()
+                    }
 
                     if self.autoDeleteCompleted {
                         Stepper(
@@ -194,7 +201,9 @@ public struct SettingsView: View {
                         }
                     }
 
-                    Toggle("Auto Sync", isOn: self.$autoSyncEnabled)
+                    SettingRow(title: "Auto Sync") {
+                        Toggle("", isOn: self.$autoSyncEnabled).labelsHidden()
+                    }
 
                     Picker("Sync Frequency", selection: self.$syncFrequency) {
                         Text("Every 15 minutes").tag("15min")
@@ -208,8 +217,12 @@ public struct SettingsView: View {
 
                 // Enhanced Features Section
                 Section("Enhanced Features") {
-                    Toggle("Haptic Feedback", isOn: self.$enableHapticFeedback)
-                    Toggle("Enable Analytics", isOn: self.$enableAnalytics)
+                    SettingRow(title: "Haptic Feedback") {
+                        Toggle("", isOn: self.$enableHapticFeedback).labelsHidden()
+                    }
+                    SettingRow(title: "Enable Analytics") {
+                        Toggle("", isOn: self.$enableAnalytics).labelsHidden()
+                    }
 
                     if self.enableAnalytics {
                         Text("Help improve PlannerApp by sharing anonymous usage data.")

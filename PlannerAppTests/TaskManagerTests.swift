@@ -80,9 +80,9 @@ final class TaskManagerTests: XCTestCase {
 
     // MARK: - Due Date Handling Tests
 
-    func testFetchTasksDueToday() {
+    func testFetchTasksDueToday() throws {
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
 
         let todayTask = PlannerTask(title: "Today", dueDate: today)
         let tomorrowTask = PlannerTask(title: "Tomorrow", dueDate: tomorrow)
@@ -106,9 +106,9 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertEqual(stats["dueToday"], 1)
     }
 
-    func testFetchOverdueTasks() {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    func testFetchOverdueTasks() throws {
+        let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
 
         let overdueTask = PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday)
         let futureTask = PlannerTask(title: "Future", dueDate: tomorrow)

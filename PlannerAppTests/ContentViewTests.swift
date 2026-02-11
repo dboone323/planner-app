@@ -1,5 +1,4 @@
 import XCTest
-
 @testable import PlannerApp
 
 public class ContentViewTests: XCTestCase {

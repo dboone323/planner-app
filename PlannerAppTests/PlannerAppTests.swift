@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 import XCTest
-
 @testable import PlannerApp
 
 private typealias AppTask = PlannerTask
@@ -517,11 +516,11 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Date and Time Tests
 
-    func testDateCalculations() {
+    func testDateCalculations() throws {
         // Test date calculation utilities
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: today)!
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 7, to: today))
 
         XCTAssertGreaterThan(tomorrow, today, "Tomorrow should be after today")
         XCTAssertGreaterThan(nextWeek, tomorrow, "Next week should be after tomorrow")

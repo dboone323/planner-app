@@ -155,10 +155,10 @@ final class TaskDataManagerTests: XCTestCase {
         XCTAssertEqual(incomplete.count, 1)
     }
 
-    func testTasksDueWithin() {
+    func testTasksDueWithin() throws {
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 8, to: today)!
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 8, to: today))
 
         self.manager.add(PlannerTask(title: "Tomorrow", isCompleted: false, dueDate: tomorrow))
         self.manager.add(PlannerTask(title: "Next Week", isCompleted: false, dueDate: nextWeek))
@@ -168,8 +168,8 @@ final class TaskDataManagerTests: XCTestCase {
         XCTAssertEqual(dueWithin7Days.first?.title, "Tomorrow")
     }
 
-    func testTasksDueWithinExcludesCompleted() {
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    func testTasksDueWithinExcludesCompleted() throws {
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
 
         self.manager.add(PlannerTask(title: "Due Tomorrow", isCompleted: true, dueDate: tomorrow))
 
@@ -177,9 +177,9 @@ final class TaskDataManagerTests: XCTestCase {
         XCTAssertEqual(dueSoon.count, 0, "Completed tasks should not appear in due tasks")
     }
 
-    func testOverdueTasks() {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    func testOverdueTasks() throws {
+        let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
 
         self.manager.add(PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday))
         self.manager.add(PlannerTask(title: "Future", isCompleted: false, dueDate: tomorrow))
@@ -203,10 +203,10 @@ final class TaskDataManagerTests: XCTestCase {
         XCTAssertEqual(sorted[2].title, "Low")
     }
 
-    func testTasksSortedByDate() {
+    func testTasksSortedByDate() throws {
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: today)!
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 7, to: today))
 
         self.manager.add(PlannerTask(title: "Next Week", dueDate: nextWeek))
         self.manager.add(PlannerTask(title: "Tomorrow", dueDate: tomorrow))
@@ -220,12 +220,12 @@ final class TaskDataManagerTests: XCTestCase {
 
     // MARK: - Statistics Tests
 
-    func testGetTaskStatistics() {
+    func testGetTaskStatistics() throws {
         let today = Date()
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: today))
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
         // Use end of day to ensure this is always in the future during test day
-        let todayEndOfDay = Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: today)!
+        let todayEndOfDay = try XCTUnwrap(Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: today))
 
         self.manager.add(PlannerTask(title: "Complete", isCompleted: true))
         self.manager.add(PlannerTask(title: "Incomplete", isCompleted: false))
