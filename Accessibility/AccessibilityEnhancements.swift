@@ -277,7 +277,7 @@ enum ScreenReaderAnnouncement {
             #if os(iOS)
                 UIAccessibility.post(notification: .announcement, argument: message)
             #elseif os(macOS)
-                /// Using the correct method without an argument parameter
+                // Using the correct method without an argument parameter
                 let userInfo: [NSAccessibility.NotificationUserInfoKey: Any] = [
                     NSAccessibility.NotificationUserInfoKey.announcement: message,
                 ]

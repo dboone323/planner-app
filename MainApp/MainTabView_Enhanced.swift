@@ -181,7 +181,6 @@ public struct MainTabViewEnhanced: View {
 
     // MARK: - Content Views
 
-    @ViewBuilder
     private var contentForSelectedTab: some View {
         self.contentForTab(self.selectedTabTag)
     }

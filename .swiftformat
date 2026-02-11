@@ -91,14 +91,14 @@
 --enable redundantThrows
 --enable blankLinesBetweenImports
 --enable noForceUnwrapInTests
-# --enable wrap
+--enable wrap
 
 # Disabled Rules
 --disable andOperator
 --disable blankLinesAtStartOfScope
 --disable blankLinesAtEndOfScope
 --disable redundantSelf
---disable wrapEnumCases
 
 # Exclusions
 --exclude .build,Package.swift,node_modules,.swiftpm,Tools
+--enable wrapFunctionBodies

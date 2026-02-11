@@ -215,7 +215,8 @@ public class DashboardViewModel: ObservableObject {
                     icon: "checkmark.circle.fill",
                     color: .green,
                     timestamp: task.createdAt
-                ))
+                )
+            )
         }
 
         // Add recent events
@@ -234,7 +235,8 @@ public class DashboardViewModel: ObservableObject {
                     icon: "calendar",
                     color: .orange,
                     timestamp: event.date
-                ))
+                )
+            )
         }
 
         self.recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
@@ -257,7 +259,8 @@ public class DashboardViewModel: ObservableObject {
                     icon: "calendar",
                     color: .orange,
                     destination: .calendarEvent(event.id)
-                ))
+                )
+            )
         }
 
         // Add upcoming goals
@@ -273,7 +276,8 @@ public class DashboardViewModel: ObservableObject {
                     icon: "target",
                     color: .green,
                     destination: .goalDetail(goal.id)
-                ))
+                )
+            )
         }
 
         self.upcomingItems = items.sorted { $0.date < $1.date }

@@ -93,14 +93,16 @@ public struct SettingsView: View {
                             HStack {
                                 Text("Theme Preview")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor)
+                                        self.themeManager.currentTheme.primaryTextColor
+                                    )
                                 Spacer()
                                 Circle()
                                     .fill(self.themeManager.currentTheme.primaryAccentColor)
                                     .frame(width: 20, height: 20)
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor)
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                             }
                         }
                         .buttonStyle(.plain)
@@ -327,7 +329,8 @@ public struct SettingsView: View {
             }
         #elseif os(macOS)
             NSWorkspace.shared.open(
-                URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+                URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!
+            )
         #endif
     }
 
@@ -336,7 +339,8 @@ public struct SettingsView: View {
         guard let data = csvString.data(using: .utf8) else { return }
 
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "PlannerExport.csv")
+            "PlannerExport.csv"
+        )
         do {
             try data.write(to: tempURL, options: .atomic)
             self.exportURL = tempURL

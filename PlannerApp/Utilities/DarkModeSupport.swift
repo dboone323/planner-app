@@ -106,14 +106,37 @@ public enum AdaptiveColors {
     }
 
     extension NSColor {
-        static var label: NSColor { .labelColor }
-        static var secondaryLabel: NSColor { .secondaryLabelColor }
-        static var tertiaryLabel: NSColor { .tertiaryLabelColor }
-        static var systemBackground: NSColor { .windowBackgroundColor }
-        static var secondarySystemBackground: NSColor { .controlBackgroundColor }
-        static var tertiarySystemBackground: NSColor { .controlBackgroundColor }
-        static var systemGroupedBackground: NSColor { .windowBackgroundColor }
-        static var separator: NSColor { .separatorColor }
+        static var label: NSColor {
+            .labelColor
+        }
+
+        static var secondaryLabel: NSColor {
+            .secondaryLabelColor
+        }
+
+        static var tertiaryLabel: NSColor {
+            .tertiaryLabelColor
+        }
+
+        static var systemBackground: NSColor {
+            .windowBackgroundColor
+        }
+
+        static var secondarySystemBackground: NSColor {
+            .controlBackgroundColor
+        }
+
+        static var tertiarySystemBackground: NSColor {
+            .controlBackgroundColor
+        }
+
+        static var systemGroupedBackground: NSColor {
+            .windowBackgroundColor
+        }
+
+        static var separator: NSColor {
+            .separatorColor
+        }
     }
 #endif
 

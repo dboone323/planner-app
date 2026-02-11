@@ -80,7 +80,7 @@ class CalendarSyncManagerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
-    func testSyncTaskToCalendar_CreatesEvent() async {
+    func testSyncTaskToCalendar_CreatesEvent() {
         self.mockStore.accessGranted = true
 
         var task = PlannerTask(

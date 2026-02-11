@@ -155,7 +155,8 @@ public struct CalendarView: View {
                                 NSLocalizedString(
                                     "calendar.previous_month.hint",
                                     comment: "Previous month hint"
-                                ))
+                                )
+                            )
 
                             Button(
                                 action: self.nextMonth,
@@ -175,7 +176,8 @@ public struct CalendarView: View {
                                 NSLocalizedString(
                                     "calendar.next_month.hint",
                                     comment: "Next month hint"
-                                ))
+                                )
+                            )
                         }
                     }
                     .padding(.horizontal, 20)
@@ -213,7 +215,8 @@ public struct CalendarView: View {
                             NSLocalizedString("calendar.add_event", comment: "Add event button")
                         )
                         .accessibilityHint(
-                            NSLocalizedString("calendar.add_event.hint", comment: "Add event hint"))
+                            NSLocalizedString("calendar.add_event.hint", comment: "Add event hint")
+                        )
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)

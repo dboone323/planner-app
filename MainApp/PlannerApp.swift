@@ -66,7 +66,8 @@ public struct PlannerApp: App {
                 .onAppear {
                     // Perform one-time legacy data migration
                     LegacyDataMigrator.migrateIfNeeded(
-                        context: self.sharedModelContainer.mainContext)
+                        context: self.sharedModelContainer.mainContext
+                    )
                 }
         }
         .modelContainer(self.sharedModelContainer)

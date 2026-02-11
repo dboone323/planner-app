@@ -107,7 +107,9 @@ public class EnhancedCloudKitManager: ObservableObject {
         case conflictDetected
         case unknownError(Error)
 
-        var id: String { self.localizedDescription }
+        var id: String {
+            self.localizedDescription
+        }
 
         /// Provide a user-friendly message
         var localizedDescription: String {

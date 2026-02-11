@@ -91,7 +91,7 @@ extension Color {
             let green = convertedColor.greenComponent
             let blue = convertedColor.blueComponent
 
-            /// Calculate luminance using standard coefficients.
+            // Calculate luminance using standard coefficients.
             let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
             // Consider the color dark if luminance is below a threshold (e.g., 0.5).
             return luminance < 0.5
@@ -105,7 +105,7 @@ extension Color {
 
             uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-            /// Calculate luminance using standard coefficients.
+            // Calculate luminance using standard coefficients.
             let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
             // Consider the color dark if luminance is below a threshold (e.g., 0.5).
             return luminance < 0.5

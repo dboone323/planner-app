@@ -224,6 +224,11 @@ struct SyncResult {
 
 /// Mock Task extension for calendar sync
 extension PlannerTask {
-    var syncToCalendar: Bool { true }
-    var isAllDay: Bool { estimatedDuration == 0 }
+    var syncToCalendar: Bool {
+        true
+    }
+
+    var isAllDay: Bool {
+        estimatedDuration == 0
+    }
 }
