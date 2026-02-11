@@ -427,7 +427,7 @@ final class PlannerAppTests: XCTestCase {
 
         // Add multiple tasks
         var tasks: [AppTask] = []
-        for index in 1 ... 10 {
+        for index in 1...10 {
             let task = AppTask(title: "Task \(index)", description: "Task \(index)", isCompleted: false)
             tasks.append(task)
         }
@@ -622,7 +622,7 @@ final class PlannerAppTests: XCTestCase {
         let startTime = Date()
 
         // Simulate creating multiple tasks
-        for identifier in 1 ... 100 {
+        for identifier in 1...100 {
             let taskData: [String: Any] = ["id": identifier, "title": "Task \(identifier)"]
             XCTAssertEqual((taskData["id"] as? Int), identifier)
         }
@@ -638,7 +638,7 @@ final class PlannerAppTests: XCTestCase {
         let startTime = Date()
 
         // Simulate search through multiple items
-        for itemIndex in 1 ... 1000 {
+        for itemIndex in 1...1000 {
             let item = "Item \(itemIndex)"
             XCTAssertTrue(item.contains("Item"))
         }
@@ -655,7 +655,7 @@ final class PlannerAppTests: XCTestCase {
 
         // Simulate bulk task operations
         var tasks: [[String: Any]] = []
-        for taskIndex in 1 ... 500 {
+        for taskIndex in 1...500 {
             let task: [String: Any] = [
                 "id": taskIndex,
                 "title": "Bulk Task \(taskIndex)",
@@ -840,7 +840,7 @@ final class PlannerAppTests: XCTestCase {
 
     func testLargeDataSets() {
         // Test handling of large data sets
-        let largeArray = Array(1 ... 10000)
+        let largeArray = Array(1...10000)
         let filteredArray = largeArray.filter { $0 % 2 == 0 }
 
         XCTAssertEqual(largeArray.count, 10000)

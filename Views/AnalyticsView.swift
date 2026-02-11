@@ -212,7 +212,7 @@ struct ProductivityChart: View {
     var body: some View {
         GeometryReader { _ in
             HStack(alignment: .bottom, spacing: 2) {
-                ForEach(0 ..< timeRange.days, id: \.self) { dayOffset in
+                ForEach(0..<timeRange.days, id: \.self) { dayOffset in
                     let date = Calendar.current.date(byAdding: .day, value: -dayOffset, to: Date()) ?? Date()
                     let dayTasks = tasks.filter { Calendar.current.isDate($0.createdAt, inSameDayAs: date) }
                     let completedCount = dayTasks.count(where: { $0.isCompleted })

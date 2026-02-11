@@ -23,7 +23,7 @@ public struct AddGoalView: View {
 
                     TextField("Description", text: self.$description, axis: .vertical).accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
-                        .lineLimit(3 ... 6)
+                        .lineLimit(3...6)
 
                     DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
                 }

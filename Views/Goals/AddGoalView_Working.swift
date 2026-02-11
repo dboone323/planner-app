@@ -69,7 +69,7 @@ public struct AddGoalView: View {
                             ))
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
-                        Slider(value: self.$progress, in: 0 ... 1)
+                        Slider(value: self.$progress, in: 0...1)
                             .accentColor(self.themeManager.currentTheme.primaryAccentColor)
                     }
                 }

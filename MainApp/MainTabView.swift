@@ -119,6 +119,6 @@ public struct MainTabView_Previews: PreviewProvider {
         // Provide a constant binding for the preview (doesn't change).
         MainTabView(selectedTabTag: .constant(MainTabView.TabTags.dashboard))
             // Provide the ThemeManager environment object for the preview.
-            .environmentObject(ThemeManager())
+                .environmentObject(ThemeManager())
     }
 }

@@ -72,7 +72,7 @@ public struct SettingsView: View {
                 Section("Dashboard") {
                     Stepper(
                         "Items per section: \(self.dashboardItemLimit)", value: self.$dashboardItemLimit,
-                        in: 1 ... 10
+                        in: 1...10
                     )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)

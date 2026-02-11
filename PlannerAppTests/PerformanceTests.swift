@@ -25,7 +25,7 @@ class PerformanceTests: XCTestCase {
         let dependencyService = TaskDependencyService.shared
 
         measure {
-            for i in 0 ..< 200 {
+            for i in 0..<200 {
                 let task = createMockTask(id: "task_\(i)")
                 let dependency = createMockTask(id: "dep_\(i)")
                 dependencyService.addDependency(from: task, to: dependency)
@@ -39,7 +39,7 @@ class PerformanceTests: XCTestCase {
         let priorityManager = PriorityManager.shared
 
         measure {
-            for i in 0 ..< 300 {
+            for i in 0..<300 {
                 let task = createMockTask(id: "priority_task_\(i)")
                 priorityManager.updatePriority(for: task, basedOn: createMockContext())
                 _ = priorityManager.getPriorityScore(for: task)
@@ -52,7 +52,7 @@ class PerformanceTests: XCTestCase {
         let tagManager = TagManager.shared
 
         measure {
-            for i in 0 ..< 150 {
+            for i in 0..<150 {
                 let tag = Tag(id: "tag_\(i)", name: "Tag \(i)", color: .blue)
                 tagManager.createTag(tag)
                 _ = tagManager.getTasksWithTag(tag)
@@ -67,7 +67,7 @@ class PerformanceTests: XCTestCase {
         let calendarSync = CalendarSyncService.shared
 
         measure {
-            for i in 0 ..< 50 {
+            for i in 0..<50 {
                 let event = createMockCalendarEvent(id: "event_\(i)")
                 calendarSync.syncEvent(event)
                 _ = calendarSync.getEventsForDate(Date())
@@ -80,7 +80,7 @@ class PerformanceTests: XCTestCase {
         let timeBlockService = TimeBlockService.shared
 
         measure {
-            for i in 0 ..< 100 {
+            for i in 0..<100 {
                 let timeBlock = createMockTimeBlock(id: "block_\(i)")
                 timeBlockService.scheduleTimeBlock(timeBlock)
                 _ = timeBlockService.getTimeBlocksForDate(Date())
@@ -95,7 +95,7 @@ class PerformanceTests: XCTestCase {
         let pomodoroTimer = PomodoroTimer.shared
 
         measure {
-            for _ in 0 ..< 200 {
+            for _ in 0..<200 {
                 pomodoroTimer.startTimer()
                 pomodoroTimer.pauseTimer()
                 pomodoroTimer.resetTimer()
@@ -108,7 +108,7 @@ class PerformanceTests: XCTestCase {
         let focusManager = FocusModeManager.shared
 
         measure {
-            for i in 0 ..< 100 {
+            for i in 0..<100 {
                 focusManager.startFocusSession(duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)"))
                 _ = focusManager.getCurrentSession()
                 _ = focusManager.getSessionHistory()
@@ -120,7 +120,7 @@ class PerformanceTests: XCTestCase {
         let analytics = ProductivityAnalytics.shared
 
         measure {
-            for _ in 0 ..< 50 {
+            for _ in 0..<50 {
                 _ = analytics.calculateDailyProductivity()
                 _ = analytics.generateWeeklyReport()
                 _ = analytics.getProductivityTrends()
@@ -135,7 +135,7 @@ class PerformanceTests: XCTestCase {
         let backupManager = BackupManager.shared
 
         measure {
-            for _ in 0 ..< 20 {
+            for _ in 0..<20 {
                 _ = backupManager.createBackup()
                 _ = backupManager.getBackupHistory()
                 _ = backupManager.validateBackupIntegrity()
@@ -147,7 +147,7 @@ class PerformanceTests: XCTestCase {
         let conflictDetector = ConflictDetector.shared
 
         measure {
-            for i in 0 ..< 100 {
+            for i in 0..<100 {
                 let task1 = createMockTask(id: "conflict_task1_\(i)")
                 let task2 = createMockTask(id: "conflict_task2_\(i)")
                 _ = conflictDetector.detectConflicts(between: task1, and: task2)
@@ -162,7 +162,7 @@ class PerformanceTests: XCTestCase {
         let templateService = TaskTemplateService.shared
 
         measure {
-            for i in 0 ..< 80 {
+            for i in 0..<80 {
                 let template = createMockTaskTemplate(id: "template_\(i)")
                 templateService.saveTemplate(template)
                 _ = templateService.getTemplatesForCategory(.work)
@@ -175,7 +175,7 @@ class PerformanceTests: XCTestCase {
         let workspaceManager = WorkspaceManager.shared
 
         measure {
-            for i in 0 ..< 50 {
+            for i in 0..<50 {
                 let workspace = createMockWorkspace(id: "workspace_\(i)")
                 workspaceManager.createWorkspace(workspace)
                 _ = workspaceManager.getAllWorkspaces()
@@ -195,7 +195,7 @@ class PerformanceTests: XCTestCase {
             group.enter()
             DispatchQueue.global(qos: .userInteractive).async {
                 let dependencyService = TaskDependencyService.shared
-                for i in 0 ..< 50 {
+                for i in 0..<50 {
                     let task = createMockTask(id: "concurrent_task_\(i)")
                     dependencyService.addDependency(from: task, to: createMockTask(id: "concurrent_dep_\(i)"))
                 }
@@ -205,7 +205,7 @@ class PerformanceTests: XCTestCase {
             group.enter()
             DispatchQueue.global(qos: .userInteractive).async {
                 let priorityManager = PriorityManager.shared
-                for i in 0 ..< 50 {
+                for i in 0..<50 {
                     let task = createMockTask(id: "priority_task_\(i)")
                     priorityManager.updatePriority(for: task, basedOn: createMockContext())
                 }
@@ -215,7 +215,7 @@ class PerformanceTests: XCTestCase {
             group.enter()
             DispatchQueue.global(qos: .userInteractive).async {
                 let analytics = ProductivityAnalytics.shared
-                for _ in 0 ..< 50 {
+                for _ in 0..<50 {
                     _ = analytics.calculateDailyProductivity()
                 }
                 group.leave()
@@ -238,7 +238,7 @@ class PerformanceTests: XCTestCase {
                 var timeBlocks: [TimeBlock] = []
                 var workspaces: [Workspace] = []
 
-                for i in 0 ..< 300 {
+                for i in 0..<300 {
                     tasks.append(createMockTask(id: "memory_task_\(i)"))
                     timeBlocks.append(createMockTimeBlock(id: "memory_block_\(i)"))
                     workspaces.append(createMockWorkspace(id: "memory_workspace_\(i)"))
@@ -259,7 +259,7 @@ class PerformanceTests: XCTestCase {
         let priorityManager = PriorityManager.shared
 
         measure {
-            for i in 0 ..< 100 {
+            for i in 0..<100 {
                 let task = createMockTask(id: "metrics_task_\(i)")
                 priorityManager.updatePriority(for: task, basedOn: createMockContext())
                 _ = performanceMonitor.getMetrics()
@@ -296,8 +296,8 @@ class PerformanceMonitor {
         }
 
         // Simulate memory and CPU monitoring
-        metrics.memoryUsage = Double.random(in: 40 ... 80)
-        metrics.cpuUsage = Double.random(in: 25 ... 60)
+        metrics.memoryUsage = Double.random(in: 40...80)
+        metrics.cpuUsage = Double.random(in: 25...60)
 
         return metrics
     }

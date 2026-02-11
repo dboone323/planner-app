@@ -104,7 +104,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
             }
 
             var nextDate = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
-            for _ in 0 ..< 7 {
+            for _ in 0..<7 {
                 let weekday = calendar.component(.weekday, from: nextDate)
                 if days.contains(weekday) {
                     return nextDate

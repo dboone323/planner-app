@@ -55,7 +55,7 @@ final class FocusModeManagerTests: XCTestCase {
 
     func testMultipleToggles() {
         // Toggle 5 times should end up in on state
-        for _ in 0 ..< 5 {
+        for _ in 0..<5 {
             self.manager.toggleFocusMode()
         }
         XCTAssertTrue(self.manager.isFocusModeEnabled)

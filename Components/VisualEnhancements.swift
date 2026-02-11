@@ -275,17 +275,17 @@ public struct ParticleSystem: View {
     }
 
     private func createParticles() {
-        self.particles = (0 ..< 50).map { _ in
+        self.particles = (0..<50).map { _ in
             Particle(
-                positionX: CGFloat.random(in: 50 ... 350),
+                positionX: CGFloat.random(in: 50...350),
                 positionY: 400,
                 velocity: CGVector(
-                    dx: CGFloat.random(in: -200 ... 200),
+                    dx: CGFloat.random(in: -200...200),
                     dy: CGFloat.random(in: -400 ... -200)
                 ),
                 color: [Color.blue, Color.green, Color.orange, Color.red, Color.purple]
                     .randomElement()!,
-                scale: CGFloat.random(in: 0.5 ... 1.5),
+                scale: CGFloat.random(in: 0.5...1.5),
                 opacity: 1.0
             )
         }
@@ -402,11 +402,11 @@ struct BreathingView<Content: View>: View {
     @State private var scale: CGFloat = 1.0
 
     var duration: Double = 2.0
-    var scaleRange: ClosedRange<CGFloat> = 0.95 ... 1.05
+    var scaleRange: ClosedRange<CGFloat> = 0.95...1.05
 
     init(
         duration: Double = 2.0,
-        scaleRange: ClosedRange<CGFloat> = 0.95 ... 1.05,
+        scaleRange: ClosedRange<CGFloat> = 0.95...1.05,
         @ViewBuilder content: () -> Content
     ) {
         self.duration = duration
