@@ -91,7 +91,7 @@
 --enable redundantThrows
 --enable blankLinesBetweenImports
 --enable noForceUnwrapInTests
---enable wrap
+# --enable wrap
 
 # Disabled Rules
 --disable andOperator
