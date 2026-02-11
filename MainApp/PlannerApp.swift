@@ -45,8 +45,8 @@ public struct PlannerApp: App {
         // Read the saved default view identifier from UserDefaults.
         let initialTab =
             UserDefaults.standard.string(forKey: AppSettingKeys.defaultView)
-            // Use the Dashboard tag as a fallback if nothing is saved.
-            ?? MainTabView.TabTags.dashboard
+                // Use the Dashboard tag as a fallback if nothing is saved.
+                ?? MainTabView.TabTags.dashboard
         // Initialize the @State variable with the value read from UserDefaults.
         // The underscore syntax is used here because we are initializing the State wrapper itself.
         _selectedTabTag = State(initialValue: initialTab)
