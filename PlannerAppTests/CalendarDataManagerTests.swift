@@ -8,28 +8,35 @@
 import XCTest
 @testable import PlannerApp
 
-final class CalendarDataManagerTests: XCTestCase {
-    var manager: CalendarDataManager!
+final class CalendarDataManagerTests: XCTestCase, @unchecked Sendable {
+    @MainActor var manager: CalendarDataManager!
 
     // MARK: - Setup & Teardown
 
-    override func setUp() {
-        super.setUp()
-        self.manager = CalendarDataManager.shared
-        self.manager.clearAllEvents()
+    override nonisolated func setUp() async throws {
+        try await super.setUp()
+        await MainActor.run {
+            self.manager = CalendarDataManager.shared
+            self.manager.clearAllEvents()
+        }
     }
 
-    override func tearDown() {
-        self.manager.clearAllEvents()
-        super.tearDown()
+    override nonisolated func tearDown() async throws {
+        await MainActor.run {
+            self.manager.clearAllEvents()
+            self.manager = nil
+        }
+        try await super.tearDown()
     }
 
     // MARK: - Initialization Tests
 
+    @MainActor
     func testSharedInstanceExists() {
         XCTAssertNotNil(CalendarDataManager.shared)
     }
 
+    @MainActor
     func testSharedInstanceIsSingleton() {
         let instance1 = CalendarDataManager.shared
         let instance2 = CalendarDataManager.shared
@@ -38,11 +45,13 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Load/Save Tests
 
+    @MainActor
     func testLoadReturnsEmptyArrayInitially() {
         let events = self.manager.load()
         XCTAssertEqual(events.count, 0)
     }
 
+    @MainActor
     func testSaveAndLoadEvents() {
         let event1 = CalendarEvent(title: "Meeting", date: Date())
         let event2 = CalendarEvent(title: "Lunch", date: Date())
@@ -57,6 +66,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Add Tests
 
+    @MainActor
     func testAddEvent() {
         let event = CalendarEvent(title: "Conference", date: Date())
         self.manager.add(event)
@@ -67,6 +77,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(events.first?.id, event.id)
     }
 
+    @MainActor
     func testAddMultipleEvents() {
         self.manager.add(CalendarEvent(title: "Event 1", date: Date()))
         self.manager.add(CalendarEvent(title: "Event 2", date: Date()))
@@ -77,6 +88,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Update Tests
 
+    @MainActor
     func testUpdateEvent() {
         var event = CalendarEvent(title: "Original", date: Date())
         self.manager.add(event)
@@ -92,6 +104,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(loadedEvents.first?.date, newDate)
     }
 
+    @MainActor
     func testUpdateNonexistentEvent() {
         let event = CalendarEvent(title: "Nonexistent", date: Date())
         self.manager.update(event)
@@ -101,6 +114,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Delete Tests
 
+    @MainActor
     func testDeleteEvent() {
         let event = CalendarEvent(title: "To Delete", date: Date())
         self.manager.add(event)
@@ -110,6 +124,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(self.manager.load().count, 0)
     }
 
+    @MainActor
     func testDeleteOnlySpecifiedEvent() {
         let event1 = CalendarEvent(title: "Keep", date: Date())
         let event2 = CalendarEvent(title: "Delete", date: Date())
@@ -125,6 +140,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Find Tests
 
+    @MainActor
     func testFindEventById() {
         let event = CalendarEvent(title: "Findable", date: Date())
         self.manager.add(event)
@@ -135,6 +151,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(found?.id, event.id)
     }
 
+    @MainActor
     func testFindNonexistentEvent() {
         let found = self.manager.find(by: UUID())
         XCTAssertNil(found)
@@ -142,6 +159,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Events For Date Tests
 
+    @MainActor
     func testEventsForSpecificDate() throws {
         let today = Date()
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
@@ -155,11 +173,18 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(todayEvents[0].title, "Today 1")
     }
 
+    @MainActor
     func testEventsForDateReturnsSortedByTime() throws {
         let today = Date()
-        let morning = try XCTUnwrap(Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today))
-        let afternoon = try XCTUnwrap(Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today))
-        let evening = try XCTUnwrap(Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today))
+        let morning = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
+        )
+        let afternoon = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)
+        )
+        let evening = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
+        )
 
         self.manager.add(CalendarEvent(title: "Evening", date: evening))
         self.manager.add(CalendarEvent(title: "Morning", date: morning))
@@ -173,6 +198,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Events Between Dates Tests
 
+    @MainActor
     func testEventsBetweenDates() throws {
         let today = Date()
         let twoDaysAgo = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -2, to: today))
@@ -190,6 +216,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(eventsInRange[1].title, "Today")
     }
 
+    @MainActor
     func testEventsBetweenDatesSorted() throws {
         let start = Date()
         let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 3, to: start))
@@ -206,6 +233,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Upcoming Events Tests
 
+    @MainActor
     func testUpcomingEventsWithinDays() throws {
         let now = Date()
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: now))
@@ -219,6 +247,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(upcomingThisWeek.first?.title, "Tomorrow")
     }
 
+    @MainActor
     func testUpcomingEventsExcludesPast() throws {
         let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
@@ -231,6 +260,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(upcoming.first?.title, "Tomorrow")
     }
 
+    @MainActor
     func testUpcomingEventsSorted() throws {
         let now = Date()
         let day3 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 3, to: now))
@@ -249,6 +279,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Sorting Tests
 
+    @MainActor
     func testEventsSortedByDate() throws {
         let today = Date()
         let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: today))
@@ -266,10 +297,15 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Statistics Tests
 
+    @MainActor
     func testGetEventStatistics() throws {
         let today = Date()
-        let todayMorning = try XCTUnwrap(Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today))
-        let todayEvening = try XCTUnwrap(Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today))
+        let todayMorning = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
+        )
+        let todayEvening = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
+        )
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 10, to: today))
 
@@ -285,6 +321,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertEqual(stats["thisWeek"], 1, "Tomorrow is the only upcoming event within 7 days")
     }
 
+    @MainActor
     func testStatisticsWithNoEvents() {
         let stats = self.manager.getEventStatistics()
 
@@ -295,6 +332,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Clear Tests
 
+    @MainActor
     func testClearAllEvents() {
         self.manager.add(CalendarEvent(title: "Event 1", date: Date()))
         self.manager.add(CalendarEvent(title: "Event 2", date: Date()))
@@ -306,6 +344,7 @@ final class CalendarDataManagerTests: XCTestCase {
 
     // MARK: - Edge Cases
 
+    @MainActor
     func testHandlesMidnightBoundary() {
         let midnight = Calendar.current.startOfDay(for: Date())
         let justBeforeMidnight = midnight.addingTimeInterval(-1)
@@ -321,6 +360,7 @@ final class CalendarDataManagerTests: XCTestCase {
         XCTAssertFalse(todayEvents.contains(where: { $0.title == "Before Midnight" }))
     }
 
+    @MainActor
     func testPersistenceAcrossInstances() {
         let event = CalendarEvent(title: "Persistent", date: Date())
         self.manager.add(event)

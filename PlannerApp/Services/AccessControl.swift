@@ -20,7 +20,7 @@ struct Permission {
 }
 
 class AccessControl {
-    static let shared = AccessControl()
+    nonisolated(unsafe) static let shared = AccessControl()
 
     func permissions(for role: Role) -> Permission {
         switch role {

@@ -242,6 +242,7 @@ import SwiftUI
 
 #if os(macOS)
     /// Menu bar integration
+    @MainActor
     class MenuBarManager: ObservableObject {
         private var statusItem: NSStatusItem?
 
@@ -412,6 +413,7 @@ import SwiftUI
     }
 
     /// Multiple windows support
+    @MainActor
     enum WindowManager {
         static func openNewWindow(content: AnyView) {
             let windowController = NSWindowController(
@@ -439,8 +441,9 @@ import SwiftUI
     }
 
     /// File system integration
+    @MainActor
     enum FileExportManager {
-        static func exportToFile(_ data: some Codable, fileName: String) {
+        static func exportToFile(_ data: some Codable & Sendable, fileName: String) {
             let panel = NSSavePanel()
             panel.nameFieldStringValue = fileName
             panel.allowedContentTypes = [.json]
@@ -457,7 +460,9 @@ import SwiftUI
             }
         }
 
-        static func importFromFile<T: Codable>(_ type: T.Type, completion: @escaping (T?) -> Void) {
+        static func importFromFile<T: Codable & Sendable>(
+            _ type: T.Type, completion: @escaping @MainActor @Sendable (T?) -> Void
+        ) {
             let panel = NSOpenPanel()
             panel.allowedContentTypes = [.json]
             panel.allowsMultipleSelection = false
@@ -482,13 +487,18 @@ import SwiftUI
 // MARK: - Cross-Platform Feature Interface
 
 protocol PlatformFeatureProvider {
+    @MainActor
     func setupPlatformFeatures()
+    @MainActor
     func handleDeepLink(_ url: URL)
+    @MainActor
     func shareContent(_ content: String)
+    @MainActor
     func openSystemSettings()
 }
 
 /// Platform-specific implementations
+@MainActor
 class IOSFeatureProvider: PlatformFeatureProvider {
     func setupPlatformFeatures() {
         #if os(iOS)
@@ -527,6 +537,7 @@ class IOSFeatureProvider: PlatformFeatureProvider {
     }
 }
 
+@MainActor
 class MacOSFeatureProvider: PlatformFeatureProvider {
     func setupPlatformFeatures() {
         #if os(macOS)

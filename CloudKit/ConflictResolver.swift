@@ -173,7 +173,8 @@ enum ConflictResolver {
                 if localDate > serverDate {
                     #if DEBUG
                         print(
-                            "ConflictResolver: Preferring local value for '\(key)': \(localVal) over server: \(serverVal)"
+                            "ConflictResolver: Preferring local value for '\(key)': " +
+                                "\(localVal) over server: \(serverVal)"
                         )
                     #endif
                     merged[key] = localVal

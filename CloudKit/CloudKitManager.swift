@@ -149,11 +149,14 @@ public class CloudKitManager: ObservableObject {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
+private let objectPoolLock = NSLock()
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one
 private func getPooledObject<T>() -> T? {
+    objectPoolLock.lock()
+    defer { objectPoolLock.unlock() }
     if let pooled = objectPool.popLast() as? T {
         return pooled
     }
@@ -162,6 +165,8 @@ private func getPooledObject<T>() -> T? {
 
 /// Return an object to the pool
 private func returnToPool(_ object: Any) {
+    objectPoolLock.lock()
+    defer { objectPoolLock.unlock() }
     if objectPool.count < maxPoolSize {
         objectPool.append(object)
     }

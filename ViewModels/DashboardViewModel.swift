@@ -75,6 +75,7 @@ public class DashboardViewModel: ObservableObject {
     /// --- Data Fetching and Filtering ---
     /// This function loads data from managers, filters it based on dates/status,
     /// applies the user's limit, and updates the @Published properties.
+    @MainActor
     func fetchDashboardData() {
         print("Fetching dashboard data...") // Debugging log
 
@@ -142,7 +143,8 @@ public class DashboardViewModel: ObservableObject {
         self.upcomingGoals = Array(filteredUpcomingGoals.prefix(limit))
 
         print(
-            "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
+            "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), " +
+                "Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
         ) // Debugging log
     }
 
@@ -183,6 +185,7 @@ public class DashboardViewModel: ObservableObject {
         print("Dashboard refresh completed") // Debugging log
     }
 
+    @MainActor
     private func updateQuickStats() {
         let allTasks = TaskDataManager.shared.load()
         let allGoals = GoalDataManager.shared.load()
@@ -194,6 +197,7 @@ public class DashboardViewModel: ObservableObject {
         self.todayEvents = self.totalTodaysEventsCount
     }
 
+    @MainActor
     private func generateRecentActivities() {
         var activities: [DashboardActivity] = []
 
@@ -242,6 +246,7 @@ public class DashboardViewModel: ObservableObject {
         self.recentActivities = activities.sorted { $0.timestamp > $1.timestamp }
     }
 
+    @MainActor
     private func generateUpcomingItems() {
         var items: [UpcomingItem] = []
 

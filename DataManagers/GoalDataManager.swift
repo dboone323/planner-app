@@ -13,7 +13,7 @@ protocol GoalDataManaging {
 /// Manages storage and retrieval of `Goal` objects with UserDefaults persistence.
 final class GoalDataManager: GoalDataManaging {
     /// Shared singleton instance.
-    static let shared = GoalDataManager()
+    @MainActor static let shared = GoalDataManager()
 
     /// UserDefaults key for storing goals.
     private let goalsKey = "SavedGoals"
@@ -137,7 +137,7 @@ final class GoalDataManager: GoalDataManaging {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one

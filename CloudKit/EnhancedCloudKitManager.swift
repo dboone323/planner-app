@@ -182,9 +182,11 @@ public class EnhancedCloudKitManager: ObservableObject {
                 #endif
             case .quotaExceeded:
                 #if os(iOS)
-                    return "Go to Settings → Apple ID → iCloud → Manage Storage to free up space or upgrade your storage plan."
+                    return "Go to Settings → Apple ID → iCloud → Manage Storage " +
+                        "to free up space or upgrade your storage plan."
                 #else
-                    return "Go to System Settings → Apple ID → iCloud → Manage Storage to free up space."
+                    return "Go to System Settings → Apple ID → iCloud → Manage Storage " +
+                        "to free up space."
                 #endif
             case .deviceBusy:
                 return "Close some other apps and try again. If the issue persists, restart your device."
@@ -193,7 +195,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             case .accountChanged:
                 return "Sign in to your current iCloud account in Settings, then restart the app."
             case .containerUnavailable:
-                return "Check that iCloud is enabled for this app in Settings. If the issue persists, restart your device."
+                return "Check that iCloud is enabled for this app in Settings. If issue persists, restart device."
             case .conflictDetected:
                 return "Review the conflicted items and choose which version to keep."
             case .unknownError:
@@ -1125,7 +1127,7 @@ extension EnhancedCloudKitManager {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one

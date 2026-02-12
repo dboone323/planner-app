@@ -8,32 +8,36 @@
 import XCTest
 @testable import PlannerApp
 
-@MainActor
-final class DashboardViewModelTests: XCTestCase {
-    var viewModel: DashboardViewModel!
+final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
+    @MainActor var viewModel: DashboardViewModel!
 
     // MARK: - Setup & Teardown
 
-    override func setUp() {
-        super.setUp()
-        self.viewModel = DashboardViewModel()
-        // Clear all data managers
-        TaskDataManager.shared.clearAllTasks()
-        CalendarDataManager.shared.clearAllEvents()
-        GoalDataManager.shared.clearAllGoals()
+    override nonisolated func setUp() async throws {
+        try await super.setUp()
+        await MainActor.run {
+            self.viewModel = DashboardViewModel()
+            // Clear all data managers
+            TaskDataManager.shared.clearAllTasks()
+            CalendarDataManager.shared.clearAllEvents()
+            GoalDataManager.shared.clearAllGoals()
+        }
     }
 
-    override func tearDown() {
-        // Cleanup test environment
-        TaskDataManager.shared.clearAllTasks()
-        CalendarDataManager.shared.clearAllEvents()
-        GoalDataManager.shared.clearAllGoals()
-        self.viewModel = nil
-        super.tearDown()
+    override nonisolated func tearDown() async throws {
+        await MainActor.run {
+            // Cleanup test environment
+            TaskDataManager.shared.clearAllTasks()
+            CalendarDataManager.shared.clearAllEvents()
+            GoalDataManager.shared.clearAllGoals()
+            self.viewModel = nil
+        }
+        try await super.tearDown()
     }
 
     // MARK: - Initialization Tests
 
+    @MainActor
     func testInitialization() {
         XCTAssertNotNil(self.viewModel, "ViewModel should initialize")
         XCTAssertEqual(self.viewModel.todaysEvents.count, 0, "Should start with no events")
@@ -46,6 +50,7 @@ final class DashboardViewModelTests: XCTestCase {
 
     // MARK: - Property Tests
 
+    @MainActor
     func testPublishedProperties() {
         XCTAssertNotNil(self.viewModel.todaysEvents)
         XCTAssertNotNil(self.viewModel.incompleteTasks)
@@ -57,6 +62,7 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertNotNil(self.viewModel.allJournalEntries)
     }
 
+    @MainActor
     func testQuickStatsProperties() {
         XCTAssertEqual(self.viewModel.totalTasks, 0)
         XCTAssertEqual(self.viewModel.completedTasks, 0)
@@ -67,6 +73,7 @@ final class DashboardViewModelTests: XCTestCase {
 
     // MARK: - fetchDashboardData Tests
 
+    @MainActor
     func testFetchDashboardDataWithNoData() {
         self.viewModel.fetchDashboardData()
 
@@ -78,6 +85,7 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.totalUpcomingGoalsCount, 0)
     }
 
+    @MainActor
     func testFetchDashboardDataFiltersTodaysEvents() throws {
         // Add events: today, yesterday, tomorrow
         let today = Date()
@@ -90,11 +98,14 @@ final class DashboardViewModelTests: XCTestCase {
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.totalTodaysEventsCount, 1, "Should filter only today's events")
+        XCTAssertEqual(
+            self.viewModel.totalTodaysEventsCount, 1, "Should filter only today's events"
+        )
         XCTAssertEqual(self.viewModel.todaysEvents.count, 1)
         XCTAssertEqual(self.viewModel.todaysEvents.first?.title, "Today Event")
     }
 
+    @MainActor
     func testFetchDashboardDataFiltersIncompleteTasks() {
         TaskDataManager.shared.add(PlannerTask(title: "Incomplete Task", isCompleted: false))
         TaskDataManager.shared.add(PlannerTask(title: "Complete Task", isCompleted: true))
@@ -102,25 +113,35 @@ final class DashboardViewModelTests: XCTestCase {
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.totalIncompleteTasksCount, 2, "Should filter incomplete tasks")
+        XCTAssertEqual(
+            self.viewModel.totalIncompleteTasksCount, 2, "Should filter incomplete tasks"
+        )
         XCTAssertEqual(self.viewModel.incompleteTasks.count, 2)
     }
 
+    @MainActor
     func testFetchDashboardDataFiltersUpcomingGoals() throws {
         let today = Date()
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
         let nextMonth = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 30, to: today))
 
-        GoalDataManager.shared.add(Goal(title: "This Week", description: "Soon", targetDate: nextWeek))
-        GoalDataManager.shared.add(Goal(title: "Next Month", description: "Later", targetDate: nextMonth))
+        GoalDataManager.shared.add(
+            Goal(title: "This Week", description: "Soon", targetDate: nextWeek)
+        )
+        GoalDataManager.shared.add(
+            Goal(title: "Next Month", description: "Later", targetDate: nextMonth)
+        )
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.totalUpcomingGoalsCount, 1, "Should filter goals within 7 days")
+        XCTAssertEqual(
+            self.viewModel.totalUpcomingGoalsCount, 1, "Should filter goals within 7 days"
+        )
         XCTAssertEqual(self.viewModel.upcomingGoals.count, 1)
         XCTAssertEqual(self.viewModel.upcomingGoals.first?.title, "This Week")
     }
 
+    @MainActor
     func testFetchDashboardDataRespectsLimit() {
         // Add 5 incomplete tasks
         for i in 1...5 {
@@ -130,14 +151,23 @@ final class DashboardViewModelTests: XCTestCase {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(self.viewModel.totalIncompleteTasksCount, 5, "Should count all tasks")
-        XCTAssertEqual(self.viewModel.incompleteTasks.count, 3, "Should limit displayed tasks to default of 3")
+        XCTAssertEqual(
+            self.viewModel.incompleteTasks.count, 3, "Should limit displayed tasks to default of 3"
+        )
     }
 
+    @MainActor
     func testFetchDashboardDataSortsEventsByTime() throws {
         let today = Date()
-        let morning = try XCTUnwrap(Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today))
-        let afternoon = try XCTUnwrap(Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today))
-        let evening = try XCTUnwrap(Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today))
+        let morning = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
+        )
+        let afternoon = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)
+        )
+        let evening = try XCTUnwrap(
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
+        )
 
         CalendarDataManager.shared.add(CalendarEvent(title: "Evening", date: evening))
         CalendarDataManager.shared.add(CalendarEvent(title: "Morning", date: morning))
@@ -145,11 +175,16 @@ final class DashboardViewModelTests: XCTestCase {
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.todaysEvents.first?.title, "Morning", "Events should be sorted by time")
+        XCTAssertEqual(
+            self.viewModel.todaysEvents.first?.title, "Morning", "Events should be sorted by time"
+        )
         XCTAssertEqual(self.viewModel.todaysEvents[1].title, "Afternoon")
-        XCTAssertEqual(self.viewModel.todaysEvents.last?.title, "Evening", "Latest event within limit")
+        XCTAssertEqual(
+            self.viewModel.todaysEvents.last?.title, "Evening", "Latest event within limit"
+        )
     }
 
+    @MainActor
     func testFetchDashboardDataSortsGoalsByDate() throws {
         let today = Date()
         let day3 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 3, to: today))
@@ -162,11 +197,14 @@ final class DashboardViewModelTests: XCTestCase {
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.upcomingGoals.first?.title, "Day 1", "Goals should be sorted by date")
+        XCTAssertEqual(
+            self.viewModel.upcomingGoals.first?.title, "Day 1", "Goals should be sorted by date"
+        )
     }
 
     // MARK: - refreshData Tests
 
+    @MainActor
     func testRefreshDataCallsFetchDashboardData() async {
         TaskDataManager.shared.add(PlannerTask(title: "Test Task", isCompleted: false))
 
@@ -176,6 +214,7 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.totalTasks, 1, "Should update quick stats")
     }
 
+    @MainActor
     func testRefreshDataUpdatesQuickStats() async {
         TaskDataManager.shared.add(PlannerTask(title: "Task 1", isCompleted: false))
         TaskDataManager.shared.add(PlannerTask(title: "Task 2", isCompleted: true))
@@ -190,6 +229,7 @@ final class DashboardViewModelTests: XCTestCase {
 
     // MARK: - Edge Case Tests
 
+    @MainActor
     func testHandlesEmptyDataGracefully() {
         self.viewModel.fetchDashboardData()
 
@@ -199,6 +239,7 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.todaysEvents.count, 0)
     }
 
+    @MainActor
     func testHandlesDateBoundaryConditions() {
         let midnight = Calendar.current.startOfDay(for: Date())
         let almostMidnight = midnight.addingTimeInterval(86399) // 23:59:59
@@ -208,9 +249,12 @@ final class DashboardViewModelTests: XCTestCase {
 
         self.viewModel.fetchDashboardData()
 
-        XCTAssertEqual(self.viewModel.totalTodaysEventsCount, 2, "Should include both boundary events")
+        XCTAssertEqual(
+            self.viewModel.totalTodaysEventsCount, 2, "Should include both boundary events"
+        )
     }
 
+    @MainActor
     func testHandlesLargeDatasets() {
         // Add 100 tasks
         for i in 1...100 {
@@ -225,15 +269,22 @@ final class DashboardViewModelTests: XCTestCase {
 
     // MARK: - Integration Tests
 
+    @MainActor
     func testFullDashboardDataFlow() throws {
         // Setup realistic data
         let today = Date()
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
 
-        TaskDataManager.shared.add(PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high))
-        TaskDataManager.shared.add(PlannerTask(title: "Finish project", isCompleted: false, priority: .medium))
+        TaskDataManager.shared.add(
+            PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high)
+        )
+        TaskDataManager.shared.add(
+            PlannerTask(title: "Finish project", isCompleted: false, priority: .medium)
+        )
         CalendarDataManager.shared.add(CalendarEvent(title: "Team meeting", date: today))
-        GoalDataManager.shared.add(Goal(title: "Learn Swift", description: "Complete tutorial", targetDate: nextWeek))
+        GoalDataManager.shared.add(
+            Goal(title: "Learn Swift", description: "Complete tutorial", targetDate: nextWeek)
+        )
 
         self.viewModel.fetchDashboardData()
 

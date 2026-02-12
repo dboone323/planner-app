@@ -119,7 +119,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
 // MARK: - Template Manager
 
 final class RecurringTaskTemplateManager: ObservableObject {
-    static let shared = RecurringTaskTemplateManager()
+    nonisolated(unsafe) static let shared = RecurringTaskTemplateManager()
 
     @Published var templates: [RecurringTaskTemplate] = []
 

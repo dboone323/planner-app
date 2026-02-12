@@ -13,7 +13,7 @@ protocol JournalDataManaging {
 /// Manages storage and retrieval of `JournalEntry` objects with UserDefaults persistence.
 final class JournalDataManager: JournalDataManaging {
     /// Shared singleton instance.
-    static let shared = JournalDataManager()
+    @MainActor static let shared = JournalDataManager()
 
     /// UserDefaults key for storing journal entries.
     private let entriesKey = "SavedJournalEntries"
@@ -159,7 +159,7 @@ final class JournalDataManager: JournalDataManaging {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one

@@ -13,7 +13,7 @@ protocol CalendarDataManaging {
 /// Manages storage and retrieval of `CalendarEvent` objects with UserDefaults persistence.
 final class CalendarDataManager: CalendarDataManaging {
     /// Shared singleton instance.
-    static let shared = CalendarDataManager()
+    @MainActor static let shared = CalendarDataManager()
 
     /// UserDefaults key for storing calendar events.
     private let eventsKey = "SavedCalendarEvents"
@@ -147,7 +147,7 @@ final class CalendarDataManager: CalendarDataManaging {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one

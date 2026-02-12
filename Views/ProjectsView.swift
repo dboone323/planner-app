@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// View for managing and displaying projects
-struct ProjectsView: View {
+public struct ProjectsView: View {
     @State private var projects: [PlannerProject] = []
     @State private var showingAddProject = false
     @State private var selectedStatus: PlannerProject.ProjectStatus = .active

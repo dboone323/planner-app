@@ -33,12 +33,6 @@ public struct DashboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                #if os(iOS)
-                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-                        await self.refreshDataWithDelay()
-                    }
-                #endif
-
                 LazyVStack(spacing: 20) {
                     // Welcome Header
                     VStack(alignment: .leading, spacing: 12) {
@@ -234,6 +228,9 @@ public struct DashboardView: View {
             }
             #if os(iOS)
             .coordinateSpace(name: "pullToRefresh")
+            .refreshable {
+                await self.refreshDataWithDelay()
+            }
             #endif
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle("Dashboard")

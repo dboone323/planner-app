@@ -1,24 +1,29 @@
 import XCTest
 @testable import PlannerApp
 
-final class TaskManagerTests: XCTestCase {
-    var taskManager: TaskDataManager!
+final class TaskManagerTests: XCTestCase, @unchecked Sendable {
+    @MainActor var taskManager: TaskDataManager!
 
-    override func setUp() {
-        super.setUp()
-        // Use a mock UserDefaults if possible, or just clear the shared instance
-        self.taskManager = TaskDataManager.shared
-        self.taskManager.clearAllTasks()
+    override nonisolated func setUp() async throws {
+        try await super.setUp()
+        await MainActor.run {
+            // Use a mock UserDefaults if possible, or just clear the shared instance
+            self.taskManager = TaskDataManager.shared
+            self.taskManager.clearAllTasks()
+        }
     }
 
-    override func tearDown() {
-        self.taskManager.clearAllTasks()
-        self.taskManager = nil
-        super.tearDown()
+    override nonisolated func tearDown() async throws {
+        await MainActor.run {
+            self.taskManager.clearAllTasks()
+            self.taskManager = nil
+        }
+        try await super.tearDown()
     }
 
     // MARK: - CRUD Tests
 
+    @MainActor
     func testCreateTask() {
         let task = PlannerTask(title: "Test Task", dueDate: Date())
         self.taskManager.add(task)
@@ -28,6 +33,7 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertEqual(tasks.first?.title, "Test Task")
     }
 
+    @MainActor
     func testUpdateTask() {
         var task = PlannerTask(title: "Original", dueDate: Date())
         self.taskManager.add(task)
@@ -39,6 +45,7 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertEqual(tasks.first?.title, "Updated")
     }
 
+    @MainActor
     func testDeleteTask() {
         let task = PlannerTask(title: "To Delete", dueDate: Date())
         self.taskManager.add(task)
@@ -49,6 +56,7 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertEqual(tasks.count, 0)
     }
 
+    @MainActor
     func testFetchAllTasks() {
         let task1 = PlannerTask(title: "Task 1", dueDate: Date())
         let task2 = PlannerTask(title: "Task 2", dueDate: Date())
@@ -62,6 +70,7 @@ final class TaskManagerTests: XCTestCase {
 
     // MARK: - Priority Sorting Tests
 
+    @MainActor
     func testSortByPriority() {
         let lowTask = PlannerTask(title: "Low", priority: .low)
         let highTask = PlannerTask(title: "High", priority: .high)
@@ -80,6 +89,7 @@ final class TaskManagerTests: XCTestCase {
 
     // MARK: - Due Date Handling Tests
 
+    @MainActor
     func testFetchTasksDueToday() throws {
         let today = Date()
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
@@ -106,6 +116,7 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertEqual(stats["dueToday"], 1)
     }
 
+    @MainActor
     func testFetchOverdueTasks() throws {
         let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
@@ -124,6 +135,7 @@ final class TaskManagerTests: XCTestCase {
 
     // MARK: - Completion Tests
 
+    @MainActor
     func testMarkTaskComplete() {
         var task = PlannerTask(title: "To Complete", dueDate: Date())
         self.taskManager.add(task)
@@ -135,6 +147,7 @@ final class TaskManagerTests: XCTestCase {
         XCTAssertTrue(tasks.first?.isCompleted == true)
     }
 
+    @MainActor
     func testFetchCompletedTasks() {
         let completed = PlannerTask(title: "Done", isCompleted: true, dueDate: Date())
         let incomplete = PlannerTask(title: "Todo", isCompleted: false, dueDate: Date())

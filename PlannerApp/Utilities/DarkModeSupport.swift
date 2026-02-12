@@ -9,7 +9,7 @@ import SwiftUI
 
 /// App-wide color scheme manager.
 public final class AppearanceManager: ObservableObject {
-    public static let shared = AppearanceManager()
+    @MainActor public static let shared = AppearanceManager()
 
     @Published public var colorScheme: ColorScheme?
     @Published public var useSystemAppearance: Bool = true

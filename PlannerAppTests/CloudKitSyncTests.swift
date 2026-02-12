@@ -115,8 +115,14 @@ final class CloudKitSyncTests: XCTestCase {
         let task2 = SDTask(id: uuid, title: "Duplicate Task")
         self.context.insert(task2)
 
-        // SwiftData should handle unique constraint
-        XCTAssertThrowsError(try self.context.save())
+        // SwiftData handles unique constraint by merging (upsert)
+        try self.context.save()
+
+        let descriptor = FetchDescriptor<SDTask>(predicate: #Predicate { $0.id == uuid })
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertEqual(fetched.count, 1)
+        XCTAssertEqual(fetched.first?.title, "Duplicate Task")
     }
 
     // MARK: - Data Integrity Tests

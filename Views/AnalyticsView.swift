@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// View for displaying productivity analytics and statistics
-struct AnalyticsView: View {
+public struct AnalyticsView: View {
     @State private var tasks: [PlannerTask] = []
     @State private var projects: [PlannerProject] = []
     @State private var selectedTimeRange: TimeRange = .week

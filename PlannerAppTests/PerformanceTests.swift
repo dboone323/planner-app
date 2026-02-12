@@ -6,21 +6,26 @@
 import XCTest
 @testable import PlannerApp
 
-class PerformanceTests: XCTestCase {
-    var performanceMonitor: PerformanceMonitor!
+class PerformanceTests: XCTestCase, @unchecked Sendable {
+    @MainActor var performanceMonitor: PerformanceMonitor!
 
-    override func setUp() {
-        super.setUp()
-        performanceMonitor = PerformanceMonitor()
+    override nonisolated func setUp() async throws {
+        try await super.setUp()
+        await MainActor.run {
+            self.performanceMonitor = PerformanceMonitor()
+        }
     }
 
-    override func tearDown() {
-        performanceMonitor = nil
-        super.tearDown()
+    override nonisolated func tearDown() async throws {
+        await MainActor.run {
+            self.performanceMonitor = nil
+        }
+        try await super.tearDown()
     }
 
     // MARK: - Task Management Performance Tests
 
+    @MainActor
     func testTaskDependencyServicePerformance() {
         let dependencyService = TaskDependencyService.shared
 
@@ -35,6 +40,7 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testPriorityManagerPerformance() {
         let priorityManager = PriorityManager.shared
 
@@ -48,12 +54,13 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testTagManagerPerformance() {
         let tagManager = TagManager.shared
 
         measure {
             for i in 0..<150 {
-                let tag = Tag(id: "tag_\(i)", name: "Tag \(i)", color: .blue)
+                let tag = MockTag(id: "tag_\(i)", name: "Tag \(i)", color: .blue)
                 tagManager.createTag(tag)
                 _ = tagManager.getTasksWithTag(tag)
                 _ = tagManager.getTagStatistics()
@@ -63,6 +70,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Calendar & Time Management Performance Tests
 
+    @MainActor
     func testCalendarSyncServicePerformance() {
         let calendarSync = CalendarSyncService.shared
 
@@ -76,6 +84,7 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testTimeBlockServicePerformance() {
         let timeBlockService = TimeBlockService.shared
 
@@ -91,6 +100,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Productivity Features Performance Tests
 
+    @MainActor
     func testPomodoroTimerPerformance() {
         let pomodoroTimer = PomodoroTimer.shared
 
@@ -104,18 +114,22 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testFocusModeManagerPerformance() {
         let focusManager = FocusModeManager.shared
 
         measure {
             for i in 0..<100 {
-                focusManager.startFocusSession(duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)"))
+                focusManager.startFocusSession(
+                    duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)")
+                )
                 _ = focusManager.getCurrentSession()
                 _ = focusManager.getSessionHistory()
             }
         }
     }
 
+    @MainActor
     func testProductivityAnalyticsPerformance() {
         let analytics = ProductivityAnalytics.shared
 
@@ -131,6 +145,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Data Management Performance Tests
 
+    @MainActor
     func testBackupManagerPerformance() {
         let backupManager = BackupManager.shared
 
@@ -143,6 +158,7 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testConflictDetectorPerformance() {
         let conflictDetector = ConflictDetector.shared
 
@@ -158,6 +174,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Template & Workspace Performance Tests
 
+    @MainActor
     func testTaskTemplateServicePerformance() {
         let templateService = TaskTemplateService.shared
 
@@ -171,6 +188,7 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testWorkspaceManagerPerformance() {
         let workspaceManager = WorkspaceManager.shared
 
@@ -186,6 +204,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Concurrent Operations Performance Tests
 
+    @MainActor
     func testConcurrentTaskOperationsPerformance() {
         let expectation = XCTestExpectation(description: "Concurrent task operations")
 
@@ -197,7 +216,9 @@ class PerformanceTests: XCTestCase {
                 let dependencyService = TaskDependencyService.shared
                 for i in 0..<50 {
                     let task = createMockTask(id: "concurrent_task_\(i)")
-                    dependencyService.addDependency(from: task, to: createMockTask(id: "concurrent_dep_\(i)"))
+                    dependencyService.addDependency(
+                        from: task, to: createMockTask(id: "concurrent_dep_\(i)")
+                    )
                 }
                 group.leave()
             }
@@ -231,12 +252,13 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Memory Performance Tests
 
+    @MainActor
     func testMemoryUsageDuringTaskOperations() {
         measure {
             autoreleasepool {
-                var tasks: [Task] = []
-                var timeBlocks: [TimeBlock] = []
-                var workspaces: [Workspace] = []
+                var tasks: [MockTask] = []
+                var timeBlocks: [MockTimeBlock] = []
+                var workspaces: [MockWorkspace] = []
 
                 for i in 0..<300 {
                     tasks.append(createMockTask(id: "memory_task_\(i)"))
@@ -253,6 +275,7 @@ class PerformanceTests: XCTestCase {
 
     // MARK: - Performance Monitoring
 
+    @MainActor
     func testPerformanceMetricsCollection() {
         performanceMonitor.startMonitoring()
 
@@ -275,19 +298,19 @@ class PerformanceTests: XCTestCase {
 class PerformanceMonitor {
     private var startTime: Date?
     private var operationCount = 0
-    private var metrics: PerformanceMetrics = .init()
+    private var metrics: MockPerformanceMetrics = .init()
 
     func startMonitoring() {
         startTime = Date()
         operationCount = 0
-        metrics = PerformanceMetrics()
+        metrics = MockPerformanceMetrics()
     }
 
     func stopMonitoring() {
         startTime = nil
     }
 
-    func getMetrics() -> PerformanceMetrics {
+    func getMetrics() -> MockPerformanceMetrics {
         operationCount += 1
 
         if let startTime {
@@ -305,7 +328,7 @@ class PerformanceMonitor {
 
 // MARK: - Extended Data Models
 
-struct PerformanceMetrics {
+struct MockPerformanceMetrics {
     var operationsPerSecond: Double = 150.0
     var memoryUsage: Double = 55.0
     var cpuUsage: Double = 35.0
@@ -315,8 +338,8 @@ struct PerformanceMetrics {
 
 // MARK: - Mock Data Creation
 
-private func createMockTask(id: String) -> Task {
-    Task(
+private func createMockTask(id: String) -> MockTask {
+    MockTask(
         id: id,
         title: "Test Task",
         description: "A test task for performance testing",
@@ -329,8 +352,8 @@ private func createMockTask(id: String) -> Task {
     )
 }
 
-private func createMockCalendarEvent(id: String) -> CalendarEvent {
-    CalendarEvent(
+private func createMockCalendarEvent(id: String) -> MockCalendarEvent {
+    MockCalendarEvent(
         id: id,
         title: "Test Event",
         startDate: Date(),
@@ -340,8 +363,8 @@ private func createMockCalendarEvent(id: String) -> CalendarEvent {
     )
 }
 
-private func createMockTimeBlock(id: String) -> TimeBlock {
-    TimeBlock(
+private func createMockTimeBlock(id: String) -> MockTimeBlock {
+    MockTimeBlock(
         id: id,
         title: "Test Time Block",
         startTime: Date(),
@@ -351,8 +374,8 @@ private func createMockTimeBlock(id: String) -> TimeBlock {
     )
 }
 
-private func createMockTaskTemplate(id: String) -> TaskTemplate {
-    TaskTemplate(
+private func createMockTaskTemplate(id: String) -> MockTaskTemplate {
+    MockTaskTemplate(
         id: id,
         name: "Test Template",
         description: "A test template",
@@ -363,8 +386,8 @@ private func createMockTaskTemplate(id: String) -> TaskTemplate {
     )
 }
 
-private func createMockWorkspace(id: String) -> Workspace {
-    Workspace(
+private func createMockWorkspace(id: String) -> MockWorkspace {
+    MockWorkspace(
         id: id,
         name: "Test Workspace",
         description: "A test workspace",
@@ -386,45 +409,45 @@ private func createMockContext() -> TaskContext {
 // MARK: - Mock Extensions for Testing
 
 extension TaskDependencyService {
-    static let shared = TaskDependencyService()
+    @MainActor static let shared = TaskDependencyService()
 
-    func addDependency(from task: Task, to dependency: Task) {
+    func addDependency(from task: MockTask, to dependency: MockTask) {
         // Simulate adding dependency
     }
 
-    func getDependencies(for task: Task) -> [Task] {
+    func getDependencies(for task: MockTask) -> [MockTask] {
         []
     }
 
-    func canCompleteTask(_ task: Task) -> Bool {
+    func canCompleteTask(_ task: MockTask) -> Bool {
         true
     }
 }
 
 extension PriorityManager {
-    static let shared = PriorityManager()
+    @MainActor static let shared = PriorityManager()
 
-    func updatePriority(for task: Task, basedOn context: TaskContext) {
+    func updatePriority(for task: MockTask, basedOn context: TaskContext) {
         // Simulate priority update
     }
 
-    func getPriorityScore(for task: Task) -> Double {
+    func getPriorityScore(for task: MockTask) -> Double {
         0.7
     }
 
-    func getPrioritizedTasks(from tasks: [Task]) -> [Task] {
+    func getPrioritizedTasks(from tasks: [MockTask]) -> [MockTask] {
         tasks
     }
 }
 
 extension TagManager {
-    static let shared = TagManager()
+    @MainActor static let shared = TagManager()
 
-    func createTag(_ tag: Tag) {
+    func createTag(_ tag: MockTag) {
         // Simulate tag creation
     }
 
-    func getTasksWithTag(_ tag: Tag) -> [Task] {
+    func getTasksWithTag(_ tag: MockTag) -> [MockTask] {
         []
     }
 
@@ -434,29 +457,29 @@ extension TagManager {
 }
 
 extension CalendarSyncService {
-    static let shared = CalendarSyncService()
+    @MainActor static let shared = CalendarSyncService()
 
-    func syncEvent(_ event: CalendarEvent) {
+    func syncEvent(_ event: MockCalendarEvent) {
         // Simulate event sync
     }
 
-    func getEventsForDate(_ date: Date) -> [CalendarEvent] {
+    func getEventsForDate(_ date: Date) -> [MockCalendarEvent] {
         []
     }
 
-    func getConflictingEvents(for event: CalendarEvent) -> [CalendarEvent] {
+    func getConflictingEvents(for event: MockCalendarEvent) -> [MockCalendarEvent] {
         []
     }
 }
 
 extension TimeBlockService {
-    static let shared = TimeBlockService()
+    @MainActor static let shared = TimeBlockService()
 
-    func scheduleTimeBlock(_ timeBlock: TimeBlock) {
+    func scheduleTimeBlock(_ timeBlock: MockTimeBlock) {
         // Simulate scheduling
     }
 
-    func getTimeBlocksForDate(_ date: Date) -> [TimeBlock] {
+    func getTimeBlocksForDate(_ date: Date) -> [MockTimeBlock] {
         []
     }
 
@@ -466,7 +489,7 @@ extension TimeBlockService {
 }
 
 extension PomodoroTimer {
-    static let shared = PomodoroTimer()
+    nonisolated(unsafe) static let shared = PomodoroTimer()
 
     func startTimer() {
         // Simulate starting timer
@@ -480,39 +503,39 @@ extension PomodoroTimer {
         // Simulate resetting timer
     }
 
-    func getCurrentSession() -> PomodoroSession? {
+    func getCurrentSession() -> MockPomodoroSession? {
         nil
     }
 }
 
 extension FocusModeManager {
-    static let shared = FocusModeManager()
+    nonisolated(unsafe) static let shared = FocusModeManager()
 
-    func startFocusSession(duration: TimeInterval, task: Task) {
+    func startFocusSession(duration: TimeInterval, task: MockTask) {
         // Simulate starting focus session
     }
 
-    func getCurrentSession() -> FocusSession? {
+    func getCurrentSession() -> MockFocusSession? {
         nil
     }
 
-    func getSessionHistory() -> [FocusSession] {
+    func getSessionHistory() -> [MockFocusSession] {
         []
     }
 }
 
 extension ProductivityAnalytics {
-    static let shared = ProductivityAnalytics()
+    @MainActor static let shared = ProductivityAnalytics()
 
     func calculateDailyProductivity() -> Double {
         0.75
     }
 
-    func generateWeeklyReport() -> ProductivityReport {
-        ProductivityReport()
+    func generateWeeklyReport() -> MockProductivityReport {
+        MockProductivityReport()
     }
 
-    func getProductivityTrends() -> [ProductivityDataPoint] {
+    func getProductivityTrends() -> [MockProductivityDataPoint] {
         []
     }
 
@@ -522,13 +545,13 @@ extension ProductivityAnalytics {
 }
 
 extension BackupManager {
-    static let shared = BackupManager()
+    @MainActor static let shared = BackupManager()
 
-    func createBackup() -> BackupResult {
+    func createBackup() -> MockBackupResult {
         .success
     }
 
-    func getBackupHistory() -> [BackupInfo] {
+    func getBackupHistory() -> [MockBackupInfo] {
         []
     }
 
@@ -538,70 +561,70 @@ extension BackupManager {
 }
 
 extension ConflictDetector {
-    static let shared = ConflictDetector()
+    @MainActor static let shared = ConflictDetector()
 
-    func detectConflicts(between task1: Task, and task2: Task) -> [Conflict] {
+    func detectConflicts(between task1: MockTask, and task2: MockTask) -> [MockConflict] {
         []
     }
 
-    func getAllConflicts() -> [Conflict] {
+    func getAllConflicts() -> [MockConflict] {
         []
     }
 }
 
 extension TaskTemplateService {
-    static let shared = TaskTemplateService()
+    @MainActor static let shared = TaskTemplateService()
 
-    func saveTemplate(_ template: TaskTemplate) {
+    func saveTemplate(_ template: MockTaskTemplate) {
         // Simulate saving template
     }
 
-    func getTemplatesForCategory(_ category: TaskCategory) -> [TaskTemplate] {
+    func getTemplatesForCategory(_ category: MockTaskCategory) -> [MockTaskTemplate] {
         []
     }
 
-    func createTaskFromTemplate(_ template: TaskTemplate) -> Task {
+    func createTaskFromTemplate(_ template: MockTaskTemplate) -> MockTask {
         createMockTask(id: "from_template")
     }
 }
 
 extension WorkspaceManager {
-    static let shared = WorkspaceManager()
+    nonisolated(unsafe) static let shared = WorkspaceManager()
 
-    func createWorkspace(_ workspace: Workspace) {
+    func createWorkspace(_ workspace: MockWorkspace) {
         // Simulate workspace creation
     }
 
-    func getAllWorkspaces() -> [Workspace] {
+    func getAllWorkspaces() -> [MockWorkspace] {
         []
     }
 
-    func getWorkspaceStatistics() -> WorkspaceStats {
-        WorkspaceStats()
+    func getWorkspaceStatistics() -> MockWorkspaceStats {
+        MockWorkspaceStats()
     }
 }
 
 // MARK: - Mock Data Structures
 
-struct Task {
+struct MockTask {
     let id: String
     let title: String
     let description: String
     let dueDate: Date
-    let priority: TaskPriority
+    let priority: MockTaskPriority
     let isCompleted: Bool
     let createdAt: Date
-    let tags: [Tag]
+    let tags: [MockTag]
     let estimatedDuration: TimeInterval
 }
 
-struct Tag {
+struct MockTag {
     let id: String
     let name: String
-    let color: TagColor
+    let color: MockTagColor
 }
 
-struct CalendarEvent {
+struct MockCalendarEvent {
     let id: String
     let title: String
     let startDate: Date
@@ -610,7 +633,7 @@ struct CalendarEvent {
     let calendarId: String
 }
 
-struct TimeBlock {
+struct MockTimeBlock {
     let id: String
     let title: String
     let startTime: Date
@@ -619,55 +642,55 @@ struct TimeBlock {
     let isCompleted: Bool
 }
 
-struct TaskTemplate {
+struct MockTaskTemplate {
     let id: String
     let name: String
     let description: String
-    let category: TaskCategory
+    let category: MockTaskCategory
     let estimatedDuration: TimeInterval
-    let defaultPriority: TaskPriority
+    let defaultPriority: MockTaskPriority
     let subtasks: [String]
 }
 
-struct Workspace {
+struct MockWorkspace {
     let id: String
     let name: String
     let description: String
-    let color: WorkspaceColor
+    let color: MockWorkspaceColor
     let iconName: String
     let createdAt: Date
 }
 
 struct TaskContext {
     let dueDate: Date
-    let dependencies: [Task]
+    let dependencies: [MockTask]
     let userPreferences: [String: Any]
     let currentWorkload: Int
 }
 
-enum TaskPriority {
+enum MockTaskPriority {
     case low, medium, high, urgent
 }
 
-enum TagColor {
+enum MockTagColor {
     case red, blue, green, yellow, purple
 }
 
-enum TaskCategory {
+enum MockTaskCategory {
     case work, personal, health, learning
 }
 
-enum WorkspaceColor {
+enum MockWorkspaceColor {
     case red, blue, green, yellow, purple
 }
 
-struct PomodoroSession {
+struct MockPomodoroSession {
     var duration: TimeInterval
     var elapsedTime: TimeInterval
     var isActive: Bool
 }
 
-struct FocusSession {
+struct MockFocusSession {
     let id: String
     let startTime: Date
     let duration: TimeInterval
@@ -675,38 +698,38 @@ struct FocusSession {
     var isCompleted: Bool
 }
 
-struct ProductivityReport {
+struct MockProductivityReport {
     var dailyAverage: Double = 0.0
     var weeklyTotal: Double = 0.0
     var topCategories: [String] = []
 }
 
-struct ProductivityDataPoint {
+struct MockProductivityDataPoint {
     let date: Date
     let productivity: Double
 }
 
-enum BackupResult {
+enum MockBackupResult {
     case success, failure
 }
 
-struct BackupInfo {
+struct MockBackupInfo {
     let id: String
     let createdAt: Date
     let size: Int64
 }
 
-struct Conflict {
+struct MockConflict {
     let id: String
-    let type: ConflictType
+    let type: MockConflictType
     let description: String
 }
 
-enum ConflictType {
+enum MockConflictType {
     case timeOverlap, dependencyConflict, resourceConflict
 }
 
-struct WorkspaceStats {
+struct MockWorkspaceStats {
     var totalTasks: Int = 0
     var completedTasks: Int = 0
     var activeWorkspaces: Int = 0

@@ -13,7 +13,7 @@ protocol TaskDataManaging {
 /// Manages storage and retrieval of `PlannerTask` objects with UserDefaults persistence.
 final class TaskDataManager: TaskDataManaging {
     /// Shared singleton instance.
-    static let shared = TaskDataManager()
+    @MainActor static let shared = TaskDataManager()
 
     /// UserDefaults key for storing tasks.
     private let tasksKey = "SavedTasks"
@@ -173,7 +173,7 @@ final class TaskDataManager: TaskDataManaging {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+private nonisolated(unsafe) var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one

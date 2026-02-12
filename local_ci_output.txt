@@ -1,0 +1,830 @@
+🚀 Starting Local CI/CD for PlannerApp
+📱 Device: iPhone 17 Simulator (iOS latest)
+💻 Xcode: 26.3 on macOS 26
+🔍 Running Code Quality Checks...
+[0;32m✅ SwiftFormat check[0m
+Running SwiftFormat...
+(lint mode - no files will be changed.)
+Ignoring config file at /Users/danielstevens/github-projects/tools-automation/.swiftformat
+Reading swift-version file at /Users/danielstevens/github-projects/tools-automation/PlannerApp/.swift-version (version 5.9)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_AUTOMATION_SUMMARY_20250923.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/APP_STORE_CONNECT_CONFIG.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_CODE_REVIEW_20250924.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/fixes_dashboard_items.swift
+-- no changes (cached)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Tools
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/ARCHITECTURE.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PerformanceManager.swift
+-- no changes (cached)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/SECURITY_REPORT_20250915_192926.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/SECURITY_REPORT_20250915_173558.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/ENHANCEMENT_PLAN.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/SECURITY_REPORT_20250915_173428.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/SECURITY_REPORT_20250915_192745.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_ANALYSIS_20250923.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Dependencies.swift
+-- no changes (cached)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/MULTI_DEVICE_TESTING_PLAN.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/PLANNER_APP_COMPLETION.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AUTOMATION_SUMMARY_20250923.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp_TestResult
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_PERFORMANCE_OPTIMIZATION_20250924.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/FINAL_TEST_STATUS.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/README.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AUTOMATION_SUMMARY_20250924.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_PERFORMANCE_OPTIMIZATION_20250923.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/CONTRIBUTING.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/FIXES_COMPLETED.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/SECURITY_REPORT_20250915_173231.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_ANALYSIS_20250924.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/ERROR_SUMMARY.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/run_tests.swift
+-- no changes (cached)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI_CODE_REVIEW_20250923.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/ViewModels/DashboardViewModel.swift
+-- no changes (cached)
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Documentation/ProjectOrgAudit.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Documentation/TaskManagementAudit.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Documentation/SchedulingAudit.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Documentation/ProductivityAudit.md
+-- ignored
+Skipping /Users/danielstevens/github-projects/tools-automation/PlannerApp/Documentation/IntegrationAudit.md
+-- ignored
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppUITests/PlannerAppUITestsLaunchTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppUITests/PlannerAppUITests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/ConflictResolver.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitManager_Simplified.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitOnboardingView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitSyncView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/EnhancedCloudKitManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitEnhancements.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/CloudKitMigrationHelper.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Platform/PlatformFeatures.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/ContentView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskDataManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddJournalEntryViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DependenciesTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ModernThemesTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PomodoroTimerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalView_SimpleTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsView_NewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DashboardViewModelTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalRowTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DateSectionViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/EventRowViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/QuickStatCardTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalsViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalDataManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitManager_SimplifiedTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ConflictDetectorTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalView_WorkingTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ModernCardTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ThemeManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PlatformAdaptiveNavigationTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/MainTabViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalDataManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DarkModeSupportTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PerformanceManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsView_BackupTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarSyncManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SDGoalTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalRowViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/iOSAdaptivePopupsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DataManagerErrorTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddCalendarEventViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalsHeaderViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitMigrationHelperTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ProgressUpdateSheetTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/WorkspaceManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ContentViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DashboardViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarEventTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalEntryTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/MainTabView_EnhancedTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskInputViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/NotificationExtensionsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskDependencyServiceTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/EnhancedCloudKitManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalView_MinimalTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsView_CleanTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ProductivityAnalyticsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SyncRefreshViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalHeaderViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AppIntentsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitSyncTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/fixes_dashboard_itemsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TimeBlockServiceTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PlatformFeaturesTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsView_SimpleTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalEmptyStateViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/FocusModeManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DashboardView_ModernTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarView_NewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AccessControlTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ConflictResolverTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/run_testsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/RecurringTaskTemplatesTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SyncStatusViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskManagerViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalItemViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitEnhancementsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/DataManagersTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/EnhancedPlatformNavigationTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AccessibilityEnhancementsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SDTaskTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PerformanceTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/VisualEnhancementsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/NetworkMonitorTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskRowViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalView_NewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalListViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PriorityManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskManagerHeaderViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarSyncServiceTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TagManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AppSettingKeysTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/AddGoalView_FinalTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarGridTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskRowTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/UpcomingItemViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/PlannerAppTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskListViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ThemePreviewViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalEntrySentimentTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarComponentsTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalsListViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/ThemeTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/JournalDetailViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/GoalsEmptyStateViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitOnboardingViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/SettingsView_Simple_TestTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/BackupManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/TaskTemplateServiceTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CalendarDataManagerTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/QuickActionCardTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppTests/CloudKitSyncViewTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/CalendarEvent.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/PlannerSchema.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/SDTask.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/CalendarDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/Goal.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/TaskDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/GoalDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/Project.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/JournalDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/DataManagers.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/JournalEntry.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/Task.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Models/SDGoal.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Utilities/AppSettingKeys.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Utilities/NotificationExtensions.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Utilities/DateFormatters.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Utilities/LegacyDataMigrator.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Utilities/NetworkMonitor.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/EnhancedPlatformNavigation.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/SyncStatusView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/ModernCard.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/SentimentBadge.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/PlatformAdaptiveNavigation.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/VisualEnhancements.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/iOSAdaptivePopups.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/DashboardView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/DashboardView_Modern.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/MainTabView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/PlannerApp.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/MainTabView_Enhanced.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/AI/SmartScheduler.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Styling/ThemeManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Styling/ModernThemes.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Styling/Theme.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/SwiftDataGoalManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/CalendarDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/TaskDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/GoalDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/SwiftDataTaskManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/JournalDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/DataManagerError.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/DataManagers/ProjectDataManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Sync/CalendarSyncManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Accessibility/AccessibilityEnhancements.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/NotificationSettingsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/AnalyticsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/ProjectsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Services/TaskNotificationService.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Services/NotificationManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/Mappers/RecordMapper.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Models/RecurringTaskTemplates.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Utilities/DarkModeSupport.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Intents/AppIntents.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/TagManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/PomodoroTimer.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/CalendarSyncService.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/BackupManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/ConflictDetector.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/TimeBlockService.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/PriorityManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/FocusModeManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/ProductivityAnalytics.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/TaskTemplateService.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/AccessControl.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/TaskDependencyService.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/WorkspaceManager.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Journal/JournalRow.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Journal/JournalEmptyStateView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Journal/JournalHeaderView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Journal/JournalListView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/TaskListView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/TaskManagerHeaderView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/TaskInputView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/TaskRow.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/SDTaskListView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Tasks/SDTaskRow.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Goals/GoalItemView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Goals/ProgressUpdateSheet.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Goals/GoalsEmptyStateView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Goals/GoalsListView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Goals/GoalsHeaderView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Shared/EmptyStateView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Dashboard/QuickActionCard.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Dashboard/QuickStatCard.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Components/Dashboard/UpcomingItemView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/MainApp/Tests/PlannerAppTests.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Journal/JournalDetailView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Journal/SentimentAnalyticsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Journal/JournalView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Journal/AddJournalEntryView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView_Clean.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingRow.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView_Backup.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView_Simple_Test.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView_New.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/ThemePreviewView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Settings/SettingsView_Simple.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Tasks/TaskInputView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Tasks/TaskCardView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Tasks/TaskManagerView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/GoalRowView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/CalendarGrid.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/DateSectionView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/CalendarView_New.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/AddCalendarEventView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/CalendarComponents.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/TaskRowView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/SDTaskRowView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/EventRowView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/SDGoalRowView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Calendar/CalendarView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView_Final.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView_New.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/GoalsView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView_Working.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView_Minimal.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/Views/Goals/AddGoalView_Simple.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Views/Common/SyncRefreshView.swift
+-- no changes (cached)
+Linting /Users/danielstevens/github-projects/tools-automation/PlannerApp/build/PlannerApp.build/Release/PlannerApp.build/DerivedSources/GeneratedAssetSymbols.swift
+-- no changes (cached)
+SwiftFormat completed in 0.47s.
+0/248 files require formatting.
+[0;32m✅ SwiftLint check[0m
+warning: Found a configuration for 'identifier_name' rule, but it is disabled in 'disabled_rules'.
+warning: Found a configuration for 'force_unwrapping' rule, but it is not enabled in 'opt_in_rules'.
+Linting Swift files in current working directory
+Linting 'PlannerAppUITestsLaunchTests.swift' (3/247)
+Linting 'fixes_dashboard_items.swift' (2/247)
+Linting 'DashboardViewModel.swift' (1/247)
+Linting 'PlannerAppUITests.swift' (4/247)
+Linting 'PerformanceManager.swift' (5/247)
+Linting 'CloudKitManager_Simplified.swift' (7/247)
+Linting 'ConflictResolver.swift' (6/247)
+Linting 'CloudKitOnboardingView.swift' (8/247)
+Linting 'CloudKitSyncView.swift' (9/247)
+Linting 'EnhancedCloudKitManager.swift' (10/247)
+Linting 'CloudKitManager.swift' (11/247)
+Linting 'RecordMapper.swift' (12/247)
+Linting 'CloudKitEnhancements.swift' (13/247)
+Linting 'CloudKitMigrationHelper.swift' (14/247)
+Linting 'Dependencies.swift' (15/247)
+Linting 'PlatformFeatures.swift' (16/247)
+Linting 'RecurringTaskTemplates.swift' (17/247)
+Linting 'DarkModeSupport.swift' (18/247)
+Linting 'AppIntents.swift' (19/247)
+Linting 'SyncRefreshView.swift' (20/247)
+Linting 'ContentView.swift' (21/247)
+Linting 'TagManager.swift' (22/247)
+Linting 'PomodoroTimer.swift' (23/247)
+Linting 'CalendarSyncService.swift' (24/247)
+Linting 'BackupManager.swift' (25/247)
+Linting 'ConflictDetector.swift' (26/247)
+Linting 'TimeBlockService.swift' (27/247)
+Linting 'PriorityManager.swift' (28/247)
+Linting 'FocusModeManager.swift' (29/247)
+Linting 'ProductivityAnalytics.swift' (30/247)
+Linting 'TaskTemplateService.swift' (31/247)
+Linting 'AccessControl.swift' (32/247)
+Linting 'TaskDependencyService.swift' (33/247)
+Linting 'WorkspaceManager.swift' (34/247)
+Linting 'TaskManagerTests.swift' (35/247)
+Linting 'TaskDataManagerTests.swift' (36/247)
+Linting 'GoalTests.swift' (37/247)
+Linting 'AddJournalEntryViewTests.swift' (38/247)
+Linting 'DependenciesTests.swift' (39/247)
+Linting 'ModernThemesTests.swift' (40/247)
+Linting 'PomodoroTimerTests.swift' (41/247)
+Linting 'AddGoalView_SimpleTests.swift' (42/247)
+Linting 'SettingsView_NewTests.swift' (43/247)
+Linting 'AddGoalViewTests.swift' (44/247)
+Linting 'DashboardViewModelTests.swift' (45/247)
+Linting 'JournalRowTests.swift' (46/247)
+Linting 'DateSectionViewTests.swift' (47/247)
+Linting 'EventRowViewTests.swift' (48/247)
+Linting 'QuickStatCardTests.swift' (49/247)
+Linting 'GoalsViewTests.swift' (50/247)
+Linting 'GoalDataManagerTests.swift' (51/247)
+Linting 'CloudKitManager_SimplifiedTests.swift' (52/247)
+Linting 'ConflictDetectorTests.swift' (53/247)
+Linting 'AddGoalView_WorkingTests.swift' (54/247)
+Linting 'ModernCardTests.swift' (55/247)
+Linting 'ThemeManagerTests.swift' (56/247)
+Linting 'PlatformAdaptiveNavigationTests.swift' (57/247)
+Linting 'MainTabViewTests.swift' (58/247)
+Linting 'JournalDataManagerTests.swift' (59/247)
+Linting 'CalendarViewTests.swift' (60/247)
+Linting 'DarkModeSupportTests.swift' (61/247)
+Linting 'PerformanceManagerTests.swift' (62/247)
+Linting 'CloudKitManagerTests.swift' (63/247)
+Linting 'SettingsView_BackupTests.swift' (64/247)
+Linting 'CalendarSyncManagerTests.swift' (65/247)
+Linting 'SDGoalTests.swift' (66/247)
+Linting 'GoalRowViewTests.swift' (67/247)
+Linting 'iOSAdaptivePopupsTests.swift' (68/247)
+Linting 'DataManagerErrorTests.swift' (69/247)
+Linting 'AddCalendarEventViewTests.swift' (70/247)
+Linting 'GoalsHeaderViewTests.swift' (71/247)
+Linting 'CloudKitMigrationHelperTests.swift' (72/247)
+Linting 'ProgressUpdateSheetTests.swift' (73/247)
+Linting 'ContentViewTests.swift' (75/247)
+Linting 'WorkspaceManagerTests.swift' (74/247)
+Linting 'DashboardViewTests.swift' (76/247)
+Linting 'CalendarEventTests.swift' (77/247)
+Linting 'JournalEntryTests.swift' (78/247)
+Linting 'MainTabView_EnhancedTests.swift' (79/247)
+Linting 'TaskInputViewTests.swift' (80/247)
+Linting 'NotificationExtensionsTests.swift' (81/247)
+Linting 'TaskDependencyServiceTests.swift' (82/247)
+Linting 'EnhancedCloudKitManagerTests.swift' (83/247)
+Linting 'AddGoalView_MinimalTests.swift' (84/247)
+Linting 'SettingsView_CleanTests.swift' (85/247)
+Linting 'ProductivityAnalyticsTests.swift' (86/247)
+Linting 'JournalHeaderViewTests.swift' (88/247)
+Linting 'SyncRefreshViewTests.swift' (87/247)
+Linting 'AppIntentsTests.swift' (89/247)
+Linting 'CloudKitSyncTests.swift' (90/247)
+Linting 'fixes_dashboard_itemsTests.swift' (91/247)
+Linting 'TimeBlockServiceTests.swift' (92/247)
+Linting 'PlatformFeaturesTests.swift' (93/247)
+Linting 'SettingsView_SimpleTests.swift' (94/247)
+Linting 'JournalEmptyStateViewTests.swift' (95/247)
+Linting 'FocusModeManagerTests.swift' (96/247)
+Linting 'DashboardView_ModernTests.swift' (97/247)
+Linting 'CalendarView_NewTests.swift' (98/247)
+Linting 'AccessControlTests.swift' (99/247)
+Linting 'JournalViewTests.swift' (100/247)
+Linting 'ConflictResolverTests.swift' (101/247)
+Linting 'run_testsTests.swift' (102/247)
+Linting 'TaskTests.swift' (103/247)
+Linting 'RecurringTaskTemplatesTests.swift' (104/247)
+Linting 'SyncStatusViewTests.swift' (105/247)
+Linting 'TaskManagerViewTests.swift' (106/247)
+Linting 'GoalItemViewTests.swift' (107/247)
+Linting 'CloudKitEnhancementsTests.swift' (108/247)
+Linting 'DataManagersTests.swift' (109/247)
+Linting 'EnhancedPlatformNavigationTests.swift' (110/247)
+Linting 'SettingsViewTests.swift' (111/247)
+Linting 'AccessibilityEnhancementsTests.swift' (112/247)
+Linting 'SDTaskTests.swift' (113/247)
+Linting 'PerformanceTests.swift' (114/247)
+Linting 'VisualEnhancementsTests.swift' (115/247)
+Linting 'NetworkMonitorTests.swift' (116/247)
+Linting 'TaskRowViewTests.swift' (117/247)
+Linting 'AddGoalView_NewTests.swift' (118/247)
+Linting 'JournalListViewTests.swift' (119/247)
+Linting 'PriorityManagerTests.swift' (120/247)
+Linting 'TaskManagerHeaderViewTests.swift' (121/247)
+Linting 'CalendarSyncServiceTests.swift' (122/247)
+Linting 'TagManagerTests.swift' (123/247)
+Linting 'AppSettingKeysTests.swift' (124/247)
+Linting 'AddGoalView_FinalTests.swift' (125/247)
+Linting 'CalendarGridTests.swift' (126/247)
+Linting 'TaskRowTests.swift' (127/247)
+Linting 'UpcomingItemViewTests.swift' (128/247)
+Linting 'PlannerAppTests.swift' (129/247)
+Linting 'TaskListViewTests.swift' (130/247)
+Linting 'ThemePreviewViewTests.swift' (131/247)
+Linting 'JournalEntrySentimentTests.swift' (132/247)
+Linting 'CalendarComponentsTests.swift' (133/247)
+Linting 'GoalsListViewTests.swift' (134/247)
+Linting 'ThemeTests.swift' (135/247)
+Linting 'JournalDetailViewTests.swift' (136/247)
+Linting 'GoalsEmptyStateViewTests.swift' (137/247)
+Linting 'CloudKitOnboardingViewTests.swift' (138/247)
+Linting 'SettingsView_Simple_TestTests.swift' (139/247)
+Linting 'BackupManagerTests.swift' (140/247)
+Linting 'TaskTemplateServiceTests.swift' (141/247)
+Linting 'CalendarDataManagerTests.swift' (142/247)
+Linting 'QuickActionCardTests.swift' (143/247)
+Linting 'CloudKitSyncViewTests.swift' (144/247)
+Linting 'CalendarEvent.swift' (145/247)
+Linting 'SDTask.swift' (147/247)
+Linting 'PlannerSchema.swift' (146/247)
+Linting 'Models/CalendarDataManager.swift' (148/247)
+Linting 'Goal.swift' (149/247)
+Linting 'Models/TaskDataManager.swift' (150/247)
+Linting 'Models/GoalDataManager.swift' (151/247)
+Linting 'Project.swift' (152/247)
+Linting 'Models/JournalDataManager.swift' (153/247)
+Linting 'DataManagers.swift' (154/247)
+Linting 'JournalEntry.swift' (155/247)
+Linting 'Task.swift' (156/247)
+Linting 'SDGoal.swift' (157/247)
+Linting 'AppSettingKeys.swift' (158/247)
+Linting 'NotificationExtensions.swift' (159/247)
+Linting 'DateFormatters.swift' (160/247)
+Linting 'LegacyDataMigrator.swift' (161/247)
+Linting 'NetworkMonitor.swift' (162/247)
+Linting 'JournalRow.swift' (163/247)
+Linting 'JournalEmptyStateView.swift' (164/247)
+Linting 'JournalHeaderView.swift' (165/247)
+Linting 'JournalListView.swift' (166/247)
+Linting 'TaskListView.swift' (167/247)
+Linting 'TaskManagerHeaderView.swift' (168/247)
+Linting 'Components/Tasks/TaskInputView.swift' (169/247)
+Linting 'TaskRow.swift' (170/247)
+Linting 'SDTaskListView.swift' (171/247)
+Linting 'SDTaskRow.swift' (172/247)
+Linting 'GoalItemView.swift' (173/247)
+Linting 'ProgressUpdateSheet.swift' (174/247)
+Linting 'GoalsEmptyStateView.swift' (175/247)
+Linting 'GoalsListView.swift' (176/247)
+Linting 'GoalsHeaderView.swift' (177/247)
+Linting 'EnhancedPlatformNavigation.swift' (178/247)
+Linting 'EmptyStateView.swift' (179/247)
+Linting 'SyncStatusView.swift' (180/247)
+Linting 'ModernCard.swift' (181/247)
+Linting 'SentimentBadge.swift' (182/247)
+Linting 'QuickActionCard.swift' (183/247)
+Linting 'QuickStatCard.swift' (184/247)
+Linting 'UpcomingItemView.swift' (185/247)
+Linting 'PlatformAdaptiveNavigation.swift' (186/247)
+Linting 'VisualEnhancements.swift' (187/247)
+Linting 'iOSAdaptivePopups.swift' (188/247)
+Linting 'DashboardView.swift' (189/247)
+Linting 'MainTabView.swift' (191/247)
+Linting 'PlannerApp.swift' (192/247)
+Linting 'DashboardView_Modern.swift' (190/247)
+Linting 'MainTabView_Enhanced.swift' (193/247)
+Linting 'SmartScheduler.swift' (194/247)
+Linting 'ThemeManager.swift' (195/247)
+Linting 'ModernThemes.swift' (196/247)
+Linting 'Theme.swift' (197/247)
+Linting 'SwiftDataGoalManager.swift' (198/247)
+Linting 'DataManagers/CalendarDataManager.swift' (199/247)
+Linting 'DataManagers/TaskDataManager.swift' (200/247)
+Linting 'DataManagers/GoalDataManager.swift' (201/247)
+Linting 'SwiftDataTaskManager.swift' (202/247)
+Linting 'DataManagers/JournalDataManager.swift' (203/247)
+Linting 'DataManagerError.swift' (204/247)
+Linting 'ProjectDataManager.swift' (205/247)
+Linting 'GeneratedAssetSymbols.swift' (206/247)
+Linting 'CalendarSyncManager.swift' (207/247)
+Linting 'AccessibilityEnhancements.swift' (208/247)
+Linting 'JournalDetailView.swift' (209/247)
+Linting 'SentimentAnalyticsView.swift' (210/247)
+Linting 'JournalView.swift' (211/247)
+Linting 'AddJournalEntryView.swift' (212/247)
+Linting 'SettingsView_Clean.swift' (213/247)
+Linting 'SettingsView.swift' (214/247)
+Linting 'SettingRow.swift' (215/247)
+Linting 'SettingsView_Backup.swift' (216/247)
+Linting 'SettingsView_Simple_Test.swift' (217/247)
+Linting 'SettingsView_New.swift' (218/247)
+Linting 'ThemePreviewView.swift' (219/247)
+Linting 'SettingsView_Simple.swift' (220/247)
+Linting 'Views/Tasks/TaskInputView.swift' (221/247)
+Linting 'TaskCardView.swift' (222/247)
+Linting 'TaskManagerView.swift' (223/247)
+Linting 'GoalRowView.swift' (224/247)
+Linting 'CalendarGrid.swift' (225/247)
+Linting 'DateSectionView.swift' (226/247)
+Linting 'CalendarView_New.swift' (227/247)
+Linting 'AddCalendarEventView.swift' (228/247)
+Linting 'CalendarComponents.swift' (229/247)
+Linting 'TaskRowView.swift' (230/247)
+Linting 'SDTaskRowView.swift' (231/247)
+Linting 'EventRowView.swift' (232/247)
+Linting 'SDGoalRowView.swift' (233/247)
+Linting 'CalendarView.swift' (234/247)
+Linting 'AddGoalView_Final.swift' (235/247)
+Linting 'AddGoalView_New.swift' (236/247)
+Linting 'GoalsView.swift' (237/247)
+Linting 'AddGoalView_Working.swift' (238/247)
+Linting 'AddGoalView_Minimal.swift' (239/247)
+Linting 'AddGoalView.swift' (240/247)
+Linting 'AddGoalView_Simple.swift' (241/247)
+Linting 'NotificationSettingsView.swift' (242/247)
+Linting 'AnalyticsView.swift' (243/247)
+Linting 'ProjectsView.swift' (244/247)
+Linting 'TaskNotificationService.swift' (245/247)
+Linting 'NotificationManager.swift' (246/247)
+Linting 'run_tests.swift' (247/247)
+/Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/ConflictResolver.swift
+⛔️ Line 176: Line should be 120 characters or less; currently it has 122 characters (line_length)
+/Users/danielstevens/github-projects/tools-automation/PlannerApp/CloudKit/EnhancedCloudKitManager.swift
+⛔️ Line 196: Line should be 120 characters or less; currently it has 123 characters (line_length)
+⛔️ Line 185: Line should be 120 characters or less; currently it has 127 characters (line_length)
+/Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Intents/AppIntents.swift
+⛔️ Line 96: Line should be 120 characters or less; currently it has 130 characters (line_length)
+/Users/danielstevens/github-projects/tools-automation/PlannerApp/ViewModels/DashboardViewModel.swift
+⛔️ Line 145: Line should be 150 characters or less; currently it has 174 characters (line_length)
+Done linting! Found 5 violations, 5 serious in 247 files.

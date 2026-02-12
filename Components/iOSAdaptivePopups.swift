@@ -84,6 +84,7 @@ extension View {
 // MARK: - iOS Haptic Feedback Helper
 
 enum HapticManager {
+    @MainActor
     static func lightImpact() {
         #if os(iOS)
             let impactFeedback = UIImpactFeedbackGenerator(style: .light)
@@ -91,6 +92,7 @@ enum HapticManager {
         #endif
     }
 
+    @MainActor
     static func mediumImpact() {
         #if os(iOS)
             let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
@@ -98,6 +100,7 @@ enum HapticManager {
         #endif
     }
 
+    @MainActor
     static func selectionChanged() {
         #if os(iOS)
             let selectionFeedback = UISelectionFeedbackGenerator()
@@ -105,6 +108,7 @@ enum HapticManager {
         #endif
     }
 
+    @MainActor
     static func notificationSuccess() {
         #if os(iOS)
             let notificationFeedback = UINotificationFeedbackGenerator()
@@ -112,6 +116,7 @@ enum HapticManager {
         #endif
     }
 
+    @MainActor
     static func notificationError() {
         #if os(iOS)
             let notificationFeedback = UINotificationFeedbackGenerator()

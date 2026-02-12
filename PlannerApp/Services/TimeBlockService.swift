@@ -18,7 +18,7 @@ struct TimeBlock: Identifiable {
 }
 
 class TimeBlockService {
-    static let shared = TimeBlockService()
+    @MainActor static let shared = TimeBlockService()
 
     func createTimeBlock(for task: TaskItem, start: Date, durationMinutes: Int) -> TimeBlock {
         TimeBlock(

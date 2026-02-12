@@ -1,0 +1,7 @@
+PlannerAppTests/CalendarDataManagerTests.swift
+PlannerAppTests/DashboardViewModelTests.swift
+PlannerAppTests/PerformanceTests.swift
+PlannerAppTests/PlannerAppTests.swift
+PlannerAppTests/TagManagerTests.swift
+PlannerAppTests/TaskDataManagerTests.swift
+PlannerAppTests/TaskManagerTests.swift

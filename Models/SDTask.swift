@@ -5,7 +5,7 @@ import SwiftUI // For Color (used in TaskPriority logic if needed, but not in mo
 /// The versioned schema definitions for PlannerApp.
 /// Note: This file replaces the standalone SDTask and SDGoal definitions.
 enum PlannerSchemaV1: VersionedSchema {
-    static var versionIdentifier = Schema.Version(1, 0, 0)
+    static let versionIdentifier = Schema.Version(1, 0, 0)
 
     static var models: [any PersistentModel.Type] {
         [SDTask.self, SDGoal.self]
