@@ -101,7 +101,9 @@ public struct CalendarDayView: View {
     let hasGoal: Bool
     let hasTask: Bool
 
-    private var calendar: Calendar { Calendar.current }
+    private var calendar: Calendar {
+        Calendar.current
+    }
 
     private var isSelected: Bool {
         self.calendar.isDate(self.date, inSameDayAs: self.selectedDate)

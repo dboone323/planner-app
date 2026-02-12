@@ -66,10 +66,10 @@ public enum AdaptiveColors {
     public static let secondaryText = Color(uiColor: .secondaryLabel)
     public static let tertiaryText = Color(uiColor: .tertiaryLabel)
 
-    // Separator
+    /// Separator
     public static let separator = Color(uiColor: .separator)
 
-    // Grouped table
+    /// Grouped table
     public static let groupedBackground = Color(uiColor: .systemGroupedBackground)
 
     // Status colors (consistent in both modes)
@@ -78,7 +78,7 @@ public enum AdaptiveColors {
     public static let error = Color.red
     public static let info = Color.blue
 
-    // Priority colors
+    /// Priority colors
     public static func priorityColor(for priority: String) -> Color {
         switch priority.lowercased() {
         case "high": .red
@@ -89,7 +89,7 @@ public enum AdaptiveColors {
     }
 }
 
-/// Platform-independent UIColor wrapper
+// Platform-independent UIColor wrapper
 #if os(iOS)
     import UIKit
 
@@ -106,14 +106,37 @@ public enum AdaptiveColors {
     }
 
     extension NSColor {
-        static var label: NSColor { .labelColor }
-        static var secondaryLabel: NSColor { .secondaryLabelColor }
-        static var tertiaryLabel: NSColor { .tertiaryLabelColor }
-        static var systemBackground: NSColor { .windowBackgroundColor }
-        static var secondarySystemBackground: NSColor { .controlBackgroundColor }
-        static var tertiarySystemBackground: NSColor { .controlBackgroundColor }
-        static var systemGroupedBackground: NSColor { .windowBackgroundColor }
-        static var separator: NSColor { .separatorColor }
+        static var label: NSColor {
+            .labelColor
+        }
+
+        static var secondaryLabel: NSColor {
+            .secondaryLabelColor
+        }
+
+        static var tertiaryLabel: NSColor {
+            .tertiaryLabelColor
+        }
+
+        static var systemBackground: NSColor {
+            .windowBackgroundColor
+        }
+
+        static var secondarySystemBackground: NSColor {
+            .controlBackgroundColor
+        }
+
+        static var tertiarySystemBackground: NSColor {
+            .controlBackgroundColor
+        }
+
+        static var systemGroupedBackground: NSColor {
+            .windowBackgroundColor
+        }
+
+        static var separator: NSColor {
+            .separatorColor
+        }
     }
 #endif
 

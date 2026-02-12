@@ -19,7 +19,7 @@ public struct CalendarView: View {
     @AppStorage(AppSettingKeys.firstDayOfWeek) private var firstDayOfWeekSetting: Int = Calendar.current.firstWeekday
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
-    // Computed property to group events by the start of their day
+    /// Computed property to group events by the start of their day
     private var groupedEvents: [Date: [CalendarEvent]] {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
@@ -28,14 +28,14 @@ public struct CalendarView: View {
         }
     }
 
-    // Computed property to get dates with goals
+    /// Computed property to get dates with goals
     private var goalDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Set(self.goals.map { calendar.startOfDay(for: $0.targetDate) })
     }
 
-    // Computed property to get dates with tasks
+    /// Computed property to get dates with tasks
     private var taskDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
@@ -45,21 +45,21 @@ public struct CalendarView: View {
         })
     }
 
-    // Computed property to get dates with events
+    /// Computed property to get dates with events
     private var eventDates: Set<Date> {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Set(self.events.map { calendar.startOfDay(for: $0.date) })
     }
 
-    // Structure for selected date items
+    /// Structure for selected date items
     private struct SelectedDateItems {
         let events: [CalendarEvent]
         let goals: [Goal]
         let tasks: [Task]
     }
 
-    // Get items for selected date
+    /// Get items for selected date
     private var selectedDateItems: SelectedDateItems {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: self.selectedDate)
@@ -81,25 +81,17 @@ public struct CalendarView: View {
         return SelectedDateItems(events: dayEvents, goals: dayGoals, tasks: dayTasks)
     }
 
-    // Date Formatters
+    /// Date Formatters (delegated to shared formatters)
     private var eventTimeFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: self.use24HourTime ? "en_GB" : "en_US")
-        return formatter
+        AppDateFormatters.timeFormatter(use24Hour: self.use24HourTime)
     }
 
     private var monthYearFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        return formatter
+        AppDateFormatters.monthYearFormatter
     }
 
     private var selectedDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        return formatter
+        AppDateFormatters.fullDateFormatter
     }
 
     var body: some View {
@@ -209,19 +201,11 @@ public struct CalendarView: View {
 
                             // Empty State
                             if items.events.isEmpty, items.goals.isEmpty, items.tasks.isEmpty {
-                                VStack(spacing: 12) {
-                                    Image(systemName: "calendar")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("No items for this date")
-                                        .font(.subheadline)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("Tap + to add an event")
-                                        .font(.caption)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                                }
+                                EmptyStateView(
+                                    imageSystemName: "calendar",
+                                    title: "No items for this date",
+                                    subtitle: "Tap + to add an event"
+                                )
                                 .padding(.vertical, 40)
                             }
                         }

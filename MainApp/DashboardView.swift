@@ -20,7 +20,7 @@ public struct DashboardView: View {
     @State private var showAddEvent = false
     @State private var showAddJournal = false
 
-    // Date formatters
+    /// Date formatters
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -54,20 +54,23 @@ public struct DashboardView: View {
                                     .font(.title2)
                                     .fontWeight(.medium)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor)
+                                        self.themeManager.currentTheme.primaryTextColor
+                                    )
 
                                 if !self.userName.isEmpty {
                                     Text(self.userName)
                                         .font(.title)
                                         .fontWeight(.bold)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.primaryAccentColor)
+                                            self.themeManager.currentTheme.primaryAccentColor
+                                        )
                                 }
 
                                 Text(self.dateFormatter.string(from: Date()))
                                     .font(.subheadline)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor)
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                             }
 
                             Spacer()
@@ -77,12 +80,14 @@ public struct DashboardView: View {
                                     .font(.title2)
                                     .fontWeight(.semibold)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor)
+                                        self.themeManager.currentTheme.primaryTextColor
+                                    )
 
                                 Text("Today")
                                     .font(.caption)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor)
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                             }
                         }
                     }
@@ -197,17 +202,20 @@ public struct DashboardView: View {
                                     Image(systemName: "tray")
                                         .font(.system(size: 40))
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
 
                                     Text("No recent activities")
                                         .font(.subheadline)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
 
                                     Text("Start by creating a task or goal!")
                                         .font(.caption)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
                                 }
                                 .padding(.vertical, 40)
                             }
@@ -252,17 +260,20 @@ public struct DashboardView: View {
                                     Image(systemName: "calendar")
                                         .font(.system(size: 40))
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
 
                                     Text("Nothing upcoming")
                                         .font(.subheadline)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
 
                                     Text("Schedule some events to see them here")
                                         .font(.caption)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor)
+                                            self.themeManager.currentTheme.secondaryTextColor
+                                        )
                                 }
                                 .padding(.vertical, 40)
                             }
@@ -309,7 +320,8 @@ public struct DashboardView: View {
                                     Text("Refreshing...")
                                         .font(.subheadline)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.primaryTextColor)
+                                            self.themeManager.currentTheme.primaryTextColor
+                                        )
                                 }
                                 .padding(32)
                                 .background(

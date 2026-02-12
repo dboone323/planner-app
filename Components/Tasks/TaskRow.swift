@@ -8,11 +8,11 @@ import SwiftUI
 // typealias TaskModel = Task  // Removed - already defined in TaskManagerView
 
 public struct TaskRow: View {
-    // Access shared ThemeManager
+    /// Access shared ThemeManager
     @EnvironmentObject var themeManager: ThemeManager
-    // The specific task to display
+    /// The specific task to display
     let taskItem: PlannerTask
-    // Binding to the main tasks array to allow modification (toggling completion)
+    /// Binding to the main tasks array to allow modification (toggling completion)
     @Binding var tasks: [PlannerTask]
 
     public var body: some View {
@@ -20,13 +20,13 @@ public struct TaskRow: View {
             // Checkmark icon (filled if completed, empty circle otherwise)
             Image(systemName: self.taskItem.isCompleted ? "checkmark.circle.fill" : "circle")
                 // Apply theme colors based on completion status
-                    .foregroundColor(
-                        self.taskItem.isCompleted
-                            ? self.themeManager.currentTheme.completedColor
-                            : self.themeManager.currentTheme.secondaryTextColor
-                    )
-                    .font(.title3) // Make icon slightly larger
-                    .onTapGesture { self.toggleCompletion() } // Toggle completion on icon tap
+                .foregroundColor(
+                    self.taskItem.isCompleted
+                        ? self.themeManager.currentTheme.completedColor
+                        : self.themeManager.currentTheme.secondaryTextColor
+                )
+                .font(.title3) // Make icon slightly larger
+                .onTapGesture { self.toggleCompletion() } // Toggle completion on icon tap
 
             // Task title text
             Text(self.taskItem.title)
@@ -53,7 +53,7 @@ public struct TaskRow: View {
         // Row background color is applied by the parent List section modifier
     }
 
-    // Toggles the completion status of the task and saves changes
+    /// Toggles the completion status of the task and saves changes
     private func toggleCompletion() {
         // Find the index of this task in the main array
         if let index = tasks.firstIndex(where: { $0.id == taskItem.id }) {

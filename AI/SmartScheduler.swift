@@ -144,10 +144,9 @@ class SmartScheduler {
 
     private func requestCalendarAccess() async -> Bool {
         if #available(iOS 17.0, macOS 14.0, *) {
-            let status = await eventStore.requestFullAccessToEvents()
-            return status
+            await eventStore.requestFullAccessToEvents()
         } else {
-            return await withCheckedContinuation { continuation in
+            await withCheckedContinuation { continuation in
                 self.eventStore.requestAccess(to: .event) { granted, _ in
                     continuation.resume(returning: granted)
                 }
@@ -213,7 +212,7 @@ struct SchedulingPreferences {
     )
 }
 
-// Mock Task for this implementation
+/// Mock Task for this implementation
 struct Task {
     let title: String
     let estimatedDuration: TimeInterval

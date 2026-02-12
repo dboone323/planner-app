@@ -201,10 +201,17 @@ struct IOSSecondaryButton: ButtonStyle {
 }
 
 extension ButtonStyle where Self == IOSPrimaryButton {
-    static var iOSPrimary: IOSPrimaryButton { IOSPrimaryButton() }
-    static var iOSDestructive: IOSPrimaryButton { IOSPrimaryButton(isDestructive: true) }
+    static var iOSPrimary: IOSPrimaryButton {
+        IOSPrimaryButton()
+    }
+
+    static var iOSDestructive: IOSPrimaryButton {
+        IOSPrimaryButton(isDestructive: true)
+    }
 }
 
 extension ButtonStyle where Self == IOSSecondaryButton {
-    static var iOSSecondary: IOSSecondaryButton { IOSSecondaryButton() }
+    static var iOSSecondary: IOSSecondaryButton {
+        IOSSecondaryButton()
+    }
 }

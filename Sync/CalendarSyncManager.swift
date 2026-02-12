@@ -1,7 +1,7 @@
 import EventKit
 import Foundation
 
-// Protocol for testing
+/// Protocol for testing
 protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it as class dependency
     func requestAccessToEvents() async -> Bool
     // Update to @Sendable for Swift 6 strict concurrency
@@ -222,8 +222,13 @@ struct SyncResult {
     let deleted: Int
 }
 
-// Mock Task extension for calendar sync
+/// Mock Task extension for calendar sync
 extension PlannerTask {
-    var syncToCalendar: Bool { true }
-    var isAllDay: Bool { estimatedDuration == 0 }
+    var syncToCalendar: Bool {
+        true
+    }
+
+    var isAllDay: Bool {
+        estimatedDuration == 0
+    }
 }

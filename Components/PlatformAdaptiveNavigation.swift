@@ -177,11 +177,7 @@ extension View {
 // MARK: - Platform-Specific Context Menu
 
 struct PlatformContextMenu<MenuContent: View>: ViewModifier {
-    let menuContent: MenuContent
-
-    init(@ViewBuilder menuContent: () -> MenuContent) {
-        self.menuContent = menuContent()
-    }
+    @ViewBuilder let menuContent: MenuContent
 
     func body(content: Content) -> some View {
         #if os(macOS)
@@ -209,12 +205,8 @@ extension View {
 // MARK: - Adaptive Grid Layout
 
 struct AdaptiveGrid<Content: View>: View {
-    let content: Content
+    @ViewBuilder let content: Content
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
 
     private var columns: [GridItem] {
         #if os(macOS)

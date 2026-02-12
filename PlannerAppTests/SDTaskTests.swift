@@ -26,7 +26,7 @@ final class SDTaskTests: XCTestCase {
 
     // MARK: - Initialization Tests
 
-    func testSDTaskInitialization() throws {
+    func testSDTaskInitialization() {
         let task = SDTask(
             title: "Test Task",
             taskDescription: "Test Description",
@@ -44,7 +44,7 @@ final class SDTaskTests: XCTestCase {
         XCTAssertNotNil(task.createdAt)
     }
 
-    func testSDTaskDefaultValues() throws {
+    func testSDTaskDefaultValues() {
         let task = SDTask(title: "Minimal Task")
 
         XCTAssertEqual(task.title, "Minimal Task")
@@ -116,7 +116,7 @@ final class SDTaskTests: XCTestCase {
 
     // MARK: - Priority Tests
 
-    func testSDTaskPrioritySortOrder() throws {
+    func testSDTaskPrioritySortOrder() {
         let lowPriority = SDTask(title: "Low", priority: "low")
         let mediumPriority = SDTask(title: "Medium", priority: "medium")
         let highPriority = SDTask(title: "High", priority: "high")
@@ -148,7 +148,7 @@ final class SDTaskTests: XCTestCase {
 
     // MARK: - Sentiment Tests
 
-    func testSDTaskSentimentAnalysis() throws {
+    func testSDTaskSentimentAnalysis() {
         let task = SDTask(title: "Test", taskDescription: "This is a great and amazing feature")
         task.analyzeSentiment()
 
@@ -156,7 +156,7 @@ final class SDTaskTests: XCTestCase {
         XCTAssertGreaterThan(task.sentimentScore, 0)
     }
 
-    func testSDTaskNegativeSentiment() throws {
+    func testSDTaskNegativeSentiment() {
         let task = SDTask(title: "Test", taskDescription: "This is terrible and has a bug")
         task.analyzeSentiment()
 

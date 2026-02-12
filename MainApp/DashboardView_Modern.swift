@@ -21,20 +21,13 @@ public struct DashboardView: View {
     @State private var showAddEvent = false
     @State private var showAddJournal = false
 
-    // Date formatters
+    /// Date formatters (delegated to shared formatters)
     private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
+        AppDateFormatters.dateFormatter()
     }
 
     private var timeFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: self.use24HourTime ? "en_GB" : "en_US")
-        return formatter
+        AppDateFormatters.timeFormatter(use24Hour: self.use24HourTime)
     }
 
     var body: some View {
@@ -173,7 +166,7 @@ public struct DashboardView: View {
                             Spacer()
 
                             Button("View All").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                /// - Pending: Navigate to activities view
+                                // - Pending: Navigate to activities view
                                 print("View All tapped")
                             }
                             .font(.caption)
@@ -181,26 +174,19 @@ public struct DashboardView: View {
                         }
 
                         LazyVStack(spacing: 12) {
-                            ForEach(self.viewModel.recentActivities.prefix(self.dashboardItemLimit),
-                                    id: \.id)
-                            { activity in
+                            ForEach(
+                                self.viewModel.recentActivities.prefix(self.dashboardItemLimit),
+                                id: \.id
+                            ) { activity in
                                 ActivityRowView(activity: activity)
                             }
 
                             if self.viewModel.recentActivities.isEmpty {
-                                VStack(spacing: 12) {
-                                    Image(systemName: "tray")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("No recent activities")
-                                        .font(.subheadline)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("Start by creating a task or goal!")
-                                        .font(.caption)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                                }
+                                EmptyStateView(
+                                    imageSystemName: "tray",
+                                    title: "No recent activities",
+                                    subtitle: "Start by creating a task or goal!"
+                                )
                                 .padding(.vertical, 40)
                             }
                         }
@@ -218,7 +204,7 @@ public struct DashboardView: View {
                             Spacer()
 
                             Button("View Calendar").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                /// - Pending: Navigate to calendar
+                                // - Pending: Navigate to calendar
                                 print("View Calendar tapped")
                             }
                             .font(.caption)
@@ -231,19 +217,11 @@ public struct DashboardView: View {
                             }
 
                             if self.viewModel.upcomingItems.isEmpty {
-                                VStack(spacing: 12) {
-                                    Image(systemName: "calendar")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("Nothing upcoming")
-                                        .font(.subheadline)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-
-                                    Text("Schedule some events to see them here")
-                                        .font(.caption)
-                                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
-                                }
+                                EmptyStateView(
+                                    imageSystemName: "calendar",
+                                    title: "Nothing upcoming",
+                                    subtitle: "Schedule some events to see them here"
+                                )
                                 .padding(.vertical, 40)
                             }
                         }

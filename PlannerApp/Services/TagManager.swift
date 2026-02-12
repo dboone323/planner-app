@@ -13,7 +13,7 @@ struct Tag: Identifiable, Hashable {
     let color: Color
 }
 
-class TagManager {
+class TagManager: @unchecked Sendable {
     static let shared = TagManager()
 
     private var tags: [Tag] = [

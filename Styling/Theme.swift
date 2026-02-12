@@ -15,8 +15,8 @@ import SwiftUI
     import UIKit
 #endif
 
-// Defines the properties of a visual theme
-public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
+/// Defines the properties of a visual theme
+public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for comparison
     public let id = UUID()
     let name: String
 
@@ -36,7 +36,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
     let primaryFontName: String? // Use nil for system default
     let secondaryFontName: String? // Use nil for system default
 
-    // Helper to get Font objects
+    /// Helper to get Font objects
     func font(forName name: String?, size: CGFloat, weight: Font.Weight = .regular) -> Font {
         if let fontName = name {
             // Attempt to load by name. Use correct PostScript names for custom fonts.
@@ -63,7 +63,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
         secondaryFontName: nil // System default
     )
 
-    // Platform-specific default colors
+    /// Platform-specific default colors
     private static var defaultPrimaryBackgroundColor: Color {
         #if os(macOS)
             return Color(nsColor: .windowBackgroundColor)
@@ -138,7 +138,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
         secondaryFontName: nil
     )
 
-    // Add a Dark Mode Theme Example
+    /// Add a Dark Mode Theme Example
     static let midnightDark = Theme(
         name: "Midnight Dark",
         primaryAccentColor: Color(red: 0.7, green: 0.5, blue: 1.0), // Purple accent
@@ -153,7 +153,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
         secondaryFontName: nil
     )
 
-    // Modern minimal theme
+    /// Modern minimal theme
     static let minimalGray = Theme(
         name: "Minimal Gray",
         primaryAccentColor: Color(red: 0.20, green: 0.20, blue: 0.20),
@@ -168,7 +168,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
         secondaryFontName: nil
     )
 
-    // Warm pink theme for a softer feel
+    /// Warm pink theme for a softer feel
     static let rosePink = Theme(
         name: "Rose Pink",
         primaryAccentColor: Color(red: 0.85, green: 0.40, blue: 0.60),
@@ -183,7 +183,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
         secondaryFontName: nil
     )
 
-    // List of all available themes for pickers etc.
+    /// List of all available themes for pickers etc.
     static let availableThemes: [Theme] = [
         defaultTheme,
         oceanBlue,
@@ -198,7 +198,7 @@ public struct Theme: Identifiable, Equatable { // Added Equatable for comparison
 
     // These will be added via extension in ModernThemes.swift
 
-    // Implement Equatable based on name to compare themes
+    /// Implement Equatable based on name to compare themes
     public static func == (lhs: Theme, rhs: Theme) -> Bool {
         lhs.name == rhs.name
     }

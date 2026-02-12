@@ -18,7 +18,7 @@ public struct MainTabViewEnhanced: View {
     @Binding var selectedTabTag: String
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    // Define constants for tab tags
+    /// Define constants for tab tags
     enum TabTags {
         static let dashboard = "Dashboard"
         static let tasks = "Tasks"
@@ -28,7 +28,7 @@ public struct MainTabViewEnhanced: View {
         static let settings = "Settings"
     }
 
-    // Tab configuration
+    /// Tab configuration
     struct TabConfiguration {
         let tag: String
         let title: String
@@ -181,7 +181,6 @@ public struct MainTabViewEnhanced: View {
 
     // MARK: - Content Views
 
-    @ViewBuilder
     private var contentForSelectedTab: some View {
         self.contentForTab(self.selectedTabTag)
     }

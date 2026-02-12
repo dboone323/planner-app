@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class PriorityManager {
+class PriorityManager: @unchecked Sendable {
     static let shared = PriorityManager()
 
     func color(for priority: Priority) -> Color {
@@ -39,7 +39,7 @@ class PriorityManager {
     }
 }
 
-// Placeholder TaskItem struct
+/// Placeholder TaskItem struct
 struct TaskItem: Identifiable {
     let id = UUID()
     let title: String

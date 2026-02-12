@@ -29,8 +29,8 @@ class PerformanceTests: XCTestCase {
                 let task = createMockTask(id: "task_\(i)")
                 let dependency = createMockTask(id: "dep_\(i)")
                 dependencyService.addDependency(from: task, to: dependency)
-                let _ = dependencyService.getDependencies(for: task)
-                let _ = dependencyService.canCompleteTask(task)
+                _ = dependencyService.getDependencies(for: task)
+                _ = dependencyService.canCompleteTask(task)
             }
         }
     }
@@ -42,8 +42,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<300 {
                 let task = createMockTask(id: "priority_task_\(i)")
                 priorityManager.updatePriority(for: task, basedOn: createMockContext())
-                let _ = priorityManager.getPriorityScore(for: task)
-                let _ = priorityManager.getPrioritizedTasks(from: [task])
+                _ = priorityManager.getPriorityScore(for: task)
+                _ = priorityManager.getPrioritizedTasks(from: [task])
             }
         }
     }
@@ -55,8 +55,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<150 {
                 let tag = Tag(id: "tag_\(i)", name: "Tag \(i)", color: .blue)
                 tagManager.createTag(tag)
-                let _ = tagManager.getTasksWithTag(tag)
-                let _ = tagManager.getTagStatistics()
+                _ = tagManager.getTasksWithTag(tag)
+                _ = tagManager.getTagStatistics()
             }
         }
     }
@@ -70,8 +70,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<50 {
                 let event = createMockCalendarEvent(id: "event_\(i)")
                 calendarSync.syncEvent(event)
-                let _ = calendarSync.getEventsForDate(Date())
-                let _ = calendarSync.getConflictingEvents(for: event)
+                _ = calendarSync.getEventsForDate(Date())
+                _ = calendarSync.getConflictingEvents(for: event)
             }
         }
     }
@@ -83,8 +83,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<100 {
                 let timeBlock = createMockTimeBlock(id: "block_\(i)")
                 timeBlockService.scheduleTimeBlock(timeBlock)
-                let _ = timeBlockService.getTimeBlocksForDate(Date())
-                let _ = timeBlockService.getAvailableTimeSlots(on: Date())
+                _ = timeBlockService.getTimeBlocksForDate(Date())
+                _ = timeBlockService.getAvailableTimeSlots(on: Date())
             }
         }
     }
@@ -99,7 +99,7 @@ class PerformanceTests: XCTestCase {
                 pomodoroTimer.startTimer()
                 pomodoroTimer.pauseTimer()
                 pomodoroTimer.resetTimer()
-                let _ = pomodoroTimer.getCurrentSession()
+                _ = pomodoroTimer.getCurrentSession()
             }
         }
     }
@@ -110,8 +110,8 @@ class PerformanceTests: XCTestCase {
         measure {
             for i in 0..<100 {
                 focusManager.startFocusSession(duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)"))
-                let _ = focusManager.getCurrentSession()
-                let _ = focusManager.getSessionHistory()
+                _ = focusManager.getCurrentSession()
+                _ = focusManager.getSessionHistory()
             }
         }
     }
@@ -121,10 +121,10 @@ class PerformanceTests: XCTestCase {
 
         measure {
             for _ in 0..<50 {
-                let _ = analytics.calculateDailyProductivity()
-                let _ = analytics.generateWeeklyReport()
-                let _ = analytics.getProductivityTrends()
-                let _ = analytics.getTimeDistribution()
+                _ = analytics.calculateDailyProductivity()
+                _ = analytics.generateWeeklyReport()
+                _ = analytics.getProductivityTrends()
+                _ = analytics.getTimeDistribution()
             }
         }
     }
@@ -136,9 +136,9 @@ class PerformanceTests: XCTestCase {
 
         measure {
             for _ in 0..<20 {
-                let _ = backupManager.createBackup()
-                let _ = backupManager.getBackupHistory()
-                let _ = backupManager.validateBackupIntegrity()
+                _ = backupManager.createBackup()
+                _ = backupManager.getBackupHistory()
+                _ = backupManager.validateBackupIntegrity()
             }
         }
     }
@@ -150,8 +150,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<100 {
                 let task1 = createMockTask(id: "conflict_task1_\(i)")
                 let task2 = createMockTask(id: "conflict_task2_\(i)")
-                let _ = conflictDetector.detectConflicts(between: task1, and: task2)
-                let _ = conflictDetector.getAllConflicts()
+                _ = conflictDetector.detectConflicts(between: task1, and: task2)
+                _ = conflictDetector.getAllConflicts()
             }
         }
     }
@@ -165,8 +165,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<80 {
                 let template = createMockTaskTemplate(id: "template_\(i)")
                 templateService.saveTemplate(template)
-                let _ = templateService.getTemplatesForCategory(.work)
-                let _ = templateService.createTaskFromTemplate(template)
+                _ = templateService.getTemplatesForCategory(.work)
+                _ = templateService.createTaskFromTemplate(template)
             }
         }
     }
@@ -178,8 +178,8 @@ class PerformanceTests: XCTestCase {
             for i in 0..<50 {
                 let workspace = createMockWorkspace(id: "workspace_\(i)")
                 workspaceManager.createWorkspace(workspace)
-                let _ = workspaceManager.getAllWorkspaces()
-                let _ = workspaceManager.getWorkspaceStatistics()
+                _ = workspaceManager.getAllWorkspaces()
+                _ = workspaceManager.getWorkspaceStatistics()
             }
         }
     }
@@ -216,7 +216,7 @@ class PerformanceTests: XCTestCase {
             DispatchQueue.global(qos: .userInteractive).async {
                 let analytics = ProductivityAnalytics.shared
                 for _ in 0..<50 {
-                    let _ = analytics.calculateDailyProductivity()
+                    _ = analytics.calculateDailyProductivity()
                 }
                 group.leave()
             }
@@ -262,7 +262,7 @@ class PerformanceTests: XCTestCase {
             for i in 0..<100 {
                 let task = createMockTask(id: "metrics_task_\(i)")
                 priorityManager.updatePriority(for: task, basedOn: createMockContext())
-                let _ = performanceMonitor.getMetrics()
+                _ = performanceMonitor.getMetrics()
             }
         }
 
@@ -275,7 +275,7 @@ class PerformanceTests: XCTestCase {
 class PerformanceMonitor {
     private var startTime: Date?
     private var operationCount = 0
-    private var metrics: PerformanceMetrics = PerformanceMetrics()
+    private var metrics: PerformanceMetrics = .init()
 
     func startMonitoring() {
         startTime = Date()
@@ -290,7 +290,7 @@ class PerformanceMonitor {
     func getMetrics() -> PerformanceMetrics {
         operationCount += 1
 
-        if let startTime = startTime {
+        if let startTime {
             let elapsed = Date().timeIntervalSince(startTime)
             metrics.operationsPerSecond = Double(operationCount) / elapsed
         }
@@ -316,7 +316,7 @@ struct PerformanceMetrics {
 // MARK: - Mock Data Creation
 
 private func createMockTask(id: String) -> Task {
-    return Task(
+    Task(
         id: id,
         title: "Test Task",
         description: "A test task for performance testing",
@@ -330,7 +330,7 @@ private func createMockTask(id: String) -> Task {
 }
 
 private func createMockCalendarEvent(id: String) -> CalendarEvent {
-    return CalendarEvent(
+    CalendarEvent(
         id: id,
         title: "Test Event",
         startDate: Date(),
@@ -341,7 +341,7 @@ private func createMockCalendarEvent(id: String) -> CalendarEvent {
 }
 
 private func createMockTimeBlock(id: String) -> TimeBlock {
-    return TimeBlock(
+    TimeBlock(
         id: id,
         title: "Test Time Block",
         startTime: Date(),
@@ -352,7 +352,7 @@ private func createMockTimeBlock(id: String) -> TimeBlock {
 }
 
 private func createMockTaskTemplate(id: String) -> TaskTemplate {
-    return TaskTemplate(
+    TaskTemplate(
         id: id,
         name: "Test Template",
         description: "A test template",
@@ -364,7 +364,7 @@ private func createMockTaskTemplate(id: String) -> TaskTemplate {
 }
 
 private func createMockWorkspace(id: String) -> Workspace {
-    return Workspace(
+    Workspace(
         id: id,
         name: "Test Workspace",
         description: "A test workspace",
@@ -375,7 +375,7 @@ private func createMockWorkspace(id: String) -> Workspace {
 }
 
 private func createMockContext() -> TaskContext {
-    return TaskContext(
+    TaskContext(
         dueDate: Date().addingTimeInterval(86400),
         dependencies: [],
         userPreferences: [:],
@@ -393,11 +393,11 @@ extension TaskDependencyService {
     }
 
     func getDependencies(for task: Task) -> [Task] {
-        return []
+        []
     }
 
     func canCompleteTask(_ task: Task) -> Bool {
-        return true
+        true
     }
 }
 
@@ -409,11 +409,11 @@ extension PriorityManager {
     }
 
     func getPriorityScore(for task: Task) -> Double {
-        return 0.7
+        0.7
     }
 
     func getPrioritizedTasks(from tasks: [Task]) -> [Task] {
-        return tasks
+        tasks
     }
 }
 
@@ -425,11 +425,11 @@ extension TagManager {
     }
 
     func getTasksWithTag(_ tag: Tag) -> [Task] {
-        return []
+        []
     }
 
     func getTagStatistics() -> [String: Int] {
-        return [:]
+        [:]
     }
 }
 
@@ -441,11 +441,11 @@ extension CalendarSyncService {
     }
 
     func getEventsForDate(_ date: Date) -> [CalendarEvent] {
-        return []
+        []
     }
 
     func getConflictingEvents(for event: CalendarEvent) -> [CalendarEvent] {
-        return []
+        []
     }
 }
 
@@ -457,11 +457,11 @@ extension TimeBlockService {
     }
 
     func getTimeBlocksForDate(_ date: Date) -> [TimeBlock] {
-        return []
+        []
     }
 
     func getAvailableTimeSlots(on date: Date) -> [DateInterval] {
-        return []
+        []
     }
 }
 
@@ -481,7 +481,7 @@ extension PomodoroTimer {
     }
 
     func getCurrentSession() -> PomodoroSession? {
-        return nil
+        nil
     }
 }
 
@@ -493,11 +493,11 @@ extension FocusModeManager {
     }
 
     func getCurrentSession() -> FocusSession? {
-        return nil
+        nil
     }
 
     func getSessionHistory() -> [FocusSession] {
-        return []
+        []
     }
 }
 
@@ -505,19 +505,19 @@ extension ProductivityAnalytics {
     static let shared = ProductivityAnalytics()
 
     func calculateDailyProductivity() -> Double {
-        return 0.75
+        0.75
     }
 
     func generateWeeklyReport() -> ProductivityReport {
-        return ProductivityReport()
+        ProductivityReport()
     }
 
     func getProductivityTrends() -> [ProductivityDataPoint] {
-        return []
+        []
     }
 
     func getTimeDistribution() -> [String: TimeInterval] {
-        return [:]
+        [:]
     }
 }
 
@@ -525,15 +525,15 @@ extension BackupManager {
     static let shared = BackupManager()
 
     func createBackup() -> BackupResult {
-        return .success
+        .success
     }
 
     func getBackupHistory() -> [BackupInfo] {
-        return []
+        []
     }
 
     func validateBackupIntegrity() -> Bool {
-        return true
+        true
     }
 }
 
@@ -541,11 +541,11 @@ extension ConflictDetector {
     static let shared = ConflictDetector()
 
     func detectConflicts(between task1: Task, and task2: Task) -> [Conflict] {
-        return []
+        []
     }
 
     func getAllConflicts() -> [Conflict] {
-        return []
+        []
     }
 }
 
@@ -557,11 +557,11 @@ extension TaskTemplateService {
     }
 
     func getTemplatesForCategory(_ category: TaskCategory) -> [TaskTemplate] {
-        return []
+        []
     }
 
     func createTaskFromTemplate(_ template: TaskTemplate) -> Task {
-        return createMockTask(id: "from_template")
+        createMockTask(id: "from_template")
     }
 }
 
@@ -573,11 +573,11 @@ extension WorkspaceManager {
     }
 
     func getAllWorkspaces() -> [Workspace] {
-        return []
+        []
     }
 
     func getWorkspaceStatistics() -> WorkspaceStats {
-        return WorkspaceStats()
+        WorkspaceStats()
     }
 }
 

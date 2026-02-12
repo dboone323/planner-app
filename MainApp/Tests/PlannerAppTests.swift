@@ -64,7 +64,7 @@ class PlannerAppTests: XCTestCase {
     }
 }
 
-// Mock Model Context for testing
+/// Mock Model Context for testing
 class MockModelContext: NSManagedObjectContext {
     var didMigrate = false
 

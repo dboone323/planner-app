@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ConflictDetector {
+class ConflictDetector: @unchecked Sendable {
     static let shared = ConflictDetector()
 
     func findConflicts(blocks: [TimeBlock]) -> [TimeBlock] {

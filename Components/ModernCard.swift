@@ -136,7 +136,7 @@ public struct ModernButton: View {
     }
 }
 
-// Progress indicator component
+/// Progress indicator component
 public struct ProgressBar: View {
     let progress: Double // 0.0 to 1.0
     @EnvironmentObject var themeManager: ThemeManager
@@ -172,7 +172,7 @@ public struct ProgressBar: View {
     }
 }
 
-// Enhanced input field
+/// Enhanced input field
 public struct ModernTextField: View {
     @Binding var text: String
     let placeholder: String

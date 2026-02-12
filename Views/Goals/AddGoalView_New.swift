@@ -7,17 +7,17 @@ public struct AddGoalView: View {
     // Access shared ThemeManager and dismiss action
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) var dismiss
-    // Binding to the goals array in the parent view (GoalsView)
+    /// Binding to the goals array in the parent view (GoalsView)
     @Binding var goals: [Goal]
 
     // State variables for the form fields
     @State private var title = ""
     @State private var description = ""
     @State private var targetDate = Date()
-    // Focus state to manage keyboard for the TextEditor
+    /// Focus state to manage keyboard for the TextEditor
     @FocusState private var isDescriptionFocused: Bool
 
-    // Computed property to check if the form is valid for saving
+    /// Computed property to check if the form is valid for saving
     private var isFormValid: Bool {
         !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
             !self.description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -113,7 +113,7 @@ public struct AddGoalView: View {
     }
 }
 
-// --- Preview Provider ---
+/// --- Preview Provider ---
 public struct AddGoalView_Previews: PreviewProvider {
     static var previews: some View {
         AddGoalView(goals: Binding.constant([]))

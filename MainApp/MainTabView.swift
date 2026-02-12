@@ -8,13 +8,13 @@ import SwiftUI
 #endif
 
 public struct MainTabView: View {
-    // Access the shared ThemeManager instance from the environment.
+    /// Access the shared ThemeManager instance from the environment.
     @EnvironmentObject var themeManager: ThemeManager
-    // Receive the binding for the selected tab tag from the parent view (PlannerApp).
-    // Changes to this binding will update the currently visible tab.
+    /// Receive the binding for the selected tab tag from the parent view (PlannerApp).
+    /// Changes to this binding will update the currently visible tab.
     @Binding var selectedTabTag: String
 
-    // Define constants or an enum for tab tags to avoid string typos.
+    /// Define constants or an enum for tab tags to avoid string typos.
     enum TabTags {
         static let dashboard = "Dashboard"
         static let tasks = "Tasks"
@@ -77,8 +77,8 @@ public struct MainTabView: View {
     }
 }
 
-// Helper extension to determine if a Color is perceived as dark.
-// Used to adjust the color scheme for tab items.
+/// Helper extension to determine if a Color is perceived as dark.
+/// Used to adjust the color scheme for tab items.
 extension Color {
     func isDark() -> Bool {
         #if os(macOS)
@@ -113,12 +113,12 @@ extension Color {
     }
 }
 
-// Preview Provider for MainTabView
+/// Preview Provider for MainTabView
 public struct MainTabView_Previews: PreviewProvider {
     public static var previews: some View {
         // Provide a constant binding for the preview (doesn't change).
         MainTabView(selectedTabTag: .constant(MainTabView.TabTags.dashboard))
             // Provide the ThemeManager environment object for the preview.
-                .environmentObject(ThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

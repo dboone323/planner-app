@@ -15,14 +15,14 @@
 import EventKit
 
 protocol EventStoreProtocol {
-    func requestFullAccessToEvents(completion: @escaping (Bool, Error?) -> Void)
+    func requestFullAccessToEvents(completion: @escaping @Sendable (Bool, Error?) -> Void)
     func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
     func events(matching predicate: NSPredicate) -> [EKEvent]
 }
 
 extension EKEventStore: EventStoreProtocol {}
 
-class CalendarSyncService: ObservableObject {
+class CalendarSyncService: ObservableObject, @unchecked Sendable {
     static let shared = CalendarSyncService()
     private let eventStore: EventStoreProtocol
 

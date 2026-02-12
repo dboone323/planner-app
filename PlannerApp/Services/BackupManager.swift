@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BackupManager {
+class BackupManager: @unchecked Sendable {
     static let shared = BackupManager()
 
     func createBackup(tasks _: [TaskItem]) -> URL? {

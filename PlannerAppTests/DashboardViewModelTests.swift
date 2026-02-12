@@ -78,11 +78,11 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.totalUpcomingGoalsCount, 0)
     }
 
-    func testFetchDashboardDataFiltersTodaysEvents() {
+    func testFetchDashboardDataFiltersTodaysEvents() throws {
         // Add events: today, yesterday, tomorrow
         let today = Date()
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: today))
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
 
         CalendarDataManager.shared.add(CalendarEvent(title: "Today Event", date: today))
         CalendarDataManager.shared.add(CalendarEvent(title: "Yesterday Event", date: yesterday))
@@ -106,10 +106,10 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.incompleteTasks.count, 2)
     }
 
-    func testFetchDashboardDataFiltersUpcomingGoals() {
+    func testFetchDashboardDataFiltersUpcomingGoals() throws {
         let today = Date()
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 5, to: today)!
-        let nextMonth = Calendar.current.date(byAdding: .day, value: 30, to: today)!
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
+        let nextMonth = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 30, to: today))
 
         GoalDataManager.shared.add(Goal(title: "This Week", description: "Soon", targetDate: nextWeek))
         GoalDataManager.shared.add(Goal(title: "Next Month", description: "Later", targetDate: nextMonth))
@@ -133,11 +133,11 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.incompleteTasks.count, 3, "Should limit displayed tasks to default of 3")
     }
 
-    func testFetchDashboardDataSortsEventsByTime() {
+    func testFetchDashboardDataSortsEventsByTime() throws {
         let today = Date()
-        let morning = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)!
-        let afternoon = Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)!
-        let evening = Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)!
+        let morning = try XCTUnwrap(Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today))
+        let afternoon = try XCTUnwrap(Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today))
+        let evening = try XCTUnwrap(Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today))
 
         CalendarDataManager.shared.add(CalendarEvent(title: "Evening", date: evening))
         CalendarDataManager.shared.add(CalendarEvent(title: "Morning", date: morning))
@@ -150,11 +150,11 @@ final class DashboardViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.todaysEvents.last?.title, "Evening", "Latest event within limit")
     }
 
-    func testFetchDashboardDataSortsGoalsByDate() {
+    func testFetchDashboardDataSortsGoalsByDate() throws {
         let today = Date()
-        let day3 = Calendar.current.date(byAdding: .day, value: 3, to: today)!
-        let day5 = Calendar.current.date(byAdding: .day, value: 5, to: today)!
-        let day1 = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        let day3 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 3, to: today))
+        let day5 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
+        let day1 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
 
         GoalDataManager.shared.add(Goal(title: "Day 3", description: "", targetDate: day3))
         GoalDataManager.shared.add(Goal(title: "Day 5", description: "", targetDate: day5))
@@ -225,10 +225,10 @@ final class DashboardViewModelTests: XCTestCase {
 
     // MARK: - Integration Tests
 
-    func testFullDashboardDataFlow() {
+    func testFullDashboardDataFlow() throws {
         // Setup realistic data
         let today = Date()
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 5, to: today)!
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
 
         TaskDataManager.shared.add(PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high))
         TaskDataManager.shared.add(PlannerTask(title: "Finish project", isCompleted: false, priority: .medium))

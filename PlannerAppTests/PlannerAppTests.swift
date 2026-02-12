@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 import XCTest
-
 @testable import PlannerApp
 
 private typealias AppTask = PlannerTask
@@ -62,7 +61,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertNotNil(task.dueDate)
     }
 
-    func testTaskPriority() throws {
+    func testTaskPriority() {
         let highPriorityTask = AppTask(
             title: "High Priority",
             description: "Urgent task",
@@ -83,7 +82,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(lowPriorityTask.priority.sortOrder, 1)
     }
 
-    func testTaskDueDate() throws {
+    func testTaskDueDate() {
         let futureDate = Date().addingTimeInterval(86400) // Tomorrow
         let pastDate = Date().addingTimeInterval(-86400) // Yesterday
 
@@ -91,7 +90,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertLessThan(pastDate, Date(), "Past date should be before current date")
     }
 
-    func testTaskCompletionToggle() throws {
+    func testTaskCompletionToggle() {
         var task = AppTask(title: "Toggle Test", description: "Test completion toggle")
 
         XCTAssertFalse(task.isCompleted)
@@ -103,7 +102,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertFalse(task.isCompleted)
     }
 
-    func testTaskEquality() throws {
+    func testTaskEquality() {
         let id = UUID()
         let task1 = AppTask(id: id, title: "Test", description: "Description")
         let task2 = AppTask(id: id, title: "Test", description: "Description")
@@ -183,7 +182,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(loadedTasks[0].isCompleted)
     }
 
-    func testTaskDataManagerDelete() throws {
+    func testTaskDataManagerDelete() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -198,7 +197,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(loadedTasks[0].title, "Task 2")
     }
 
-    func testTaskDataManagerFindById() throws {
+    func testTaskDataManagerFindById() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -214,7 +213,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertNil(notFoundTask)
     }
 
-    func testTaskDataManagerFiltering() throws {
+    func testTaskDataManagerFiltering() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -231,7 +230,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(incompleteTasks[0].title, "Incomplete")
     }
 
-    func testTaskDataManagerDueDateFiltering() throws {
+    func testTaskDataManagerDueDateFiltering() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -253,7 +252,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(dueWithin7Days.count, 3) // dueToday, dueTomorrow, and dueNextWeek (within 7 days)
     }
 
-    func testTaskDataManagerOverdueTasks() throws {
+    func testTaskDataManagerOverdueTasks() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -282,7 +281,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(overdueTasks[0].title, "Overdue")
     }
 
-    func testTaskDataManagerSorting() throws {
+    func testTaskDataManagerSorting() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -298,7 +297,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(sortedByPriority[2].title, "Low")
     }
 
-    func testTaskDataManagerStatistics() throws {
+    func testTaskDataManagerStatistics() {
         let manager = TaskDataManager.shared
         manager.clearAllTasks()
 
@@ -342,7 +341,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - DashboardViewModel Tests
 
-    func testDashboardViewModelInitialization() throws {
+    func testDashboardViewModelInitialization() {
         let viewModel = DashboardViewModel()
 
         XCTAssertEqual(viewModel.todaysEvents.count, 0)
@@ -352,7 +351,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(viewModel.upcomingItems.count, 0)
     }
 
-    func testDashboardViewModelFetchData() throws {
+    func testDashboardViewModelFetchData() {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
@@ -378,7 +377,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(viewModel.totalTodaysEventsCount, 1)
     }
 
-    func testDashboardViewModelRefreshData() async throws {
+    func testDashboardViewModelRefreshData() async {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
@@ -397,7 +396,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(viewModel.recentActivities.count, 0) // May be 0 if not recent
     }
 
-    func testDashboardViewModelDataFiltering() throws {
+    func testDashboardViewModelDataFiltering() {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
@@ -420,7 +419,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertFalse(viewModel.incompleteTasks.contains { $0.title == "Completed" })
     }
 
-    func testDashboardViewModelItemLimit() throws {
+    func testDashboardViewModelItemLimit() {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
@@ -444,7 +443,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Goal Model Tests
 
-    func testGoalCreation() throws {
+    func testGoalCreation() {
         let targetDate = Date().addingTimeInterval(7 * 86400) // One week from now
         let goal = Goal(title: "Test Goal", description: "A test goal", targetDate: targetDate)
 
@@ -456,7 +455,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertNotNil(goal.createdAt)
     }
 
-    func testGoalCompletion() throws {
+    func testGoalCompletion() {
         var goal = Goal(
             title: "Completion Test",
             description: "Test completion",
@@ -471,7 +470,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Calendar Event Tests
 
-    func testCalendarEventCreation() throws {
+    func testCalendarEventCreation() {
         let eventDate = Date().addingTimeInterval(3600) // One hour from now
         let event = CalendarEvent(title: "Test Event", date: eventDate)
 
@@ -482,7 +481,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Data Manager Integration Tests
 
-    func testDataManagerIntegration() throws {
+    func testDataManagerIntegration() {
         // Clear all data
         TaskDataManager.shared.clearAllTasks()
         GoalDataManager.shared.clearAllGoals()
@@ -520,14 +519,14 @@ final class PlannerAppTests: XCTestCase {
     func testDateCalculations() throws {
         // Test date calculation utilities
         let today = Date()
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-        let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: today)!
+        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
+        let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 7, to: today))
 
         XCTAssertGreaterThan(tomorrow, today, "Tomorrow should be after today")
         XCTAssertGreaterThan(nextWeek, tomorrow, "Next week should be after tomorrow")
     }
 
-    func testTaskOverdueDetection() throws {
+    func testTaskOverdueDetection() {
         // Test detection of overdue tasks
         let yesterday = Date().addingTimeInterval(-86400)
         let tomorrow = Date().addingTimeInterval(86400)
@@ -536,7 +535,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertGreaterThan(tomorrow, Date(), "Tomorrow should be in the future")
     }
 
-    func testDueDateValidation() throws {
+    func testDueDateValidation() {
         // Test due date validation
         let pastDate = Date().addingTimeInterval(-86400)
         let futureDate = Date().addingTimeInterval(86400)
@@ -549,7 +548,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Search and Filter Tests
 
-    func testTaskSearch() throws {
+    func testTaskSearch() {
         // Test task search functionality
         let searchTerm = "meeting"
 
@@ -557,7 +556,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(searchTerm.lowercased(), "meeting", "Search term should be lowercase")
     }
 
-    func testTaskFiltering() throws {
+    func testTaskFiltering() {
         // Test task filtering by priority
         // let highPriorityTasks = filterTasks(by: .high)
         // let mediumPriorityTasks = filterTasks(by: .medium)
@@ -568,7 +567,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Task filtering test framework ready")
     }
 
-    func testAdvancedFiltering() throws {
+    func testAdvancedFiltering() {
         // Test advanced filtering options
         // let completedTasks = filterTasks(by: .completed)
         // let overdueTasks = filterTasks(by: .overdue)
@@ -583,7 +582,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Data Persistence Tests
 
-    func testDataPersistence() throws {
+    func testDataPersistence() {
         // Test data persistence across app launches
         let testData = ["key": "value", "number": "42"]
 
@@ -592,7 +591,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(testData.count, 2)
     }
 
-    func testDataMigration() throws {
+    func testDataMigration() {
         // Test data migration between app versions
         let oldVersionData = ["version": "1.0", "tasks": "[]"]
         let newVersionData = ["version": "2.0", "tasks": "[]", "projects": "[]"]
@@ -602,7 +601,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(newVersionData.keys.contains("projects"))
     }
 
-    func testDataBackupAndRestore() throws {
+    func testDataBackupAndRestore() {
         // Test data backup and restore functionality
         // let backupService = DataBackupService()
         // let testData = ["tasks": ["task1", "task2"], "projects": ["project1"]]
@@ -618,7 +617,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Performance Tests
 
-    func testTaskCreationPerformance() throws {
+    func testTaskCreationPerformance() {
         // Test performance of creating multiple tasks
         let startTime = Date()
 
@@ -634,7 +633,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertLessThan(duration, 1.0, "Creating 100 tasks should take less than 1 second")
     }
 
-    func testSearchPerformance() throws {
+    func testSearchPerformance() {
         // Test performance of search operations
         let startTime = Date()
 
@@ -650,7 +649,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertLessThan(duration, 0.5, "Searching through 1000 items should be fast")
     }
 
-    func testBulkOperationsPerformance() throws {
+    func testBulkOperationsPerformance() {
         // Test performance of bulk operations
         let startTime = Date()
 
@@ -675,7 +674,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - UI Logic Tests
 
-    func testTaskDisplayFormatting() throws {
+    func testTaskDisplayFormatting() {
         // Test formatting of task display strings
         let taskTitle = "Complete Project Report"
         let formattedTitle = taskTitle.uppercased()
@@ -684,7 +683,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(formattedTitle.hasSuffix("REPORT"))
     }
 
-    func testDateDisplayFormatting() throws {
+    func testDateDisplayFormatting() {
         // Test formatting of date display strings
         let date = Date()
         let dateString = date.description
@@ -693,7 +692,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(dateString.contains("-")) // ISO date format contains hyphens
     }
 
-    func testPriorityColorMapping() throws {
+    func testPriorityColorMapping() {
         // Test mapping of priority levels to colors
         // let highPriorityColor = UIColor.red
         // let mediumPriorityColor = UIColor.orange
@@ -707,7 +706,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Integration Tests
 
-    func testTaskProjectIntegration() throws {
+    func testTaskProjectIntegration() {
         // Test integration between tasks and projects
         // let project = Project(name: "Integration Test", description: "Test integration", color: .red)
         // let task = Task(title: "Integration Task", description: "Test task", dueDate: Date(), priority: .high)
@@ -720,7 +719,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Task-project integration test framework ready")
     }
 
-    func testCategoryTaskIntegration() throws {
+    func testCategoryTaskIntegration() {
         // Test integration between categories and tasks
         // let category = Category(name: "Integration", color: .purple, icon: "circle")
         // let task = Task(title: "Category Task", description: "Test category task", dueDate: Date(), priority:
@@ -734,7 +733,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Category-task integration test framework ready")
     }
 
-    func testFullWorkflowIntegration() throws {
+    func testFullWorkflowIntegration() {
         // Test complete workflow from project creation to task completion
         // let project = Project(name: "Full Workflow", description: "Complete workflow test", color: .blue)
         // let category = Category(name: "Workflow Category", color: .green, icon: "checklist")
@@ -757,7 +756,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Data Export Service Tests
 
-    func testDataExportServiceInitialization() throws {
+    func testDataExportServiceInitialization() {
         // Test data export service initialization
         // let service = DataExportService()
         // XCTAssertNotNil(service)
@@ -766,7 +765,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Data export service initialization test framework ready")
     }
 
-    func testDataExport() throws {
+    func testDataExport() {
         // Test data export functionality
         // let service = DataExportService()
         // let exportData = ["tasks": ["task1", "task2"], "projects": ["project1"]]
@@ -781,7 +780,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Data export test framework ready")
     }
 
-    func testExportFormats() throws {
+    func testExportFormats() {
         // Test different export formats
         // let service = DataExportService()
         // let testData = ["test": "data"]
@@ -800,7 +799,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Content View Tests
 
-    func testContentViewInitialization() throws {
+    func testContentViewInitialization() {
         // Test content view initialization
         // let view = ContentView()
         // XCTAssertNotNil(view)
@@ -809,7 +808,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(true, "Content view initialization test framework ready")
     }
 
-    func testContentViewDataBinding() throws {
+    func testContentViewDataBinding() {
         // Test content view data binding
         // let viewModel = PlannerViewModel()
         // let view = ContentView(viewModel: viewModel)
@@ -823,7 +822,7 @@ final class PlannerAppTests: XCTestCase {
 
     // MARK: - Edge Cases and Validation Tests
 
-    func testEmptyTaskValidation() throws {
+    func testEmptyTaskValidation() {
         // Test validation of empty tasks
         let emptyTitle = ""
         let emptyDescription = ""
@@ -832,14 +831,14 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertTrue(emptyDescription.isEmpty)
     }
 
-    func testInvalidDateHandling() throws {
+    func testInvalidDateHandling() {
         // Test handling of invalid dates
         let invalidDate = Date.distantPast
 
         XCTAssertLessThan(invalidDate, Date())
     }
 
-    func testLargeDataSets() throws {
+    func testLargeDataSets() {
         // Test handling of large data sets
         let largeArray = Array(1...10000)
         let filteredArray = largeArray.filter { $0 % 2 == 0 }
@@ -848,7 +847,7 @@ final class PlannerAppTests: XCTestCase {
         XCTAssertEqual(filteredArray.count, 5000)
     }
 
-    func testConcurrentAccess() throws {
+    func testConcurrentAccess() {
         // Test concurrent access to data
         // This would typically use expectations for async testing
         let expectation = XCTestExpectation(description: "Concurrent access test")

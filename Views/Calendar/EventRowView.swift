@@ -5,7 +5,7 @@ public struct EventRowView: View {
     @EnvironmentObject var themeManager: ThemeManager
     let event: CalendarEvent
 
-    // Read time format setting from UserDefaults
+    /// Read time format setting from UserDefaults
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
     private var timeFormatter: DateFormatter {

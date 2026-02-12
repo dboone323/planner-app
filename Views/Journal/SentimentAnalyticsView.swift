@@ -12,7 +12,7 @@ public struct SentimentAnalyticsView: View {
     @EnvironmentObject var themeManager: ThemeManager
     let entries: [JournalEntry]
 
-    // Computed analytics data
+    /// Computed analytics data
     private var averageSentiment: Double {
         guard !self.entries.isEmpty else { return 0.0 }
         return self.entries.reduce(0.0) { $0 + $1.sentimentScore } / Double(self.entries.count)
@@ -188,7 +188,7 @@ public struct SentimentAnalyticsView: View {
         .navigationTitle("Sentiment Analytics")
     }
 
-    // Helper functions
+    /// Helper functions
     private func sentimentLabel(for score: Double) -> String {
         score > 0.2 ? "positive" : (score < -0.2 ? "negative" : "neutral")
     }

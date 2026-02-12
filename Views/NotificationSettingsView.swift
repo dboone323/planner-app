@@ -60,7 +60,8 @@ struct NotificationSettingsView: View {
 
                 Section("About Notifications") {
                     Text(
-                        "Task notifications help you stay on top of your deadlines. You'll receive reminders before tasks are due and notifications when they become due."
+                        "Task notifications help you stay on top of your deadlines. "
+                            + "You'll receive reminders before tasks are due and notifications when they become due."
                     )
                     .font(.caption)
                     .foregroundColor(.secondary)

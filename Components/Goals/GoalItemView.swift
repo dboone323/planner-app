@@ -10,7 +10,7 @@ public struct GoalItemView: View {
 
     @State private var showProgressSheet = false
 
-    // Formatter for displaying the target date
+    /// Formatter for displaying the target date
     private var targetDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium // e.g., Apr 29, 2025
@@ -18,7 +18,7 @@ public struct GoalItemView: View {
         return formatter
     }
 
-    // Progress bar component
+    /// Progress bar component
     private var progressBar: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
@@ -36,7 +36,7 @@ public struct GoalItemView: View {
         .frame(height: 8)
     }
 
-    // Color for progress bar based on completion status
+    /// Color for progress bar based on completion status
     private var progressColor: Color {
         if self.goal.isCompleted {
             self.themeManager.currentTheme.completedColor.opacity(0.8)
@@ -49,7 +49,7 @@ public struct GoalItemView: View {
         }
     }
 
-    // Priority badge
+    /// Priority badge
     private var priorityBadge: some View {
         Text(self.goal.priority.displayName)
             .font(.caption2)
@@ -61,7 +61,7 @@ public struct GoalItemView: View {
             .clipShape(Capsule())
     }
 
-    // Color for priority badge
+    /// Color for priority badge
     private var priorityColor: Color {
         switch self.goal.priority {
         case .high: .red

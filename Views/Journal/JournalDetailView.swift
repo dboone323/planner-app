@@ -2,15 +2,15 @@
 import SwiftUI
 
 public struct JournalDetailView: View {
-    // Access shared ThemeManager
+    /// Access shared ThemeManager
     @EnvironmentObject var themeManager: ThemeManager
-    // The specific journal entry to display
+    /// The specific journal entry to display
     var entry: JournalEntry
 
-    // Read settings if needed (e.g., for date formatting)
+    /// Read settings if needed (e.g., for date formatting)
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
-    // Formatter for the date displayed prominently in the detail view
+    /// Formatter for the date displayed prominently in the detail view
     private var detailDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long // e.g., April 29, 2025
@@ -35,21 +35,25 @@ public struct JournalDetailView: View {
                 // Title Section
                 Text(self.entry.title)
                     // Apply theme font (primary, large title size, bold) and color
-                        .font(self.themeManager.currentTheme.font(
+                    .font(
+                        self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
                             size: 30,
                             weight: .bold
-                        ))
-                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                        )
+                    )
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                 // Date Section
                 Text(self.entry.date, formatter: self.detailDateFormatter) // Use the detailed formatter
                     // Apply theme font (secondary, smaller size) and color
-                        .font(self.themeManager.currentTheme.font(
+                    .font(
+                        self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.secondaryFontName,
                             size: 16
-                        ))
-                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        )
+                    )
+                    .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
                 // Divider line (uses system/theme appropriate color)
                 Divider()
@@ -57,12 +61,14 @@ public struct JournalDetailView: View {
                 // Body Text Section
                 Text(self.entry.body)
                     // Apply theme font (primary, body size) and color
-                        .font(self.themeManager.currentTheme.font(
+                    .font(
+                        self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
                             size: 17
-                        ))
-                        .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
-                        .lineSpacing(5) // Add extra space between lines for readability
+                        )
+                    )
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .lineSpacing(5) // Add extra space between lines for readability
             } // End VStack
             .padding() // Add padding around the entire content VStack
         } // End ScrollView
@@ -74,20 +80,23 @@ public struct JournalDetailView: View {
     }
 }
 
-// --- Preview Provider ---
+/// --- Preview Provider ---
 public struct JournalDetailView_Previews: PreviewProvider {
     public static var previews: some View {
         // Embed in NavigationStack for the preview to show the title bar
         NavigationStack {
             // Create a sample entry for the preview
-            JournalDetailView(entry: JournalEntry(
-                title: "A Wonderful Day",
-                body: "Spent the afternoon reading in the park. The weather was perfect and it felt great to relax and unwind.",
-                date: Date(),
-                mood: "😊"
-            ))
+            JournalDetailView(
+                entry: JournalEntry(
+                    title: "A Wonderful Day",
+                    body: "Spent the afternoon reading in the park. "
+                        + "The weather was perfect and it felt great to relax and unwind.",
+                    date: Date(),
+                    mood: "😊"
+                )
+            )
             // Provide the ThemeManager environment object for the preview
-                .environmentObject(ThemeManager())
+            .environmentObject(ThemeManager())
         }
     }
 }

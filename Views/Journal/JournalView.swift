@@ -19,7 +19,7 @@ public struct JournalView: View {
     // @State private var authenticationErrorMsg = ""
     // @State private var isAuthenticating = false
 
-    // Filtered and sorted entries
+    /// Filtered and sorted entries
     private var filteredEntries: [JournalEntry] {
         // Apply text search filter
         let searched = self.searchText.isEmpty
@@ -129,7 +129,7 @@ public struct JournalView: View {
 
     // --- Authentication Function (REMOVED) ---
 
-    // --- Data Functions ---
+    /// --- Data Functions ---
     private func deleteEntry(at offsets: IndexSet) {
         print("[JournalView Simplified] deleteEntry called with offsets: \(offsets)")
         let idsToDelete = offsets.map { offset -> UUID in
@@ -168,7 +168,7 @@ enum JournalSortOption: String, CaseIterable {
     case sentiment = "Sentiment"
 }
 
-// --- Preview Provider (Unchanged) ---
+/// --- Preview Provider (Unchanged) ---
 public struct JournalView_Previews: PreviewProvider {
     public static var previews: some View {
         JournalView()
