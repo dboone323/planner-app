@@ -23,6 +23,7 @@ public struct SettingsView: View {
     // State for managing UI elements
     @State private var showingNotificationAlert = false
     @State private var showingThemePreview = false
+    @FocusState private var isUserNameFocused: Bool
 
     public var body: some View {
         NavigationStack {
@@ -34,6 +35,11 @@ public struct SettingsView: View {
                         Spacer()
                         TextField("Your Name", text: self.$userName).accessibilityLabel("Text Field")
                             .accessibilityLabel("Text Field")
+                            .focused(self.$isUserNameFocused)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                self.isUserNameFocused = false
+                            }
                             .multilineTextAlignment(.trailing)
                     }
                 }

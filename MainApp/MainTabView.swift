@@ -70,6 +70,13 @@ public struct MainTabView: View {
             \.colorScheme,
             self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light
         )
+        .onChange(of: self.selectedTabTag) { _, _ in
+            #if os(iOS)
+            let generator = UISelectionFeedbackGenerator()
+            generator.prepare()
+            generator.selectionChanged()
+            #endif
+        }
         #if os(macOS)
         // Ensure full window utilization on macOS
         .frame(minWidth: 800, minHeight: 600)

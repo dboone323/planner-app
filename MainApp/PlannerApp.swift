@@ -63,11 +63,13 @@ public struct PlannerApp: App {
                     MainTabView(selectedTabTag: self.$selectedTabTag)
                 )
                 .environmentObject(self.themeManager)
+                .plannerAccessibilityDefaults()
                 .onAppear {
                     // Perform one-time legacy data migration
                     LegacyDataMigrator.migrateIfNeeded(
                         context: self.sharedModelContainer.mainContext
                     )
+                    PlannerAppLifecycleCoordinator.configureOnLaunch()
                 }
         }
         .modelContainer(self.sharedModelContainer)

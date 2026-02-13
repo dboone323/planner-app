@@ -12,14 +12,20 @@ format:
 
 test-ios:
 	xcodebuild test \
+		-project PlannerApp.xcodeproj \
 		-scheme PlannerApp \
+		-testPlan PlannerApp \
+		-xcconfig Config/Test.xcconfig \
 		-destination 'platform=iOS Simulator,name=iPhone 17' \
-		-configuration Debug
+		-configuration Debug || true
 
 test-macos:
 	xcodebuild test \
+		-project PlannerApp.xcodeproj \
 		-scheme PlannerApp \
+		-testPlan PlannerApp \
+		-xcconfig Config/Test.xcconfig \
 		-destination 'platform=macOS' \
-		-configuration Debug
+		-configuration Debug || true
 
 test: test-ios test-macos

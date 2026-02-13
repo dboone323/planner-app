@@ -84,7 +84,6 @@
 		CECD1CA877541BE3DD68D911 /* SwiftDataGoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E22E219DFA7636D96BD27 /* SwiftDataGoalManager.swift */; };
 		D3B62AEB3150480696E34AC2 /* Views/Calendar/DateSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4CD3BF68B740DCA1401394 /* Views/Calendar/DateSectionView.swift */; };
 		DBD2722588798E4B7A2A03A9 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC169814801F8CDBBBC73C7 /* TaskListView.swift */; };
-		E5AF22140D0C8D4C944A351D /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DAD3D085DEC2DDCB7C470A /* PomodoroTimer.swift */; };
 		EA79E7C6EEA49D353429B2B1 /* SDTaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BA89C715F76E05F76F1392 /* SDTaskRowView.swift */; };
 		EC334CC720874E159EB225A4 /* Views/Calendar/TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3698D37148483F8BE8E470 /* Views/Calendar/TaskRowView.swift */; };
 		F88CE36DFF624C828ADE25B1 /* Components/VisualEnhancements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3A5A2135AE4820844E6552 /* Components/VisualEnhancements.swift */; };
@@ -671,7 +670,6 @@
 				7DF8187049581FF6C9402637 /* RecordMapper.swift in Sources */,
 				5B7F39BAB84F61147B4EC7C7 /* ConflictResolver.swift in Sources */,
 				32249CDEC69EAC530CFCBAEA /* CalendarSyncManager.swift in Sources */,
-				E5AF22140D0C8D4C944A351D /* PomodoroTimer.swift in Sources */,
 				1067DE7571C865A617C7A548 /* SDTask.swift in Sources */,
 				44209E3A07627D741B040651 /* SDGoal.swift in Sources */,
 				935F019271E9DDF22FB543E3 /* LegacyDataMigrator.swift in Sources */,
@@ -832,15 +830,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+					CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 1;
+					DEVELOPMENT_TEAM = 3N5528D82R;
+					ENABLE_HARDENED_RUNTIME = YES;
+					ENABLE_PREVIEWS = YES;
+					GENERATE_INFOPLIST_FILE = NO;
+					INFOPLIST_FILE = Config/AppInfo.plist;
+					"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+					"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -872,15 +871,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+					CODE_SIGN_ENTITLEMENTS = PlannerApp/PlannerApp.entitlements;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 1;
+					DEVELOPMENT_TEAM = 3N5528D82R;
+					ENABLE_HARDENED_RUNTIME = YES;
+					ENABLE_PREVIEWS = YES;
+					GENERATE_INFOPLIST_FILE = NO;
+					INFOPLIST_FILE = Config/AppInfo.plist;
+					"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+					"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
