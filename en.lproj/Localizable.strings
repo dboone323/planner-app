@@ -84,7 +84,7 @@
 
 /* Sync Status */
 "syncing" = "Syncing...";
-"last_synced" = "Last synced %s ago";
+"last_synced" = "Last synced %@ ago";
 "not_synced" = "Not synced";
 "sync_now" = "Sync Now";
 
@@ -101,7 +101,7 @@
 "completed" = "Completed";
 
 /* Goals */
-"target_date" = "Target: %s";
+"target_date" = "Target: %@";
 "goal_completed" = "Completed";
 "goal_overdue" = "Overdue";
 

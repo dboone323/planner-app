@@ -56,7 +56,7 @@ struct SyncStatusBar: View {
             } else if let date = lastSyncDate {
                 Image(systemName: "checkmark.icloud")
                     .foregroundColor(.green)
-                Text(String(format: NSLocalizedString("last_synced", comment: "Last sync time display"), date, style: .relative))
+                Text(String(format: NSLocalizedString("last_synced", comment: "Last sync time display"), RelativeDateTimeFormatter().localizedString(for: date, relativeTo: Date())))
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else {

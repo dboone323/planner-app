@@ -156,7 +156,7 @@ public struct GoalItemView: View {
 
             // Target Date and status
             HStack {
-                Text(String(format: NSLocalizedString("target_date", comment: "Target date display"), self.goal.targetDate, formatter: self.targetDateFormatter))
+                Text(String(format: NSLocalizedString("target_date", comment: "Target date display"), self.targetDateFormatter.string(from: self.goal.targetDate)))
                     .font(
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.secondaryFontName,

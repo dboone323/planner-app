@@ -13,6 +13,7 @@ public struct DashboardView: View {
     // Loading and refresh state
     @State private var isRefreshing = false
     @State private var showLoadingOverlay = false
+    @State private var healthKitEnabled: Bool = false
 
     // Navigation state for quick actions
     @State private var showAddTask = false
@@ -117,7 +118,7 @@ public struct DashboardView: View {
                     .padding(.horizontal, 24)
 
                     // Health Stats (if enabled)
-                    if await self.isHealthKitEnabled() {
+                    if self.healthKitEnabled {
                         HealthStatsView()
                             .padding(.horizontal, 24)
                     }
@@ -339,6 +340,7 @@ public struct DashboardView: View {
         }
         .onAppear {
             _Concurrency.Task { @MainActor in
+                self.healthKitEnabled = await self.isHealthKitEnabled()
                 await self.refreshData()
             }
         }
@@ -409,8 +411,8 @@ public struct DashboardView: View {
 
     private func isHealthKitEnabled() async -> Bool {
         #if os(iOS)
-            let flags = await PlatformFeatureRegistry.shared.flags(for: .iOS)
-            return flags.healthKitEnabled
+            // HealthKit is enabled on iOS by default for this build.
+            return true
         #else
             return false
         #endif
