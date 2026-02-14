@@ -28,6 +28,10 @@
 	<string>PlannerApp needs access to your calendar to sync events.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>PlannerApp uses Face ID or Touch ID to protect your private planning data.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>PlannerApp needs access to your Health data to show steps, activity, and other fitness stats.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>PlannerApp needs access to your Health data to show steps, activity, and other fitness stats.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>PlannerApp exports snapshots and reports to your photo library.</string>
 	<key>UIApplicationSceneManifest</key>
