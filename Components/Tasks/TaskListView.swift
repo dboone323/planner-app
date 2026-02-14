@@ -18,10 +18,10 @@ public struct TaskListView: View {
     public var body: some View {
         List {
             // --- Incomplete Tasks Section ---
-            Section("To Do (\(self.incompleteTasks.count))") {
+            Section(String(format: NSLocalizedString("to_do_section", comment: "To do section header"), self.incompleteTasks.count)) {
                 if self.incompleteTasks.isEmpty {
                     // Message shown when no incomplete tasks exist
-                    Text("No tasks yet!")
+                    Text(NSLocalizedString("no_tasks_yet", comment: "No tasks empty state"))
                         .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         .font(
                             self.themeManager.currentTheme.font(
@@ -43,10 +43,10 @@ public struct TaskListView: View {
             .headerProminence(.increased) // Style section header
 
             // --- Completed Tasks Section ---
-            Section("Completed (\(self.completedTasks.count))") {
+            Section(String(format: NSLocalizedString("completed_section", comment: "Completed section header"), self.completedTasks.count)) {
                 if self.completedTasks.isEmpty {
                     // Message shown when no completed tasks exist
-                    Text("No completed tasks.")
+                    Text(NSLocalizedString("no_completed_tasks", comment: "No completed tasks empty state"))
                         .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         .font(
                             self.themeManager.currentTheme.font(

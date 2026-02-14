@@ -12,7 +12,7 @@ public struct TaskManagerHeaderView: View {
 
     public var body: some View {
         HStack {
-            Button("Done") {
+            Button(NSLocalizedString("done", comment: "Done button")) {
                 #if os(iOS)
                     HapticManager.lightImpact()
                 #endif
@@ -26,7 +26,7 @@ public struct TaskManagerHeaderView: View {
 
             Spacer()
 
-            Text("Task Manager")
+            Text(NSLocalizedString("task_manager.title", comment: "Task manager title"))
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(self.themeManager.currentTheme.primaryTextColor)

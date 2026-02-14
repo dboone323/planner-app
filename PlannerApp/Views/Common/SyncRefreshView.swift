@@ -50,19 +50,19 @@ struct SyncStatusBar: View {
             if self.isSyncing {
                 ProgressView()
                     .scaleEffect(0.8)
-                Text("Syncing...")
+                Text(NSLocalizedString("syncing", comment: "Sync status when actively syncing"))
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else if let date = lastSyncDate {
                 Image(systemName: "checkmark.icloud")
                     .foregroundColor(.green)
-                Text("Last synced \(date, style: .relative) ago")
+                Text(String(format: NSLocalizedString("last_synced", comment: "Last sync time display"), date, style: .relative))
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else {
                 Image(systemName: "icloud")
                     .foregroundColor(.gray)
-                Text("Not synced")
+                Text(NSLocalizedString("not_synced", comment: "Status when never synced"))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -95,7 +95,7 @@ struct ManualSyncButton: View {
                 } else {
                     Image(systemName: "arrow.triangle.2.circlepath")
                 }
-                Text("Sync Now")
+                Text(NSLocalizedString("sync_now", comment: "Manual sync button title"))
             }
         })
         .disabled(self.isSyncing)
@@ -134,9 +134,9 @@ extension View {
         onRefresh: {},
         content: {
             List {
-                Text("Item 1")
-                Text("Item 2")
-                Text("Item 3")
+                Text(NSLocalizedString("item_1", comment: "Test item 1"))
+                Text(NSLocalizedString("item_2", comment: "Test item 2"))
+                Text(NSLocalizedString("item_3", comment: "Test item 3"))
             }
         }
     )

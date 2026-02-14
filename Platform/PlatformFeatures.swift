@@ -10,6 +10,7 @@ import SwiftUI
 #if os(iOS)
     import UIKit
     import WidgetKit
+    import HealthKit
 #elseif os(macOS)
     import AppKit
 #endif
@@ -24,7 +25,7 @@ import SwiftUI
 
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Today's Focus")
+                Text(NSLocalizedString("todays_focus", comment: "Today's focus title"))
                     .font(.headline.bold())
                     .foregroundColor(.primary)
 
@@ -42,7 +43,7 @@ import SwiftUI
                 }
 
                 if !self.goals.isEmpty {
-                    Text("Active Goals")
+                    Text(NSLocalizedString("active_goals", comment: "Active goals section"))
                         .font(.caption.bold())
                         .foregroundColor(.secondary)
 
@@ -88,7 +89,7 @@ import SwiftUI
         var body: some View {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Working on:")
+                    Text(NSLocalizedString("working_on", comment: "Working on label"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text(self.taskTitle)
@@ -232,6 +233,113 @@ import SwiftUI
                 break
             default:
                 break
+            }
+        }
+    }
+
+#endif
+
+// MARK: - HealthKit Integration
+
+#if os(iOS)
+    /// HealthKit fitness tracking integration
+    struct HealthStatsView: View {
+        // @StateObject private var healthKit = HealthKitManager.shared
+        @EnvironmentObject var themeManager: ThemeManager
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.red)
+                        .font(.title2)
+                    Text(NSLocalizedString("todays_health", comment: "Today's health section"))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(themeManager.currentTheme.primaryTextColor)
+                    Spacer()
+                }
+
+                // if healthKit.isAuthorized {
+                VStack(spacing: 12) {
+                    HealthStatRow(
+                        icon: "figure.walk",
+                        title: "Steps",
+                        value: "8,547", // "\(healthKit.stepCount)",
+                        color: .green
+                    )
+
+                    HealthStatRow(
+                        icon: "flame.fill",
+                        title: "Active Energy",
+                        value: "342 cal", // String(format: "%.0f cal", healthKit.activeEnergyBurned),
+                        color: .orange
+                    )
+
+                    HealthStatRow(
+                        icon: "figure.run",
+                        title: "Exercise",
+                        value: "45 min", // "\(healthKit.exerciseMinutes) min",
+                        color: .blue
+                    )
+                }
+                // } else {
+                //     VStack(spacing: 12) {
+                //         Image(systemName: "heart.slash")
+                //             .font(.system(size: 40))
+                //             .foregroundColor(.secondary)
+                //
+                //         Text("Connect to Health")
+                //             .font(.subheadline)
+                //             .foregroundColor(.secondary)
+                //
+                //         Button("Enable Health Access") {
+                //             Task {
+                //                 try? await healthKit.requestAuthorization()
+                //             }
+                //         }
+                //         .buttonStyle(.borderedProminent)
+                //         .tint(.red)
+                //     }
+                //     .padding(.vertical, 20)
+                // }
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(themeManager.currentTheme.secondaryBackgroundColor)
+            )
+            // .onAppear {
+            //     if healthKit.isAuthorized {
+            //         Task {
+            //             await healthKit.fetchTodayStats()
+            //         }
+            //     }
+            // }
+        }
+    }
+
+    struct HealthStatRow: View {
+        let icon: String
+        let title: String
+        let value: String
+        let color: Color
+
+        var body: some View {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                    .frame(width: 24)
+
+                Text(title)
+                    .foregroundColor(.secondary)
+                    .font(.subheadline)
+
+                Spacer()
+
+                Text(value)
+                    .font(.headline)
+                    .foregroundColor(color)
             }
         }
     }

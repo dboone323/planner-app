@@ -19,3 +19,93 @@
 /* Empty States */
 "calendar.empty.no_items" = "No items for this date";
 "calendar.empty.add_hint" = "Tap + to add an event";
+
+/* Dashboard */
+"today" = "Today";
+"tasks" = "Tasks";
+"completed" = "completed";
+"goals" = "Goals";
+"achieved" = "achieved";
+"events" = "Events";
+"today_suffix" = "today";
+"quick_actions" = "Quick Actions";
+"add_task" = "Add Task";
+"new_goal" = "New Goal";
+"schedule_event" = "Schedule Event";
+"journal_entry" = "Journal Entry";
+"recent_activities" = "Recent Activities";
+"view_all" = "View All";
+"no_recent_activities" = "No recent activities";
+"start_by_creating" = "Start by creating a task or goal!";
+"upcoming" = "Upcoming";
+"view_calendar" = "View Calendar";
+"nothing_upcoming" = "Nothing upcoming";
+"schedule_events_hint" = "Schedule some events to see them here";
+"dashboard" = "Dashboard";
+"refreshing" = "Refreshing...";
+
+/* Greetings */
+"good_morning" = "Good Morning";
+"good_afternoon" = "Good Afternoon";
+"good_evening" = "Good Evening";
+"good_night" = "Good Night";
+
+/* Time */
+"now" = "now";
+"minutes_ago" = "%dm ago";
+"hours_ago" = "%dh ago";
+"days_ago" = "%dd ago";
+
+/* Tasks */
+"to_do_section" = "To Do (%d)";
+"no_tasks_yet" = "No tasks yet!";
+"completed_section" = "Completed (%d)";
+"no_completed_tasks" = "No completed tasks.";
+"done" = "Done";
+
+/* CloudKit */
+"sync_across_devices" = "Sync Across Devices";
+"sync_across_devices_desc" = "Access your tasks, goals, and events on all your Apple devices.";
+"private_secure" = "Private & Secure";
+"private_secure_desc" = "Your data is encrypted and protected by your Apple ID.";
+"automatic_backup" = "Automatic Backup";
+"automatic_backup_desc" = "Never lose your important information with automatic backups.";
+"just_for_you" = "Just for You";
+"just_for_you_desc" = "Your data is only visible to you, never shared with others.";
+"new_device_alert" = "This is a New Device";
+"merge_from_icloud" = "Merge from iCloud";
+"start_fresh" = "Start Fresh";
+
+/* Platform Features */
+"todays_focus" = "Today's Focus";
+"active_goals" = "Active Goals";
+"working_on" = "Working on:";
+"todays_health" = "Today's Health";
+
+/* Sync Status */
+"syncing" = "Syncing...";
+"last_synced" = "Last synced %s ago";
+"not_synced" = "Not synced";
+"sync_now" = "Sync Now";
+
+/* Test Items */
+"item_1" = "Item 1";
+"item_2" = "Item 2";
+"item_3" = "Item 3";
+
+/* Journal */
+"edit" = "Edit";
+
+/* Task Sections */
+"to_do" = "To Do";
+"completed" = "Completed";
+
+/* Goals */
+"target_date" = "Target: %s";
+"goal_completed" = "Completed";
+"goal_overdue" = "Overdue";
+
+/* Progress Update */
+"progress_update_sheet_title" = "Progress Update Sheet - Coming Soon";
+"progress_completion_prompt" = "You've set the progress to 100%. Would you like to mark this goal as completed?";
+"current_progress" = "Current Progress";

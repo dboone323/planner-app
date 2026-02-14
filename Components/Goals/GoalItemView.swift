@@ -156,7 +156,7 @@ public struct GoalItemView: View {
 
             // Target Date and status
             HStack {
-                Text("Target: \(self.goal.targetDate, formatter: self.targetDateFormatter)")
+                Text(String(format: NSLocalizedString("target_date", comment: "Target date display"), self.goal.targetDate, formatter: self.targetDateFormatter))
                     .font(
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.secondaryFontName,
@@ -171,7 +171,7 @@ public struct GoalItemView: View {
 
                 // Completion status
                 if self.goal.isCompleted {
-                    Text("Completed")
+                    Text(NSLocalizedString("goal_completed", comment: "Completed status"))
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.green)
@@ -180,7 +180,7 @@ public struct GoalItemView: View {
                         .background(Color.green.opacity(0.1))
                         .clipShape(Capsule())
                 } else if self.goal.targetDate < Date() {
-                    Text("Overdue")
+                    Text(NSLocalizedString("goal_overdue", comment: "Overdue status"))
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.red)
@@ -206,7 +206,7 @@ public struct GoalItemView: View {
         )
         .sheet(isPresented: self.$showProgressSheet) {
             // Placeholder for progress update sheet
-            Text("Progress Update Sheet - Coming Soon")
+            Text(NSLocalizedString("progress_update_sheet_title", comment: "Progress update sheet placeholder"))
                 .environmentObject(self.themeManager)
         }
     }

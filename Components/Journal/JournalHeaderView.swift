@@ -10,7 +10,7 @@ public struct JournalHeaderView: View {
             Button {
                 // Custom edit implementation for macOS
             } label: {
-                Text("Edit")
+                Text(NSLocalizedString("edit", comment: "Edit button"))
             }
             .accessibilityLabel("Button")
 

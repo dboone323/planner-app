@@ -24,31 +24,30 @@ public struct CloudKitOnboardingView: View {
                     )
                     .padding(.top, 30)
 
-                Text("Sync With iCloud")
+                Text(NSLocalizedString("sync_with_icloud", comment: "iCloud sync title"))
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
                 // Benefits explanation
                 VStack(alignment: .leading, spacing: 16) {
                     self.benefitRow(
-                        icon: "iphone.and.arrow.forward", title: "Sync Across Devices",
-                        description:
-                        "Access your tasks, goals, and events on all your Apple devices."
+                        icon: "iphone.and.arrow.forward", title: NSLocalizedString("sync_across_devices", comment: "Sync across devices benefit"),
+                        description: NSLocalizedString("sync_across_devices_desc", comment: "Sync across devices description")
                     )
 
                     self.benefitRow(
-                        icon: "lock.shield", title: "Private & Secure",
-                        description: "Your data is encrypted and protected by your Apple ID."
+                        icon: "lock.shield", title: NSLocalizedString("private_secure", comment: "Private and secure benefit"),
+                        description: NSLocalizedString("private_secure_desc", comment: "Private and secure description")
                     )
 
                     self.benefitRow(
-                        icon: "arrow.clockwise.icloud", title: "Automatic Backup",
-                        description: "Never lose your important information with automatic backups."
+                        icon: "arrow.clockwise.icloud", title: NSLocalizedString("automatic_backup", comment: "Automatic backup benefit"),
+                        description: NSLocalizedString("automatic_backup_desc", comment: "Automatic backup description")
                     )
 
                     self.benefitRow(
-                        icon: "person.crop.circle", title: "Just for You",
-                        description: "Your data is only visible to you, never shared with others."
+                        icon: "person.crop.circle", title: NSLocalizedString("just_for_you", comment: "Just for you benefit"),
+                        description: NSLocalizedString("just_for_you_desc", comment: "Just for you description")
                     )
                 }
                 .padding()
@@ -65,7 +64,7 @@ public struct CloudKitOnboardingView: View {
                     Button {
                         self.requestiCloudAccess()
                     } label: {
-                        Text("Enable iCloud Sync")
+                        Text(NSLocalizedString("enable_icloud_sync", comment: "Enable iCloud sync button"))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -85,7 +84,7 @@ public struct CloudKitOnboardingView: View {
                     Button {
                         self.skipOnboarding()
                     } label: {
-                        Text("Maybe Later")
+                        Text(NSLocalizedString("maybe_later", comment: "Maybe later button"))
                             .padding()
                     }
                 }
@@ -95,18 +94,18 @@ public struct CloudKitOnboardingView: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .alert("This is a New Device", isPresented: self.$showingMergeOptions) {
-                Button("Merge from iCloud", action: {
+            .alert(NSLocalizedString("new_device_alert", comment: "New device alert title"), isPresented: self.$showingMergeOptions) {
+                Button(NSLocalizedString("merge_from_icloud", comment: "Merge from iCloud button"), action: {
                     self.mergeFromiCloud()
                 })
                 .accessibilityLabel("Button")
 
-                Button("Start Fresh", action: {
+                Button(NSLocalizedString("start_fresh", comment: "Start fresh button"), action: {
                     self.startFresh()
                 })
                 .accessibilityLabel("Button")
             } message: {
-                Text("Do you want to merge existing iCloud data with this device, or start fresh?")
+                Text(NSLocalizedString("icloud_merge_prompt", comment: "iCloud merge prompt"))
             }
         }
     }
