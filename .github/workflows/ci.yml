@@ -2,10 +2,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop, 'fix/*']
+    branches: [main, develop, 'fix/*', 'phase3-advanced-automation']
     tags: ['v*']
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, 'phase3-advanced-automation']
   workflow_dispatch:
     inputs:
       environment:
