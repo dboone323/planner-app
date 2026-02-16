@@ -5,9 +5,9 @@
 //  HealthKit integration for fitness and health tracking
 //
 
+import Combine
 import Foundation
 import HealthKit
-import Combine
 
 @MainActor
 public class HealthKitManager: ObservableObject {
@@ -40,13 +40,13 @@ public class HealthKitManager: ObservableObject {
             HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
             HKObjectType.quantityType(forIdentifier: .bodyMass)!,
-            HKObjectType.quantityType(forIdentifier: .height)!
+            HKObjectType.quantityType(forIdentifier: .height)!,
         ]
 
         let writeTypes: Set<HKSampleType> = [
             HKObjectType.quantityType(forIdentifier: .bodyMass)!,
             HKObjectType.quantityType(forIdentifier: .height)!,
-            HKObjectType.workoutType()
+            HKObjectType.workoutType(),
         ]
 
         try await healthStore.requestAuthorization(toShare: writeTypes, read: readTypes)
@@ -107,9 +107,14 @@ public class HealthKitManager: ObservableObject {
     }
 
     private func queryQuantitySamples(type: HKQuantityType, predicate: NSPredicate) async throws -> [HKQuantitySample] {
-        return try await withCheckedThrowingContinuation { continuation in
-            let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, error in
-                if let error = error {
+        try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(
+                sampleType: type,
+                predicate: predicate,
+                limit: HKObjectQueryNoLimit,
+                sortDescriptors: nil
+            ) { _, samples, error in
+                if let error {
                     continuation.resume(throwing: error)
                 } else if let quantitySamples = samples as? [HKQuantitySample] {
                     continuation.resume(returning: quantitySamples)
@@ -123,7 +128,12 @@ public class HealthKitManager: ObservableObject {
 
     // MARK: - Workout Logging
 
-    public func logWorkout(type: HKWorkoutActivityType, startDate: Date, endDate: Date, energyBurned: Double? = nil) async throws {
+    public func logWorkout(
+        type: HKWorkoutActivityType,
+        startDate: Date,
+        endDate: Date,
+        energyBurned: Double? = nil
+    ) async throws {
         guard isAuthorized else { throw HealthKitError.notAuthorized }
 
         let workout = HKWorkout(
@@ -131,7 +141,9 @@ public class HealthKitManager: ObservableObject {
             start: startDate,
             end: endDate,
             duration: endDate.timeIntervalSince(startDate),
-            totalEnergyBurned: energyBurned != nil ? HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: energyBurned!) : nil,
+            totalEnergyBurned: energyBurned != nil
+                ? HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: energyBurned!)
+                : nil,
             totalDistance: nil,
             metadata: nil
         )
@@ -171,9 +183,9 @@ public enum HealthKitError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .healthDataNotAvailable:
-            return "Health data is not available on this device"
+            "Health data is not available on this device"
         case .notAuthorized:
-            return "HealthKit access not authorized"
+            "HealthKit access not authorized"
         }
     }
 }
@@ -182,6 +194,6 @@ public enum HealthKitError: LocalizedError {
 
 extension HKHealthStore {
     func authorizationStatus(for type: HKObjectType) -> HKAuthorizationStatus {
-        return authorizationStatus(for: type)
+        authorizationStatus(for: type)
     }
 }

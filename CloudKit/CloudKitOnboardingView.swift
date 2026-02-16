@@ -31,22 +31,37 @@ public struct CloudKitOnboardingView: View {
                 // Benefits explanation
                 VStack(alignment: .leading, spacing: 16) {
                     self.benefitRow(
-                        icon: "iphone.and.arrow.forward", title: NSLocalizedString("sync_across_devices", comment: "Sync across devices benefit"),
-                        description: NSLocalizedString("sync_across_devices_desc", comment: "Sync across devices description")
+                        icon: "iphone.and.arrow.forward", title: NSLocalizedString(
+                            "sync_across_devices",
+                            comment: "Sync across devices benefit"
+                        ),
+                        description: NSLocalizedString(
+                            "sync_across_devices_desc",
+                            comment: "Sync across devices description"
+                        )
                     )
 
                     self.benefitRow(
-                        icon: "lock.shield", title: NSLocalizedString("private_secure", comment: "Private and secure benefit"),
+                        icon: "lock.shield", title: NSLocalizedString(
+                            "private_secure",
+                            comment: "Private and secure benefit"
+                        ),
                         description: NSLocalizedString("private_secure_desc", comment: "Private and secure description")
                     )
 
                     self.benefitRow(
-                        icon: "arrow.clockwise.icloud", title: NSLocalizedString("automatic_backup", comment: "Automatic backup benefit"),
+                        icon: "arrow.clockwise.icloud", title: NSLocalizedString(
+                            "automatic_backup",
+                            comment: "Automatic backup benefit"
+                        ),
                         description: NSLocalizedString("automatic_backup_desc", comment: "Automatic backup description")
                     )
 
                     self.benefitRow(
-                        icon: "person.crop.circle", title: NSLocalizedString("just_for_you", comment: "Just for you benefit"),
+                        icon: "person.crop.circle", title: NSLocalizedString(
+                            "just_for_you",
+                            comment: "Just for you benefit"
+                        ),
                         description: NSLocalizedString("just_for_you_desc", comment: "Just for you description")
                     )
                 }
@@ -94,7 +109,10 @@ public struct CloudKitOnboardingView: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .alert(NSLocalizedString("new_device_alert", comment: "New device alert title"), isPresented: self.$showingMergeOptions) {
+            .alert(
+                NSLocalizedString("new_device_alert", comment: "New device alert title"),
+                isPresented: self.$showingMergeOptions
+            ) {
                 Button(NSLocalizedString("merge_from_icloud", comment: "Merge from iCloud button"), action: {
                     self.mergeFromiCloud()
                 })

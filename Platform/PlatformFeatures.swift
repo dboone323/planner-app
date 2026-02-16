@@ -8,9 +8,9 @@
 import SwiftUI
 
 #if os(iOS)
+    import HealthKit
     import UIKit
     import WidgetKit
-    import HealthKit
 #elseif os(macOS)
     import AppKit
 #endif

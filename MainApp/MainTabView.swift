@@ -72,9 +72,9 @@ public struct MainTabView: View {
         )
         .onChange(of: self.selectedTabTag) { _, _ in
             #if os(iOS)
-            let generator = UISelectionFeedbackGenerator()
-            generator.prepare()
-            generator.selectionChanged()
+                let generator = UISelectionFeedbackGenerator()
+                generator.prepare()
+                generator.selectionChanged()
             #endif
         }
         #if os(macOS)

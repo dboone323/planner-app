@@ -206,11 +206,14 @@ public struct DashboardView: View {
                                             self.themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text(NSLocalizedString("no_recent_activities", comment: "No recent activities message"))
-                                        .font(.subheadline)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(NSLocalizedString(
+                                        "no_recent_activities",
+                                        comment: "No recent activities message"
+                                    ))
+                                    .font(.subheadline)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
 
                                     Text(NSLocalizedString("start_by_creating", comment: "Start by creating hint"))
                                         .font(.caption)
