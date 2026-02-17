@@ -3,6 +3,8 @@ name: 🤖 Copilot Code Review & Enhancement
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: read
@@ -11,28 +13,36 @@ permissions:
 
 jobs:
   copilot-review:
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest # optimization: save costs
+    if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' || contains(github.event.comment.body, '/review'))
+    timeout-minutes: 10
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
-          pip install requests
+          pip install requests openai anthropic
 
       - name: Run Copilot Code Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
           GITHUB_OWNER: ${{ github.repository_owner }}
           GITHUB_REPO: ${{ github.event.repository.name }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          echo "🔍 Running Copilot Code Review..."
+          echo "🔍 Running Copilot Code Review (Swift Context)..."
           python3 .github/scripts/copilot-review.py
