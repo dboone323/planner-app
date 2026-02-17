@@ -100,7 +100,6 @@ public class HealthKitManager: ObservableObject {
                 let totalMinutes = exerciseSamples.reduce(0) { $0 + $1.quantity.doubleValue(for: HKUnit.minute()) }
                 await MainActor.run { exerciseMinutes = Int(totalMinutes) }
             }
-
         } catch {
             print("Error fetching health data: \(error)")
         }

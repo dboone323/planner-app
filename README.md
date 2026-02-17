@@ -1,30 +1,28 @@
-# PlannerApp 📅
+# planner-app
 
-A comprehensive task and productivity management application built for iOS and macOS.
+![CI Status](https://github.com/dboone323/planner-app/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Swift](https://img.shields.io/badge/swift-6.0-orange.svg)
+![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 
-## Overview
+**Task management application with CoreData persistence.**
 
-PlannerApp helps users organize their daily tasks, manage projects, and track productivity metrics. Built with SwiftUI and integrated with modern iOS features.
+This repository is part of the **Momentum Ecosystem**, a suite of integrated iOS applications and developer tools.
 
 ## Features
 
-- **Task Management**: Create, edit, and organize tasks with ease.
-- **Projects**: Group tasks into projects for better organization.
-- **Calendar Integration**: View tasks alongside your calendar events.
-- **Productivity Stats**: Track completion rates and productivity trends.
-
-## Architecture
-
-- **UI**: SwiftUI
-- **Data Persistence**: SwiftData / Core Data
-- **Architecture**: MVVM with Clean Architecture principles
+- **Built with Swift 6 & SwiftUI**
+- **Architecture**: MVVM + Coordinator pattern
+- **Code Quality**: Enforced via SwiftLint & SwiftFormat
+- **CI/CD**: Automated via GitHub Actions
 
 ## Getting Started
 
 ### Prerequisites
 
-- Xcode 15.0+
-- iOS 17.0+ / macOS 14.0+
+- Xcode 15+
+- iOS 17+
+- [Tools Automation](https://github.com/dboone323/tools-automation) scripts (optional but recommended)
 
 ### Installation
 
@@ -32,49 +30,22 @@ PlannerApp helps users organize their daily tasks, manage projects, and track pr
     ```bash
     git clone https://github.com/dboone323/planner-app.git
     ```
-2. Open `PlannerApp.xcodeproj` in Xcode.
-3. Build and run (Cmd+R).
+2. Open the project in Xcode:
+    ```bash
+    open PlannerApp.xcodeproj
+    ```
 
-## Testing
+## Documentation
 
-### Run all tests
-
-```bash
-make test
-```
-
-### iOS only (iPhone 17 Simulator)
-
-```bash
-make test-ios
-```
-
-### macOS only
-
-```bash
-make test-macos
-```
-
-### Code Quality
-
-Run linting:
-
-```bash
-make lint
-```
-
-Auto-format code:
-
-```bash
-make format
-```
+For high-level architecture and AI agent context, see [AI_CONTEXT.md](docs/AI_CONTEXT.md).
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+1. Create a feature branch (`feature/my-feature`)
+2. Commit changes
+3. Push to GitHub
+4. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-CI test trigger - Sat Feb 14 18:50:05 CST 2026
+MIT License. See [LICENSE](LICENSE) for details.
