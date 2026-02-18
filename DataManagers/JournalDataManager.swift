@@ -1,6 +1,7 @@
 import Foundation
 
 /// Protocol defining the interface for journal entry data management
+@MainActor
 protocol JournalDataManaging {
     func load() -> [JournalEntry]
     func save(entries: [JournalEntry])
@@ -11,15 +12,20 @@ protocol JournalDataManaging {
 }
 
 /// Manages storage and retrieval of `JournalEntry` objects with UserDefaults persistence.
+@MainActor
 final class JournalDataManager: JournalDataManaging {
     /// Shared singleton instance.
-    @MainActor static let shared = JournalDataManager()
+    static let shared = JournalDataManager()
 
     /// UserDefaults key for storing journal entries.
     private let entriesKey = "SavedJournalEntries"
 
     /// UserDefaults instance for persistence.
     private let userDefaults: UserDefaults
+
+    /// Object pool for performance optimization
+    private var objectPool: [Any] = []
+    private let maxPoolSize = 50
 
     /// Private initializer to enforce singleton usage.
     private init(userDefaults: UserDefaults = .standard) {
@@ -154,25 +160,21 @@ final class JournalDataManager: JournalDataManaging {
             "moods": moods,
         ]
     }
-}
 
-// MARK: - Object Pooling
+    // MARK: - Object Pooling
 
-/// Object pool for performance optimization
-private nonisolated(unsafe) var objectPool: [Any] = []
-private let maxPoolSize = 50
-
-/// Get an object from the pool or create new one
-private func getPooledObject<T>() -> T? {
-    if let pooled = objectPool.popLast() as? T {
-        return pooled
+    /// Get an object from the pool or create new one
+    func getPooledObject<T>() -> T? {
+        if let pooled = objectPool.popLast() as? T {
+            return pooled
+        }
+        return nil
     }
-    return nil
-}
 
-/// Return an object to the pool
-private func returnToPool(_ object: Any) {
-    if objectPool.count < maxPoolSize {
-        objectPool.append(object)
+    /// Return an object to the pool
+    func returnToPool(_ object: Any) {
+        if objectPool.count < maxPoolSize {
+            objectPool.append(object)
+        }
     }
 }

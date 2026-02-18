@@ -4,7 +4,7 @@ import CloudKit
 import Foundation
 
 /// Represents a calendar event for PlannerApp, supporting CloudKit sync and Codable serialization.
-public struct CalendarEvent: Identifiable, Codable {
+public struct CalendarEvent: Identifiable, Codable, Sendable {
     /// Unique identifier for the calendar event.
     public let id: UUID
 

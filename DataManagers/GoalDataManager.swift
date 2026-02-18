@@ -1,6 +1,7 @@
 import Foundation
 
 /// Protocol defining the interface for goal data management
+@MainActor
 protocol GoalDataManaging {
     func load() -> [Goal]
     func save(goals: [Goal])
@@ -11,15 +12,20 @@ protocol GoalDataManaging {
 }
 
 /// Manages storage and retrieval of `Goal` objects with UserDefaults persistence.
+@MainActor
 final class GoalDataManager: GoalDataManaging {
     /// Shared singleton instance.
-    @MainActor static let shared = GoalDataManager()
+    static let shared = GoalDataManager()
 
     /// UserDefaults key for storing goals.
     private let goalsKey = "SavedGoals"
 
     /// UserDefaults instance for persistence.
     private let userDefaults: UserDefaults
+
+    /// Object pool for performance optimization
+    private var objectPool: [Any] = []
+    private let maxPoolSize = 50
 
     /// Private initializer to enforce singleton usage.
     private init(userDefaults: UserDefaults = .standard) {
@@ -132,25 +138,21 @@ final class GoalDataManager: GoalDataManaging {
             "dueThisWeek": dueThisWeek,
         ]
     }
-}
 
-// MARK: - Object Pooling
+    // MARK: - Object Pooling
 
-/// Object pool for performance optimization
-private nonisolated(unsafe) var objectPool: [Any] = []
-private let maxPoolSize = 50
-
-/// Get an object from the pool or create new one
-private func getPooledObject<T>() -> T? {
-    if let pooled = objectPool.popLast() as? T {
-        return pooled
+    /// Get an object from the pool or create new one
+    func getPooledObject<T>() -> T? {
+        if let pooled = objectPool.popLast() as? T {
+            return pooled
+        }
+        return nil
     }
-    return nil
-}
 
-/// Return an object to the pool
-private func returnToPool(_ object: Any) {
-    if objectPool.count < maxPoolSize {
-        objectPool.append(object)
+    /// Return an object to the pool
+    func returnToPool(_ object: Any) {
+        if objectPool.count < maxPoolSize {
+            objectPool.append(object)
+        }
     }
 }

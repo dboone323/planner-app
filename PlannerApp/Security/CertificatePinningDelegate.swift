@@ -1,7 +1,7 @@
 import Foundation
 
 /// Certificate pinning delegate for URLSession
-class CertificatePinningDelegate: NSObject, URLSessionDelegate {
+final class CertificatePinningDelegate: NSObject, URLSessionDelegate, Sendable {
     // Replace with your actual certificate data (DER format)
     private let pinnedCertificateData: Data = {
         // Load from bundle or hardcode for demo
@@ -18,7 +18,8 @@ class CertificatePinningDelegate: NSObject, URLSessionDelegate {
 
     func urlSession(
         _ session: URLSession, didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+        completionHandler:
+        @escaping @Sendable (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
     ) {
         // If we don't have a pinned cert, we can't pin.
         // In a strict app, you might want to cancel here.
@@ -35,15 +36,17 @@ class CertificatePinningDelegate: NSObject, URLSessionDelegate {
         let policy = SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString)
         SecTrustSetPolicies(serverTrust, policy)
 
-        var secresult = SecTrustResultType.invalid
-        let status = SecTrustEvaluate(serverTrust, &secresult)
+        var error: CFError?
+        let isValid = SecTrustEvaluateWithError(serverTrust, &error)
 
-        guard status == errSecSuccess else {
+        guard isValid else {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
 
-        guard let serverCert = SecTrustGetCertificateAtIndex(serverTrust, 0) else {
+        guard let certificates = SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate],
+              let serverCert = certificates.first
+        else {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }

@@ -3,7 +3,7 @@
 import CloudKit
 import Foundation
 
-public struct JournalEntry: Identifiable, Codable {
+public struct JournalEntry: Identifiable, Codable, Sendable {
     public let id: UUID
     var title: String
     var body: String
@@ -62,7 +62,8 @@ public struct JournalEntry: Identifiable, Codable {
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
 
         self.sentimentScore = normalizedScore
-        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        self.sentiment =
+            normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion

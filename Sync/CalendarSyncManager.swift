@@ -2,16 +2,20 @@ import EventKit
 import Foundation
 
 /// Protocol for testing
-protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it as class dependency
+@MainActor
+protocol SyncEventStoreProtocol: AnyObject, Sendable { // Ideally AnyObject if we use it as class dependency
     func requestAccessToEvents() async -> Bool
     // Update to @Sendable for Swift 6 strict concurrency
-    func requestAccess(to entityType: EKEntityType, completion: @escaping @Sendable (Bool, Error?) -> Void)
+    func requestAccess(
+        to entityType: EKEntityType, completion: @escaping @Sendable (Bool, Error?) -> Void
+    )
     func calendars(for entityType: EKEntityType) -> [EKCalendar]
     func saveCalendar(_ calendar: EKCalendar, commit: Bool) throws
     func save(_ event: EKEvent, span: EKSpan) throws
     func remove(_ event: EKEvent, span: EKSpan) throws
     func event(withIdentifier identifier: String) -> EKEvent?
-    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
+    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?)
+        -> NSPredicate
     func events(matching predicate: NSPredicate) -> [EKEvent]
     var defaultCalendarForNewEvents: EKCalendar? { get }
 
@@ -19,7 +23,7 @@ protocol SyncEventStoreProtocol: AnyObject { // Ideally AnyObject if we use it a
     func newCalendar() -> EKCalendar
 }
 
-extension EKEventStore: SyncEventStoreProtocol {
+extension EKEventStore: SyncEventStoreProtocol, @unchecked Sendable {
     func newEvent() -> EKEvent {
         EKEvent(eventStore: self)
     }
@@ -47,6 +51,7 @@ extension EKEventStore: SyncEventStoreProtocol {
 }
 
 /// Calendar sync manager with bidirectional sync
+@MainActor
 class CalendarSyncManager {
     private let eventStore: SyncEventStoreProtocol
     private let calendarIdentifier = "com.plannerapp.sync"

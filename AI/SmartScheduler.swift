@@ -7,20 +7,28 @@ class SmartScheduler {
 
     // MARK: - Auto Time-Blocking
 
-    func scheduleTask(_ task: Task, preferences: SchedulingPreferences = .default) async -> ScheduledBlock? {
+    func scheduleTask(_ task: PlannerTask, preferences: SchedulingPreferences = .default) async
+        -> ScheduledBlock?
+    {
         // Request calendar access
         guard await self.requestCalendarAccess() else {
+            return nil
+        }
+
+        // We need a due date to find a slot
+        guard let dueDate = task.dueDate else {
             return nil
         }
 
         // Find optimal time slot
         let availableSlots = await findAvailableSlots(
             duration: task.estimatedDuration,
-            dueDate: task.dueDate,
+            dueDate: dueDate,
             preferences: preferences
         )
 
-        guard let bestSlot = selectBestSlot(availableSlots, for: task, preferences: preferences) else {
+        guard let bestSlot = selectBestSlot(availableSlots, for: task, preferences: preferences)
+        else {
             return nil
         }
 
@@ -59,12 +67,13 @@ class SmartScheduler {
             let dayStart = calendar.startOfDay(for: searchDate)
 
             // Working hours based on preferences
-            guard let workStart = calendar.date(
-                bySettingHour: preferences.workStartHour,
-                minute: 0,
-                second: 0,
-                of: dayStart
-            ),
+            guard
+                let workStart = calendar.date(
+                    bySettingHour: preferences.workStartHour,
+                    minute: 0,
+                    second: 0,
+                    of: dayStart
+                ),
                 let workEnd = calendar.date(
                     bySettingHour: preferences.workEndHour,
                     minute: 0,
@@ -84,10 +93,12 @@ class SmartScheduler {
 
             // Filter gaps that fit the task duration
             for gap in gaps where gap.duration >= duration {
-                availableSlots.append(TimeSlot(
-                    start: gap.start,
-                    end: calendar.date(byAdding: .second, value: Int(duration), to: gap.start)!
-                ))
+                availableSlots.append(
+                    TimeSlot(
+                        start: gap.start,
+                        end: calendar.date(byAdding: .second, value: Int(duration), to: gap.start)!
+                    )
+                )
             }
 
             searchDate = calendar.date(byAdding: .day, value: 1, to: searchDate)!
@@ -100,7 +111,7 @@ class SmartScheduler {
 
     private func selectBestSlot(
         _ slots: [TimeSlot],
-        for task: Task,
+        for task: PlannerTask,
         preferences: SchedulingPreferences
     ) -> TimeSlot? {
         guard !slots.isEmpty else { return nil }
@@ -111,7 +122,8 @@ class SmartScheduler {
 
             // Prefer earlier slots for high priority tasks
             if task.priority == .high {
-                let daysUntilSlot = Calendar.current.dateComponents([.day], from: Date(), to: slot.start).day ?? 0
+                let daysUntilSlot =
+                    Calendar.current.dateComponents([.day], from: Date(), to: slot.start).day ?? 0
                 score += Double(10 - min(10, daysUntilSlot))
             }
 
@@ -144,7 +156,7 @@ class SmartScheduler {
 
     private func requestCalendarAccess() async -> Bool {
         if #available(iOS 17.0, macOS 14.0, *) {
-            await eventStore.requestFullAccessToEvents()
+            await (try? eventStore.requestFullAccessToEvents()) ?? false
         } else {
             await withCheckedContinuation { continuation in
                 self.eventStore.requestAccess(to: .event) { granted, _ in
@@ -155,7 +167,9 @@ class SmartScheduler {
     }
 
     private func getEvents(from start: Date, to end: Date) -> [EKEvent] {
-        let predicate = self.eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
+        let predicate = self.eventStore.predicateForEvents(
+            withStart: start, end: end, calendars: nil
+        )
         return self.eventStore.events(matching: predicate)
     }
 
@@ -193,7 +207,7 @@ struct TimeSlot {
 }
 
 struct ScheduledBlock {
-    let task: Task
+    let task: PlannerTask
     let start: Date
     let end: Date
 }
@@ -210,16 +224,4 @@ struct SchedulingPreferences {
         preferMorning: true,
         avoidLateEvening: true
     )
-}
-
-/// Mock Task for this implementation
-struct Task {
-    let title: String
-    let estimatedDuration: TimeInterval
-    let dueDate: Date
-    let priority: TaskPriority
-}
-
-enum TaskPriority {
-    case low, medium, high
 }

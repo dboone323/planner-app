@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 
 /// Manages notifications for task reminders and due dates
+@MainActor
 final class NotificationManager {
     static let shared = NotificationManager()
 
@@ -13,7 +14,8 @@ final class NotificationManager {
 
     /// Request authorization for notifications
     func requestAuthorization() {
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) {
+            granted, error in
             if granted {
                 print("Notification permission granted")
             } else if let error {
@@ -45,10 +47,14 @@ final class NotificationManager {
             content.body = "\"\(task.title)\" is due soon: \(task.description)"
         }
 
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminderDate)
+        let components = Calendar.current.dateComponents(
+            [.year, .month, .day, .hour, .minute], from: reminderDate
+        )
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
-        let request = UNNotificationRequest(identifier: "task-reminder-\(task.id)", content: content, trigger: trigger)
+        let request = UNNotificationRequest(
+            identifier: "task-reminder-\(task.id)", content: content, trigger: trigger
+        )
 
         notificationCenter.add(request) { error in
             if let error {
@@ -73,10 +79,14 @@ final class NotificationManager {
         content.sound = .default
         content.badge = 1
 
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dueDate)
+        let components = Calendar.current.dateComponents(
+            [.year, .month, .day, .hour, .minute], from: dueDate
+        )
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
-        let request = UNNotificationRequest(identifier: "task-due-\(task.id)", content: content, trigger: trigger)
+        let request = UNNotificationRequest(
+            identifier: "task-due-\(task.id)", content: content, trigger: trigger
+        )
 
         notificationCenter.add(request) { error in
             if let error {

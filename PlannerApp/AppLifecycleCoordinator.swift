@@ -48,6 +48,7 @@ enum PlannerAppLifecycleCoordinator {
     #endif
 }
 
+@MainActor
 enum PlannerSecureStore {
     static func set(_ value: Bool, forKey key: String) -> Bool {
         let data = Data([value ? 1 : 0])

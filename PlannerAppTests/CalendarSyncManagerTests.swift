@@ -2,19 +2,17 @@ import EventKit
 import XCTest
 @testable import PlannerApp
 
-// Mock Task for testing since actual Task might be a SwiftData model hard to init
-// Mock Task removed, using PlannerApp.Task
-
 class MockSyncEventStore: SyncEventStoreProtocol {
     var accessGranted = true
     var savedEvents: [EKEvent] = []
     var removedEvents: [EKEvent] = []
     var storedEvents: [EKEvent] = []
+    var mockCalendars: [EKCalendar] = []
 
     var defaultCalendarForNewEvents: EKCalendar?
 
     func newEvent() -> EKEvent {
-        EKEvent(eventStore: EKEventStore()) // Real store needed for init
+        EKEvent(eventStore: EKEventStore())
     }
 
     func newCalendar() -> EKCalendar {
@@ -30,11 +28,11 @@ class MockSyncEventStore: SyncEventStoreProtocol {
     }
 
     func calendars(for _: EKEntityType) -> [EKCalendar] {
-        [] // Return empty or mock
+        self.mockCalendars
     }
 
-    func saveCalendar(_: EKCalendar, commit _: Bool) throws {
-        // No-op
+    func saveCalendar(_ calendar: EKCalendar, commit _: Bool) throws {
+        self.mockCalendars.append(calendar)
     }
 
     func save(_ event: EKEvent, span _: EKSpan) throws {
@@ -49,7 +47,9 @@ class MockSyncEventStore: SyncEventStoreProtocol {
         self.storedEvents.first { $0.eventIdentifier == identifier }
     }
 
-    func predicateForEvents(withStart _: Date, end _: Date, calendars _: [EKCalendar]?) -> NSPredicate {
+    func predicateForEvents(withStart _: Date, end _: Date, calendars _: [EKCalendar]?)
+        -> NSPredicate
+    {
         NSPredicate(value: true)
     }
 
@@ -72,6 +72,7 @@ class CalendarSyncManagerTests: XCTestCase {
         self.mockStore.accessGranted = true
         let result = await manager.setupCalendar()
         XCTAssertTrue(result)
+        XCTAssertEqual(mockStore.mockCalendars.count, 1)
     }
 
     func testSetupCalendar_Failure() async {
@@ -80,8 +81,9 @@ class CalendarSyncManagerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
-    func testSyncTaskToCalendar_CreatesEvent() {
+    func testSyncTaskToCalendar_CreatesEvent() async throws {
         self.mockStore.accessGranted = true
+        _ = await manager.setupCalendar()
 
         var task = PlannerTask(
             title: "Test Task",
@@ -91,11 +93,10 @@ class CalendarSyncManagerTests: XCTestCase {
             calendarEventId: nil
         )
 
-        // Note: syncing will fail if findSyncCalendar returns nil (mock returns [] for calendars).
-        // To test properly, we'd need mockStore.calendars() to return a mock calendar OR setupCalendar() to create one.
-        // For now, checks signature compilation only.
+        try await manager.syncTaskToCalendar(&task)
 
-        // try await manager.syncTaskToCalendar(&task) // Logic would throw calendarNotFound
-        XCTAssertTrue(true)
+        XCTAssertNotNil(task.calendarEventId)
+        XCTAssertEqual(mockStore.savedEvents.count, 1)
+        XCTAssertEqual(mockStore.savedEvents.first?.title, "Test Task")
     }
 }

@@ -4,7 +4,7 @@ import CloudKit
 import Foundation
 
 /// Represents the priority of a goal (low, medium, high).
-public enum GoalPriority: String, CaseIterable, Codable {
+public enum GoalPriority: String, CaseIterable, Codable, Sendable {
     /// Low priority goal.
     case low
     /// Medium priority goal.
@@ -32,7 +32,7 @@ public enum GoalPriority: String, CaseIterable, Codable {
 }
 
 /// Represents a user goal in the PlannerApp (e.g., "Run a marathon").
-public struct Goal: Identifiable, Codable {
+public struct Goal: Identifiable, Codable, Sendable {
     /// Unique identifier for the goal.
     public let id: UUID
     /// The title or summary of the goal.
@@ -83,7 +83,9 @@ public struct Goal: Identifiable, Codable {
 
     /// Converts this goal to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: "Goal", recordID: CKRecord.ID(recordName: self.id.uuidString))
+        let record = CKRecord(
+            recordType: "Goal", recordID: CKRecord.ID(recordName: self.id.uuidString)
+        )
         record["title"] = self.title
         record["description"] = self.description
         record["targetDate"] = self.targetDate

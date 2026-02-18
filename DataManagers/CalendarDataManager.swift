@@ -1,6 +1,7 @@
 import Foundation
 
 /// Protocol defining the interface for calendar event data management
+@MainActor
 protocol CalendarDataManaging {
     func load() -> [CalendarEvent]
     func save(events: [CalendarEvent])
@@ -11,9 +12,10 @@ protocol CalendarDataManaging {
 }
 
 /// Manages storage and retrieval of `CalendarEvent` objects with UserDefaults persistence.
+@MainActor
 final class CalendarDataManager: CalendarDataManaging {
     /// Shared singleton instance.
-    @MainActor static let shared = CalendarDataManager()
+    static let shared = CalendarDataManager()
 
     /// UserDefaults key for storing calendar events.
     private let eventsKey = "SavedCalendarEvents"
@@ -141,26 +143,5 @@ final class CalendarDataManager: CalendarDataManaging {
             "today": today,
             "thisWeek": thisWeek,
         ]
-    }
-}
-
-// MARK: - Object Pooling
-
-/// Object pool for performance optimization
-private nonisolated(unsafe) var objectPool: [Any] = []
-private let maxPoolSize = 50
-
-/// Get an object from the pool or create new one
-private func getPooledObject<T>() -> T? {
-    if let pooled = objectPool.popLast() as? T {
-        return pooled
-    }
-    return nil
-}
-
-/// Return an object to the pool
-private func returnToPool(_ object: Any) {
-    if objectPool.count < maxPoolSize {
-        objectPool.append(object)
     }
 }

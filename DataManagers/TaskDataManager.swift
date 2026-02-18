@@ -1,6 +1,7 @@
 import Foundation
 
 /// Protocol defining the interface for task data management
+@MainActor
 protocol TaskDataManaging {
     func load() -> [PlannerTask]
     func save(tasks: [PlannerTask])
@@ -11,9 +12,11 @@ protocol TaskDataManaging {
 }
 
 /// Manages storage and retrieval of `PlannerTask` objects with UserDefaults persistence.
+/// - WARNING: This class is deprecated. Use `SwiftDataTaskManager` for new implementations.
+@MainActor
 final class TaskDataManager: TaskDataManaging {
     /// Shared singleton instance.
-    @MainActor static let shared = TaskDataManager()
+    static let shared = TaskDataManager()
 
     /// UserDefaults key for storing tasks.
     private let tasksKey = "SavedTasks"
@@ -167,26 +170,5 @@ final class TaskDataManager: TaskDataManaging {
             "overdue": overdue,
             "dueToday": dueToday,
         ]
-    }
-}
-
-// MARK: - Object Pooling
-
-/// Object pool for performance optimization
-private nonisolated(unsafe) var objectPool: [Any] = []
-private let maxPoolSize = 50
-
-/// Get an object from the pool or create new one
-private func getPooledObject<T>() -> T? {
-    if let pooled = objectPool.popLast() as? T {
-        return pooled
-    }
-    return nil
-}
-
-/// Return an object to the pool
-private func returnToPool(_ object: Any) {
-    if objectPool.count < maxPoolSize {
-        objectPool.append(object)
     }
 }

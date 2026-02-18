@@ -12,11 +12,10 @@ class FocusModeManager: ObservableObject {
 
     func toggleFocusMode() {
         self.isFocusModeEnabled.toggle()
-        if self.isFocusModeEnabled {
-            // Enable Do Not Disturb logic (mock)
-            print("Focus Mode ON: Notifications silenced")
-        } else {
-            print("Focus Mode OFF")
-        }
+        let status = self.isFocusModeEnabled ? "ENABLED" : "DISABLED"
+
+        // In a production environment, this would integrate with System Focus APIs
+        // or trigger a centralized EventBus notification.
+        NSLog("[FocusModeManager] Focus Mode \(status)")
     }
 }

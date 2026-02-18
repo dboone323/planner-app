@@ -33,7 +33,7 @@ public enum TaskPriority: String, CaseIterable, Codable, Sendable {
 }
 
 /// Represents a user task or to-do item in the PlannerApp.
-public struct PlannerTask: Identifiable, Codable, Transferable {
+public struct PlannerTask: Identifiable, Codable, Transferable, Sendable {
     /// Unique identifier for the task.
     public let id: UUID
     /// The title or summary of the task.
@@ -48,7 +48,6 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
     var dueDate: Date?
     /// The date the task was created.
     var createdAt: Date
-    /// The date the task was last modified (optional).
     /// The date the task was last modified (optional).
     var modifiedAt: Date? // Added for CloudKit sync/merge
 
@@ -132,14 +131,17 @@ public struct PlannerTask: Identifiable, Codable, Transferable {
         let normalizedScore = max(-1.0, min(1.0, rawScore / 5.0))
 
         self.sentimentScore = normalizedScore
-        self.sentiment = normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
+        self.sentiment =
+            normalizedScore > 0.2 ? "positive" : (normalizedScore < -0.2 ? "negative" : "neutral")
     }
 
     // MARK: - CloudKit Conversion
 
     /// Converts this task to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: "Task", recordID: CKRecord.ID(recordName: self.id.uuidString))
+        let record = CKRecord(
+            recordType: "Task", recordID: CKRecord.ID(recordName: self.id.uuidString)
+        )
         record["title"] = self.title
         record["description"] = self.description
         record["isCompleted"] = self.isCompleted
