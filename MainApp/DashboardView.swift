@@ -1,6 +1,6 @@
-import _Concurrency
 import Foundation
 import SwiftUI
+import _Concurrency
 
 public struct DashboardView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -94,7 +94,9 @@ public struct DashboardView: View {
                         QuickStatCard(
                             title: NSLocalizedString("tasks", comment: "Tasks stat card title"),
                             value: "\(self.viewModel.totalTasks)",
-                            subtitle: "\(self.viewModel.completedTasks) \(NSLocalizedString("completed", comment: "Completed tasks subtitle"))",
+                            subtitle: "\(self.viewModel.completedTasks) "
+                                + NSLocalizedString(
+                                    "completed", comment: "Completed tasks subtitle"),
                             icon: "checkmark.circle.fill",
                             color: self.themeManager.currentTheme.primaryAccentColor
                         )
@@ -102,7 +104,8 @@ public struct DashboardView: View {
                         QuickStatCard(
                             title: NSLocalizedString("goals", comment: "Goals stat card title"),
                             value: "\(self.viewModel.totalGoals)",
-                            subtitle: "\(self.viewModel.completedGoals) \(NSLocalizedString("achieved", comment: "Achieved goals subtitle"))",
+                            subtitle: "\(self.viewModel.completedGoals) "
+                                + NSLocalizedString("achieved", comment: "Achieved goals subtitle"),
                             icon: "target",
                             color: .green
                         )
@@ -110,7 +113,8 @@ public struct DashboardView: View {
                         QuickStatCard(
                             title: NSLocalizedString("events", comment: "Events stat card title"),
                             value: "\(self.viewModel.todayEvents)",
-                            subtitle: NSLocalizedString("today_suffix", comment: "Today suffix for events"),
+                            subtitle: NSLocalizedString(
+                                "today_suffix", comment: "Today suffix for events"),
                             icon: "calendar",
                             color: .orange
                         )
@@ -126,10 +130,13 @@ public struct DashboardView: View {
                     // Quick Actions
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
-                            Text(NSLocalizedString("quick_actions", comment: "Quick actions section title"))
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                            Text(
+                                NSLocalizedString(
+                                    "quick_actions", comment: "Quick actions section title")
+                            )
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                             Spacer()
                         }
 
@@ -138,7 +145,8 @@ public struct DashboardView: View {
                             spacing: 16
                         ) {
                             QuickActionCard(
-                                title: NSLocalizedString("add_task", comment: "Add task quick action"),
+                                title: NSLocalizedString(
+                                    "add_task", comment: "Add task quick action"),
                                 icon: "plus.circle.fill",
                                 color: self.themeManager.currentTheme.primaryAccentColor
                             ) {
@@ -146,7 +154,8 @@ public struct DashboardView: View {
                             }
 
                             QuickActionCard(
-                                title: NSLocalizedString("new_goal", comment: "New goal quick action"),
+                                title: NSLocalizedString(
+                                    "new_goal", comment: "New goal quick action"),
                                 icon: "target",
                                 color: .green
                             ) {
@@ -154,7 +163,8 @@ public struct DashboardView: View {
                             }
 
                             QuickActionCard(
-                                title: NSLocalizedString("schedule_event", comment: "Schedule event quick action"),
+                                title: NSLocalizedString(
+                                    "schedule_event", comment: "Schedule event quick action"),
                                 icon: "calendar.badge.plus",
                                 color: .orange
                             ) {
@@ -162,7 +172,8 @@ public struct DashboardView: View {
                             }
 
                             QuickActionCard(
-                                title: NSLocalizedString("journal_entry", comment: "Journal entry quick action"),
+                                title: NSLocalizedString(
+                                    "journal_entry", comment: "Journal entry quick action"),
                                 icon: "book.fill",
                                 color: .purple
                             ) {
@@ -175,10 +186,13 @@ public struct DashboardView: View {
                     // Recent Activities
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
-                            Text(NSLocalizedString("recent_activities", comment: "Recent activities section title"))
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                            Text(
+                                NSLocalizedString(
+                                    "recent_activities", comment: "Recent activities section title")
+                            )
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
                             Spacer()
 
@@ -206,20 +220,25 @@ public struct DashboardView: View {
                                             self.themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text(NSLocalizedString(
-                                        "no_recent_activities",
-                                        comment: "No recent activities message"
-                                    ))
+                                    Text(
+                                        NSLocalizedString(
+                                            "no_recent_activities",
+                                            comment: "No recent activities message"
+                                        )
+                                    )
                                     .font(.subheadline)
                                     .foregroundColor(
                                         self.themeManager.currentTheme.secondaryTextColor
                                     )
 
-                                    Text(NSLocalizedString("start_by_creating", comment: "Start by creating hint"))
-                                        .font(.caption)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(
+                                        NSLocalizedString(
+                                            "start_by_creating", comment: "Start by creating hint")
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                                 }
                                 .padding(.vertical, 40)
                             }
@@ -237,7 +256,9 @@ public struct DashboardView: View {
 
                             Spacer()
 
-                            Button(NSLocalizedString("view_calendar", comment: "View calendar button")) {
+                            Button(
+                                NSLocalizedString("view_calendar", comment: "View calendar button")
+                            ) {
                                 self.selectedTabTag = "Calendar"
                             }
                             .font(.caption)
@@ -267,17 +288,23 @@ public struct DashboardView: View {
                                             self.themeManager.currentTheme.secondaryTextColor
                                         )
 
-                                    Text(NSLocalizedString("nothing_upcoming", comment: "Nothing upcoming message"))
-                                        .font(.subheadline)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(
+                                        NSLocalizedString(
+                                            "nothing_upcoming", comment: "Nothing upcoming message")
+                                    )
+                                    .font(.subheadline)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
 
-                                    Text(NSLocalizedString("schedule_events_hint", comment: "Schedule events hint"))
-                                        .font(.caption)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
-                                        )
+                                    Text(
+                                        NSLocalizedString(
+                                            "schedule_events_hint", comment: "Schedule events hint")
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(
+                                        self.themeManager.currentTheme.secondaryTextColor
+                                    )
                                 }
                                 .padding(.vertical, 40)
                             }
@@ -290,56 +317,59 @@ public struct DashboardView: View {
                 }
             }
             #if os(iOS)
-            .coordinateSpace(name: "pullToRefresh")
-            .refreshable {
-                await self.refreshData()
-            }
+                .coordinateSpace(name: "pullToRefresh")
+                .refreshable {
+                    await self.refreshData()
+                }
             #endif
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .navigationTitle(NSLocalizedString("dashboard", comment: "Dashboard navigation title"))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .navigationDestination(for: DashboardViewModel.Destination.self) { destination in
-                    switch destination {
-                    case let .taskDetail(id):
-                        Text("Task Detail for \(id.uuidString)")
-                    case let .goalDetail(id):
-                        Text("Goal Detail for \(id.uuidString)")
-                    case let .calendarEvent(id):
-                        Text("Event Detail for \(id.uuidString)")
-                    case .settings:
-                        SettingsView()
-                    }
+            .navigationDestination(for: DashboardViewModel.Destination.self) { destination in
+                switch destination {
+                case .taskDetail(let id):
+                    Text("Task Detail for \(id.uuidString)")
+                case .goalDetail(let id):
+                    Text("Goal Detail for \(id.uuidString)")
+                case .calendarEvent(let id):
+                    Text("Event Detail for \(id.uuidString)")
+                case .settings:
+                    SettingsView()
                 }
-                .overlay(
-                    Group {
-                        if self.showLoadingOverlay {
-                            ZStack {
-                                Color.black.opacity(0.3)
-                                    .ignoresSafeArea()
+            }
+            .overlay(
+                Group {
+                    if self.showLoadingOverlay {
+                        ZStack {
+                            Color.black.opacity(0.3)
+                                .ignoresSafeArea()
 
-                                VStack(spacing: 16) {
-                                    ProgressView()
-                                        .scaleEffect(1.5)
-                                        .tint(self.themeManager.currentTheme.primaryAccentColor)
+                            VStack(spacing: 16) {
+                                ProgressView()
+                                    .scaleEffect(1.5)
+                                    .tint(self.themeManager.currentTheme.primaryAccentColor)
 
-                                    Text(NSLocalizedString("refreshing", comment: "Refreshing loading text"))
-                                        .font(.subheadline)
-                                        .foregroundColor(
-                                            self.themeManager.currentTheme.primaryTextColor
-                                        )
-                                }
-                                .padding(32)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                Text(
+                                    NSLocalizedString(
+                                        "refreshing", comment: "Refreshing loading text")
+                                )
+                                .font(.subheadline)
+                                .foregroundColor(
+                                    self.themeManager.currentTheme.primaryTextColor
                                 )
                             }
+                            .padding(32)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            )
                         }
                     }
-                )
+                }
+            )
         }
         .onAppear {
             _Concurrency.Task { @MainActor in
@@ -466,10 +496,12 @@ public struct ActivityRowView: View {
             return NSLocalizedString("now", comment: "Just now")
         } else if interval < 3600 {
             let minutes = Int(interval / 60)
-            return String(format: NSLocalizedString("minutes_ago", comment: "Minutes ago format"), minutes)
+            return String(
+                format: NSLocalizedString("minutes_ago", comment: "Minutes ago format"), minutes)
         } else if interval < 86400 {
             let hours = Int(interval / 3600)
-            return String(format: NSLocalizedString("hours_ago", comment: "Hours ago format"), hours)
+            return String(
+                format: NSLocalizedString("hours_ago", comment: "Hours ago format"), hours)
         } else {
             let days = Int(interval / 86400)
             return String(format: NSLocalizedString("days_ago", comment: "Days ago format"), days)
