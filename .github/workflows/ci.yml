@@ -196,7 +196,27 @@ jobs:
           fi
 
           requested_name="$(echo "$requested" | sed -n 's/.*name=\([^,]*\).*/\1/p')"
-          available_names="$(xcrun simctl list devices available | awk -F ' \\(' '/^[[:space:]]+iPhone/ { gsub(/^[[:space:]]+/, "", $1); print $1 }' | sort -u)"
+          available_names="$(
+            python3 - <<'PY'
+import json
+import subprocess
+
+raw = subprocess.check_output(
+    ["xcrun", "simctl", "list", "devices", "available", "--json"],
+    text=True,
+)
+data = json.loads(raw)
+names = sorted(
+    {
+        device.get("name", "")
+        for runtime_devices in data.get("devices", {}).values()
+        for device in runtime_devices
+        if device.get("isAvailable") and device.get("name", "").startswith("iPhone")
+    }
+)
+print("\n".join(name for name in names if name))
+PY
+          )"
 
           resolved=''
           for candidate in "$requested_name" "iPhone 17" "iPhone 17 Pro" "iPhone 17 Pro Max" "iPhone 16e" "iPhone Air"; do
