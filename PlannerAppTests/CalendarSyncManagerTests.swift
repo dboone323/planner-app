@@ -2,6 +2,7 @@ import EventKit
 import XCTest
 @testable import PlannerApp
 
+@MainActor
 class MockSyncEventStore: SyncEventStoreProtocol {
     var accessGranted = true
     var savedEvents: [EKEvent] = []
@@ -58,6 +59,7 @@ class MockSyncEventStore: SyncEventStoreProtocol {
     }
 }
 
+@MainActor
 class CalendarSyncManagerTests: XCTestCase {
     var manager: CalendarSyncManager!
     var mockStore: MockSyncEventStore!
