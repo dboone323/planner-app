@@ -204,13 +204,13 @@ jobs:
           elif echo "$available" | grep -q 'name:iPhone 16e'; then
             resolved='platform=iOS Simulator,name=iPhone 16e,OS=latest'
           else
-            fallback_name="$(echo "$available" | sed -n 's/.*name:\([^}]*\) }.*/\1/p' | sed 's/^ *//;s/ *$//' | grep '^iPhone' | head -n 1)"
+            fallback_name="$(echo "$available" | sed -n 's/.*name:\([^}]*\) }.*/\1/p' | sed 's/^ *//;s/ *$//' | head -n 1)"
             if [[ -z "$fallback_name" ]]; then
-              echo "::error::No iOS simulator destinations are available for scheme ${{ matrix.scheme }}."
-              xcodebuild -showdestinations -scheme '${{ matrix.scheme }}'
-              exit 1
+              resolved='platform=iOS Simulator'
+              echo "::warning::No named simulator found for ${{ matrix.scheme }}; using generic iOS Simulator destination."
+            else
+              resolved="platform=iOS Simulator,name=${fallback_name},OS=latest"
             fi
-            resolved="platform=iOS Simulator,name=${fallback_name},OS=latest"
           fi
 
           echo "destination=$resolved" >> "$GITHUB_OUTPUT"
