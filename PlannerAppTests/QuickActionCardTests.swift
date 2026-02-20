@@ -9,6 +9,7 @@ import SwiftUI
 import XCTest
 @testable import PlannerApp
 
+@MainActor
 final class QuickActionCardTests: XCTestCase {
     func testInitialization() {
         var tapped = false
