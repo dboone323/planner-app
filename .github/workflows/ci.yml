@@ -195,24 +195,30 @@ jobs:
             exit 0
           fi
 
-          available="$(xcodebuild -showdestinations -scheme '${{ matrix.scheme }}' 2>&1 | grep 'platform:iOS Simulator' | grep -v placeholder || true)"
+          requested_name="$(echo "$requested" | sed -n 's/.*name=\([^,]*\).*/\1/p')"
+          available_names="$(xcrun simctl list devices available | awk -F ' \\(' '/^[[:space:]]+iPhone/ { gsub(/^[[:space:]]+/, \"\", $1); print $1 }' | sort -u)"
 
-          if echo "$available" | grep -q 'name:iPhone 17'; then
-            resolved='platform=iOS Simulator,name=iPhone 17,OS=latest'
-          elif echo "$available" | grep -q 'name:iPhone 17 Pro'; then
-            resolved='platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
-          elif echo "$available" | grep -q 'name:iPhone 16e'; then
-            resolved='platform=iOS Simulator,name=iPhone 16e,OS=latest'
-          else
-            fallback_name="$(echo "$available" | awk -F'name:' 'NF>1 { print $2 }' | awk -F'}' '{ print $1 }' | sed 's/^ *//;s/ *$//' | head -n 1)"
+          resolved=''
+          for candidate in "$requested_name" "iPhone 17" "iPhone 17 Pro" "iPhone 17 Pro Max" "iPhone 16e" "iPhone Air"; do
+            if [[ -n "$candidate" ]] && echo "$available_names" | grep -Fxq "$candidate"; then
+              resolved="platform=iOS Simulator,name=${candidate},OS=latest"
+              break
+            fi
+          done
+
+          if [[ -z "$resolved" ]]; then
+            fallback_name="$(echo "$available_names" | head -n 1)"
             if [[ -z "$fallback_name" ]]; then
-              resolved='platform=iOS Simulator'
-              echo "::warning::No named simulator found for ${{ matrix.scheme }}; using generic iOS Simulator destination."
-              echo "$available"
+              resolved="$requested"
+              echo "::warning::No available iPhone simulators found; using requested destination: $requested."
             else
               resolved="platform=iOS Simulator,name=${fallback_name},OS=latest"
+              echo "::warning::Requested simulator unavailable; using fallback iPhone simulator: ${fallback_name}."
             fi
           fi
+
+          echo "Available iPhone simulators:"
+          echo "$available_names"
 
           echo "destination=$resolved" >> "$GITHUB_OUTPUT"
           echo "Requested destination: $requested"
