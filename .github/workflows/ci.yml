@@ -151,9 +151,11 @@ jobs:
           - destination: "platform=iOS Simulator,name=iPhone 17,OS=latest"
             name: iOS
             scheme: PlannerApp
+            test_skip_args: ""
           - destination: "platform=macOS"
             name: macOS
             scheme: PlannerApp
+            test_skip_args: "-skip-testing:PlannerAppUITests"
 
     steps:
       - name: 📥 Checkout Code
@@ -200,6 +202,7 @@ jobs:
             -destination '${{ matrix.destination }}' \
             -configuration Debug \
             -enableCodeCoverage YES \
+            ${{ matrix.test_skip_args }} \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
