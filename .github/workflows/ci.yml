@@ -195,7 +195,7 @@ jobs:
             exit 0
           fi
 
-          available="$(xcodebuild -showdestinations -scheme '${{ matrix.scheme }}' 2>/dev/null | grep 'platform:iOS Simulator' | grep -v placeholder || true)"
+          available="$(xcodebuild -showdestinations -scheme '${{ matrix.scheme }}' 2>&1 | grep 'platform:iOS Simulator' | grep -v placeholder || true)"
 
           if echo "$available" | grep -q 'name:iPhone 17'; then
             resolved='platform=iOS Simulator,name=iPhone 17,OS=latest'
