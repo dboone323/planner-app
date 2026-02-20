@@ -123,11 +123,13 @@ public struct DashboardView: View {
                     }
                     .padding(.horizontal, 24)
 
-                    // Health Stats (if enabled)
-                    if self.healthKitEnabled {
-                        HealthStatsView()
-                            .padding(.horizontal, 24)
-                    }
+                    #if os(iOS)
+                        // Health stats are iOS-only; the underlying view is not available on macOS.
+                        if self.healthKitEnabled {
+                            HealthStatsView()
+                                .padding(.horizontal, 24)
+                        }
+                    #endif
 
                     // Quick Actions
                     VStack(alignment: .leading, spacing: 16) {
