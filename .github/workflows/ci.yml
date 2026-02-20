@@ -182,12 +182,46 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-deriveddata-
 
+      - name: 🎯 Resolve destination (${{ matrix.name }})
+        id: destination
+        run: |
+          set -euo pipefail
+          requested='${{ matrix.destination }}'
+
+          if [[ "$requested" != platform=iOS\ Simulator* ]]; then
+            echo "destination=$requested" >> "$GITHUB_OUTPUT"
+            echo "Using non-simulator destination: $requested"
+            exit 0
+          fi
+
+          available="$(xcodebuild -showdestinations -scheme '${{ matrix.scheme }}' 2>/dev/null | grep 'platform:iOS Simulator' | grep -v placeholder || true)"
+
+          if echo "$available" | grep -q 'name:iPhone 17'; then
+            resolved='platform=iOS Simulator,name=iPhone 17,OS=latest'
+          elif echo "$available" | grep -q 'name:iPhone 17 Pro'; then
+            resolved='platform=iOS Simulator,name=iPhone 17 Pro,OS=latest'
+          elif echo "$available" | grep -q 'name:iPhone 16e'; then
+            resolved='platform=iOS Simulator,name=iPhone 16e,OS=latest'
+          else
+            fallback_name="$(echo "$available" | sed -n 's/.*name:\([^}]*\) }.*/\1/p' | sed 's/^ *//;s/ *$//' | grep '^iPhone' | head -n 1)"
+            if [[ -z "$fallback_name" ]]; then
+              echo "::error::No iOS simulator destinations are available for scheme ${{ matrix.scheme }}."
+              xcodebuild -showdestinations -scheme '${{ matrix.scheme }}'
+              exit 1
+            fi
+            resolved="platform=iOS Simulator,name=${fallback_name},OS=latest"
+          fi
+
+          echo "destination=$resolved" >> "$GITHUB_OUTPUT"
+          echo "Requested destination: $requested"
+          echo "Resolved destination: $resolved"
+
       - name: 🏗️ Build (${{ matrix.name }})
         run: |
           echo "🔨 Building ${{ matrix.name }}..."
           xcodebuild build \
             -scheme ${{ matrix.scheme }} \
-            -destination '${{ matrix.destination }}' \
+            -destination '${{ steps.destination.outputs.destination }}' \
             -configuration Debug \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
@@ -199,7 +233,7 @@ jobs:
           rm -rf TestResults.xcresult
           xcodebuild test \
             -scheme ${{ matrix.scheme }} \
-            -destination '${{ matrix.destination }}' \
+            -destination '${{ steps.destination.outputs.destination }}' \
             -configuration Debug \
             -enableCodeCoverage YES \
             ${{ matrix.test_skip_args }} \

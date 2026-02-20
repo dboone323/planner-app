@@ -63,11 +63,25 @@ class MockSyncEventStore: SyncEventStoreProtocol {
 class CalendarSyncManagerTests: XCTestCase {
     var manager: CalendarSyncManager!
     var mockStore: MockSyncEventStore!
+    var testDefaults: UserDefaults!
+    var defaultsSuiteName: String!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
+        self.defaultsSuiteName = "CalendarSyncManagerTests.\(UUID().uuidString)"
+        self.testDefaults = try XCTUnwrap(UserDefaults(suiteName: self.defaultsSuiteName))
+        self.testDefaults.removePersistentDomain(forName: self.defaultsSuiteName)
         self.mockStore = MockSyncEventStore()
-        self.manager = CalendarSyncManager(eventStore: self.mockStore)
+        self.manager = CalendarSyncManager(eventStore: self.mockStore, userDefaults: self.testDefaults)
+    }
+
+    override func tearDown() {
+        self.testDefaults?.removePersistentDomain(forName: self.defaultsSuiteName)
+        self.manager = nil
+        self.mockStore = nil
+        self.testDefaults = nil
+        self.defaultsSuiteName = nil
+        super.tearDown()
     }
 
     func testSetupCalendar_Success() async {
