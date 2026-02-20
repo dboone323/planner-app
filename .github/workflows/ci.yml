@@ -37,10 +37,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🔧 Setup Swift
-        uses: swift-actions/setup-swift@7e293214cba9e9225c93ce3267f17f6efdb656a8
-        with:
-          swift-version: "6.2.1"
+      - name: 🔧 Verify Swift Toolchain
+        run: |
+          echo "Using preinstalled Swift toolchain on runner"
+          xcode-select -p
+          swift --version
 
       - name: 📦 Cache Dependencies
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
