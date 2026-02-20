@@ -90,7 +90,7 @@ class CalendarSyncManagerTests: XCTestCase {
             description: "Notes",
             dueDate: Date(),
             estimatedDuration: 3600,
-            calendarEventId: nil,
+            calendarEventId: nil
         )
 
         try await manager.syncTaskToCalendar(&task)

@@ -32,14 +32,14 @@ public class AccessibilityManager: ObservableObject {
                 self,
                 selector: #selector(self.accessibilitySettingsChanged),
                 name: UIAccessibility.voiceOverStatusDidChangeNotification,
-                object: nil,
+                object: nil
             )
 
             NotificationCenter.default.addObserver(
                 self,
                 selector: #selector(self.accessibilitySettingsChanged),
                 name: UIContentSizeCategory.didChangeNotification,
-                object: nil,
+                object: nil
             )
         #elseif os(macOS)
             // For macOS, we use different notification mechanisms
@@ -47,7 +47,7 @@ public class AccessibilityManager: ObservableObject {
                 self,
                 selector: #selector(self.accessibilitySettingsChanged),
                 name: NSWorkspace.accessibilityDisplayOptionsDidChangeNotification,
-                object: nil,
+                object: nil
             )
         #endif
     }
@@ -72,7 +72,7 @@ public class AccessibilityManager: ObservableObject {
             self.prefersReducedMotion = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
             self.prefersHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
             self.prefersDynamicType = UserDefaults.standard.bool(
-                forKey: "AppleAccessibilityDynamicTypeEnabled",
+                forKey: "AppleAccessibilityDynamicTypeEnabled"
             )
         #endif
     }
@@ -158,7 +158,7 @@ struct AccessibleListRow<Content: View>: View {
         accessibilityValue: String? = nil,
         accessibilityHint: String? = nil,
         accessibilityActions: [AccessibilityActionInfo] = [],
-        @ViewBuilder content: () -> Content,
+        @ViewBuilder content: () -> Content
     ) {
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityValue = accessibilityValue
@@ -200,7 +200,7 @@ public struct HighContrastModifier: ViewModifier {
         content
             .environment(\.colorScheme, self.accessibilityManager.prefersHighContrast ? .dark : .light)
             .foregroundColor(
-                self.accessibilityManager.prefersHighContrast ? Color.white : Color.primary,
+                self.accessibilityManager.prefersHighContrast ? Color.white : Color.primary
             )
     }
 }
@@ -221,7 +221,7 @@ public struct ReducedMotionModifier: ViewModifier {
         content
             .animation(
                 self.accessibilityManager.prefersReducedMotion ? .none : self.animation,
-                value: UUID(),
+                value: UUID()
             )
     }
 }
@@ -244,7 +244,7 @@ struct FocusableView<Content: View>: View {
     init(
         accessibilityLabel: String,
         onFocusChange: ((Bool) -> Void)? = nil,
-        @ViewBuilder content: () -> Content,
+        @ViewBuilder content: () -> Content
     ) {
         self.accessibilityLabel = accessibilityLabel
         self.onFocusChange = onFocusChange
@@ -282,7 +282,7 @@ enum ScreenReaderAnnouncement {
                     NSAccessibility.NotificationUserInfoKey.announcement: message,
                 ]
                 NSAccessibility.post(
-                    element: NSApp as Any, notification: .announcementRequested, userInfo: userInfo,
+                    element: NSApp as Any, notification: .announcementRequested, userInfo: userInfo
                 )
             #endif
         }
@@ -306,7 +306,7 @@ enum ScreenReaderAnnouncement {
             #elseif os(macOS)
                 // Make sure we're using the correct API without an argument parameter
                 NSAccessibility.post(
-                    element: NSApp as Any, notification: .layoutChanged, userInfo: nil,
+                    element: NSApp as Any, notification: .layoutChanged, userInfo: nil
                 )
             #endif
         }
@@ -375,7 +375,7 @@ public struct AccessibilityDemoView: View {
                         .init(name: "Delete") {
                             ScreenReaderAnnouncement.announce("Task deleted")
                         },
-                    ],
+                    ]
                 ) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
@@ -390,7 +390,7 @@ public struct AccessibilityDemoView: View {
                     action: {
                         ScreenReaderAnnouncement.announce("Add task button pressed")
                     },
-                    hint: "Opens the add task screen",
+                    hint: "Opens the add task screen"
                 )
 
                 AccessibleProgressView(progress: self.progress, label: "Goal Progress")
@@ -401,7 +401,7 @@ public struct AccessibilityDemoView: View {
                         Spacer()
                         DynamicTypeText(
                             text: self.accessibilityManager.isVoiceOverEnabled ? "On" : "Off",
-                            style: .caption,
+                            style: .caption
                         )
                     }
 
@@ -410,7 +410,7 @@ public struct AccessibilityDemoView: View {
                         Spacer()
                         DynamicTypeText(
                             text: self.accessibilityManager.prefersDynamicType ? "Large" : "Standard",
-                            style: .caption,
+                            style: .caption
                         )
                     }
 
@@ -419,7 +419,7 @@ public struct AccessibilityDemoView: View {
                         Spacer()
                         DynamicTypeText(
                             text: self.accessibilityManager.prefersReducedMotion ? "On" : "Off",
-                            style: .caption,
+                            style: .caption
                         )
                     }
                 }

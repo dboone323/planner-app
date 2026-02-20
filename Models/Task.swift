@@ -87,7 +87,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable, Sendable {
         priority: TaskPriority = .medium, dueDate: Date? = nil, projectId: UUID? = nil,
         estimatedDuration: TimeInterval = 3600,
         calendarEventId: String? = nil, createdAt: Date = Date(),
-        modifiedAt: Date? = Date(), sentiment: String = "neutral", sentimentScore: Double = 0.0,
+        modifiedAt: Date? = Date(), sentiment: String = "neutral", sentimentScore: Double = 0.0
     ) {
         self.id = id
         self.title = title
@@ -140,7 +140,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable, Sendable {
     /// Converts this task to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
         let record = CKRecord(
-            recordType: "Task", recordID: CKRecord.ID(recordName: self.id.uuidString),
+            recordType: "Task", recordID: CKRecord.ID(recordName: self.id.uuidString)
         )
         record["title"] = self.title
         record["description"] = self.description
@@ -170,7 +170,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable, Sendable {
         else {
             throw NSError(
                 domain: "TaskConversionError", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to convert CloudKit record to Task"],
+                userInfo: [NSLocalizedDescriptionKey: "Failed to convert CloudKit record to Task"]
             )
         }
 
@@ -188,7 +188,7 @@ public struct PlannerTask: Identifiable, Codable, Transferable, Sendable {
             createdAt: createdAt,
             modifiedAt: ckRecord["modifiedAt"] as? Date,
             sentiment: ckRecord["sentiment"] as? String ?? "neutral",
-            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0,
+            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0
         )
     }
 

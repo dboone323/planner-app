@@ -43,7 +43,7 @@ public struct ProjectsView: View {
                                         project: project,
                                         tasks: getTasksForProject(project),
                                         onEdit: { editProject(project) },
-                                        onDelete: { deleteProject(project) },
+                                        onDelete: { deleteProject(project) }
                                     )
                                 }
                             }
@@ -59,7 +59,7 @@ public struct ProjectsView: View {
                         action: { showingAddProject = true },
                         label: {
                             Label("Add Project", systemImage: "plus")
-                        },
+                        }
                     )
                 }
             }
@@ -237,11 +237,11 @@ struct ProjectCardView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color(uiColor: .secondarySystemGroupedBackground)),
+                .fill(Color(uiColor: .secondarySystemGroupedBackground))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1),
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
     }
 
@@ -291,7 +291,7 @@ struct AddProjectView: View {
                                 .padding(.top, 8)
                                 .padding(.leading, 4)
                                 .allowsHitTesting(false),
-                            alignment: .topLeading,
+                            alignment: .topLeading
                         )
                 }
 
@@ -314,8 +314,8 @@ struct AddProjectView: View {
                         "Set target completion date",
                         isOn: Binding(
                             get: { targetCompletionDate != nil },
-                            set: { if !$0 { targetCompletionDate = nil } },
-                        ),
+                            set: { if !$0 { targetCompletionDate = nil } }
+                        )
                     )
 
                     if targetCompletionDate != nil {
@@ -323,9 +323,9 @@ struct AddProjectView: View {
                             "Target Date",
                             selection: Binding(
                                 get: { targetCompletionDate ?? Date() },
-                                set: { targetCompletionDate = $0 },
+                                set: { targetCompletionDate = $0 }
                             ),
-                            displayedComponents: .date,
+                            displayedComponents: .date
                         )
                     }
                 }
@@ -354,7 +354,7 @@ struct AddProjectView: View {
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
             description: description.trimmingCharacters(in: .whitespacesAndNewlines),
             color: color,
-            targetCompletionDate: targetCompletionDate,
+            targetCompletionDate: targetCompletionDate
         )
         onSave(project)
     }

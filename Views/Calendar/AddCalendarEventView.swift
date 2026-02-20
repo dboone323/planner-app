@@ -74,7 +74,7 @@ public struct AddCalendarEventView: View {
                     }
                 #endif
                 DatePicker(
-                    "Event Date", selection: self.$date, displayedComponents: [.date, .hourAndMinute],
+                    "Event Date", selection: self.$date, displayedComponents: [.date, .hourAndMinute]
                 )
             }
             #if os(iOS)
@@ -87,7 +87,7 @@ public struct AddCalendarEventView: View {
                             self.isTitleFocused = false
                             UIApplication.shared.sendAction(
                                 #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
-                                for: nil,
+                                for: nil
                             )
                         })
                         .accessibilityLabel("Button")
@@ -109,7 +109,7 @@ public struct AddCalendarEventView: View {
     private func saveEvent() {
         let newEvent = CalendarEvent(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            date: self.date,
+            date: self.date
         )
         self.events.append(newEvent)
 

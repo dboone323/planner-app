@@ -83,7 +83,7 @@ public struct SettingsView: View {
                         Text("Name")
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         TextField("Enter your name", text: self.$userName).accessibilityLabel(
-                            "Text Field",
+                            "Text Field"
                         )
                         .accessibilityLabel("Text Field")
                         .multilineTextAlignment(.trailing)
@@ -105,7 +105,7 @@ public struct SettingsView: View {
                             HStack {
                                 Text("Theme Preview")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor,
+                                        self.themeManager.currentTheme.primaryTextColor
                                     )
                                 Spacer()
                                 Circle()
@@ -113,7 +113,7 @@ public struct SettingsView: View {
                                     .frame(width: 20, height: 20)
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor,
+                                        self.themeManager.currentTheme.secondaryTextColor
                                     )
                             }
                         }
@@ -124,7 +124,7 @@ public struct SettingsView: View {
                 Section("Dashboard") {
                     Stepper(
                         "Items per section: \\(dashboardItemLimit)",
-                        value: self.$dashboardItemLimit, in: 1...10,
+                        value: self.$dashboardItemLimit, in: 1...10
                     )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -140,7 +140,7 @@ public struct SettingsView: View {
                     .alert(
                         "Notification Permissions",
                         isPresented: self.$showingNotificationAlert,
-                        actions: self.notificationAlertActions,
+                        actions: self.notificationAlertActions
                     )
 
                     Picker("Default Reminder", selection: self.$defaultReminderTime) {
@@ -181,7 +181,7 @@ public struct SettingsView: View {
                     if self.autoDeleteCompleted {
                         Stepper(
                             "Delete after: \\(autoDeleteDays) days", value: self.$autoDeleteDays,
-                            in: 1...90,
+                            in: 1...90
                         )
                     }
                 }
@@ -191,7 +191,7 @@ public struct SettingsView: View {
                 Section("Security") {
                     if self.canUseBiometrics {
                         Toggle(
-                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled,
+                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled
                         )
                     } else {
                         Text("Biometric authentication not available on this device.")
@@ -203,7 +203,7 @@ public struct SettingsView: View {
                 // --- Sync & Cloud Section ---
                 Section("Sync & Cloud") {
                     Button(action: { self.showingCloudKitSheet = true }).accessibilityLabel(
-                        "Button",
+                        "Button"
                     )
                     .accessibilityLabel("Button") {
                         HStack {
@@ -256,7 +256,7 @@ public struct SettingsView: View {
 
                     Button(
                         "Clear Old Completed Tasks...",
-                        action: { self.showingClearDataConfirmation = true },
+                        action: { self.showingClearDataConfirmation = true }
                     )
                     .accessibilityLabel("Button")
                     .accessibilityLabel("Button")
@@ -270,7 +270,7 @@ public struct SettingsView: View {
                     } message: {
                         Text(
                             "Are you sure you want to permanently delete completed tasks "
-                                + "older than \\(autoDeleteDays) days? This cannot be undone.",
+                                + "older than \\(autoDeleteDays) days? This cannot be undone."
                         )
                     }
                 }
@@ -362,7 +362,7 @@ public struct SettingsView: View {
         guard
             let url = URL(
                 string:
-                "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications",
+                "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications"
             )
         else {
             print("Cannot open system preferences URL.")
@@ -381,7 +381,7 @@ public struct SettingsView: View {
         }
 
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "PlannerExport.csv",
+            "PlannerExport.csv"
         )
         do {
             try data.write(to: tempURL, options: .atomic)

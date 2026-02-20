@@ -60,7 +60,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color.red,
         completedColor: Color.green,
         primaryFontName: nil, // System default
-        secondaryFontName: nil, // System default
+        secondaryFontName: nil // System default
     )
 
     /// Platform-specific default colors
@@ -107,7 +107,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 0.85, green: 0.35, blue: 0.35),
         completedColor: Color(red: 0.20, green: 0.72, blue: 0.42),
         primaryFontName: nil, // Use system font for better accessibility
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     static let forestGreen = Theme(
@@ -121,7 +121,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 0.82, green: 0.40, blue: 0.35),
         completedColor: Color(red: 0.15, green: 0.70, blue: 0.30),
         primaryFontName: nil,
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     static let sunsetOrange = Theme(
@@ -135,7 +135,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 0.80, green: 0.25, blue: 0.20),
         completedColor: Color(red: 0.25, green: 0.70, blue: 0.35),
         primaryFontName: nil,
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     /// Add a Dark Mode Theme Example
@@ -150,7 +150,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 1.0, green: 0.4, blue: 0.4), // Brighter red
         completedColor: Color(red: 0.4, green: 0.8, blue: 0.4), // Brighter green
         primaryFontName: nil, // System default
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     /// Modern minimal theme
@@ -165,7 +165,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 0.85, green: 0.30, blue: 0.30),
         completedColor: Color(red: 0.30, green: 0.70, blue: 0.30),
         primaryFontName: nil,
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     /// Warm pink theme for a softer feel
@@ -180,7 +180,7 @@ public struct Theme: Identifiable, Equatable, Sendable { // Added Equatable for 
         destructiveColor: Color(red: 0.80, green: 0.35, blue: 0.35),
         completedColor: Color(red: 0.25, green: 0.70, blue: 0.40),
         primaryFontName: nil,
-        secondaryFontName: nil,
+        secondaryFontName: nil
     )
 
     /// List of all available themes for pickers etc.

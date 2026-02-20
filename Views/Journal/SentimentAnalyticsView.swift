@@ -75,7 +75,7 @@ public struct SentimentAnalyticsView: View {
                         Spacer()
                         SentimentBadge(
                             sentiment: self.sentimentLabel(for: self.averageSentiment),
-                            score: self.averageSentiment,
+                            score: self.averageSentiment
                         )
                     }
                 }
@@ -94,7 +94,7 @@ public struct SentimentAnalyticsView: View {
                             ForEach(self.sentimentDistribution, id: \.0) { item in
                                 BarMark(
                                     x: .value("Sentiment", item.0),
-                                    y: .value("Count", item.1),
+                                    y: .value("Count", item.1)
                                 )
                                 .foregroundStyle(self.colorFor(sentiment: item.0))
                             }
@@ -122,14 +122,14 @@ public struct SentimentAnalyticsView: View {
                             ForEach(self.weeklyAverages, id: \.0) { dataPoint in
                                 LineMark(
                                     x: .value("Week", dataPoint.0),
-                                    y: .value("Average Sentiment", dataPoint.1),
+                                    y: .value("Average Sentiment", dataPoint.1)
                                 )
                                 .foregroundStyle(self.themeManager.currentTheme.primaryAccentColor)
                                 .interpolationMethod(.catmullRom)
 
                                 AreaMark(
                                     x: .value("Week", dataPoint.0),
-                                    y: .value("Average Sentiment", dataPoint.1),
+                                    y: .value("Average Sentiment", dataPoint.1)
                                 )
                                 .foregroundStyle(self.themeManager.currentTheme.primaryAccentColor.opacity(0.2))
                                 .interpolationMethod(.catmullRom)
@@ -255,7 +255,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 date: Date().addingTimeInterval(-86400 * 7),
                 mood: "😊",
                 sentiment: "positive",
-                sentimentScore: 0.8,
+                sentimentScore: 0.8
             ),
             JournalEntry(
                 title: "Tough Times",
@@ -263,7 +263,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 date: Date().addingTimeInterval(-86400 * 5),
                 mood: "😢",
                 sentiment: "negative",
-                sentimentScore: -0.7,
+                sentimentScore: -0.7
             ),
             JournalEntry(
                 title: "Regular Day",
@@ -271,7 +271,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 date: Date().addingTimeInterval(-86400 * 2),
                 mood: "😐",
                 sentiment: "neutral",
-                sentimentScore: 0.0,
+                sentimentScore: 0.0
             ),
         ]
 

@@ -204,7 +204,7 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
         self.manager.add(PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday))
         self.manager.add(PlannerTask(title: "Future", isCompleted: false, dueDate: tomorrow))
         self.manager.add(
-            PlannerTask(title: "Overdue but Done", isCompleted: true, dueDate: yesterday),
+            PlannerTask(title: "Overdue but Done", isCompleted: true, dueDate: yesterday)
         )
 
         let overdue = self.manager.overdueTasks()
@@ -251,14 +251,14 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
         // Use end of day to ensure this is always in the future during test day
         let todayEndOfDay = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: today)
         )
 
         self.manager.add(PlannerTask(title: "Complete", isCompleted: true))
         self.manager.add(PlannerTask(title: "Incomplete", isCompleted: false))
         self.manager.add(PlannerTask(title: "Overdue", isCompleted: false, dueDate: yesterday))
         self.manager.add(
-            PlannerTask(title: "Due Today", isCompleted: false, dueDate: todayEndOfDay),
+            PlannerTask(title: "Due Today", isCompleted: false, dueDate: todayEndOfDay)
         )
 
         let stats = self.manager.getTaskStatistics()

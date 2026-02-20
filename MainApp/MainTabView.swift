@@ -68,7 +68,7 @@ public struct MainTabView: View {
         // It tells SwiftUI whether the overall view context is light or dark.
         .environment(
             \.colorScheme,
-            self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light,
+            self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light
         )
         .onChange(of: self.selectedTabTag) { _, _ in
             #if os(iOS)

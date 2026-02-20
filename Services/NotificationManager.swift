@@ -47,12 +47,12 @@ final class NotificationManager {
         }
 
         let components = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute], from: reminderDate,
+            [.year, .month, .day, .hour, .minute], from: reminderDate
         )
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
         let request = UNNotificationRequest(
-            identifier: "task-reminder-\(task.id)", content: content, trigger: trigger,
+            identifier: "task-reminder-\(task.id)", content: content, trigger: trigger
         )
 
         notificationCenter.add(request) { error in
@@ -79,12 +79,12 @@ final class NotificationManager {
         content.badge = 1
 
         let components = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute], from: dueDate,
+            [.year, .month, .day, .hour, .minute], from: dueDate
         )
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
         let request = UNNotificationRequest(
-            identifier: "task-due-\(task.id)", content: content, trigger: trigger,
+            identifier: "task-due-\(task.id)", content: content, trigger: trigger
         )
 
         notificationCenter.add(request) { error in

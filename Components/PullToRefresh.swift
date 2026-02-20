@@ -12,7 +12,7 @@ public struct PullToRefresh<Content: View>: View {
     public init(
         coordinateSpaceName: String,
         @ViewBuilder content: () -> Content,
-        onRefresh: @escaping () async -> Void,
+        onRefresh: @escaping () async -> Void
     ) {
         self.coordinateSpaceName = coordinateSpaceName
         self.content = content()
@@ -48,7 +48,7 @@ public struct PullToRefresh<Content: View>: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white.opacity(0.8))
                 }
-            },
+            }
         )
     }
 }
@@ -64,7 +64,7 @@ public extension View {
     /// Adds pull-to-refresh functionality to a ScrollView
     func pullToRefresh(
         coordinateSpaceName: String,
-        onRefresh: @escaping () async -> Void,
+        onRefresh: @escaping () async -> Void
     ) -> some View {
         PullToRefresh(coordinateSpaceName: coordinateSpaceName, content: { self }, onRefresh: onRefresh)
     }

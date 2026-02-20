@@ -19,8 +19,8 @@ public struct CloudKitOnboardingView: View {
                     .font(.system(size: 80))
                     .foregroundStyle(
                         .linearGradient(
-                            colors: [.blue.opacity(0.7), .blue], startPoint: .top, endPoint: .bottom,
-                        ),
+                            colors: [.blue.opacity(0.7), .blue], startPoint: .top, endPoint: .bottom
+                        )
                     )
                     .padding(.top, 30)
 
@@ -33,48 +33,42 @@ public struct CloudKitOnboardingView: View {
                     self.benefitRow(
                         icon: "iphone.and.arrow.forward", title: NSLocalizedString(
                             "sync_across_devices",
-                            comment: "Sync across devices benefit",
+                            comment: "Sync across devices benefit"
                         ),
                         description: NSLocalizedString(
                             "sync_across_devices_desc",
-                            comment: "Sync across devices description",
-                        ),
+                            comment: "Sync across devices description"
+                        )
                     )
 
                     self.benefitRow(
                         icon: "lock.shield", title: NSLocalizedString(
                             "private_secure",
-                            comment: "Private and secure benefit",
+                            comment: "Private and secure benefit"
                         ),
-                        description: NSLocalizedString(
-                            "private_secure_desc",
-                            comment: "Private and secure description",
-                        ),
+                        description: NSLocalizedString("private_secure_desc", comment: "Private and secure description")
                     )
 
                     self.benefitRow(
                         icon: "arrow.clockwise.icloud", title: NSLocalizedString(
                             "automatic_backup",
-                            comment: "Automatic backup benefit",
+                            comment: "Automatic backup benefit"
                         ),
-                        description: NSLocalizedString(
-                            "automatic_backup_desc",
-                            comment: "Automatic backup description",
-                        ),
+                        description: NSLocalizedString("automatic_backup_desc", comment: "Automatic backup description")
                     )
 
                     self.benefitRow(
                         icon: "person.crop.circle", title: NSLocalizedString(
                             "just_for_you",
-                            comment: "Just for you benefit",
+                            comment: "Just for you benefit"
                         ),
-                        description: NSLocalizedString("just_for_you_desc", comment: "Just for you description"),
+                        description: NSLocalizedString("just_for_you_desc", comment: "Just for you description")
                     )
                 }
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.secondary.opacity(0.1)),
+                        .fill(Color.secondary.opacity(0.1))
                 )
                 .padding(.horizontal)
 
@@ -117,7 +111,7 @@ public struct CloudKitOnboardingView: View {
             #endif
             .alert(
                 NSLocalizedString("new_device_alert", comment: "New device alert title"),
-                isPresented: self.$showingMergeOptions,
+                isPresented: self.$showingMergeOptions
             ) {
                 Button(NSLocalizedString("merge_from_icloud", comment: "Merge from iCloud button"), action: {
                     self.mergeFromiCloud()

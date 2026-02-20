@@ -24,7 +24,7 @@ class SmartScheduler {
         let availableSlots = await findAvailableSlots(
             duration: task.estimatedDuration,
             dueDate: dueDate,
-            preferences: preferences,
+            preferences: preferences
         )
 
         guard let bestSlot = selectBestSlot(availableSlots, for: task, preferences: preferences)
@@ -53,7 +53,7 @@ class SmartScheduler {
     private func findAvailableSlots(
         duration: TimeInterval,
         dueDate: Date,
-        preferences: SchedulingPreferences,
+        preferences: SchedulingPreferences
     ) async -> [TimeSlot] {
         let calendar = Calendar.current
         let now = Date()
@@ -72,13 +72,13 @@ class SmartScheduler {
                     bySettingHour: preferences.workStartHour,
                     minute: 0,
                     second: 0,
-                    of: dayStart,
+                    of: dayStart
                 ),
                 let workEnd = calendar.date(
                     bySettingHour: preferences.workEndHour,
                     minute: 0,
                     second: 0,
-                    of: dayStart,
+                    of: dayStart
                 )
             else {
                 searchDate = calendar.date(byAdding: .day, value: 1, to: searchDate)!
@@ -96,8 +96,8 @@ class SmartScheduler {
                 availableSlots.append(
                     TimeSlot(
                         start: gap.start,
-                        end: calendar.date(byAdding: .second, value: Int(duration), to: gap.start)!,
-                    ),
+                        end: calendar.date(byAdding: .second, value: Int(duration), to: gap.start)!
+                    )
                 )
             }
 
@@ -112,7 +112,7 @@ class SmartScheduler {
     private func selectBestSlot(
         _ slots: [TimeSlot],
         for task: PlannerTask,
-        preferences: SchedulingPreferences,
+        preferences: SchedulingPreferences
     ) -> TimeSlot? {
         guard !slots.isEmpty else { return nil }
 
@@ -168,7 +168,7 @@ class SmartScheduler {
 
     private func getEvents(from start: Date, to end: Date) -> [EKEvent] {
         let predicate = self.eventStore.predicateForEvents(
-            withStart: start, end: end, calendars: nil,
+            withStart: start, end: end, calendars: nil
         )
         return self.eventStore.events(matching: predicate)
     }
@@ -222,6 +222,6 @@ struct SchedulingPreferences {
         workStartHour: 9,
         workEndHour: 17,
         preferMorning: true,
-        avoidLateEvening: true,
+        avoidLateEvening: true
     )
 }

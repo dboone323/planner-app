@@ -149,7 +149,7 @@ final class JournalDataManager: JournalDataManaging {
         let total = entries.count
         let thisWeek = self.entries(
             between: Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date(),
-            and: Date(),
+            and: Date()
         ).count
         let moods = self.uniqueMoods()
 

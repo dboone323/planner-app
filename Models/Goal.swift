@@ -66,7 +66,7 @@ public struct Goal: Identifiable, Codable, Sendable {
     init(
         id: UUID = UUID(), title: String, description: String, targetDate: Date,
         createdAt: Date = Date(), modifiedAt: Date? = Date(), isCompleted: Bool = false,
-        priority: GoalPriority = .medium, progress: Double = 0.0,
+        priority: GoalPriority = .medium, progress: Double = 0.0
     ) {
         self.id = id
         self.title = title
@@ -84,7 +84,7 @@ public struct Goal: Identifiable, Codable, Sendable {
     /// Converts this goal to a CloudKit record for syncing.
     func toCKRecord() -> CKRecord {
         let record = CKRecord(
-            recordType: "Goal", recordID: CKRecord.ID(recordName: self.id.uuidString),
+            recordType: "Goal", recordID: CKRecord.ID(recordName: self.id.uuidString)
         )
         record["title"] = self.title
         record["description"] = self.description
@@ -108,7 +108,7 @@ public struct Goal: Identifiable, Codable, Sendable {
         else {
             throw NSError(
                 domain: "GoalConversionError", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to convert CloudKit record to Goal"],
+                userInfo: [NSLocalizedDescriptionKey: "Failed to convert CloudKit record to Goal"]
             )
         }
 
@@ -124,7 +124,7 @@ public struct Goal: Identifiable, Codable, Sendable {
             modifiedAt: ckRecord["modifiedAt"] as? Date,
             isCompleted: ckRecord["isCompleted"] as? Bool ?? false,
             priority: priority,
-            progress: ckRecord["progress"] as? Double ?? 0.0,
+            progress: ckRecord["progress"] as? Double ?? 0.0
         )
     }
 }

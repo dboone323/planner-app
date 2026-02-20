@@ -49,7 +49,7 @@ public struct PlannerTask: Identifiable, Codable {
     init(
         id: UUID = UUID(), title: String, description: String = "", isCompleted: Bool = false,
         priority: TaskPriority = .medium, dueDate: Date? = nil, createdAt: Date = Date(),
-        modifiedAt: Date? = Date(),
+        modifiedAt: Date? = Date()
     ) {
         self.id = id
         self.title = title
@@ -107,7 +107,7 @@ public struct Goal: Identifiable, Codable {
     init(
         id: UUID = UUID(), title: String, description: String, targetDate: Date,
         createdAt: Date = Date(), modifiedAt: Date? = Date(), isCompleted: Bool = false,
-        priority: GoalPriority = .medium, progress: Double = 0.0,
+        priority: GoalPriority = .medium, progress: Double = 0.0
     ) {
         self.id = id
         self.title = title
@@ -131,7 +131,7 @@ public struct JournalEntry: Identifiable, Codable {
 
     init(
         id: UUID = UUID(), title: String, body: String, date: Date, mood: String,
-        modifiedAt: Date? = Date(),
+        modifiedAt: Date? = Date()
     ) {
         self.id = id
         self.title = title
@@ -219,7 +219,7 @@ runTest("testGoalCreation") {
         title: "Test Goal",
         description: "A test goal",
         targetDate: futureDate,
-        priority: .medium,
+        priority: .medium
     )
 
     assert(goal.title == "Test Goal")
@@ -234,7 +234,7 @@ runTest("testGoalProgress") {
         title: "Progress Goal",
         description: "Test progress tracking",
         targetDate: Date().addingTimeInterval(86400 * 30),
-        progress: 0.5,
+        progress: 0.5
     )
 
     assert(goal.progress == 0.5)
@@ -251,14 +251,14 @@ runTest("testGoalPriority") {
         title: "High Priority Goal",
         description: "Urgent goal",
         targetDate: Date().addingTimeInterval(86400 * 7),
-        priority: .high,
+        priority: .high
     )
 
     let lowPriorityGoal = Goal(
         title: "Low Priority Goal",
         description: "Optional goal",
         targetDate: Date().addingTimeInterval(86400 * 365),
-        priority: .low,
+        priority: .low
     )
 
     assert(highPriorityGoal.priority == .high)
@@ -273,13 +273,13 @@ runTest("testGoalTargetDateValidation") {
     let goalWithPastDate = Goal(
         title: "Past Goal",
         description: "Goal with past target",
-        targetDate: pastDate,
+        targetDate: pastDate
     )
 
     let goalWithFutureDate = Goal(
         title: "Future Goal",
         description: "Goal with future target",
-        targetDate: futureDate,
+        targetDate: futureDate
     )
 
     assert(goalWithPastDate.targetDate < Date())
@@ -293,7 +293,7 @@ runTest("testJournalEntryCreation") {
         title: "Test Entry",
         body: "This is a test journal entry",
         date: Date(),
-        mood: "Happy",
+        mood: "Happy"
     )
 
     assert(entry.title == "Test Entry")
@@ -309,7 +309,7 @@ runTest("testJournalEntryPersistence") {
         title: "Persistent Entry",
         body: "Test persistence",
         date: Date(),
-        mood: "Thoughtful",
+        mood: "Thoughtful"
     )
 
     journalDataManager.save(entries: [entry])
@@ -329,21 +329,21 @@ runTest("testJournalEntryDateOrdering") {
         title: "Yesterday",
         body: "Yesterday's thoughts",
         date: yesterday,
-        mood: "Reflective",
+        mood: "Reflective"
     )
 
     let todayEntry = JournalEntry(
         title: "Today",
         body: "Today's thoughts",
         date: today,
-        mood: "Excited",
+        mood: "Excited"
     )
 
     let tomorrowEntry = JournalEntry(
         title: "Tomorrow",
         body: "Tomorrow's thoughts",
         date: tomorrow,
-        mood: "Hopeful",
+        mood: "Hopeful"
     )
 
     let entries = [yesterdayEntry, todayEntry, tomorrowEntry]
@@ -595,7 +595,7 @@ runTest("testTaskGoalIntegration") {
     let goal = Goal(
         title: "Related Goal",
         description: "Goal that relates to the task",
-        targetDate: Date().addingTimeInterval(86400 * 30),
+        targetDate: Date().addingTimeInterval(86400 * 30)
     )
 
     assert(task.title.contains("Goal"))
@@ -609,7 +609,7 @@ runTest("testJournalTaskIntegration") {
         title: "Task Reflection",
         body: "Reflecting on completed tasks",
         date: Date(),
-        mood: "Productive",
+        mood: "Productive"
     )
 
     assert(task.title.contains("Journal"))

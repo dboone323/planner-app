@@ -18,7 +18,7 @@ final class SwiftDataGoalManager: ObservableObject {
     /// Fetches all goals, sorted by target date.
     func load() -> [SDGoal] {
         let descriptor = FetchDescriptor<SDGoal>(
-            sortBy: [SortDescriptor(\.targetDate)],
+            sortBy: [SortDescriptor(\.targetDate)]
         )
         return (try? self.modelContext.fetch(descriptor)) ?? []
     }
@@ -56,7 +56,7 @@ final class SwiftDataGoalManager: ObservableObject {
         let predicate = #Predicate<SDGoal> { $0.isCompleted == completed }
         let descriptor = FetchDescriptor<SDGoal>(
             predicate: predicate,
-            sortBy: [SortDescriptor(\.targetDate)],
+            sortBy: [SortDescriptor(\.targetDate)]
         )
         return (try? self.modelContext.fetch(descriptor)) ?? []
     }

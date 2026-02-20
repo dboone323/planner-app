@@ -134,7 +134,7 @@ public struct MacOSSidebarView: View {
                     .foregroundColor(
                         self.selectedTab == tab
                             ? self.themeManager.currentTheme.primaryAccentColor
-                            : self.themeManager.currentTheme.primaryTextColor,
+                            : self.themeManager.currentTheme.primaryTextColor
                     )
             }
             .keyboardShortcut(tab.keyboardShortcut ?? KeyEquivalent(" "), modifiers: .command)
@@ -178,7 +178,7 @@ public struct IPadSidebarView: View {
                     .background(
                         self.selectedTab == tab.0
                             ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.1)
-                            : Color.clear,
+                            : Color.clear
                     )
                     .cornerRadius(8)
                     .onTapGesture {
@@ -199,7 +199,7 @@ public struct IPadSidebarView: View {
                     title: "Add Task", icon: "plus.circle", color: .blue,
                     action: {
                         // Handle add task
-                    },
+                    }
                 )
                 .accessibilityLabel("Add Task Button")
 
@@ -207,7 +207,7 @@ public struct IPadSidebarView: View {
                     title: "Add Goal", icon: "target", color: .green,
                     action: {
                         // Handle add goal
-                    },
+                    }
                 )
                 .accessibilityLabel("Add Goal Button")
 
@@ -215,7 +215,7 @@ public struct IPadSidebarView: View {
                     title: "Add Event", icon: "calendar.badge.plus", color: .orange,
                     action: {
                         // Handle add event
-                    },
+                    }
                 )
                 .accessibilityLabel("Add Event Button")
             }

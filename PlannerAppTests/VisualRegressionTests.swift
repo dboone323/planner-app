@@ -12,7 +12,7 @@ final class VisualRegressionTests: XCTestCase {
         _ snapshot: String,
         named name: String,
         file: StaticString = #filePath,
-        line: UInt = #line,
+        line: UInt = #line
     ) throws {
         let currentFile = URL(fileURLWithPath: String(describing: file))
         let fixtureURL = currentFile.deletingLastPathComponent()

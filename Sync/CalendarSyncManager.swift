@@ -7,7 +7,7 @@ protocol SyncEventStoreProtocol: AnyObject, Sendable { // Ideally AnyObject if w
     func requestAccessToEvents() async -> Bool
     // Update to @Sendable for Swift 6 strict concurrency
     func requestAccess(
-        to entityType: EKEntityType, completion: @escaping @Sendable (Bool, Error?) -> Void,
+        to entityType: EKEntityType, completion: @escaping @Sendable (Bool, Error?) -> Void
     )
     func calendars(for entityType: EKEntityType) -> [EKCalendar]
     func saveCalendar(_ calendar: EKCalendar, commit: Bool) throws
@@ -192,7 +192,7 @@ class CalendarSyncManager {
         let predicate = self.eventStore.predicateForEvents(
             withStart: startDate,
             end: endDate,
-            calendars: [calendar],
+            calendars: [calendar]
         )
 
         return self.eventStore.events(matching: predicate)
@@ -208,7 +208,7 @@ class CalendarSyncManager {
             description: event.notes ?? "",
             dueDate: event.startDate,
             estimatedDuration: event.endDate.timeIntervalSince(event.startDate),
-            calendarEventId: event.eventIdentifier,
+            calendarEventId: event.eventIdentifier
         )
     }
 }

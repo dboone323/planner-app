@@ -121,7 +121,7 @@ class PerformanceTests: XCTestCase, @unchecked Sendable {
         measure {
             for i in 0..<100 {
                 focusManager.startFocusSession(
-                    duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)"),
+                    duration: 25 * 60, task: createMockTask(id: "focus_task_\(i)")
                 )
                 _ = focusManager.getCurrentSession()
                 _ = focusManager.getSessionHistory()
@@ -217,7 +217,7 @@ class PerformanceTests: XCTestCase, @unchecked Sendable {
                 for i in 0..<50 {
                     let task = createMockTask(id: "concurrent_task_\(i)")
                     dependencyService.addDependency(
-                        from: task, to: createMockTask(id: "concurrent_dep_\(i)"),
+                        from: task, to: createMockTask(id: "concurrent_dep_\(i)")
                     )
                 }
                 group.leave()
@@ -348,7 +348,7 @@ private func createMockTask(id: String) -> MockTask {
         isCompleted: false,
         createdAt: Date(),
         tags: [],
-        estimatedDuration: 60,
+        estimatedDuration: 60
     )
 }
 
@@ -359,7 +359,7 @@ private func createMockCalendarEvent(id: String) -> MockCalendarEvent {
         startDate: Date(),
         endDate: Date().addingTimeInterval(3600),
         isAllDay: false,
-        calendarId: "test_calendar",
+        calendarId: "test_calendar"
     )
 }
 
@@ -370,7 +370,7 @@ private func createMockTimeBlock(id: String) -> MockTimeBlock {
         startTime: Date(),
         endTime: Date().addingTimeInterval(3600),
         taskId: "test_task",
-        isCompleted: false,
+        isCompleted: false
     )
 }
 
@@ -382,7 +382,7 @@ private func createMockTaskTemplate(id: String) -> MockTaskTemplate {
         category: .work,
         estimatedDuration: 60,
         defaultPriority: .medium,
-        subtasks: [],
+        subtasks: []
     )
 }
 
@@ -393,7 +393,7 @@ private func createMockWorkspace(id: String) -> MockWorkspace {
         description: "A test workspace",
         color: .blue,
         iconName: "folder",
-        createdAt: Date(),
+        createdAt: Date()
     )
 }
 
@@ -402,7 +402,7 @@ private func createMockContext() -> TaskContext {
         dueDate: Date().addingTimeInterval(86400),
         dependencies: [],
         userPreferences: [:],
-        currentWorkload: 5,
+        currentWorkload: 5
     )
 }
 

@@ -16,14 +16,14 @@ public struct PlannerApp: App {
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false,
-            cloudKitDatabase: .automatic,
+            cloudKitDatabase: .automatic
         )
 
         do {
             return try ModelContainer(
                 for: schema,
                 migrationPlan: PlannerMigrationPlan.self,
-                configurations: [modelConfiguration],
+                configurations: [modelConfiguration]
             )
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
@@ -60,14 +60,14 @@ public struct PlannerApp: App {
                 .ignoresSafeArea()
                 .overlay(
                     // Use enhanced navigation for better cross-platform UX
-                    MainTabView(selectedTabTag: self.$selectedTabTag),
+                    MainTabView(selectedTabTag: self.$selectedTabTag)
                 )
                 .environmentObject(self.themeManager)
                 .plannerAccessibilityDefaults()
                 .onAppear {
                     // Perform one-time legacy data migration
                     LegacyDataMigrator.migrateIfNeeded(
-                        context: self.sharedModelContainer.mainContext,
+                        context: self.sharedModelContainer.mainContext
                     )
                     PlannerAppLifecycleCoordinator.configureOnLaunch()
                 }

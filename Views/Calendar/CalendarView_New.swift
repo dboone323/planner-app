@@ -136,7 +136,7 @@ public struct CalendarView: View {
                         eventDates: self.eventDates,
                         goalDates: self.goalDates,
                         taskDates: self.taskDates,
-                        firstDayOfWeek: self.firstDayOfWeekSetting,
+                        firstDayOfWeek: self.firstDayOfWeekSetting
                     )
                     .environmentObject(self.themeManager)
                 }
@@ -204,7 +204,7 @@ public struct CalendarView: View {
                                 EmptyStateView(
                                     imageSystemName: "calendar",
                                     title: "No items for this date",
-                                    subtitle: "Tap + to add an event",
+                                    subtitle: "Tap + to add an event"
                                 )
                                 .padding(.vertical, 40)
                             }
@@ -245,7 +245,7 @@ public struct CalendarView: View {
         self.goals = GoalDataManager.shared.load()
         self.tasks = TaskDataManager.shared.load()
         print(
-            "Calendar data loaded. Events: \(self.events.count), Goals: \(self.goals.count), Tasks: \(self.tasks.count)",
+            "Calendar data loaded. Events: \(self.events.count), Goals: \(self.goals.count), Tasks: \(self.tasks.count)"
         )
     }
 

@@ -29,7 +29,7 @@ class ConflictResolverTests: XCTestCase {
     func testDetectConflict_IdenticalRecords_ReturnsNil() {
         let record = self.createRecord(id: "1", modified: Date(), title: "Test")
         let conflict = ConflictResolver.detectConflict(
-            localRecord: record, serverRecord: record, lastSyncDate: Date(),
+            localRecord: record, serverRecord: record, lastSyncDate: Date()
         )
         XCTAssertNil(conflict)
     }
@@ -59,7 +59,7 @@ class ConflictResolverTests: XCTestCase {
 
         // This will likely return nil locally due to changeTag being nil on both
         let result = ConflictResolver.detectConflict(
-            localRecord: local, serverRecord: server, lastSyncDate: lastSync,
+            localRecord: local, serverRecord: server, lastSyncDate: lastSync
         )
         XCTAssertNil(result)
     }

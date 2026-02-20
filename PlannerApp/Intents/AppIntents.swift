@@ -37,7 +37,7 @@ struct AddTaskIntent: AppIntent {
         _ = SDTask(
             title: title,
             priority: priority ?? "medium",
-            dueDate: dueDate,
+            dueDate: dueDate
         )
 
         // In production, inject the model context
@@ -113,7 +113,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "New task in \(.applicationName)",
             ],
             shortTitle: "Add Task",
-            systemImageName: "plus.circle",
+            systemImageName: "plus.circle"
         )
 
         AppShortcut(
@@ -123,7 +123,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "Mark task done in \(.applicationName)",
             ],
             shortTitle: "Complete Task",
-            systemImageName: "checkmark.circle",
+            systemImageName: "checkmark.circle"
         )
 
         AppShortcut(
@@ -134,7 +134,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "What are my tasks in \(.applicationName)",
             ],
             shortTitle: "List Tasks",
-            systemImageName: "list.bullet",
+            systemImageName: "list.bullet"
         )
 
         AppShortcut(
@@ -144,7 +144,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "Create goal in \(.applicationName)",
             ],
             shortTitle: "Add Goal",
-            systemImageName: "target",
+            systemImageName: "target"
         )
     }
 }

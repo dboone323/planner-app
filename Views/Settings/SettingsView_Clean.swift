@@ -181,7 +181,7 @@ public struct ThemeCard: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 6)
                                     .fill(self.theme.primaryAccentColor)
-                                    .frame(width: 60, height: 20),
+                                    .frame(width: 60, height: 20)
                             )
 
                         HStack(spacing: 4) {
@@ -196,7 +196,7 @@ public struct ThemeCard: View {
                                 .frame(width: 12, height: 12)
                         }
                     }
-                    .padding(12),
+                    .padding(12)
                 )
                 .frame(height: 100)
                 .overlay(
@@ -205,8 +205,8 @@ public struct ThemeCard: View {
                             self.themeManager.currentTheme.name == self.theme.name
                                 ? self.theme.primaryAccentColor
                                 : Color.clear,
-                            lineWidth: 2,
-                        ),
+                            lineWidth: 2
+                        )
                 )
 
             // Theme name

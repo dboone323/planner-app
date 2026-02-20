@@ -44,7 +44,7 @@ public struct TaskManagerView: View {
                 TaskInputView(
                     newTaskTitle: self.$newTaskTitle,
                     isInputFieldFocused: self.$isInputFieldFocused,
-                    onAddTask: self.addTask,
+                    onAddTask: self.addTask
                 )
                 .environmentObject(self.themeManager)
 
@@ -54,7 +54,7 @@ public struct TaskManagerView: View {
                     incompleteTasks: self.incompleteTasks,
                     completedTasks: self.completedTasks,
                     onDeleteIncomplete: self.deleteTaskIncomplete,
-                    onDeleteCompleted: self.deleteTaskCompleted,
+                    onDeleteCompleted: self.deleteTaskCompleted
                 )
                 .environmentObject(self.themeManager)
             } // End main VStack

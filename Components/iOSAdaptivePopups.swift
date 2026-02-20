@@ -47,7 +47,7 @@ extension View {
             onTapGesture {
                 // Dismiss keyboard when tapping outside
                 UIApplication.shared.sendAction(
-                    #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil,
+                    #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil
                 )
             }
         #else
@@ -166,7 +166,7 @@ struct IOSFormField<Content: View>: View {
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(self.strokeColor, lineWidth: 1),
+                        .stroke(self.strokeColor, lineWidth: 1)
                 )
         }
         .padding(.vertical, 4)

@@ -19,7 +19,7 @@ final class SwiftDataTaskManager: ObservableObject {
     /// Fetches all tasks, sorted by creation date.
     func load() -> [SDTask] {
         let descriptor = FetchDescriptor<SDTask>(
-            sortBy: [SortDescriptor(\.createdAt, order: .reverse)],
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
         return (try? self.modelContext.fetch(descriptor)) ?? []
     }
@@ -57,7 +57,7 @@ final class SwiftDataTaskManager: ObservableObject {
         let predicate = #Predicate<SDTask> { $0.isCompleted == completed }
         let descriptor = FetchDescriptor<SDTask>(
             predicate: predicate,
-            sortBy: [SortDescriptor(\.createdAt, order: .reverse)],
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
         return (try? self.modelContext.fetch(descriptor)) ?? []
     }

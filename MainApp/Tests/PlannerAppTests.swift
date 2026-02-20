@@ -46,7 +46,7 @@ class PlannerAppTests: XCTestCase {
                 XCTAssertEqual(
                     overlayView.selectedTabTag.wrappedValue,
                     "dashboard",
-                    "Initial tab tag should be 'dashboard'",
+                    "Initial tab tag should be 'dashboard'"
                 )
             } else {
                 XCTFail("Overlay view is not of type MainTabView")

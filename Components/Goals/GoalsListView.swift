@@ -20,7 +20,7 @@ public struct GoalsListView: View {
                     GoalItemView(
                         goal: goal,
                         onProgressUpdate: self.onProgressUpdate,
-                        onCompletionToggle: self.onCompletionToggle,
+                        onCompletionToggle: self.onCompletionToggle
                     )
                     .environmentObject(self.themeManager)
                 }

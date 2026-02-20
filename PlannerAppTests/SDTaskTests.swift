@@ -32,7 +32,7 @@ final class SDTaskTests: XCTestCase {
             taskDescription: "Test Description",
             isCompleted: false,
             priority: "high",
-            dueDate: Date(),
+            dueDate: Date()
         )
 
         XCTAssertEqual(task.title, "Test Task")
@@ -61,7 +61,7 @@ final class SDTaskTests: XCTestCase {
             title: "Persistent Task",
             taskDescription: "Should be saved",
             isCompleted: true,
-            priority: "high",
+            priority: "high"
         )
 
         self.context.insert(task)
@@ -69,7 +69,7 @@ final class SDTaskTests: XCTestCase {
 
         // Fetch back
         let descriptor = FetchDescriptor<SDTask>(
-            predicate: #Predicate { $0.title == "Persistent Task" },
+            predicate: #Predicate { $0.title == "Persistent Task" }
         )
         let fetched = try context.fetch(descriptor)
 
@@ -138,7 +138,7 @@ final class SDTaskTests: XCTestCase {
 
         // Fetch only completed
         let descriptor = FetchDescriptor<SDTask>(
-            predicate: #Predicate { $0.isCompleted },
+            predicate: #Predicate { $0.isCompleted }
         )
         let completedTasks = try context.fetch(descriptor)
 

@@ -162,14 +162,14 @@ extension View {
     func platformToolbar(
         title: String,
         primaryActions: [PlatformToolbar.ToolbarAction] = [],
-        secondaryActions: [PlatformToolbar.ToolbarAction] = [],
+        secondaryActions: [PlatformToolbar.ToolbarAction] = []
     ) -> some View {
         modifier(
             PlatformToolbar(
                 title: title,
                 primaryActions: primaryActions,
-                secondaryActions: secondaryActions,
-            ),
+                secondaryActions: secondaryActions
+            )
         )
     }
 }
@@ -196,7 +196,7 @@ struct PlatformContextMenu<MenuContent: View>: ViewModifier {
 
 extension View {
     func platformContextMenu(
-        @ViewBuilder menuContent: () -> some View,
+        @ViewBuilder menuContent: () -> some View
     ) -> some View {
         modifier(PlatformContextMenu(menuContent: menuContent))
     }
@@ -261,7 +261,7 @@ struct PlatformSheet<SheetContent: View>: ViewModifier {
 extension View {
     func platformSheet(
         isPresented: Binding<Bool>,
-        @ViewBuilder content: () -> some View,
+        @ViewBuilder content: () -> some View
     ) -> some View {
         modifier(PlatformSheet(isPresented: isPresented, content: content))
     }
@@ -283,7 +283,7 @@ public struct ExamplePlatformView: View {
                             .frame(height: 120)
                             .overlay(
                                 Text("Item \(index + 1)")
-                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor),
+                                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                             )
                             .platformContextMenu {
                                 Button("Edit", action: {}).accessibilityLabel("Button")
@@ -303,7 +303,7 @@ public struct ExamplePlatformView: View {
                 secondaryActions: [
                     .init(title: "Sort", icon: "arrow.up.arrow.down") {},
                     .init(title: "Filter", icon: "line.3.horizontal.decrease.circle") {},
-                ],
+                ]
             )
             .platformSheet(isPresented: self.$showingAddItem) {
                 Text("Add Item Sheet")

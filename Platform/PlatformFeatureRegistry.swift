@@ -34,7 +34,7 @@ public struct PlatformFeatureFlags: Sendable, Codable, Equatable {
         healthKitEnabled: Bool = false,
         homeKitEnabled: Bool = false,
         callKitEnabled: Bool = false,
-        carPlayEnabled: Bool = false,
+        carPlayEnabled: Bool = false
     ) {
         self.widgetsEnabled = widgetsEnabled
         self.siriShortcutsEnabled = siriShortcutsEnabled
@@ -65,7 +65,7 @@ public actor PlatformFeatureRegistry {
                 healthKitEnabled: true, // Enable HealthKit by default on iOS
                 homeKitEnabled: false, // Enable when HomeKit features are implemented
                 callKitEnabled: false, // Enable when CallKit features are implemented
-                carPlayEnabled: false, // Enable when CarPlay is implemented
+                carPlayEnabled: false // Enable when CarPlay is implemented
             )
             registry[.iOS] = defaultFlags
         #elseif os(macOS)
@@ -78,7 +78,7 @@ public actor PlatformFeatureRegistry {
                 healthKitEnabled: false, // macOS doesn't have HealthKit
                 homeKitEnabled: true, // macOS supports HomeKit
                 callKitEnabled: false, // macOS has different calling APIs
-                carPlayEnabled: false, // CarPlay is iOS-only
+                carPlayEnabled: false // CarPlay is iOS-only
             )
             registry[.macOS] = defaultFlags
         #endif

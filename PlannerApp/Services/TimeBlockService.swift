@@ -24,7 +24,7 @@ class TimeBlockService {
         TimeBlock(
             taskId: task.id,
             startTime: start,
-            duration: TimeInterval(durationMinutes * 60),
+            duration: TimeInterval(durationMinutes * 60)
         )
     }
 

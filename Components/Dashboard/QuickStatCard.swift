@@ -37,7 +37,7 @@ public struct QuickStatCard: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2),
+                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         )
     }
 }
@@ -48,7 +48,7 @@ public struct QuickStatCard: View {
         value: "5",
         subtitle: "3 completed",
         icon: "checkmark.circle.fill",
-        color: .blue,
+        color: .blue
     )
     .environmentObject(ThemeManager())
 }

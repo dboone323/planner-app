@@ -78,7 +78,7 @@ public struct SettingsView: View {
                 Section("Dashboard") {
                     Stepper(
                         "Items per section: \(self.dashboardItemLimit)", value: self.$dashboardItemLimit,
-                        in: 1...10,
+                        in: 1...10
                     )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -87,7 +87,7 @@ public struct SettingsView: View {
                 Section("Notifications") {
                     Toggle("Enable Notifications", isOn: self.$notificationsEnabled)
                         .modifier(
-                            NotificationToggleModifier(notificationsEnabled: self.$notificationsEnabled),
+                            NotificationToggleModifier(notificationsEnabled: self.$notificationsEnabled)
                         )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -135,8 +135,8 @@ public struct SettingsView: View {
             NSWorkspace.shared.open(
                 URL(
                     string:
-                    "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications",
-                )!,
+                    "x-apple.systempreferences:com.apple.preference.security?Privacy_Notifications"
+                )!
             )
         #else
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
@@ -156,7 +156,7 @@ public struct ThemePreviewSheet: View {
                 LazyVGrid(
                     columns: [
                         GridItem(.adaptive(minimum: 150)),
-                    ], spacing: 16,
+                    ], spacing: 16
                 ) {
                     ForEach(Theme.availableThemes, id: \.name) { theme in
                         ThemeCard(theme: theme)
@@ -201,7 +201,7 @@ public struct ThemeCard: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 6)
                                     .fill(self.theme.primaryAccentColor)
-                                    .frame(width: 60, height: 20),
+                                    .frame(width: 60, height: 20)
                             )
 
                         HStack(spacing: 4) {
@@ -216,7 +216,7 @@ public struct ThemeCard: View {
                                 .frame(width: 12, height: 12)
                         }
                     }
-                    .padding(12),
+                    .padding(12)
                 )
                 .frame(height: 100)
                 .overlay(
@@ -225,8 +225,8 @@ public struct ThemeCard: View {
                             self.themeManager.currentTheme.name == self.theme.name
                                 ? self.theme.primaryAccentColor
                                 : Color.clear,
-                            lineWidth: 2,
-                        ),
+                            lineWidth: 2
+                        )
                 )
 
             // Theme name

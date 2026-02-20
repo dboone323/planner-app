@@ -39,8 +39,8 @@ public struct JournalDetailView: View {
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
                             size: 30,
-                            weight: .bold,
-                        ),
+                            weight: .bold
+                        )
                     )
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
@@ -50,8 +50,8 @@ public struct JournalDetailView: View {
                     .font(
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.secondaryFontName,
-                            size: 16,
-                        ),
+                            size: 16
+                        )
                     )
                     .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
@@ -64,8 +64,8 @@ public struct JournalDetailView: View {
                     .font(
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 17,
-                        ),
+                            size: 17
+                        )
                     )
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                     .lineSpacing(5) // Add extra space between lines for readability
@@ -92,8 +92,8 @@ public struct JournalDetailView_Previews: PreviewProvider {
                     body: "Spent the afternoon reading in the park. "
                         + "The weather was perfect and it felt great to relax and unwind.",
                     date: Date(),
-                    mood: "😊",
-                ),
+                    mood: "😊"
+                )
             )
             // Provide the ThemeManager environment object for the preview
             .environmentObject(ThemeManager())

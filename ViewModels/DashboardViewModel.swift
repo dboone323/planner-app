@@ -144,7 +144,7 @@ public class DashboardViewModel: ObservableObject {
 
         print(
             "Dashboard data fetched. Limit: \(limit). Today: \(self.totalTodaysEventsCount), " +
-                "Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)",
+                "Tasks: \(self.totalIncompleteTasksCount), Goals: \(self.totalUpcomingGoalsCount)"
         ) // Debugging log
     }
 
@@ -218,8 +218,8 @@ public class DashboardViewModel: ObservableObject {
                     subtitle: task.title,
                     icon: "checkmark.circle.fill",
                     color: .green,
-                    timestamp: task.createdAt,
-                ),
+                    timestamp: task.createdAt
+                )
             )
         }
 
@@ -238,8 +238,8 @@ public class DashboardViewModel: ObservableObject {
                     subtitle: event.title,
                     icon: "calendar",
                     color: .orange,
-                    timestamp: event.date,
-                ),
+                    timestamp: event.date
+                )
             )
         }
 
@@ -263,8 +263,8 @@ public class DashboardViewModel: ObservableObject {
                     date: event.date,
                     icon: "calendar",
                     color: .orange,
-                    destination: .calendarEvent(event.id),
-                ),
+                    destination: .calendarEvent(event.id)
+                )
             )
         }
 
@@ -280,8 +280,8 @@ public class DashboardViewModel: ObservableObject {
                     date: goal.targetDate,
                     icon: "target",
                     color: .green,
-                    destination: .goalDetail(goal.id),
-                ),
+                    destination: .goalDetail(goal.id)
+                )
             )
         }
 

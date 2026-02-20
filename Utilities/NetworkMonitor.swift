@@ -40,7 +40,7 @@ class NetworkMonitor: @unchecked Sendable {
             NotificationCenter.default.post(
                 name: .networkStatusChanged,
                 object: nil,
-                userInfo: ["isConnected": self?.isConnected ?? false],
+                userInfo: ["isConnected": self?.isConnected ?? false]
             )
         }
     }

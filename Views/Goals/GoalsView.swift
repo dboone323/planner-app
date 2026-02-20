@@ -21,7 +21,7 @@ public struct GoalsView: View {
                     goals: self.goals,
                     onDelete: self.deleteGoal,
                     onProgressUpdate: self.updateGoalProgress,
-                    onCompletionToggle: self.toggleGoalCompletion,
+                    onCompletionToggle: self.toggleGoalCompletion
                 )
                 .environmentObject(self.themeManager)
             }

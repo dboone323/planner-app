@@ -161,7 +161,7 @@ public struct ProgressUpdateSheet: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(self.progress >= value
                                         ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.2)
-                                        : self.themeManager.currentTheme.secondaryBackgroundColor),
+                                        : self.themeManager.currentTheme.secondaryBackgroundColor)
                             )
                             .foregroundColor(self.progress >= value
                                 ? self.themeManager.currentTheme.primaryAccentColor
@@ -172,8 +172,8 @@ public struct ProgressUpdateSheet: View {
                                             self.progress >= value
                                                 ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.5)
                                                 : Color.clear,
-                                            lineWidth: 1,
-                                        ),
+                                            lineWidth: 1
+                                        )
                                 )
                     }
                     .buttonStyle(.plain)
@@ -200,7 +200,7 @@ public struct ProgressUpdateSheet: View {
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(self.themeManager.currentTheme.primaryAccentColor),
+                            .fill(self.themeManager.currentTheme.primaryAccentColor)
                     )
                     .foregroundColor(.white)
             }
@@ -217,7 +217,7 @@ public struct ProgressUpdateSheet: View {
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(self.themeManager.currentTheme.primaryAccentColor, lineWidth: 2),
+                                .stroke(self.themeManager.currentTheme.primaryAccentColor, lineWidth: 2)
                         )
                         .foregroundColor(self.themeManager.currentTheme.primaryAccentColor)
                 }

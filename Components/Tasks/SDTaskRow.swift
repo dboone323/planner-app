@@ -21,7 +21,7 @@ public struct SDTaskRow: View {
                 .foregroundColor(
                     self.taskItem.isCompleted
                         ? self.themeManager.currentTheme.completedColor
-                        : self.themeManager.currentTheme.secondaryTextColor,
+                        : self.themeManager.currentTheme.secondaryTextColor
                 )
                 .font(.title3)
                 .onTapGesture { self.toggleCompletion() }
@@ -30,16 +30,16 @@ public struct SDTaskRow: View {
             Text(self.taskItem.title)
                 .font(
                     self.themeManager.currentTheme.font(
-                        forName: self.themeManager.currentTheme.primaryFontName, size: 16,
-                    ),
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 16
+                    )
                 )
                 .strikethrough(
-                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor,
+                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor
                 )
                 .foregroundColor(
                     self.taskItem.isCompleted
                         ? self.themeManager.currentTheme.secondaryTextColor
-                        : self.themeManager.currentTheme.primaryTextColor,
+                        : self.themeManager.currentTheme.primaryTextColor
                 )
 
             Spacer()

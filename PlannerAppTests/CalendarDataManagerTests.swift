@@ -177,13 +177,13 @@ final class CalendarDataManagerTests: XCTestCase, @unchecked Sendable {
     func testEventsForDateReturnsSortedByTime() throws {
         let today = Date()
         let morning = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
         )
         let afternoon = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)
         )
         let evening = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
         )
 
         self.manager.add(CalendarEvent(title: "Evening", date: evening))
@@ -301,10 +301,10 @@ final class CalendarDataManagerTests: XCTestCase, @unchecked Sendable {
     func testGetEventStatistics() throws {
         let today = Date()
         let todayMorning = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
         )
         let todayEvening = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today),
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
         )
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 10, to: today))

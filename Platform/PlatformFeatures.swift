@@ -138,7 +138,7 @@ import SwiftUI
 
         init(
             @ViewBuilder primary: () -> PrimaryContent,
-            @ViewBuilder secondary: () -> SecondaryContent,
+            @ViewBuilder secondary: () -> SecondaryContent
         ) {
             self.primaryContent = primary()
             self.secondaryContent = secondary()
@@ -266,21 +266,21 @@ import SwiftUI
                         icon: "figure.walk",
                         title: "Steps",
                         value: "8,547", // "\(healthKit.stepCount)",
-                        color: .green,
+                        color: .green
                     )
 
                     HealthStatRow(
                         icon: "flame.fill",
                         title: "Active Energy",
                         value: "342 cal", // String(format: "%.0f cal", healthKit.activeEnergyBurned),
-                        color: .orange,
+                        color: .orange
                     )
 
                     HealthStatRow(
                         icon: "figure.run",
                         title: "Exercise",
                         value: "45 min", // "\(healthKit.exerciseMinutes) min",
-                        color: .blue,
+                        color: .blue
                     )
                 }
                 // } else {
@@ -307,7 +307,7 @@ import SwiftUI
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(themeManager.currentTheme.secondaryBackgroundColor),
+                    .fill(themeManager.currentTheme.secondaryBackgroundColor)
             )
             // .onAppear {
             //     if healthKit.isAuthorized {
@@ -359,7 +359,7 @@ import SwiftUI
 
             if let button = statusItem?.button {
                 button.image = NSImage(
-                    systemSymbolName: "calendar", accessibilityDescription: "PlannerApp",
+                    systemSymbolName: "calendar", accessibilityDescription: "PlannerApp"
                 )
                 button.action = #selector(self.showQuickMenu)
                 button.target = self
@@ -378,25 +378,25 @@ import SwiftUI
 
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Task", action: #selector(self.quickAddTask), keyEquivalent: "",
-                ),
+                    title: "Quick Add Task", action: #selector(self.quickAddTask), keyEquivalent: ""
+                )
             )
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Goal", action: #selector(self.quickAddGoal), keyEquivalent: "",
-                ),
+                    title: "Quick Add Goal", action: #selector(self.quickAddGoal), keyEquivalent: ""
+                )
             )
             menu.addItem(NSMenuItem.separator())
             menu.addItem(
                 NSMenuItem(
                     title: "Show Dashboard", action: #selector(self.showDashboard),
-                    keyEquivalent: "",
-                ),
+                    keyEquivalent: ""
+                )
             )
             menu.addItem(
                 NSMenuItem(
-                    title: "Quit PlannerApp", action: #selector(self.quitApp), keyEquivalent: "q",
-                ),
+                    title: "Quit PlannerApp", action: #selector(self.quitApp), keyEquivalent: "q"
+                )
             )
 
             self.statusItem?.menu = menu
@@ -445,13 +445,13 @@ import SwiftUI
 
     extension TouchBarProvider: NSTouchBarDelegate {
         func touchBar(
-            _: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier,
+            _: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier
         ) -> NSTouchBarItem? {
             switch identifier {
             case .addTask:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Task", target: self, action: #selector(self.addTask),
+                    title: "Add Task", target: self, action: #selector(self.addTask)
                 )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
@@ -459,7 +459,7 @@ import SwiftUI
             case .addGoal:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Goal", target: self, action: #selector(self.addGoal),
+                    title: "Add Goal", target: self, action: #selector(self.addGoal)
                 )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
@@ -467,7 +467,7 @@ import SwiftUI
             case .search:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 if let image = NSImage(
-                    systemSymbolName: "magnifyingglass", accessibilityDescription: "Search",
+                    systemSymbolName: "magnifyingglass", accessibilityDescription: "Search"
                 ) {
                     item.view = NSButton(image: image, target: self, action: #selector(self.search))
                     (item.view as? NSButton)?.setAccessibilityLabel("Button")
@@ -477,10 +477,10 @@ import SwiftUI
             case .calendar:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 if let image = NSImage(
-                    systemSymbolName: "calendar", accessibilityDescription: "Calendar",
+                    systemSymbolName: "calendar", accessibilityDescription: "Calendar"
                 ) {
                     item.view = NSButton(
-                        image: image, target: self, action: #selector(self.showCalendar),
+                        image: image, target: self, action: #selector(self.showCalendar)
                     )
                     (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 }
@@ -529,8 +529,8 @@ import SwiftUI
                     contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
                     styleMask: [.titled, .closable, .miniaturizable, .resizable],
                     backing: .buffered,
-                    defer: false,
-                ),
+                    defer: false
+                )
             )
 
             windowController.window?.contentView = NSHostingView(rootView: content)
@@ -569,7 +569,7 @@ import SwiftUI
         }
 
         static func importFromFile<T: Codable & Sendable>(
-            _ type: T.Type, completion: @escaping @MainActor @Sendable (T?) -> Void,
+            _ type: T.Type, completion: @escaping @MainActor @Sendable (T?) -> Void
         ) {
             let panel = NSOpenPanel()
             panel.allowedContentTypes = [.json]
@@ -622,7 +622,7 @@ class IOSFeatureProvider: PlatformFeatureProvider {
     func shareContent(_ content: String) {
         #if os(iOS)
             let activityViewController = UIActivityViewController(
-                activityItems: [content], applicationActivities: nil,
+                activityItems: [content], applicationActivities: nil
             )
             if let windowScene = UIApplication.shared.connectedScenes
                 .compactMap({ $0 as? UIWindowScene })

@@ -91,7 +91,7 @@ struct TaskCardView: View {
             .padding(.vertical, 4)
             .background(
                 Capsule()
-                    .fill(isOverdue ? Color.red.opacity(0.1) : Color.blue.opacity(0.1)),
+                    .fill(isOverdue ? Color.red.opacity(0.1) : Color.blue.opacity(0.1))
             )
             .foregroundColor(isOverdue ? .red : .blue)
     }

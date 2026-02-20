@@ -1,10 +1,10 @@
 # Unified SwiftFormat Configuration
 # Version: 0.59.1
-# Swift: 6.0
+# Swift: 6.2
 # Updated: February 11, 2026
 
 # Swift version
---swiftversion 6.0
+--swiftversion 6.2
 
 # Indentation and Tabs
 --indent 4
@@ -85,7 +85,6 @@
 --enable sortImports
 --enable unusedArguments
 --enable void
---enable trailingCommas
 --enable strongifiedSelf
 --enable redundantReturn
 --enable redundantType
@@ -94,8 +93,6 @@
 --enable redundantThrows
 --enable blankLinesBetweenImports
 --enable noForceUnwrapInTests
---enable wrap
---enable wrapFunctionBodies
 --enable trailingSpace
 
 # Disabled Rules
@@ -104,6 +101,9 @@
 --disable blankLinesAtEndOfScope
 --disable redundantSelf
 --disable docComments
+--disable trailingCommas
+--disable wrap
+--disable wrapFunctionBodies
 
 # Exclusions
 --exclude .build,Package.swift,node_modules,.swiftpm,Tools

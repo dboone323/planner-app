@@ -111,7 +111,7 @@ public struct TaskRowView: View {
             description: "Check the new feature implementation",
             isCompleted: false,
             priority: .high,
-            dueDate: Date(),
+            dueDate: Date()
         ))
 
         TaskRowView(task: PlannerTask(
@@ -120,7 +120,7 @@ public struct TaskRowView: View {
             description: "Get items for dinner party",
             isCompleted: false,
             priority: .medium,
-            dueDate: Calendar.current.date(byAdding: .hour, value: -2, to: Date()),
+            dueDate: Calendar.current.date(byAdding: .hour, value: -2, to: Date())
         ))
 
         TaskRowView(task: PlannerTask(
@@ -129,7 +129,7 @@ public struct TaskRowView: View {
             description: "This task is done",
             isCompleted: true,
             priority: .low,
-            dueDate: Date(),
+            dueDate: Date()
         ))
     }
     .environmentObject(ThemeManager())

@@ -24,7 +24,7 @@ struct SyncConflictInfo: Identifiable, Equatable {
         localRecord: CKRecord,
         serverRecord: CKRecord,
         conflictType: ConflictType,
-        detectedAt: Date = Date(),
+        detectedAt: Date = Date()
     ) {
         self.id = id
         self.recordID = recordID
@@ -61,7 +61,7 @@ enum ConflictResolver {
     static func detectConflict(
         localRecord: CKRecord,
         serverRecord: CKRecord,
-        lastSyncDate: Date?,
+        lastSyncDate: Date?
     ) -> SyncConflictInfo? {
         // No conflict if records are identical
         guard localRecord.recordChangeTag != serverRecord.recordChangeTag else {
@@ -79,7 +79,7 @@ enum ConflictResolver {
                 recordID: localRecord.recordID,
                 localRecord: localRecord,
                 serverRecord: serverRecord,
-                conflictType: conflictType,
+                conflictType: conflictType
             )
         }
 
@@ -116,7 +116,7 @@ enum ConflictResolver {
     /// - Returns: The record to save as the resolution, or nil if manual resolution needed
     static func resolve(
         conflict: SyncConflictInfo,
-        strategy: ConflictResolutionStrategy,
+        strategy: ConflictResolutionStrategy
     ) -> CKRecord? {
         switch strategy {
         case .useLocal:
@@ -174,14 +174,14 @@ enum ConflictResolver {
                     #if DEBUG
                         print(
                             "ConflictResolver: Preferring local value for '\(key)': " +
-                                "\(localVal) over server: \(serverVal)",
+                                "\(localVal) over server: \(serverVal)"
                         )
                     #endif
                     merged[key] = localVal
                 } else {
                     #if DEBUG
                         print(
-                            "ConflictResolver: Keeping server value for '\(key)': \(serverVal) over local: \(localVal)",
+                            "ConflictResolver: Keeping server value for '\(key)': \(serverVal) over local: \(localVal)"
                         )
                     #endif
                     merged[key] = serverVal // Explicitly set for clarity
@@ -201,7 +201,7 @@ enum ConflictResolver {
     /// - Returns: Array of resolved records (excludes manual resolution items)
     static func resolveAll(
         conflicts: [SyncConflictInfo],
-        strategy: ConflictResolutionStrategy,
+        strategy: ConflictResolutionStrategy
     ) -> [CKRecord] {
         conflicts.compactMap { conflict in
             self.resolve(conflict: conflict, strategy: strategy)

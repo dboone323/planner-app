@@ -36,7 +36,7 @@ enum PlannerSchemaV1: VersionedSchema {
             calendarEventId: String? = nil,
             estimatedDuration: TimeInterval = 3600,
             sentiment: String = "neutral",
-            sentimentScore: Double = 0.0,
+            sentimentScore: Double = 0.0
         ) {
             self.id = id
             self.title = title
@@ -108,7 +108,7 @@ enum PlannerSchemaV1: VersionedSchema {
             modifiedAt: Date? = nil,
             isCompleted: Bool = false,
             priority: String = "medium",
-            progress: Double = 0.0,
+            progress: Double = 0.0
         ) {
             self.id = id
             self.title = title
@@ -175,7 +175,7 @@ extension SDTask {
             calendarEventId: legacy.calendarEventId,
             estimatedDuration: legacy.estimatedDuration,
             sentiment: legacy.sentiment,
-            sentimentScore: legacy.sentimentScore,
+            sentimentScore: legacy.sentimentScore
         )
     }
 }
@@ -191,7 +191,7 @@ extension SDGoal {
             modifiedAt: legacy.modifiedAt,
             isCompleted: legacy.isCompleted,
             priority: legacy.priority.rawValue,
-            progress: legacy.progress,
+            progress: legacy.progress
         )
     }
 }
