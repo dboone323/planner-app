@@ -37,21 +37,21 @@ class TaskTemplateService: @unchecked Sendable {
                 defaultTitle: "Fix Bug: ",
                 defaultPriority: .high,
                 defaultTags: ["bug", "dev"],
-                checklistItems: ["Reproduce issue", "Identify root cause", "Fix code", "Verify fix"]
+                checklistItems: ["Reproduce issue", "Identify root cause", "Fix code", "Verify fix"],
             ),
             TaskTemplate(
                 name: "Meeting Prep",
                 defaultTitle: "Prep for: ",
                 defaultPriority: .medium,
                 defaultTags: ["meeting", "work"],
-                checklistItems: ["Review agenda", "Prepare slides", "Gather metrics"]
+                checklistItems: ["Review agenda", "Prepare slides", "Gather metrics"],
             ),
             TaskTemplate(
                 name: "Grocery Run",
                 defaultTitle: "Buy Groceries",
                 defaultPriority: .low,
                 defaultTags: ["personal", "shopping"],
-                checklistItems: ["Milk", "Eggs", "Bread"]
+                checklistItems: ["Milk", "Eggs", "Bread"],
             ),
         ]
     }

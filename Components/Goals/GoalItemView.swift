@@ -86,8 +86,8 @@ public struct GoalItemView: View {
                             .font(
                                 self.themeManager.currentTheme.font(
                                     forName: self.themeManager.currentTheme.primaryFontName,
-                                    size: 17, weight: self.goal.isCompleted ? .regular : .semibold
-                                )
+                                    size: 17, weight: self.goal.isCompleted ? .regular : .semibold,
+                                ),
                             )
                             .foregroundColor(self.goal.isCompleted
                                 ? self.themeManager.currentTheme.secondaryTextColor
@@ -146,8 +146,8 @@ public struct GoalItemView: View {
                 .font(
                     self.themeManager.currentTheme.font(
                         forName: self.themeManager.currentTheme.secondaryFontName,
-                        size: 15
-                    )
+                        size: 15,
+                    ),
                 )
                 .foregroundColor(self.goal.isCompleted
                     ? self.themeManager.currentTheme.secondaryTextColor.opacity(0.7)
@@ -158,16 +158,16 @@ public struct GoalItemView: View {
             HStack {
                 Text(String(
                     format: NSLocalizedString("target_date", comment: "Target date display"),
-                    self.targetDateFormatter.string(from: self.goal.targetDate)
+                    self.targetDateFormatter.string(from: self.goal.targetDate),
                 ))
                 .font(
                     self.themeManager.currentTheme.font(
                         forName: self.themeManager.currentTheme.secondaryFontName,
-                        size: 13
-                    )
+                        size: 13,
+                    ),
                 )
                 .foregroundColor(
-                    self.themeManager.currentTheme.secondaryTextColor.opacity(0.8)
+                    self.themeManager.currentTheme.secondaryTextColor.opacity(0.8),
                 )
 
                 Spacer()
@@ -201,11 +201,11 @@ public struct GoalItemView: View {
                 .fill(self.goal.isCompleted
                     ? self.themeManager.currentTheme.secondaryBackgroundColor.opacity(0.5)
                     : self.themeManager.currentTheme.secondaryBackgroundColor)
-                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(self.goal.isCompleted ? Color.green.opacity(0.3) : Color.clear, lineWidth: 1)
+                .stroke(self.goal.isCompleted ? Color.green.opacity(0.3) : Color.clear, lineWidth: 1),
         )
         .sheet(isPresented: self.$showProgressSheet) {
             // Placeholder for progress update sheet

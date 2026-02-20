@@ -109,7 +109,7 @@ public struct GoalRowView: View {
             targetDate: Date(),
             isCompleted: false,
             priority: .high,
-            progress: 0.75
+            progress: 0.75,
         ))
 
         GoalRowView(goal: Goal(
@@ -119,7 +119,7 @@ public struct GoalRowView: View {
             targetDate: Date(),
             isCompleted: true,
             priority: .medium,
-            progress: 1.0
+            progress: 1.0,
         ))
     }
     .environmentObject(ThemeManager())

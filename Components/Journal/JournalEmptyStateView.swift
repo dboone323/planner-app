@@ -9,8 +9,8 @@ public struct JournalEmptyStateView: View {
             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
             .font(
                 self.themeManager.currentTheme.font(
-                    forName: self.themeManager.currentTheme.secondaryFontName, size: 15
-                )
+                    forName: self.themeManager.currentTheme.secondaryFontName, size: 15,
+                ),
             )
             .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
             .frame(maxWidth: .infinity, alignment: .center)

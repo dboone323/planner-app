@@ -22,7 +22,7 @@ extension Theme {
         destructiveColor: Color(red: 0.85, green: 0.30, blue: 0.30),
         completedColor: Color(red: 0.16, green: 0.62, blue: 0.56), // Teal
         primaryFontName: nil,
-        secondaryFontName: nil
+        secondaryFontName: nil,
     )
 
     /// Nature-inspired theme with warm colors
@@ -37,7 +37,7 @@ extension Theme {
         destructiveColor: Color(red: 0.80, green: 0.35, blue: 0.25),
         completedColor: Color(red: 0.26, green: 0.67, blue: 0.55), // Mint
         primaryFontName: nil,
-        secondaryFontName: nil
+        secondaryFontName: nil,
     )
 
     /// High contrast theme for better accessibility
@@ -52,7 +52,7 @@ extension Theme {
         destructiveColor: Color.red,
         completedColor: Color(red: 0.0, green: 0.8, blue: 0.0),
         primaryFontName: nil,
-        secondaryFontName: nil
+        secondaryFontName: nil,
     )
 
     /// Modern gradient theme
@@ -67,7 +67,7 @@ extension Theme {
         destructiveColor: Color(red: 1.0, green: 0.23, blue: 0.19), // iOS Red
         completedColor: Color(red: 0.19, green: 0.82, blue: 0.35), // iOS Green
         primaryFontName: nil,
-        secondaryFontName: nil
+        secondaryFontName: nil,
     )
 
     /// Updated list including new themes
@@ -94,7 +94,7 @@ extension Color {
         LinearGradient(
             gradient: Gradient(colors: [startColor, endColor]),
             startPoint: .topLeading,
-            endPoint: .bottomTrailing
+            endPoint: .bottomTrailing,
         )
     }
 
@@ -126,19 +126,19 @@ struct GradientCard<Content: View>: View {
                     if self.useGradient {
                         Color.gradient(
                             from: self.themeManager.currentTheme.primaryAccentColor.opacity(0.1),
-                            to: self.themeManager.currentTheme.secondaryAccentColor.opacity(0.05)
+                            to: self.themeManager.currentTheme.secondaryAccentColor.opacity(0.05),
                         )
                     } else {
                         self.themeManager.currentTheme.secondaryBackgroundColor
                     }
-                }
+                },
             )
             .cornerRadius(16)
             .shadow(
                 color: self.themeManager.currentTheme.primaryAccentColor.opacity(0.1),
                 radius: 8,
                 x: 0,
-                y: 4
+                y: 4,
             )
     }
 }

@@ -116,7 +116,7 @@ public struct AddJournalEntryView: View {
                             self.isEntryBodyFocused = false
                             UIApplication.shared.sendAction(
                                 #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
-                                for: nil
+                                for: nil,
                             )
                         })
                         .accessibilityLabel("Button")
@@ -140,7 +140,7 @@ public struct AddJournalEntryView: View {
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
             body: self.entryBody.trimmingCharacters(in: .whitespacesAndNewlines), // Use entryBody
             date: self.date,
-            mood: self.mood
+            mood: self.mood,
         )
         self.journalEntries.append(newEntry)
 

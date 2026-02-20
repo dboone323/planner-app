@@ -32,7 +32,7 @@ final class CloudKitSyncTests: XCTestCase {
         // Verify CloudKit-enabled configuration can be created
         let cloudConfig = ModelConfiguration(
             isStoredInMemoryOnly: false,
-            cloudKitDatabase: .automatic
+            cloudKitDatabase: .automatic,
         )
 
         XCTAssertNotNil(cloudConfig)
@@ -131,7 +131,7 @@ final class CloudKitSyncTests: XCTestCase {
         let task = SDTask(
             title: "Integrity Test",
             taskDescription: "Original Description",
-            priority: "low"
+            priority: "low",
         )
         self.context.insert(task)
         try self.context.save()
@@ -146,7 +146,7 @@ final class CloudKitSyncTests: XCTestCase {
 
         // Verify final state
         let descriptor = FetchDescriptor<SDTask>(
-            predicate: #Predicate { $0.title == "Integrity Test" }
+            predicate: #Predicate { $0.title == "Integrity Test" },
         )
         let fetched = try context.fetch(descriptor)
 

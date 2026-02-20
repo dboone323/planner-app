@@ -61,7 +61,7 @@ public struct JournalView: View {
                     filteredEntries: self.filteredEntries,
                     searchText: self.searchText,
                     journalEntries: self.journalEntries,
-                    onDeleteEntry: self.deleteEntry
+                    onDeleteEntry: self.deleteEntry,
                 )
                 .searchable(text: self.$searchText, prompt: "Search Entries")
             }

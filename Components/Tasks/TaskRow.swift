@@ -23,7 +23,7 @@ public struct TaskRow: View {
                 .foregroundColor(
                     self.taskItem.isCompleted
                         ? self.themeManager.currentTheme.completedColor
-                        : self.themeManager.currentTheme.secondaryTextColor
+                        : self.themeManager.currentTheme.secondaryTextColor,
                 )
                 .font(.title3) // Make icon slightly larger
                 .onTapGesture { self.toggleCompletion() } // Toggle completion on icon tap
@@ -32,18 +32,18 @@ public struct TaskRow: View {
             Text(self.taskItem.title)
                 .font(
                     self.themeManager.currentTheme.font(
-                        forName: self.themeManager.currentTheme.primaryFontName, size: 16
-                    )
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 16,
+                    ),
                 )
                 // Apply strikethrough effect if completed
                 .strikethrough(
-                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor
+                    self.taskItem.isCompleted, color: self.themeManager.currentTheme.secondaryTextColor,
                 )
                 // Apply theme text color based on completion status
                 .foregroundColor(
                     self.taskItem.isCompleted
                         ? self.themeManager.currentTheme.secondaryTextColor
-                        : self.themeManager.currentTheme.primaryTextColor
+                        : self.themeManager.currentTheme.primaryTextColor,
                 )
 
             Spacer() // Push content to the left
@@ -83,7 +83,7 @@ public struct TaskRow: View {
         description: "This is a sample task",
         isCompleted: false,
         priority: .medium,
-        dueDate: Date().addingTimeInterval(86400) // Tomorrow
+        dueDate: Date().addingTimeInterval(86400), // Tomorrow
     )
 
     TaskRow(taskItem: sampleTask, tasks: .constant([sampleTask]))

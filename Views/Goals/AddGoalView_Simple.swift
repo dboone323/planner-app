@@ -52,7 +52,7 @@ public struct AddGoalView: View {
         let newGoal = Goal(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
             description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
-            targetDate: self.targetDate
+            targetDate: self.targetDate,
         )
         self.goals.append(newGoal)
         GoalDataManager.shared.save(goals: self.goals)

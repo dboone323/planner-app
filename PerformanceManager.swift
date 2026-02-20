@@ -13,12 +13,12 @@ public final class PerformanceManager {
     private let frameQueue = DispatchQueue(
         label: "com.quantumworkspace.performance.frames",
         qos: .userInteractive,
-        attributes: .concurrent
+        attributes: .concurrent,
     )
     private let metricsQueue = DispatchQueue(
         label: "com.quantumworkspace.performance.metrics",
         qos: .utility,
-        attributes: .concurrent
+        attributes: .concurrent,
     )
 
     private let maxFrameHistory = 120

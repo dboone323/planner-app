@@ -25,7 +25,7 @@ public struct SDTaskListView: View {
             } header: {
                 Text("To Do")
                     .font(self.themeManager.currentTheme.font(
-                        forName: self.themeManager.currentTheme.primaryFontName, size: 14
+                        forName: self.themeManager.currentTheme.primaryFontName, size: 14,
                     ))
                     .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
             }
@@ -42,7 +42,7 @@ public struct SDTaskListView: View {
                 } header: {
                     Text("Completed")
                         .font(self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.primaryFontName, size: 14
+                            forName: self.themeManager.currentTheme.primaryFontName, size: 14,
                         ))
                         .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                 }

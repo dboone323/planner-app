@@ -12,7 +12,7 @@ public struct Dependencies {
 
     public init(
         performanceManager: PerformanceManager = .shared,
-        logger: Logger = .shared
+        logger: Logger = .shared,
     ) {
         self.performanceManager = performanceManager
         self.logger = logger

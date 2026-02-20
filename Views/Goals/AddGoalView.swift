@@ -27,7 +27,7 @@ public struct AddGoalView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save", action: {
                     let newGoal = Goal(
-                        title: title, description: description, targetDate: targetDate
+                        title: title, description: description, targetDate: targetDate,
                     )
                     self.goals.append(newGoal)
                     GoalDataManager.shared.save(goals: self.goals)

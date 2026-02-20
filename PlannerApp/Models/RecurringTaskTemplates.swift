@@ -43,7 +43,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
         recurrence: RecurrenceType = .daily,
         customDays: Set<Int>? = nil,
         reminderOffset: TimeInterval? = nil,
-        isActive: Bool = true
+        isActive: Bool = true,
     ) {
         self.id = id
         self.title = title
@@ -54,7 +54,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
         self.reminderOffset = reminderOffset
         self.isActive = isActive
         self.nextDueDate = Self.calculateNextDueDate(
-            from: Date(), recurrence: recurrence, customDays: customDays
+            from: Date(), recurrence: recurrence, customDays: customDays,
         )
     }
 
@@ -63,7 +63,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
     public static func calculateNextDueDate(
         from date: Date,
         recurrence: RecurrenceType,
-        customDays: Set<Int>? = nil
+        customDays: Set<Int>? = nil,
     ) -> Date {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
@@ -168,7 +168,7 @@ final class RecurringTaskTemplateManager: ObservableObject {
                 title: templates[i].title,
                 taskDescription: self.templates[i].description,
                 priority: self.templates[i].priority,
-                dueDate: nextDue
+                dueDate: nextDue,
             )
 
             context.insert(task)
@@ -179,7 +179,7 @@ final class RecurringTaskTemplateManager: ObservableObject {
             self.templates[i].nextDueDate = RecurringTaskTemplate.calculateNextDueDate(
                 from: nextDue,
                 recurrence: self.templates[i].recurrence,
-                customDays: self.templates[i].customDays
+                customDays: self.templates[i].customDays,
             )
         }
 

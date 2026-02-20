@@ -37,22 +37,22 @@ public struct MainTabViewEnhanced: View {
 
         static let allTabs = [
             TabConfiguration(
-                tag: TabTags.dashboard, title: "Dashboard", icon: "house", keyboardShortcut: "1"
+                tag: TabTags.dashboard, title: "Dashboard", icon: "house", keyboardShortcut: "1",
             ),
             TabConfiguration(
-                tag: TabTags.tasks, title: "Tasks", icon: "checkmark.square", keyboardShortcut: "2"
+                tag: TabTags.tasks, title: "Tasks", icon: "checkmark.square", keyboardShortcut: "2",
             ),
             TabConfiguration(
-                tag: TabTags.calendar, title: "Calendar", icon: "calendar", keyboardShortcut: "3"
+                tag: TabTags.calendar, title: "Calendar", icon: "calendar", keyboardShortcut: "3",
             ),
             TabConfiguration(
-                tag: TabTags.goals, title: "Goals", icon: "target", keyboardShortcut: "4"
+                tag: TabTags.goals, title: "Goals", icon: "target", keyboardShortcut: "4",
             ),
             TabConfiguration(
-                tag: TabTags.journal, title: "Journal", icon: "book", keyboardShortcut: "5"
+                tag: TabTags.journal, title: "Journal", icon: "book", keyboardShortcut: "5",
             ),
             TabConfiguration(
-                tag: TabTags.settings, title: "Settings", icon: "gear", keyboardShortcut: ","
+                tag: TabTags.settings, title: "Settings", icon: "gear", keyboardShortcut: ",",
             ),
         ]
     }
@@ -88,7 +88,7 @@ public struct MainTabViewEnhanced: View {
                     .foregroundColor(
                         self.selectedTabTag == tab.tag
                             ? self.themeManager.currentTheme.primaryAccentColor
-                            : self.themeManager.currentTheme.primaryTextColor
+                            : self.themeManager.currentTheme.primaryTextColor,
                     )
                     .tag(tab.tag)
             }
@@ -139,7 +139,7 @@ public struct MainTabViewEnhanced: View {
                         .background(
                             self.selectedTabTag == tab.tag
                                 ? self.themeManager.currentTheme.primaryAccentColor.opacity(0.1)
-                                : Color.clear
+                                : Color.clear,
                         )
                         .cornerRadius(8)
                         .onTapGesture {
@@ -174,7 +174,7 @@ public struct MainTabViewEnhanced: View {
             .accentColor(self.themeManager.currentTheme.primaryAccentColor)
             .environment(
                 \.colorScheme,
-                self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light
+                self.themeManager.currentTheme.primaryBackgroundColor.isDark() ? .dark : .light,
             )
         }
     #endif
@@ -272,7 +272,7 @@ public struct MainTabViewEnhanced: View {
     #if os(macOS)
         private func toggleSidebar() {
             NSApp.keyWindow?.firstResponder?.tryToPerform(
-                #selector(NSSplitViewController.toggleSidebar(_:)), with: nil
+                #selector(NSSplitViewController.toggleSidebar(_:)), with: nil,
             )
         }
     #endif

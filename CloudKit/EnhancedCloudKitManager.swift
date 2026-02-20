@@ -296,7 +296,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             recordType: "Task",
             predicate: predicate,
             subscriptionID: "task-changes",
-            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
         )
 
         let info = CKSubscription.NotificationInfo()
@@ -320,7 +320,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             recordType: "Goal",
             predicate: predicate,
             subscriptionID: "goal-changes",
-            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
         )
 
         let info = CKSubscription.NotificationInfo()
@@ -344,7 +344,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             recordType: "CalendarEvent",
             predicate: predicate,
             subscriptionID: "event-changes",
-            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
         )
 
         let info = CKSubscription.NotificationInfo()
@@ -368,7 +368,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             recordType: "JournalEntry",
             predicate: predicate,
             subscriptionID: "journal-changes",
-            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+            options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
         )
 
         let info = CKSubscription.NotificationInfo()
@@ -984,7 +984,7 @@ extension EnhancedCloudKitManager {
 
             _ = try await self.database.modifyRecords(
                 saving: records,
-                deleting: []
+                deleting: [],
             )
 
             // Process results if needed
@@ -1002,7 +1002,7 @@ extension EnhancedCloudKitManager {
 
             _ = try await self.database.modifyRecords(
                 saving: records,
-                deleting: []
+                deleting: [],
             )
 
             print("Batch uploaded: \(records.count) goals")
@@ -1044,7 +1044,7 @@ extension EnhancedCloudKitManager {
                 recordType: "Task",
                 predicate: NSPredicate(value: true),
                 subscriptionID: "TaskSubscription",
-                options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+                options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
             )
 
             let notificationInfo = CKSubscription.NotificationInfo()
@@ -1058,7 +1058,7 @@ extension EnhancedCloudKitManager {
                 recordType: "Goal",
                 predicate: NSPredicate(value: true),
                 subscriptionID: "GoalSubscription",
-                options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
+                options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion],
             )
             goalSubscription.notificationInfo = notificationInfo
 
@@ -1098,7 +1098,7 @@ extension EnhancedCloudKitManager {
         let currentDevice = SyncedDevice(
             name: Self.deviceName,
             lastSync: self.lastSyncDate,
-            isCurrentDevice: true
+            isCurrentDevice: true,
         )
         devices.append(currentDevice)
 

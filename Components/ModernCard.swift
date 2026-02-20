@@ -19,7 +19,7 @@ struct ModernCard<Content: View>: View {
         shadowRadius: CGFloat = 8,
         cornerRadius: CGFloat = 16,
         padding: CGFloat = 16,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.shadowRadius = shadowRadius
         self.cornerRadius = cornerRadius
@@ -37,8 +37,8 @@ struct ModernCard<Content: View>: View {
                         color: Color.black.opacity(0.08),
                         radius: self.shadowRadius,
                         x: 0,
-                        y: 2
-                    )
+                        y: 2,
+                    ),
             )
     }
 }
@@ -202,9 +202,9 @@ public struct ModernTextField: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(
                             self.themeManager.currentTheme.secondaryAccentColor.opacity(0.3),
-                            lineWidth: 1
-                        )
-                )
+                            lineWidth: 1,
+                        ),
+                ),
         )
         .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
     }

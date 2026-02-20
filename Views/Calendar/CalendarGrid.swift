@@ -82,7 +82,7 @@ public struct CalendarGrid: View {
                         isCurrentMonth: self.calendar.isDate(date, equalTo: self.selectedDate, toGranularity: .month),
                         hasEvent: self.eventDates.contains(self.calendar.startOfDay(for: date)),
                         hasGoal: self.goalDates.contains(self.calendar.startOfDay(for: date)),
-                        hasTask: self.taskDates.contains(self.calendar.startOfDay(for: date))
+                        hasTask: self.taskDates.contains(self.calendar.startOfDay(for: date)),
                     )
                     .environmentObject(self.themeManager)
                 }
@@ -132,8 +132,8 @@ public struct CalendarDayView: View {
                     Circle()
                         .stroke(
                             self.isSelected ? self.themeManager.currentTheme.primaryAccentColor : Color.clear,
-                            lineWidth: 2
-                        )
+                            lineWidth: 2,
+                        ),
                 )
 
             // Indicator dots
@@ -192,7 +192,7 @@ public struct CalendarDayView: View {
         eventDates: Set([Date()]),
         goalDates: Set([Calendar.current.date(byAdding: .day, value: 1, to: Date())!]),
         taskDates: Set([Calendar.current.date(byAdding: .day, value: 2, to: Date())!]),
-        firstDayOfWeek: 1
+        firstDayOfWeek: 1,
     )
     .environmentObject(ThemeManager())
     .padding()

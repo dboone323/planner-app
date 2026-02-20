@@ -18,23 +18,23 @@ public struct JournalRow: View {
                     .font(
                         self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName, size: 17,
-                            weight: .medium
-                        )
+                            weight: .medium,
+                        ),
                     )
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                     .lineLimit(1)
                 Text(self.entry.date, formatter: self.rowDateFormatter)
                     .font(
                         self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.secondaryFontName, size: 14
-                        )
+                            forName: self.themeManager.currentTheme.secondaryFontName, size: 14,
+                        ),
                     )
                     .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                 Text(self.entry.body)
                     .font(
                         self.themeManager.currentTheme.font(
-                            forName: self.themeManager.currentTheme.secondaryFontName, size: 13
-                        )
+                            forName: self.themeManager.currentTheme.secondaryFontName, size: 13,
+                        ),
                     )
                     .foregroundColor(self.themeManager.currentTheme.secondaryTextColor.opacity(0.8))
 

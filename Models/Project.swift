@@ -75,7 +75,7 @@ public struct PlannerProject: Identifiable, Codable, Transferable {
         color: String = "blue",
         targetCompletionDate: Date? = nil,
         createdAt: Date = Date(),
-        modifiedAt: Date? = Date()
+        modifiedAt: Date? = Date(),
     ) {
         self.id = id
         self.name = name

@@ -51,12 +51,12 @@ public struct EventRowView: View {
     VStack {
         EventRowView(event: CalendarEvent(
             title: "Team Meeting",
-            date: Date()
+            date: Date(),
         ))
 
         EventRowView(event: CalendarEvent(
             title: "Conference",
-            date: Date()
+            date: Date(),
         ))
     }
     .environmentObject(ThemeManager())

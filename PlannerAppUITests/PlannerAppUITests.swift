@@ -67,7 +67,7 @@ extension XCTestCase {
     @MainActor
     func dismissSystemPermissionAlertsIfPresent(
         in app: XCUIApplication,
-        timeout: TimeInterval = 3
+        timeout: TimeInterval = 3,
     ) {
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let preferredButtons = [
@@ -119,7 +119,7 @@ extension XCTestCase {
     @MainActor
     private static func handleAlert(
         in alert: XCUIElement,
-        preferredButtons: [String]
+        preferredButtons: [String],
     ) -> Bool {
         guard alert.exists else {
             return false
@@ -146,7 +146,7 @@ extension XCTestCase {
     @MainActor
     private static func tapPreferredButton(
         in alert: XCUIElement,
-        preferredButtons: [String]
+        preferredButtons: [String],
     ) -> Bool {
         for title in preferredButtons {
             let button = alert.buttons[title]
@@ -163,7 +163,7 @@ extension XCTestCase {
         }
 
         let approveMatch = alert.buttons.matching(
-            NSPredicate(format: "label CONTAINS[c] 'OK' OR label CONTAINS[c] 'Continue'")
+            NSPredicate(format: "label CONTAINS[c] 'OK' OR label CONTAINS[c] 'Continue'"),
         ).firstMatch
         if approveMatch.exists {
             approveMatch.tap()

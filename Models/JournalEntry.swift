@@ -23,7 +23,7 @@ public struct JournalEntry: Identifiable, Codable, Sendable {
         mood: String,
         modifiedAt: Date? = Date(),
         sentiment: String = "neutral",
-        sentimentScore: Double = 0.0
+        sentimentScore: Double = 0.0,
     ) {
         self.id = id
         self.title = title
@@ -71,7 +71,7 @@ public struct JournalEntry: Identifiable, Codable, Sendable {
     /// Convert to CloudKit record for syncing
     func toCKRecord() -> CKRecord {
         let record = CKRecord(
-            recordType: "JournalEntry", recordID: CKRecord.ID(recordName: self.id.uuidString)
+            recordType: "JournalEntry", recordID: CKRecord.ID(recordName: self.id.uuidString),
         )
         record["title"] = self.title
         record["body"] = self.body
@@ -95,7 +95,7 @@ public struct JournalEntry: Identifiable, Codable, Sendable {
                 domain: "JournalEntryConversionError", code: 1,
                 userInfo: [
                     NSLocalizedDescriptionKey: "Failed to convert CloudKit record to JournalEntry",
-                ]
+                ],
             )
         }
 
@@ -107,7 +107,7 @@ public struct JournalEntry: Identifiable, Codable, Sendable {
             mood: mood,
             modifiedAt: ckRecord["modifiedAt"] as? Date,
             sentiment: ckRecord["sentiment"] as? String ?? "neutral",
-            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0
+            sentimentScore: ckRecord["sentimentScore"] as? Double ?? 0.0,
         )
     }
 }

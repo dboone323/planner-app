@@ -18,7 +18,7 @@ struct SyncRefreshableView<Content: View>: View {
         isSyncing: Binding<Bool>,
         lastSyncDate: Binding<Date?>,
         onRefresh: @escaping () async -> Void,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         _isSyncing = isSyncing
         _lastSyncDate = lastSyncDate
@@ -58,7 +58,7 @@ struct SyncStatusBar: View {
                     .foregroundColor(.green)
                 Text(String(
                     format: NSLocalizedString("last_synced", comment: "Last sync time display"),
-                    RelativeDateTimeFormatter().localizedString(for: date, relativeTo: Date())
+                    RelativeDateTimeFormatter().localizedString(for: date, relativeTo: Date()),
                 ))
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -141,6 +141,6 @@ extension View {
                 Text(NSLocalizedString("item_2", comment: "Test item 2"))
                 Text(NSLocalizedString("item_3", comment: "Test item 3"))
             }
-        }
+        },
     )
 }

@@ -14,7 +14,7 @@ final class JournalEntrySentimentTests: XCTestCase {
             title: "Great Day",
             body: "I had an amazing and wonderful day! Everything was excellent and I feel happy.",
             date: Date(),
-            mood: "happy"
+            mood: "happy",
         )
 
         entry.analyzeSentiment()
@@ -28,7 +28,7 @@ final class JournalEntrySentimentTests: XCTestCase {
             title: "Tough Day",
             body: "This was terrible and awful. Everything felt broken and bad today.",
             date: Date(),
-            mood: "sad"
+            mood: "sad",
         )
 
         entry.analyzeSentiment()
@@ -42,7 +42,7 @@ final class JournalEntrySentimentTests: XCTestCase {
             title: "Regular Day",
             body: "Today was a normal day. I went to work and came home.",
             date: Date(),
-            mood: "neutral"
+            mood: "neutral",
         )
 
         entry.analyzeSentiment()
@@ -56,7 +56,7 @@ final class JournalEntrySentimentTests: XCTestCase {
             title: "Changing Mood",
             body: "I love this great day!",
             date: Date(),
-            mood: "happy"
+            mood: "happy",
         )
 
         entry.updateContent("I love this great day!")
@@ -74,7 +74,7 @@ final class JournalEntrySentimentTests: XCTestCase {
             title: "Empty Entry",
             body: "",
             date: Date(),
-            mood: "neutral"
+            mood: "neutral",
         )
 
         entry.analyzeSentiment()

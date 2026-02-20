@@ -29,7 +29,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
             do {
                 self.modelContainer = try ModelContainer(
-                    for: schema, configurations: [configuration]
+                    for: schema, configurations: [configuration],
                 )
             } catch {
                 XCTFail("Failed to create model container: \(error)")
@@ -67,7 +67,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     func testTaskCreation() {
         // Test basic task creation
         let task = AppTask(
-            title: "Test Task", description: "A test task", priority: .medium, dueDate: Date()
+            title: "Test Task", description: "A test task", priority: .medium, dueDate: Date(),
         )
         XCTAssertEqual(task.title, "Test Task")
         XCTAssertEqual(task.description, "A test task")
@@ -82,13 +82,13 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             title: "High Priority",
             description: "Urgent task",
             priority: .high,
-            dueDate: Date()
+            dueDate: Date(),
         )
         let lowPriorityTask = AppTask(
             title: "Low Priority",
             description: "Optional task",
             priority: .low,
-            dueDate: Date()
+            dueDate: Date(),
         )
 
         XCTAssertEqual(highPriorityTask.priority, TaskPriority.high)
@@ -141,13 +141,13 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Create test tasks
         let task1 = AppTask(
-            title: "Test Task 1", description: "First test task", priority: .medium, dueDate: Date()
+            title: "Test Task 1", description: "First test task", priority: .medium, dueDate: Date(),
         )
         let task2 = AppTask(
             title: "Test Task 2",
             description: "Second test task",
             priority: .high,
-            dueDate: Date().addingTimeInterval(86400)
+            dueDate: Date().addingTimeInterval(86400),
         )
 
         // Save tasks
@@ -173,7 +173,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Create and add a task
         let task = AppTask(
-            title: "Added Task", description: "Task added via add method", priority: .low
+            title: "Added Task", description: "Task added via add method", priority: .low,
         )
         manager.add(task)
 
@@ -193,7 +193,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Create and add a task
         let originalTask = AppTask(
-            title: "Original Task", description: "Original description", priority: .medium
+            title: "Original Task", description: "Original description", priority: .medium,
         )
         manager.add(originalTask)
 
@@ -250,7 +250,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", description: "Not done", isCompleted: false,
         )
         manager.save(tasks: [completedTask, incompleteTask])
 
@@ -270,12 +270,12 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         let dueToday = AppTask(title: "Due Today", description: "Urgent", dueDate: Date())
         let dueTomorrow = AppTask(
-            title: "Due Tomorrow", description: "Soon", dueDate: Date().addingTimeInterval(86400)
+            title: "Due Tomorrow", description: "Soon", dueDate: Date().addingTimeInterval(86400),
         )
         let dueNextWeek = AppTask(
             title: "Due Next Week",
             description: "Later",
-            dueDate: Date().addingTimeInterval(7 * 86400)
+            dueDate: Date().addingTimeInterval(7 * 86400),
         )
         let noDueDate = AppTask(title: "No Due Date", description: "Flexible")
 
@@ -297,18 +297,18 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             title: "Overdue",
             description: "Late",
             isCompleted: false,
-            dueDate: Date().addingTimeInterval(-86400)
+            dueDate: Date().addingTimeInterval(-86400),
         )
         let completedOverdueTask = AppTask(
             title: "Completed Overdue",
             description: "Done late",
             isCompleted: true,
-            dueDate: Date().addingTimeInterval(-86400)
+            dueDate: Date().addingTimeInterval(-86400),
         )
         let notOverdueTask = AppTask(
             title: "Not Overdue",
             description: "On time",
-            dueDate: Date().addingTimeInterval(86400)
+            dueDate: Date().addingTimeInterval(86400),
         )
 
         manager.save(tasks: [overdueTask, completedOverdueTask, notOverdueTask])
@@ -325,7 +325,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         let highPriority = AppTask(title: "High", description: "High priority", priority: .high)
         let mediumPriority = AppTask(
-            title: "Medium", description: "Medium priority", priority: .medium
+            title: "Medium", description: "Medium priority", priority: .medium,
         )
         let lowPriority = AppTask(title: "Low", description: "Low priority", priority: .low)
 
@@ -344,13 +344,13 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", description: "Not done", isCompleted: false,
         )
         let overdueTask = AppTask(
             title: "Overdue",
             description: "Late",
             isCompleted: false,
-            dueDate: Date().addingTimeInterval(-86400)
+            dueDate: Date().addingTimeInterval(-86400),
         )
         // Create a task due today explicitly - use noon today to ensure it's within today
         let calendar = Calendar.current
@@ -362,7 +362,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             calendar.date(byAdding: .second, value: -60, to: startOfTomorrow)
                 ?? startOfTomorrow.addingTimeInterval(-60)
         let dueTodayTask = AppTask(
-            title: "Due Today", description: "Urgent", isCompleted: false, dueDate: lateEveningToday
+            title: "Due Today", description: "Urgent", isCompleted: false, dueDate: lateEveningToday,
         )
 
         manager.save(tasks: [completedTask, incompleteTask, overdueTask, dueTodayTask])
@@ -411,7 +411,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         let task = AppTask(title: "Test Task", description: "Test description", isCompleted: false)
         let goal = Goal(
             title: "Test Goal", description: "Test goal",
-            targetDate: Date().addingTimeInterval(86400)
+            targetDate: Date().addingTimeInterval(86400),
         )
         let event = CalendarEvent(title: "Test Event", date: Date())
 
@@ -437,7 +437,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Add test data
         let task = AppTask(
-            title: "Refresh Test Task", description: "Test refresh", isCompleted: true
+            title: "Refresh Test Task", description: "Test refresh", isCompleted: true,
         )
         TaskDataManager.shared.add(task)
 
@@ -460,12 +460,12 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Add test data
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", description: "Not done", isCompleted: false,
         )
         let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
         let futureGoal = Goal(
             title: "Future Goal", description: "Future",
-            targetDate: Date().addingTimeInterval(86400)
+            targetDate: Date().addingTimeInterval(86400),
         )
 
         TaskDataManager.shared.save(tasks: [incompleteTask, completedTask])
@@ -490,7 +490,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         var tasks: [AppTask] = []
         for index in 1...10 {
             let task = AppTask(
-                title: "Task \(index)", description: "Task \(index)", isCompleted: false
+                title: "Task \(index)", description: "Task \(index)", isCompleted: false,
             )
             tasks.append(task)
         }
@@ -514,7 +514,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual(goal.title, "Test Goal")
         XCTAssertEqual(goal.description, "A test goal")
         XCTAssertEqual(
-            goal.targetDate.timeIntervalSince1970, targetDate.timeIntervalSince1970, accuracy: 1.0
+            goal.targetDate.timeIntervalSince1970, targetDate.timeIntervalSince1970, accuracy: 1.0,
         )
         XCTAssertFalse(goal.isCompleted)
         XCTAssertNotNil(goal.id)
@@ -526,7 +526,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         var goal = Goal(
             title: "Completion Test",
             description: "Test completion",
-            targetDate: Date().addingTimeInterval(86400)
+            targetDate: Date().addingTimeInterval(86400),
         )
 
         XCTAssertFalse(goal.isCompleted)
@@ -544,7 +544,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         XCTAssertEqual(event.title, "Test Event")
         XCTAssertEqual(
-            event.date.timeIntervalSince1970, eventDate.timeIntervalSince1970, accuracy: 1.0
+            event.date.timeIntervalSince1970, eventDate.timeIntervalSince1970, accuracy: 1.0,
         )
         XCTAssertNotNil(event.id)
     }
@@ -560,12 +560,12 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Add test data
         let task = AppTask(
-            title: "Integration Task", description: "Test integration", isCompleted: false
+            title: "Integration Task", description: "Test integration", isCompleted: false,
         )
         let goal = Goal(
             title: "Integration Goal",
             description: "Test goal",
-            targetDate: Date().addingTimeInterval(86400)
+            targetDate: Date().addingTimeInterval(86400),
         )
         let event = CalendarEvent(title: "Integration Event", date: Date())
 

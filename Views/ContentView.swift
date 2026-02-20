@@ -39,7 +39,7 @@ public struct ContentView: View {
                                     TaskCardView(
                                         task: task,
                                         onToggle: { t in self.toggleTask(t) },
-                                        onEdit: { _ in /* Edit implementation TODO */ }
+                                        onEdit: { _ in /* Edit implementation TODO */ },
                                     )
                                 }
                             }
@@ -122,19 +122,19 @@ public struct ContentView: View {
                 title: "Review Design Specs",
                 description: "Check color contrast and typography scale.",
                 priority: .high,
-                dueDate: Date().addingTimeInterval(3600 * 4)
+                dueDate: Date().addingTimeInterval(3600 * 4),
             ),
             PlannerTask(
                 title: "Weekly Sync",
                 description: "Team status update meeting.",
                 priority: .medium,
-                dueDate: Date().addingTimeInterval(3600 * 24)
+                dueDate: Date().addingTimeInterval(3600 * 24),
             ),
             PlannerTask(
                 title: "Update Documentation",
                 description: "Reflect recent API changes in the wiki.",
                 priority: .low,
-                dueDate: Date().addingTimeInterval(3600 * 48)
+                dueDate: Date().addingTimeInterval(3600 * 48),
             ),
         ]
 

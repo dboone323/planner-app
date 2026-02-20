@@ -34,7 +34,7 @@ final class SDGoalTests: XCTestCase {
             targetDate: targetDate,
             isCompleted: false,
             priority: "high",
-            progress: 0.5
+            progress: 0.5,
         )
 
         XCTAssertEqual(goal.title, "Test Goal")
@@ -64,7 +64,7 @@ final class SDGoalTests: XCTestCase {
             goalDescription: "Long term objective",
             targetDate: Date().addingTimeInterval(86400 * 90),
             priority: "medium",
-            progress: 0.25
+            progress: 0.25,
         )
 
         self.context.insert(goal)
@@ -72,7 +72,7 @@ final class SDGoalTests: XCTestCase {
 
         // Fetch back
         let descriptor = FetchDescriptor<SDGoal>(
-            predicate: #Predicate { $0.title == "Persistent Goal" }
+            predicate: #Predicate { $0.title == "Persistent Goal" },
         )
         let fetched = try context.fetch(descriptor)
 
@@ -169,7 +169,7 @@ final class SDGoalTests: XCTestCase {
         try self.context.save()
 
         let descriptor = FetchDescriptor<SDGoal>(
-            predicate: #Predicate { !$0.isCompleted }
+            predicate: #Predicate { !$0.isCompleted },
         )
         let activeGoals = try context.fetch(descriptor)
 

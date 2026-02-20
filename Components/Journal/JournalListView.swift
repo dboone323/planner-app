@@ -41,7 +41,7 @@ public struct JournalListView_Previews: PreviewProvider {
             filteredEntries: sampleEntries,
             searchText: "",
             journalEntries: sampleEntries,
-            onDeleteEntry: { _ in }
+            onDeleteEntry: { _ in },
         )
         .environmentObject(ThemeManager())
     }

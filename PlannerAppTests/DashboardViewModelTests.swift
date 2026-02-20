@@ -99,7 +99,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.totalTodaysEventsCount, 1, "Should filter only today's events"
+            self.viewModel.totalTodaysEventsCount, 1, "Should filter only today's events",
         )
         XCTAssertEqual(self.viewModel.todaysEvents.count, 1)
         XCTAssertEqual(self.viewModel.todaysEvents.first?.title, "Today Event")
@@ -114,7 +114,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.totalIncompleteTasksCount, 2, "Should filter incomplete tasks"
+            self.viewModel.totalIncompleteTasksCount, 2, "Should filter incomplete tasks",
         )
         XCTAssertEqual(self.viewModel.incompleteTasks.count, 2)
     }
@@ -126,16 +126,16 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let nextMonth = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 30, to: today))
 
         GoalDataManager.shared.add(
-            Goal(title: "This Week", description: "Soon", targetDate: nextWeek)
+            Goal(title: "This Week", description: "Soon", targetDate: nextWeek),
         )
         GoalDataManager.shared.add(
-            Goal(title: "Next Month", description: "Later", targetDate: nextMonth)
+            Goal(title: "Next Month", description: "Later", targetDate: nextMonth),
         )
 
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.totalUpcomingGoalsCount, 1, "Should filter goals within 7 days"
+            self.viewModel.totalUpcomingGoalsCount, 1, "Should filter goals within 7 days",
         )
         XCTAssertEqual(self.viewModel.upcomingGoals.count, 1)
         XCTAssertEqual(self.viewModel.upcomingGoals.first?.title, "This Week")
@@ -152,7 +152,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
 
         XCTAssertEqual(self.viewModel.totalIncompleteTasksCount, 5, "Should count all tasks")
         XCTAssertEqual(
-            self.viewModel.incompleteTasks.count, 3, "Should limit displayed tasks to default of 3"
+            self.viewModel.incompleteTasks.count, 3, "Should limit displayed tasks to default of 3",
         )
     }
 
@@ -160,13 +160,13 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
     func testFetchDashboardDataSortsEventsByTime() throws {
         let today = Date()
         let morning = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today)
+            Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: today),
         )
         let afternoon = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today)
+            Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: today),
         )
         let evening = try XCTUnwrap(
-            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
+            Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today),
         )
 
         CalendarDataManager.shared.add(CalendarEvent(title: "Evening", date: evening))
@@ -176,11 +176,11 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.todaysEvents.first?.title, "Morning", "Events should be sorted by time"
+            self.viewModel.todaysEvents.first?.title, "Morning", "Events should be sorted by time",
         )
         XCTAssertEqual(self.viewModel.todaysEvents[1].title, "Afternoon")
         XCTAssertEqual(
-            self.viewModel.todaysEvents.last?.title, "Evening", "Latest event within limit"
+            self.viewModel.todaysEvents.last?.title, "Evening", "Latest event within limit",
         )
     }
 
@@ -198,7 +198,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.upcomingGoals.first?.title, "Day 1", "Goals should be sorted by date"
+            self.viewModel.upcomingGoals.first?.title, "Day 1", "Goals should be sorted by date",
         )
     }
 
@@ -250,7 +250,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         self.viewModel.fetchDashboardData()
 
         XCTAssertEqual(
-            self.viewModel.totalTodaysEventsCount, 2, "Should include both boundary events"
+            self.viewModel.totalTodaysEventsCount, 2, "Should include both boundary events",
         )
     }
 
@@ -276,14 +276,14 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
 
         TaskDataManager.shared.add(
-            PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high)
+            PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high),
         )
         TaskDataManager.shared.add(
-            PlannerTask(title: "Finish project", isCompleted: false, priority: .medium)
+            PlannerTask(title: "Finish project", isCompleted: false, priority: .medium),
         )
         CalendarDataManager.shared.add(CalendarEvent(title: "Team meeting", date: today))
         GoalDataManager.shared.add(
-            Goal(title: "Learn Swift", description: "Complete tutorial", targetDate: nextWeek)
+            Goal(title: "Learn Swift", description: "Complete tutorial", targetDate: nextWeek),
         )
 
         self.viewModel.fetchDashboardData()

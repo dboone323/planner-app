@@ -26,7 +26,7 @@ public struct QuickActionCard: View {
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2),
             )
         }
         .buttonStyle(PlainButtonStyle())
@@ -37,7 +37,7 @@ public struct QuickActionCard: View {
     QuickActionCard(
         title: "Add Task",
         icon: "plus.circle.fill",
-        color: .blue
+        color: .blue,
     ) {
         print("Action tapped")
     }

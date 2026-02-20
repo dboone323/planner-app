@@ -111,7 +111,7 @@ public class HealthKitManager: ObservableObject {
                 sampleType: type,
                 predicate: predicate,
                 limit: HKObjectQueryNoLimit,
-                sortDescriptors: nil
+                sortDescriptors: nil,
             ) { _, samples, error in
                 if let error {
                     continuation.resume(throwing: error)
@@ -131,7 +131,7 @@ public class HealthKitManager: ObservableObject {
         type: HKWorkoutActivityType,
         startDate: Date,
         endDate: Date,
-        energyBurned: Double? = nil
+        energyBurned: Double? = nil,
     ) async throws {
         guard isAuthorized else { throw HealthKitError.notAuthorized }
 
@@ -144,7 +144,7 @@ public class HealthKitManager: ObservableObject {
                 ? HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: energyBurned!)
                 : nil,
             totalDistance: nil,
-            metadata: nil
+            metadata: nil,
         )
 
         try await healthStore.save(workout)

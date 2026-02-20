@@ -29,7 +29,7 @@ public struct CalendarEvent: Identifiable, Codable, Sendable {
     ///   - modifiedAt: Last modified timestamp (default: now).
     init(
         id: UUID = UUID(), title: String, date: Date, createdAt: Date = Date(),
-        modifiedAt: Date? = Date()
+        modifiedAt: Date? = Date(),
     ) {
         self.id = id
         self.title = title
@@ -44,7 +44,7 @@ public struct CalendarEvent: Identifiable, Codable, Sendable {
     /// - Returns: A `CKRecord` representing this event.
     func toCKRecord() -> CKRecord {
         let record = CKRecord(
-            recordType: "CalendarEvent", recordID: CKRecord.ID(recordName: self.id.uuidString)
+            recordType: "CalendarEvent", recordID: CKRecord.ID(recordName: self.id.uuidString),
         )
         record["title"] = self.title
         record["date"] = self.date
@@ -66,7 +66,7 @@ public struct CalendarEvent: Identifiable, Codable, Sendable {
                 domain: "CalendarEventConversionError", code: 1,
                 userInfo: [
                     NSLocalizedDescriptionKey: "Failed to convert CloudKit record to CalendarEvent",
-                ]
+                ],
             )
         }
 
@@ -75,7 +75,7 @@ public struct CalendarEvent: Identifiable, Codable, Sendable {
             title: title,
             date: date,
             createdAt: ckRecord["createdAt"] as? Date ?? Date(),
-            modifiedAt: ckRecord["modifiedAt"] as? Date
+            modifiedAt: ckRecord["modifiedAt"] as? Date,
         )
     }
 }

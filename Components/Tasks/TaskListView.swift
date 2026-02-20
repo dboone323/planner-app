@@ -20,7 +20,7 @@ public struct TaskListView: View {
             // --- Incomplete Tasks Section ---
             Section(String(
                 format: NSLocalizedString("to_do_section", comment: "To do section header"),
-                self.incompleteTasks.count
+                self.incompleteTasks.count,
             )) {
                 if self.incompleteTasks.isEmpty {
                     // Message shown when no incomplete tasks exist
@@ -29,8 +29,8 @@ public struct TaskListView: View {
                         .font(
                             self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.secondaryFontName,
-                                size: 15
-                            )
+                                size: 15,
+                            ),
                         )
                 } else {
                     // Iterate over incomplete tasks and display using TaskRow
@@ -48,7 +48,7 @@ public struct TaskListView: View {
             // --- Completed Tasks Section ---
             Section(String(
                 format: NSLocalizedString("completed_section", comment: "Completed section header"),
-                self.completedTasks.count
+                self.completedTasks.count,
             )) {
                 if self.completedTasks.isEmpty {
                     // Message shown when no completed tasks exist
@@ -57,8 +57,8 @@ public struct TaskListView: View {
                         .font(
                             self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.secondaryFontName,
-                                size: 15
-                            )
+                                size: 15,
+                            ),
                         )
                 } else {
                     // Iterate over completed tasks
@@ -83,7 +83,7 @@ public struct TaskListView: View {
             #if os(iOS)
                 UIApplication.shared.sendAction(
                     #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
-                    for: nil
+                    for: nil,
                 )
             #endif
         }

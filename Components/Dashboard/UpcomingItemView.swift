@@ -47,7 +47,7 @@ public struct UpcomingItemView: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
         )
     }
 
@@ -77,7 +77,7 @@ public struct UpcomingItemView: View {
         date: Date().addingTimeInterval(3600), // 1 hour from now
         icon: "calendar",
         color: .orange,
-        destination: nil
+        destination: nil,
     )
 
     UpcomingItemView(item: sampleItem)

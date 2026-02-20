@@ -72,7 +72,7 @@ public struct ThemePreviewView: View {
             ForEach(Theme.availableThemes, id: \.name) { theme in
                 ThemePreviewCard(
                     theme: theme,
-                    isSelected: self.selectedTheme.name == theme.name
+                    isSelected: self.selectedTheme.name == theme.name,
                 ) {
                     self.selectedTheme = theme
                     // Apply haptic feedback if enabled
@@ -219,8 +219,8 @@ public struct ThemePreviewCard: View {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(
                         self.isSelected ? self.theme.primaryAccentColor : Color.clear,
-                        lineWidth: 2
-                    )
+                        lineWidth: 2,
+                    ),
             )
             .cornerRadius(12)
         }

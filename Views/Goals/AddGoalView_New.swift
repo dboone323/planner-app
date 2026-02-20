@@ -46,7 +46,7 @@ public struct AddGoalView: View {
                     let newGoal = Goal(
                         title: title.trimmingCharacters(in: .whitespacesAndNewlines),
                         description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
-                        targetDate: self.targetDate
+                        targetDate: self.targetDate,
                     )
 
                     // Append the new goal to the array
@@ -76,7 +76,7 @@ public struct AddGoalView: View {
                         .accessibilityLabel("Text Field")
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 16
+                            size: 16,
                         ))
                         .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
@@ -90,7 +90,7 @@ public struct AddGoalView: View {
                             .frame(minHeight: 80)
                             .font(self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.secondaryFontName,
-                                size: 15
+                                size: 15,
                             ))
                             .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                             .focused(self.$isDescriptionFocused)
@@ -100,7 +100,7 @@ public struct AddGoalView: View {
                     DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 16
+                            size: 16,
                         ))
                         .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                 }

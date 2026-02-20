@@ -27,7 +27,7 @@ public struct AddGoalView: View {
                         .accessibilityLabel("Text Field")
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 16
+                            size: 16,
                         ))
                         .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
@@ -35,7 +35,7 @@ public struct AddGoalView: View {
                         Text("Description")
                             .font(self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.secondaryFontName,
-                                size: 14
+                                size: 14,
                             ))
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
@@ -43,7 +43,7 @@ public struct AddGoalView: View {
                             .frame(height: 100)
                             .font(self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.primaryFontName,
-                                size: 16
+                                size: 16,
                             ))
                             .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
                             .focused(self.$isDescriptionFocused)
@@ -52,7 +52,7 @@ public struct AddGoalView: View {
                     DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
-                            size: 16
+                            size: 16,
                         ))
 
                     Picker("Priority", selection: self.$priority) {
@@ -65,7 +65,7 @@ public struct AddGoalView: View {
                         Text("Progress: \(Int(self.progress * 100))%")
                             .font(self.themeManager.currentTheme.font(
                                 forName: self.themeManager.currentTheme.secondaryFontName,
-                                size: 14
+                                size: 14,
                             ))
                             .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
 
@@ -109,7 +109,7 @@ public struct AddGoalView: View {
             description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
             targetDate: self.targetDate,
             priority: self.priority,
-            progress: self.progress
+            progress: self.progress,
         )
         self.goals.append(newGoal)
         GoalDataManager.shared.save(goals: self.goals)

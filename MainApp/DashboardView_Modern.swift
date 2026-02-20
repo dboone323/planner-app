@@ -79,7 +79,7 @@ public struct DashboardView: View {
                             value: "\(self.viewModel.totalTasks)",
                             subtitle: "\(self.viewModel.completedTasks) completed",
                             icon: "checkmark.circle.fill",
-                            color: self.themeManager.currentTheme.primaryAccentColor
+                            color: self.themeManager.currentTheme.primaryAccentColor,
                         )
 
                         QuickStatCard(
@@ -87,7 +87,7 @@ public struct DashboardView: View {
                             value: "\(self.viewModel.totalGoals)",
                             subtitle: "\(self.viewModel.completedGoals) achieved",
                             icon: "target",
-                            color: .green
+                            color: .green,
                         )
 
                         QuickStatCard(
@@ -95,7 +95,7 @@ public struct DashboardView: View {
                             value: "\(self.viewModel.todayEvents)",
                             subtitle: "today",
                             icon: "calendar",
-                            color: .orange
+                            color: .orange,
                         )
                     }
                     .padding(.horizontal, 24)
@@ -112,12 +112,12 @@ public struct DashboardView: View {
 
                         LazyVGrid(
                             columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2),
-                            spacing: 16
+                            spacing: 16,
                         ) {
                             QuickActionCard(
                                 title: "Add Task",
                                 icon: "plus.circle.fill",
-                                color: self.themeManager.currentTheme.primaryAccentColor
+                                color: self.themeManager.currentTheme.primaryAccentColor,
                             ) {
                                 self.handleQuickAction(.addTask)
                             }
@@ -125,7 +125,7 @@ public struct DashboardView: View {
                             QuickActionCard(
                                 title: "New Goal",
                                 icon: "target",
-                                color: .green
+                                color: .green,
                             ) {
                                 self.handleQuickAction(.addGoal)
                             }
@@ -133,7 +133,7 @@ public struct DashboardView: View {
                             QuickActionCard(
                                 title: "Schedule Event",
                                 icon: "calendar.badge.plus",
-                                color: .orange
+                                color: .orange,
                             ) {
                                 self.handleQuickAction(.addEvent)
                             }
@@ -141,7 +141,7 @@ public struct DashboardView: View {
                             QuickActionCard(
                                 title: "Journal Entry",
                                 icon: "book.fill",
-                                color: .purple
+                                color: .purple,
                             ) {
                                 self.handleQuickAction(.addJournal)
                             }
@@ -170,7 +170,7 @@ public struct DashboardView: View {
                         LazyVStack(spacing: 12) {
                             ForEach(
                                 self.viewModel.recentActivities.prefix(self.dashboardItemLimit),
-                                id: \.id
+                                id: \.id,
                             ) { activity in
                                 ActivityRowView(activity: activity)
                             }
@@ -179,7 +179,7 @@ public struct DashboardView: View {
                                 EmptyStateView(
                                     imageSystemName: "tray",
                                     title: "No recent activities",
-                                    subtitle: "Start by creating a task or goal!"
+                                    subtitle: "Start by creating a task or goal!",
                                 )
                                 .padding(.vertical, 40)
                             }
@@ -214,7 +214,7 @@ public struct DashboardView: View {
                                 EmptyStateView(
                                     imageSystemName: "calendar",
                                     title: "Nothing upcoming",
-                                    subtitle: "Schedule some events to see them here"
+                                    subtitle: "Schedule some events to see them here",
                                 )
                                 .padding(.vertical, 40)
                             }
@@ -257,11 +257,11 @@ public struct DashboardView: View {
                                 .background(
                                     RoundedRectangle(cornerRadius: 16)
                                         .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4),
                                 )
                             }
                         }
-                    }
+                    },
                 )
         }
         .onAppear {
@@ -399,7 +399,7 @@ public struct QuickStatCard: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2),
         )
     }
 }
@@ -430,7 +430,7 @@ public struct QuickActionCard: View {
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2),
             )
         }
         .buttonStyle(PlainButtonStyle())
@@ -470,7 +470,7 @@ public struct ActivityRowView: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
         )
     }
 
@@ -539,7 +539,7 @@ public struct UpcomingItemView: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
         )
     }
 

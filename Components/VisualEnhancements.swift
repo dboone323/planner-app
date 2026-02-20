@@ -19,7 +19,7 @@ struct GlassMorphismCard<Content: View>: View {
     init(
         cornerRadius: CGFloat = 16,
         shadowIntensity: CGFloat = 0.1,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.cornerRadius = cornerRadius
         self.shadowIntensity = shadowIntensity
@@ -39,9 +39,9 @@ struct GlassMorphismCard<Content: View>: View {
                                 self.themeManager.currentTheme.secondaryAccentColor.opacity(0.02),
                             ]),
                             startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                            endPoint: .bottomTrailing,
+                        ),
+                    ),
             )
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
@@ -52,16 +52,16 @@ struct GlassMorphismCard<Content: View>: View {
                                 Color.white.opacity(0.1),
                             ]),
                             startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                            endPoint: .bottomTrailing,
                         ),
-                        lineWidth: 1
-                    )
+                        lineWidth: 1,
+                    ),
             )
             .shadow(
                 color: self.themeManager.currentTheme.primaryAccentColor.opacity(self.shadowIntensity),
                 radius: 20,
                 x: 0,
-                y: 10
+                y: 10,
             )
     }
 }
@@ -84,7 +84,7 @@ public struct AnimatedProgressRing: View {
             Circle()
                 .stroke(
                     self.themeManager.currentTheme.secondaryAccentColor.opacity(0.3),
-                    lineWidth: self.ringWidth
+                    lineWidth: self.ringWidth,
                 )
                 .frame(width: self.size, height: self.size)
 
@@ -98,9 +98,9 @@ public struct AnimatedProgressRing: View {
                             self.themeManager.currentTheme.secondaryAccentColor,
                         ]),
                         startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        endPoint: .bottomTrailing,
                     ),
-                    style: StrokeStyle(lineWidth: self.ringWidth, lineCap: .round)
+                    style: StrokeStyle(lineWidth: self.ringWidth, lineCap: .round),
                 )
                 .frame(width: self.size, height: self.size)
                 .rotationEffect(.degrees(-90))
@@ -179,15 +179,15 @@ public struct FloatingActionButton: View {
                                     self.themeManager.currentTheme.primaryAccentColor.opacity(0.8),
                                 ]),
                                 startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                                endPoint: .bottomTrailing,
+                            ),
+                        ),
                 )
                 .shadow(
                     color: self.themeManager.currentTheme.primaryAccentColor.opacity(0.4),
                     radius: self.isPressed ? 8 : 16,
                     x: 0,
-                    y: self.isPressed ? 4 : 8
+                    y: self.isPressed ? 4 : 8,
                 )
         }
         .buttonStyle(PlainButtonStyle())
@@ -199,7 +199,7 @@ public struct FloatingActionButton: View {
                 withAnimation(.easeInOut(duration: 0.15)) {
                     self.isPressed = pressing
                 }
-            }, perform: {}
+            }, perform: {},
         )
     }
 }
@@ -281,12 +281,12 @@ public struct ParticleSystem: View {
                 positionY: 400,
                 velocity: CGVector(
                     dx: CGFloat.random(in: -200...200),
-                    dy: CGFloat.random(in: -400 ... -200)
+                    dy: CGFloat.random(in: -400 ... -200),
                 ),
                 color: [Color.blue, Color.green, Color.orange, Color.red, Color.purple]
                     .randomElement()!,
                 scale: CGFloat.random(in: 0.5...1.5),
-                opacity: 1.0
+                opacity: 1.0,
             )
         }
     }
@@ -329,14 +329,14 @@ public struct ShimmerView: View {
                                 Color.clear,
                             ]),
                             startPoint: .leading,
-                            endPoint: .trailing
-                        )
+                            endPoint: .trailing,
+                        ),
                     )
                     .offset(x: self.shimmerOffset)
                     .animation(
                         .linear(duration: 1.5).repeatForever(autoreverses: false),
-                        value: self.shimmerOffset
-                    )
+                        value: self.shimmerOffset,
+                    ),
             )
             .onAppear {
                 self.shimmerOffset = 200
@@ -367,12 +367,12 @@ struct Interactive3DCard<Content: View>: View {
                         color: .black.opacity(0.1),
                         radius: 10 + abs(self.translation.height) * 0.1,
                         x: self.translation.width * 0.1,
-                        y: 5 + self.translation.height * 0.1
-                    )
+                        y: 5 + self.translation.height * 0.1,
+                    ),
             )
             .rotation3DEffect(
                 .degrees(self.rotation),
-                axis: (self.translation.height, -self.translation.width, 0.0)
+                axis: (self.translation.height, -self.translation.width, 0.0),
             )
             .offset(self.translation)
             .gesture(
@@ -380,7 +380,7 @@ struct Interactive3DCard<Content: View>: View {
                     .onChanged { value in
                         self.translation = CGSize(
                             width: value.translation.width * 0.1,
-                            height: value.translation.height * 0.1
+                            height: value.translation.height * 0.1,
                         )
                         self.rotation =
                             sqrt(pow(self.translation.width, 2) + pow(self.translation.height, 2)) * 0.5
@@ -390,7 +390,7 @@ struct Interactive3DCard<Content: View>: View {
                             self.translation = .zero
                             self.rotation = 0
                         }
-                    }
+                    },
             )
     }
 }
@@ -407,7 +407,7 @@ struct BreathingView<Content: View>: View {
     init(
         duration: Double = 2.0,
         scaleRange: ClosedRange<CGFloat> = 0.95...1.05,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.duration = duration
         self.scaleRange = scaleRange
@@ -420,7 +420,7 @@ struct BreathingView<Content: View>: View {
             .onAppear {
                 withAnimation(
                     .easeInOut(duration: self.duration)
-                        .repeatForever(autoreverses: true)
+                        .repeatForever(autoreverses: true),
                 ) {
                     self.scale = self.scaleRange.upperBound
                 }
@@ -492,7 +492,7 @@ public struct VisualEnhancementsPreview: View {
                                 .font(.headline)
                         }
                         .frame(height: 100)
-                    }
+                    },
                 )
 
                 // Shimmer Loading
@@ -513,7 +513,7 @@ public struct VisualEnhancementsPreview: View {
                         .overlay(
                             Text("Zen")
                                 .foregroundColor(.white)
-                                .font(.headline)
+                                .font(.headline),
                         )
                 }
 
@@ -543,7 +543,7 @@ public struct VisualEnhancementsPreview: View {
                             }
                         }
                 }
-            }
+            },
         )
         .overlay(
             VStack {
@@ -554,13 +554,13 @@ public struct VisualEnhancementsPreview: View {
                         icon: "plus",
                         action: {
                             // Add action
-                        }
+                        },
                     )
                     .accessibilityLabel("Add New Item")
                     .environmentObject(self.themeManager)
                     .padding()
                 }
-            }
+            },
         )
     }
 }

@@ -49,7 +49,7 @@ public struct DashboardView: View {
                                     .font(.title2)
                                     .fontWeight(.medium)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor
+                                        self.themeManager.currentTheme.primaryTextColor,
                                     )
 
                                 if !self.userName.isEmpty {
@@ -57,14 +57,14 @@ public struct DashboardView: View {
                                         .font(.title)
                                         .fontWeight(.bold)
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.primaryAccentColor
+                                            self.themeManager.currentTheme.primaryAccentColor,
                                         )
                                 }
 
                                 Text(self.dateFormatter.string(from: Date()))
                                     .font(.subheadline)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
                             }
 
@@ -75,13 +75,13 @@ public struct DashboardView: View {
                                     .font(.title2)
                                     .fontWeight(.semibold)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor
+                                        self.themeManager.currentTheme.primaryTextColor,
                                     )
 
                                 Text(NSLocalizedString("today", comment: "Today label"))
                                     .font(.caption)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
                             }
                         }
@@ -96,10 +96,10 @@ public struct DashboardView: View {
                             value: "\(self.viewModel.totalTasks)",
                             subtitle: "\(self.viewModel.completedTasks) "
                                 + NSLocalizedString(
-                                    "completed", comment: "Completed tasks subtitle"
+                                    "completed", comment: "Completed tasks subtitle",
                                 ),
                             icon: "checkmark.circle.fill",
-                            color: self.themeManager.currentTheme.primaryAccentColor
+                            color: self.themeManager.currentTheme.primaryAccentColor,
                         )
 
                         QuickStatCard(
@@ -108,17 +108,17 @@ public struct DashboardView: View {
                             subtitle: "\(self.viewModel.completedGoals) "
                                 + NSLocalizedString("achieved", comment: "Achieved goals subtitle"),
                             icon: "target",
-                            color: .green
+                            color: .green,
                         )
 
                         QuickStatCard(
                             title: NSLocalizedString("events", comment: "Events stat card title"),
                             value: "\(self.viewModel.todayEvents)",
                             subtitle: NSLocalizedString(
-                                "today_suffix", comment: "Today suffix for events"
+                                "today_suffix", comment: "Today suffix for events",
                             ),
                             icon: "calendar",
-                            color: .orange
+                            color: .orange,
                         )
                     }
                     .padding(.horizontal, 24)
@@ -134,8 +134,8 @@ public struct DashboardView: View {
                         HStack {
                             Text(
                                 NSLocalizedString(
-                                    "quick_actions", comment: "Quick actions section title"
-                                )
+                                    "quick_actions", comment: "Quick actions section title",
+                                ),
                             )
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -145,44 +145,44 @@ public struct DashboardView: View {
 
                         LazyVGrid(
                             columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2),
-                            spacing: 16
+                            spacing: 16,
                         ) {
                             QuickActionCard(
                                 title: NSLocalizedString(
-                                    "add_task", comment: "Add task quick action"
+                                    "add_task", comment: "Add task quick action",
                                 ),
                                 icon: "plus.circle.fill",
-                                color: self.themeManager.currentTheme.primaryAccentColor
+                                color: self.themeManager.currentTheme.primaryAccentColor,
                             ) {
                                 self.handleQuickAction(.addTask)
                             }
 
                             QuickActionCard(
                                 title: NSLocalizedString(
-                                    "new_goal", comment: "New goal quick action"
+                                    "new_goal", comment: "New goal quick action",
                                 ),
                                 icon: "target",
-                                color: .green
+                                color: .green,
                             ) {
                                 self.handleQuickAction(.addGoal)
                             }
 
                             QuickActionCard(
                                 title: NSLocalizedString(
-                                    "schedule_event", comment: "Schedule event quick action"
+                                    "schedule_event", comment: "Schedule event quick action",
                                 ),
                                 icon: "calendar.badge.plus",
-                                color: .orange
+                                color: .orange,
                             ) {
                                 self.handleQuickAction(.addEvent)
                             }
 
                             QuickActionCard(
                                 title: NSLocalizedString(
-                                    "journal_entry", comment: "Journal entry quick action"
+                                    "journal_entry", comment: "Journal entry quick action",
                                 ),
                                 icon: "book.fill",
-                                color: .purple
+                                color: .purple,
                             ) {
                                 self.handleQuickAction(.addJournal)
                             }
@@ -195,8 +195,8 @@ public struct DashboardView: View {
                         HStack {
                             Text(
                                 NSLocalizedString(
-                                    "recent_activities", comment: "Recent activities section title"
-                                )
+                                    "recent_activities", comment: "Recent activities section title",
+                                ),
                             )
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -215,7 +215,7 @@ public struct DashboardView: View {
                         LazyVStack(spacing: 12) {
                             ForEach(
                                 self.viewModel.recentActivities.prefix(self.dashboardItemLimit),
-                                id: \.id
+                                id: \.id,
                             ) { activity in
                                 ActivityRowView(activity: activity)
                             }
@@ -225,28 +225,28 @@ public struct DashboardView: View {
                                     Image(systemName: "tray")
                                         .font(.system(size: 40))
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
+                                            self.themeManager.currentTheme.secondaryTextColor,
                                         )
 
                                     Text(
                                         NSLocalizedString(
                                             "no_recent_activities",
-                                            comment: "No recent activities message"
-                                        )
+                                            comment: "No recent activities message",
+                                        ),
                                     )
                                     .font(.subheadline)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
 
                                     Text(
                                         NSLocalizedString(
-                                            "start_by_creating", comment: "Start by creating hint"
-                                        )
+                                            "start_by_creating", comment: "Start by creating hint",
+                                        ),
                                     )
                                     .font(.caption)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
                                 }
                                 .padding(.vertical, 40)
@@ -266,7 +266,7 @@ public struct DashboardView: View {
                             Spacer()
 
                             Button(
-                                NSLocalizedString("view_calendar", comment: "View calendar button")
+                                NSLocalizedString("view_calendar", comment: "View calendar button"),
                             ) {
                                 self.selectedTabTag = "Calendar"
                             }
@@ -277,7 +277,7 @@ public struct DashboardView: View {
                         LazyVStack(spacing: 12) {
                             ForEach(
                                 self.viewModel.upcomingItems.prefix(self.dashboardItemLimit),
-                                id: \.id
+                                id: \.id,
                             ) { item in
                                 Button {
                                     if let dest = item.destination {
@@ -294,27 +294,27 @@ public struct DashboardView: View {
                                     Image(systemName: "calendar")
                                         .font(.system(size: 40))
                                         .foregroundColor(
-                                            self.themeManager.currentTheme.secondaryTextColor
+                                            self.themeManager.currentTheme.secondaryTextColor,
                                         )
 
                                     Text(
                                         NSLocalizedString(
-                                            "nothing_upcoming", comment: "Nothing upcoming message"
-                                        )
+                                            "nothing_upcoming", comment: "Nothing upcoming message",
+                                        ),
                                     )
                                     .font(.subheadline)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
 
                                     Text(
                                         NSLocalizedString(
-                                            "schedule_events_hint", comment: "Schedule events hint"
-                                        )
+                                            "schedule_events_hint", comment: "Schedule events hint",
+                                        ),
                                     )
                                     .font(.caption)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
                                 }
                                 .padding(.vertical, 40)
@@ -364,23 +364,23 @@ public struct DashboardView: View {
 
                                     Text(
                                         NSLocalizedString(
-                                            "refreshing", comment: "Refreshing loading text"
-                                        )
+                                            "refreshing", comment: "Refreshing loading text",
+                                        ),
                                     )
                                     .font(.subheadline)
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor
+                                        self.themeManager.currentTheme.primaryTextColor,
                                     )
                                 }
                                 .padding(32)
                                 .background(
                                     RoundedRectangle(cornerRadius: 16)
                                         .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4),
                                 )
                             }
                         }
-                    }
+                    },
                 )
         }
         .onAppear {
@@ -497,7 +497,7 @@ public struct ActivityRowView: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.themeManager.currentTheme.secondaryBackgroundColor)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
         )
     }
 
@@ -509,12 +509,12 @@ public struct ActivityRowView: View {
         } else if interval < 3600 {
             let minutes = Int(interval / 60)
             return String(
-                format: NSLocalizedString("minutes_ago", comment: "Minutes ago format"), minutes
+                format: NSLocalizedString("minutes_ago", comment: "Minutes ago format"), minutes,
             )
         } else if interval < 86400 {
             let hours = Int(interval / 3600)
             return String(
-                format: NSLocalizedString("hours_ago", comment: "Hours ago format"), hours
+                format: NSLocalizedString("hours_ago", comment: "Hours ago format"), hours,
             )
         } else {
             let days = Int(interval / 86400)

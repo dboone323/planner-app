@@ -71,7 +71,7 @@ public struct SettingsView: View {
                         Text("Name")
                         Spacer()
                         TextField("Your Name", text: self.$userName).accessibilityLabel(
-                            "Text Field"
+                            "Text Field",
                         )
                         .accessibilityLabel("Text Field")
                         .multilineTextAlignment(.trailing)
@@ -93,7 +93,7 @@ public struct SettingsView: View {
                             HStack {
                                 Text("Theme Preview")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.primaryTextColor
+                                        self.themeManager.currentTheme.primaryTextColor,
                                     )
                                 Spacer()
                                 Circle()
@@ -101,7 +101,7 @@ public struct SettingsView: View {
                                     .frame(width: 20, height: 20)
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(
-                                        self.themeManager.currentTheme.secondaryTextColor
+                                        self.themeManager.currentTheme.secondaryTextColor,
                                     )
                             }
                         }
@@ -114,7 +114,7 @@ public struct SettingsView: View {
                     Stepper(
                         "Items per section: \(self.dashboardItemLimit)",
                         value: self.$dashboardItemLimit,
-                        in: 1...10
+                        in: 1...10,
                     )
                 }
                 .listRowBackground(self.themeManager.currentTheme.secondaryBackgroundColor)
@@ -167,7 +167,7 @@ public struct SettingsView: View {
                     if self.autoDeleteCompleted {
                         Stepper(
                             "Delete after: \(self.autoDeleteDays) days",
-                            value: self.$autoDeleteDays, in: 1...90
+                            value: self.$autoDeleteDays, in: 1...90,
                         )
                     }
                 }
@@ -177,7 +177,7 @@ public struct SettingsView: View {
                 Section("Security") {
                     if self.canUseBiometrics {
                         Toggle(
-                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled
+                            "Protect Journal with Biometrics", isOn: self.$journalBiometricsEnabled,
                         )
                     } else {
                         Text("Biometric authentication not available on this device.")
@@ -189,7 +189,7 @@ public struct SettingsView: View {
                 // Sync & Cloud Section
                 Section("Sync & Cloud") {
                     Button(action: { self.showingCloudKitSheet = true }).accessibilityLabel(
-                        "Button"
+                        "Button",
                     )
                     .accessibilityLabel("Button") {
                         HStack {
@@ -242,7 +242,7 @@ public struct SettingsView: View {
 
                     Button(
                         "Clear Old Completed Tasks...",
-                        action: { self.showingClearDataConfirmation = true }
+                        action: { self.showingClearDataConfirmation = true },
                     )
                     .accessibilityLabel("Button")
                     .accessibilityLabel("Button")
@@ -278,7 +278,7 @@ public struct SettingsView: View {
                 Button("Open Settings", action: self.openAppSettings).accessibilityLabel("Button")
                     .accessibilityLabel("Button")
                 Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel(
-                    "Button"
+                    "Button",
                 ) {}
             } message: {
                 Text("Enable notifications in Settings to receive reminders.")
@@ -288,12 +288,12 @@ public struct SettingsView: View {
                     .accessibilityLabel("Button")
                     .accessibilityLabel("Button")
                 Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel(
-                    "Button"
+                    "Button",
                 ) {}
             } message: {
                 Text(
                     "Are you sure you want to permanently delete completed tasks older than "
-                        + "\(self.autoDeleteDays) days? This cannot be undone."
+                        + "\(self.autoDeleteDays) days? This cannot be undone.",
                 )
             }
         }
@@ -329,7 +329,7 @@ public struct SettingsView: View {
             }
         #elseif os(macOS)
             NSWorkspace.shared.open(
-                URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!
+                URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!,
             )
         #endif
     }
@@ -339,7 +339,7 @@ public struct SettingsView: View {
         guard let data = csvString.data(using: .utf8) else { return }
 
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "PlannerExport.csv"
+            "PlannerExport.csv",
         )
         do {
             try data.write(to: tempURL, options: .atomic)
@@ -392,7 +392,7 @@ public struct ThemePreviewSheet: View {
                     ForEach(Theme.availableThemes, id: \.name) { theme in
                         ThemeCard(
                             theme: theme,
-                            isSelected: theme.name == self.themeManager.currentTheme.name
+                            isSelected: theme.name == self.themeManager.currentTheme.name,
                         ) {
                             self.themeManager.setTheme(theme)
                         }
@@ -449,8 +449,8 @@ public struct ThemeCard: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(
-                        self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2
-                    )
+                        self.isSelected ? self.theme.primaryAccentColor : Color.clear, lineWidth: 2,
+                    ),
             )
             .cornerRadius(12)
         }

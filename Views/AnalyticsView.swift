@@ -45,7 +45,7 @@ public struct AnalyticsView: View {
                             value: "\(completedTasksCount)",
                             subtitle: "in the last \(selectedTimeRange.rawValue.lowercased())",
                             icon: "checkmark.circle.fill",
-                            color: .green
+                            color: .green,
                         )
 
                         StatisticCard(
@@ -53,7 +53,7 @@ public struct AnalyticsView: View {
                             value: "\(Int(completionRate * 100))%",
                             subtitle: "of all tasks",
                             icon: "chart.pie.fill",
-                            color: .blue
+                            color: .blue,
                         )
 
                         StatisticCard(
@@ -61,7 +61,7 @@ public struct AnalyticsView: View {
                             value: "\(activeProjectsCount)",
                             subtitle: "currently in progress",
                             icon: "folder.fill",
-                            color: .orange
+                            color: .orange,
                         )
 
                         StatisticCard(
@@ -69,7 +69,7 @@ public struct AnalyticsView: View {
                             value: averagePriority,
                             subtitle: "task priority level",
                             icon: "exclamationmark.triangle.fill",
-                            color: .red
+                            color: .red,
                         )
                     }
                     .padding(.horizontal)
@@ -116,7 +116,7 @@ public struct AnalyticsView: View {
                 #else
                     Color.gray.opacity(0.1)
                         .ignoresSafeArea()
-                #endif
+                #endif,
             )
             .onAppear {
                 loadData()
@@ -195,11 +195,11 @@ struct StatisticCard: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                .fill(Color(uiColor: .secondarySystemGroupedBackground)),
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1),
         )
     }
 }
