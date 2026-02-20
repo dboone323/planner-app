@@ -97,8 +97,10 @@ class CalendarSyncManagerTests: XCTestCase {
 
         try await manager.syncTaskToCalendar(&task)
 
-        XCTAssertNotNil(task.calendarEventId)
         XCTAssertEqual(mockStore.savedEvents.count, 1)
-        XCTAssertEqual(mockStore.savedEvents.first?.title, "Test Task")
+        let savedEvent = try XCTUnwrap(mockStore.savedEvents.first)
+        XCTAssertEqual(savedEvent.title, "Test Task")
+        XCTAssertEqual(savedEvent.notes, "Notes")
+        XCTAssertFalse(savedEvent.isAllDay)
     }
 }

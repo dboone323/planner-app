@@ -2,36 +2,105 @@
 //  QuickActionCardTests.swift
 //  PlannerAppTests
 //
-//  Comprehensive test suite for QuickActionCard
+//  Tests for QuickActionCard value wiring and action behavior.
 //
 
+import SwiftUI
 import XCTest
 @testable import PlannerApp
 
 final class QuickActionCardTests: XCTestCase {
-    // MARK: - Initialization Tests
-
     func testInitialization() {
-        XCTFail("Test not implemented: QuickActionCard initialization")
+        var tapped = false
+        let card = QuickActionCard(
+            title: "Add Task",
+            icon: "plus.circle.fill",
+            color: .blue
+        ) {
+            tapped = true
+        }
+
+        XCTAssertEqual(card.title, "Add Task")
+        XCTAssertEqual(card.icon, "plus.circle.fill")
+        XCTAssertEqual(card.color, .blue)
+        XCTAssertFalse(tapped)
+
+        card.action()
+        XCTAssertTrue(tapped)
     }
 
     func testProperties() {
-        XCTFail("Test not implemented: QuickActionCard properties")
+        let card = QuickActionCard(
+            title: "Focus Session",
+            icon: "timer",
+            color: .orange
+        ) {}
+
+        XCTAssertEqual(card.title, "Focus Session")
+        XCTAssertEqual(card.icon, "timer")
+        XCTAssertEqual(card.color, .orange)
     }
 
     func testPublicMethods() {
-        XCTFail("Test not implemented: QuickActionCard public methods")
+        var tapCount = 0
+        let card = QuickActionCard(
+            title: "Tap",
+            icon: "hand.tap",
+            color: .green
+        ) {
+            tapCount += 1
+        }
+
+        card.action()
+        card.action()
+        card.action()
+
+        XCTAssertEqual(tapCount, 3)
     }
 
     func testEdgeCases() {
-        XCTFail("Test not implemented: QuickActionCard edge cases")
+        var invoked = false
+        let card = QuickActionCard(
+            title: "",
+            icon: "",
+            color: .clear
+        ) {
+            invoked = true
+        }
+
+        XCTAssertEqual(card.title, "")
+        XCTAssertEqual(card.icon, "")
+        XCTAssertEqual(card.color, .clear)
+
+        card.action()
+        XCTAssertTrue(invoked)
     }
 
     func testErrorHandling() {
-        XCTFail("Test not implemented: QuickActionCard error handling")
+        var state = "initial"
+        let card = QuickActionCard(
+            title: "Recover",
+            icon: "arrow.clockwise",
+            color: .red
+        ) {
+            state = "updated"
+        }
+
+        card.action()
+        XCTAssertEqual(state, "updated")
     }
 
     func testIntegration() {
-        XCTFail("Test not implemented: QuickActionCard integration")
+        var selectedAction = ""
+        let card = QuickActionCard(
+            title: "Add Event",
+            icon: "calendar.badge.plus",
+            color: .purple
+        ) {
+            selectedAction = "calendar.badge.plus"
+        }
+
+        card.action()
+        XCTAssertEqual(selectedAction, card.icon)
     }
 }
