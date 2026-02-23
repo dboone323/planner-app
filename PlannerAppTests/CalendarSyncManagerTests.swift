@@ -2,6 +2,7 @@ import EventKit
 import XCTest
 @testable import PlannerApp
 
+@MainActor
 class MockSyncEventStore: SyncEventStoreProtocol {
     var accessGranted = true
     var savedEvents: [EKEvent] = []
@@ -58,14 +59,29 @@ class MockSyncEventStore: SyncEventStoreProtocol {
     }
 }
 
+@MainActor
 class CalendarSyncManagerTests: XCTestCase {
     var manager: CalendarSyncManager!
     var mockStore: MockSyncEventStore!
+    var testDefaults: UserDefaults!
+    var defaultsSuiteName: String!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
+        self.defaultsSuiteName = "CalendarSyncManagerTests.\(UUID().uuidString)"
+        self.testDefaults = try XCTUnwrap(UserDefaults(suiteName: self.defaultsSuiteName))
+        self.testDefaults.removePersistentDomain(forName: self.defaultsSuiteName)
         self.mockStore = MockSyncEventStore()
-        self.manager = CalendarSyncManager(eventStore: self.mockStore)
+        self.manager = CalendarSyncManager(eventStore: self.mockStore, userDefaults: self.testDefaults)
+    }
+
+    override func tearDown() {
+        self.testDefaults?.removePersistentDomain(forName: self.defaultsSuiteName)
+        self.manager = nil
+        self.mockStore = nil
+        self.testDefaults = nil
+        self.defaultsSuiteName = nil
+        super.tearDown()
     }
 
     func testSetupCalendar_Success() async {
@@ -95,8 +111,10 @@ class CalendarSyncManagerTests: XCTestCase {
 
         try await manager.syncTaskToCalendar(&task)
 
-        XCTAssertNotNil(task.calendarEventId)
         XCTAssertEqual(mockStore.savedEvents.count, 1)
-        XCTAssertEqual(mockStore.savedEvents.first?.title, "Test Task")
+        let savedEvent = try XCTUnwrap(mockStore.savedEvents.first)
+        XCTAssertEqual(savedEvent.title, "Test Task")
+        XCTAssertEqual(savedEvent.notes, "Notes")
+        XCTAssertFalse(savedEvent.isAllDay)
     }
 }

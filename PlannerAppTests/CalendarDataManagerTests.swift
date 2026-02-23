@@ -161,11 +161,14 @@ final class CalendarDataManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testEventsForSpecificDate() throws {
-        let today = Date()
-        let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let tomorrow = try XCTUnwrap(calendar.date(byAdding: .day, value: 1, to: today))
+        let todayMorning = try XCTUnwrap(calendar.date(byAdding: .hour, value: 9, to: today))
+        let todayNoon = try XCTUnwrap(calendar.date(byAdding: .hour, value: 12, to: today))
 
-        self.manager.add(CalendarEvent(title: "Today 1", date: today))
-        self.manager.add(CalendarEvent(title: "Today 2", date: today.addingTimeInterval(3600)))
+        self.manager.add(CalendarEvent(title: "Today 1", date: todayMorning))
+        self.manager.add(CalendarEvent(title: "Today 2", date: todayNoon))
         self.manager.add(CalendarEvent(title: "Tomorrow", date: tomorrow))
 
         let todayEvents = self.manager.events(for: today)

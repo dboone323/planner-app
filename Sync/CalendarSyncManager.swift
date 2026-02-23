@@ -54,10 +54,16 @@ extension EKEventStore: SyncEventStoreProtocol, @unchecked Sendable {
 @MainActor
 class CalendarSyncManager {
     private let eventStore: SyncEventStoreProtocol
-    private let calendarIdentifier = "com.plannerapp.sync"
+    private let userDefaults: UserDefaults
+    private let calendarTitle = "PlannerApp"
+    private let calendarIdentifierDefaultsKey = "com.plannerapp.sync.calendarIdentifier"
 
-    init(eventStore: SyncEventStoreProtocol = EKEventStore()) {
+    init(
+        eventStore: SyncEventStoreProtocol = EKEventStore(),
+        userDefaults: UserDefaults = .standard
+    ) {
         self.eventStore = eventStore
+        self.userDefaults = userDefaults
     }
 
     // MARK: - Setup
@@ -79,18 +85,36 @@ class CalendarSyncManager {
     }
 
     private func findSyncCalendar() -> EKCalendar? {
-        self.eventStore.calendars(for: .event).first { calendar in
-            calendar.calendarIdentifier == self.calendarIdentifier
+        let calendars = self.eventStore.calendars(for: .event)
+
+        if let storedIdentifier = self.userDefaults.string(forKey: self.calendarIdentifierDefaultsKey),
+           let calendar = calendars.first(where: { $0.calendarIdentifier == storedIdentifier })
+        {
+            return calendar
         }
+
+        if let calendar = calendars.first(where: { $0.title == self.calendarTitle }) {
+            self.userDefaults.set(
+                calendar.calendarIdentifier,
+                forKey: self.calendarIdentifierDefaultsKey
+            )
+            return calendar
+        }
+
+        return nil
     }
 
     private func createSyncCalendar() -> Bool {
         let calendar = self.eventStore.newCalendar()
-        calendar.title = "PlannerApp"
+        calendar.title = self.calendarTitle
         calendar.source = self.eventStore.defaultCalendarForNewEvents?.source
 
         do {
             try self.eventStore.saveCalendar(calendar, commit: true)
+            self.userDefaults.set(
+                calendar.calendarIdentifier,
+                forKey: self.calendarIdentifierDefaultsKey
+            )
             return true
         } catch {
             print("Failed to create calendar: \(error)")
