@@ -1,0 +1,51 @@
+Fetching https://github.com/apple/swift-atomics.git from cache
+Fetching https://github.com/apple/swift-nio.git from cache
+Fetched https://github.com/apple/swift-atomics.git from cache (0.63s)
+Fetched https://github.com/apple/swift-nio.git from cache (1.15s)
+Computing version for https://github.com/apple/swift-atomics.git
+Computed https://github.com/apple/swift-atomics.git at 1.3.0 (1.85s)
+Computing version for https://github.com/apple/swift-nio.git
+Computed https://github.com/apple/swift-nio.git at 2.95.0 (0.74s)
+Fetching https://github.com/apple/swift-collections.git from cache
+Fetching https://github.com/apple/swift-system.git from cache
+Fetched https://github.com/apple/swift-collections.git from cache (0.72s)
+Fetched https://github.com/apple/swift-system.git from cache (0.76s)
+Computing version for https://github.com/apple/swift-system.git
+Computed https://github.com/apple/swift-system.git at 1.6.4 (1.39s)
+Computing version for https://github.com/apple/swift-collections.git
+Computed https://github.com/apple/swift-collections.git at 1.3.0 (0.61s)
+Creating working copy for https://github.com/apple/swift-nio.git
+Working copy of https://github.com/apple/swift-nio.git resolved at 2.95.0
+Creating working copy for https://github.com/apple/swift-system.git
+Working copy of https://github.com/apple/swift-system.git resolved at 1.6.4
+Creating working copy for https://github.com/apple/swift-atomics.git
+Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.0
+Creating working copy for https://github.com/apple/swift-collections.git
+Working copy of https://github.com/apple/swift-collections.git resolved at 1.3.0
+warning: 'planner-app': found 24 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/ai_enhancement_system.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/ai_learning_validator.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/git_workflow.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/unified_dashboard.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/Automation/ai_workflow_recovery.py
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/adaptive_learning_system.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/master_automation.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/Automation/scripts/setup_paths.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/ai_enhancement_simple.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/automate.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/ai_workflow_recovery.py
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/mcp_workflow.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/project_config.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/universal_workflow_manager.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/workflow_dashboard.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/git_operations.py
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/fix_handlers.py
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/completion_summary.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/quantum_enhancer.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/intelligent_autofix.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/enhanced_workflow.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/process_todos.sh
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/ai_test_generator.py
+    /Users/danielstevens/github-projects/planner-app/Tools/ProjectScripts/simple_autofix.sh
+warning: 'shared-kit': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /Users/danielstevens/github-projects/shared-kit/Sources/SharedKit/Integration/CROSS_PROJECT_INTEGRATION_GUIDE.md
