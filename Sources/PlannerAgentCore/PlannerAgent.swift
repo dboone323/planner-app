@@ -45,7 +45,7 @@ public struct PlannerAgent: BaseAgent {
             preference: preference
         )
 
-        let requiresApproval = !overdue.isEmpty  // Overdue tasks need human sign-off
+        let requiresApproval = !overdue.isEmpty // Overdue tasks need human sign-off
         let success = overdue.isEmpty
 
         return AgentResult(
