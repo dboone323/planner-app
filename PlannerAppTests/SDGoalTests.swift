@@ -14,7 +14,7 @@ final class SDGoalTests: XCTestCase {
     var context: ModelContext!
 
     override func setUpWithError() throws {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
         self.context = ModelContext(self.container)
     }

@@ -12,21 +12,33 @@ public struct PlannerApp: App {
     /// Shared model container for the entire app.
     /// Configures automatic CloudKit sync and schema migration.
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema(versionedSchema: PlannerSchemaV1.self)
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false,
-            cloudKitDatabase: .automatic
-        )
+        let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil ||
+            ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_TESTS"] == "1" ||
+            CommandLine.arguments.contains("-isTesting")
+
+        print("DEBUG: PlannerApp starting. isTesting: \(isTesting)")
 
         do {
-            return try ModelContainer(
-                for: schema,
-                migrationPlan: PlannerMigrationPlan.self,
-                configurations: [modelConfiguration]
-            )
+            let schema = Schema([SDTask.self, SDGoal.self])
+            if isTesting {
+                print("DEBUG: Creating in-memory ModelContainer for testing...")
+                let configuration = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+                let container = try ModelContainer(for: schema, configurations: [configuration])
+                print("DEBUG: In-memory ModelContainer created successfully.")
+                return container
+            } else {
+                print("DEBUG: Creating persistent ModelContainer for production...")
+                let configuration = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .none)
+                let container = try ModelContainer(for: schema, configurations: [configuration])
+                print("DEBUG: Persistent ModelContainer created successfully.")
+                return container
+            }
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            print("ERROR: Failed to create ModelContainer: \(error)")
+            // Instead of crashing immediately, let's try to provide more context
+            // In a real app, we might show a fallback UI, but here we still need to exit
+            // if we can't function.
+            fatalError("CRITICAL: Could not create ModelContainer. Error: \(error)")
         }
     }()
 
