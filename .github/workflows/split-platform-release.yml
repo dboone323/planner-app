@@ -118,6 +118,8 @@ jobs:
 
           ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
 
+          ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
+
       - name: Resolve destination
         id: destination
         run: |
