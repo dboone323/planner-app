@@ -27,6 +27,7 @@ final class PlannerAppUITests: XCTestCase {
     func testExample() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
+        app.launchArguments.append("-isTesting")
         app.launch()
         dismissSystemPermissionAlertsIfPresent(in: app)
 
