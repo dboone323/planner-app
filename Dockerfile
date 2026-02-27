@@ -1,30 +1,33 @@
 # syntax=docker/dockerfile:1.5
+# planner-app - Linux source image for split-platform CI
 
-# Build Stage
 FROM swift:6.2 AS builder
 
 WORKDIR /app
 
-# Copy manifest files first to leverage build cache for dependencies
+# Resolve dependencies for Linux-side validation; app compilation remains on macOS CI.
 COPY Package.* ./
-RUN --mount=type=cache,target=/root/.swiftpm swift package resolve
+RUN --mount=type=cache,target=/root/.swiftpm,id=swiftpm \
+    swift package resolve
 
-# Copy rest of sources and build using cache for SwiftPM
 COPY . .
-RUN --mount=type=cache,target=/root/.swiftpm swift build -c release
 
-# Run Stage (Slim)
 FROM swift:6.2-slim
 
-WORKDIR /app
+LABEL maintainer="tools-automation"
+LABEL description="Planner App source workspace (Linux tooling image)"
+LABEL org.opencontainers.image.source="https://github.com/tools-automation/planner-app"
+LABEL org.opencontainers.image.documentation="https://github.com/tools-automation/planner-app/wiki"
 
-# Create non-root user
-RUN groupadd -r swiftuser && useradd -r -g swiftuser -m swiftuser
+WORKDIR /workspace
 
-# Copy built artifacts from builder
-COPY --from=builder --chown=swiftuser:swiftuser /app .
+RUN groupadd -r planneruser && useradd -r -g planneruser -u 1001 planneruser
 
-USER swiftuser
+COPY --from=builder --chown=planneruser:planneruser /app /workspace
 
-# Default to running tests in dev images; production images should set a runtime command
-CMD ["swift", "test"]
+USER planneruser
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD test -f /workspace/Package.swift || exit 1
+
+CMD ["/bin/sh", "-lc", "echo 'planner-app source container ready (macOS builds app binaries)'; sleep infinity"]
