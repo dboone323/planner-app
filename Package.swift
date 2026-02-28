@@ -45,5 +45,10 @@ let package = Package(
             exclude: ["ProjectScripts", "Automation"],
             sources: ["ScheduleAudit.swift"]
         ),
+        .testTarget(
+            name: "PlannerAgentCoreTests",
+            dependencies: ["PlannerAgentCore"],
+            path: "Tests/PlannerAgentCoreTests"
+        ),
     ]
 )

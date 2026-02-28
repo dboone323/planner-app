@@ -1,5 +1,5 @@
 {
-  "originHash" : "37e263646c963a5a6c589d37c144b6e8d85d0688d37afdb50fe1ce0ca8c88ec0",
+  "originHash" : "e755dee4382385a61399966b6a8ab19136baecb8266e64b39c6f9a7a69efbaec",
   "pins" : [
     {
       "identity" : "shared-kit",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/dboone323/shared-kit.git",
       "state" : {
         "branch" : "main",
-        "revision" : "324ddfbe8b93e6fb6f7fd75b0953ab2503dde0d2"
+        "revision" : "72978973029f528951db235f187580686c99886b"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
-        "version" : "3.15.1"
+        "revision" : "6f70fa9eab24c1fd982af18c281c4525d05e3095",
+        "version" : "4.2.0"
       }
     },
     {
