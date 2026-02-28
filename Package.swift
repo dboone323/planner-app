@@ -42,6 +42,7 @@ let package = Package(
             name: "ScheduleAudit",
             dependencies: ["PlannerAgentCore"],
             path: "Tools",
+            exclude: ["ProjectScripts", "Automation"],
             sources: ["ScheduleAudit.swift"]
         ),
     ]
