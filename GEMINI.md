@@ -18,3 +18,10 @@ PlannerApp is a productivity suite featuring autonomous schedule optimization an
 
 - Must use `SharedKit` for cross-project data consistency.
 - Adhere to the `BaseAgent` execution pattern.
+
+## March 2026 Code Standards
+
+- **No Stubs/Mocks**: Do not use placeholders, mocks, or stubs in implementation or testing.
+- **Production Ready**: Every new line of code must be real, working, and production-ready.
+- **End-to-End Testing**: Use real working and tested code to verify behavior natively to avoid down-the-line problems.
+- **Modern Standards**: Adhere strictly to the latest ecosystem standards (Swift 6.2 concurrency, Python 3.13).
