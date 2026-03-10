@@ -17,7 +17,7 @@ public struct PlannerAgent: BaseAgent {
     /// Expected context keys:
     /// - `"tasks"`: `[[String: String]]` list of task dicts with keys `"title"`, `"priority"`, `"due_offset_days"`
     /// - `"preferences"`: `String` – `"morning"` | `"afternoon"` | `"evening"` (optional, defaults to morning)
-    public func execute(context: [String: Sendable]) async throws -> AgentResult {
+    public func execute(context: [String: any Sendable]) async throws -> AgentResult {
         let tasks = context["tasks"] as? [[String: String]] ?? []
         let preference = context["preferences"] as? String ?? "morning"
 
