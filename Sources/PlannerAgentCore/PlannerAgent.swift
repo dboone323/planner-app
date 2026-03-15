@@ -11,6 +11,7 @@ public struct PlannerAgent: BaseAgent {
     public let name = "Schedule Optimization Agent"
     private let ollamaClient: OllamaClient
 
+    @MainActor
     public init(ollamaClient: OllamaClient = OllamaClient()) {
         self.ollamaClient = ollamaClient
     }
@@ -42,12 +43,7 @@ public struct PlannerAgent: BaseAgent {
             preference: preference
         )
 
-        let summary = aiRecommendation ?? buildHeuristicRecommendation(
-            tasks: tasks,
-            highPriority: highPriority,
-            overdue: overdue,
-            preference: preference
-        )
+        let summary = aiRecommendation ?? "Your tasks are prioritized by importance. Focus on high-priority items during your peak focus periods."
 
         return AgentResult(
             agentId: id,
@@ -58,7 +54,7 @@ public struct PlannerAgent: BaseAgent {
                 "high_priority": "\(highPriority.count)",
                 "overdue": "\(overdue.count)",
                 "preferred_slot": preference,
-                "optimizer": aiRecommendation != nil ? "ollama_quantum" : "heuristic_v1"
+                "optimizer": aiRecommendation != nil ? "ollama_quantum" : "baseline_rational"
             ],
             requiresApproval: !overdue.isEmpty || aiRecommendation != nil
         )
@@ -82,44 +78,17 @@ public struct PlannerAgent: BaseAgent {
         Return ONLY the recommendation text.
         """
 
-        return await MainActor.run {
-            Task {
-                do {
-                    return try await ollamaClient.generate(
-                        model: nil,
-                        prompt: prompt,
-                        temperature: 0.7,
-                        maxTokens: 500,
-                        useCache: true
-                    )
-                } catch {
-                    return nil
-                }
-            }
-        }.value
-    }
-
-    private func buildHeuristicRecommendation(
-        tasks: [[String: String]],
-        highPriority: [[String: String]],
-        overdue: [[String: String]],
-        preference: String
-    ) -> String {
-        var parts: [String] = []
-
-        if !overdue.isEmpty {
-            parts.append("\(overdue.count) overdue task(s) require immediate rescheduling.")
+        do {
+            let response = try await ollamaClient.generate(
+                model: nil,
+                prompt: prompt,
+                temperature: 0.7,
+                maxTokens: 500,
+                useCache: true
+            )
+            return response.trimmingCharacters(in: .whitespacesAndNewlines)
+        } catch {
+            return nil
         }
-        if !highPriority.isEmpty {
-            parts.append("Schedule \(highPriority.count) high-priority task(s) during peak \(preference) focus blocks.")
-        }
-        let remaining = tasks.count - highPriority.count - overdue.count
-        if remaining > 0 {
-            parts.append("\(remaining) standard task(s) distributed across available slots.")
-        }
-
-        return parts.isEmpty
-            ? "All \(tasks.count) tasks are on track. No rescheduling required."
-            : parts.joined(separator: " ")
     }
 }
