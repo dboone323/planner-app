@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [[ "${FLEET_INTERNAL}" != "1" ]]; then
+  echo "❌ Error: Independent execution disabled. Please use 'python3 control/run_all.py' from the workspace root."
+  exit 1
+fi
+
 # Local CI/CD Script for PlannerApp
 # Runs on macOS 26 with Xcode 26.3
 # Tests on iPhone 17 simulator and physical iPhone 15 Pro Max
@@ -11,6 +17,11 @@ echo "💻 Xcode: 26.3 on macOS 26"
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR"
+WORKSPACE_ROOT="$(cd "${PROJECT_DIR}/.." && pwd)"
+BUILD_ROOT="${PROJECT_DIR}/.build"
+DERIVED_DATA_PATH="${BUILD_ROOT}/DerivedData"
+OUTPUT_ROOT="${WORKSPACE_ROOT}/outputs/PlannerApp"
+mkdir -p "${DERIVED_DATA_PATH}" "${OUTPUT_ROOT}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -69,6 +80,7 @@ print_status "Building PlannerApp for iPhone 17"
 BUILD_OUTPUT=$(xcodebuild build \
     -scheme PlannerApp \
     -destination "$IPHONE_17_DESTINATION" \
+    -derivedDataPath "${DERIVED_DATA_PATH}" \
     -configuration Debug \
     CODE_SIGN_IDENTITY="" \
     CODE_SIGNING_REQUIRED=NO \
@@ -86,18 +98,19 @@ print_status "Running tests on iPhone 17"
 xcodebuild test \
     -scheme PlannerApp \
     -destination "$IPHONE_17_DESTINATION" \
+    -derivedDataPath "${DERIVED_DATA_PATH}" \
     -configuration Debug \
     -enableCodeCoverage YES \
     CODE_SIGN_IDENTITY="" \
     CODE_SIGNING_REQUIRED=NO \
-    -resultBundlePath TestResults.xcresult || true
+    -resultBundlePath "${OUTPUT_ROOT}/TestResults.xcresult" || true
 
 # 3. Generate Coverage Report
 print_status "Generating coverage report"
-xcrun xccov view --report --json TestResults.xcresult > coverage.json || true
+xcrun xccov view --report --json "${OUTPUT_ROOT}/TestResults.xcresult" >"${OUTPUT_ROOT}/coverage.json" || true
 
-if [ -f coverage.json ]; then
-    COVERAGE=$(jq '.lineCoverage * 100' coverage.json 2>/dev/null || echo "0")
+if [ -f "${OUTPUT_ROOT}/coverage.json" ]; then
+    COVERAGE=$(jq '.lineCoverage * 100' "${OUTPUT_ROOT}/coverage.json" 2>/dev/null || echo "0")
     print_status "Code coverage: ${COVERAGE}%"
 fi
 
@@ -128,8 +141,8 @@ fi
 
 print_status "Local CI/CD completed successfully! 🎉"
 echo ""
-echo "📊 Test Results: TestResults.xcresult"
-echo "📈 Coverage: coverage.json"
+echo "📊 Test Results: ${OUTPUT_ROOT}/TestResults.xcresult"
+echo "📈 Coverage: ${OUTPUT_ROOT}/coverage.json"
 echo ""
 echo "To view test results in Xcode:"
-echo "open TestResults.xcresult"
+echo "open ${OUTPUT_ROOT}/TestResults.xcresult"
