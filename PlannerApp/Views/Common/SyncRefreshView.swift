@@ -1,0 +1,146 @@
+//
+// SyncRefreshView.swift
+// PlannerApp
+//
+// Step 28: Pull-to-refresh for CloudKit sync status.
+//
+
+import SwiftUI
+
+/// Pull-to-refresh enabled list with sync status indicator.
+struct SyncRefreshableView<Content: View>: View {
+    @Binding var isSyncing: Bool
+    @Binding var lastSyncDate: Date?
+    let onRefresh: () async -> Void
+    let content: Content
+
+    init(
+        isSyncing: Binding<Bool>,
+        lastSyncDate: Binding<Date?>,
+        onRefresh: @escaping () async -> Void,
+        @ViewBuilder content: () -> Content
+    ) {
+        _isSyncing = isSyncing
+        _lastSyncDate = lastSyncDate
+        self.onRefresh = onRefresh
+        self.content = content()
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Sync status bar
+            SyncStatusBar(isSyncing: self.isSyncing, lastSyncDate: self.lastSyncDate)
+
+            // Refreshable content
+            self.content
+                .refreshable {
+                    await self.onRefresh()
+                }
+        }
+    }
+}
+
+/// Status bar showing sync state.
+struct SyncStatusBar: View {
+    let isSyncing: Bool
+    let lastSyncDate: Date?
+
+    var body: some View {
+        HStack(spacing: 8) {
+            if self.isSyncing {
+                ProgressView()
+                    .scaleEffect(0.8)
+                Text(NSLocalizedString("syncing", comment: "Sync status when actively syncing"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else if let date = lastSyncDate {
+                Image(systemName: "checkmark.icloud")
+                    .foregroundColor(.green)
+                Text(String(
+                    format: NSLocalizedString("last_synced", comment: "Last sync time display"),
+                    RelativeDateTimeFormatter().localizedString(for: date, relativeTo: Date())
+                ))
+                .font(.caption)
+                .foregroundColor(.secondary)
+            } else {
+                Image(systemName: "icloud")
+                    .foregroundColor(.gray)
+                Text(NSLocalizedString("not_synced", comment: "Status when never synced"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(Color(.secondarySystemBackground))
+    }
+}
+
+/// Manual sync button.
+struct ManualSyncButton: View {
+    @Binding var isSyncing: Bool
+    let action: () async -> Void
+
+    var body: some View {
+        Button(action: {
+            Task {
+                self.isSyncing = true
+                await self.action()
+                self.isSyncing = false
+            }
+        }, label: {
+            HStack {
+                if self.isSyncing {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }
+                Text(NSLocalizedString("sync_now", comment: "Manual sync button title"))
+            }
+        })
+        .disabled(self.isSyncing)
+    }
+}
+
+/// Sync error alert modifier.
+struct SyncErrorAlert: ViewModifier {
+    @Binding var error: Error?
+    @Binding var showError: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .alert("Sync Error", isPresented: self.$showError) {
+                Button("OK", role: .cancel) {}
+                Button("Retry") {
+                    // Trigger retry
+                }
+            } message: {
+                Text(self.error?.localizedDescription ?? "Unknown error occurred")
+            }
+    }
+}
+
+extension View {
+    func syncErrorAlert(error: Binding<Error?>, showError: Binding<Bool>) -> some View {
+        modifier(SyncErrorAlert(error: error, showError: showError))
+    }
+}
+
+// Preview
+#Preview {
+    SyncRefreshableView(
+        isSyncing: .constant(false),
+        lastSyncDate: .constant(Date().addingTimeInterval(-300)),
+        onRefresh: {},
+        content: {
+            List {
+                Text(NSLocalizedString("item_1", comment: "Test item 1"))
+                Text(NSLocalizedString("item_2", comment: "Test item 2"))
+                Text(NSLocalizedString("item_3", comment: "Test item 3"))
+            }
+        }
+    )
+}

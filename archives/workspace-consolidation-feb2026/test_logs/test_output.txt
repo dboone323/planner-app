@@ -1,0 +1,1104 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -scheme PlannerApp -destination platform=macOS
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  Shared: https://github.com/dboone323/shared-kit.git @ 1.0.0
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006000-001649660AE2801E, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006000-001649660AE2801E, name:My Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'PlannerAppUITests' in project 'PlannerApp'
+        ➜ Explicit dependency on target 'PlannerApp' in project 'PlannerApp'
+    Target 'PlannerAppTests' in project 'PlannerApp'
+        ➜ Explicit dependency on target 'PlannerApp' in project 'PlannerApp'
+    Target 'PlannerApp' in project 'PlannerApp' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 5d73b65ee62239d96cd01f93aa36f177
+Build description path: /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/XCBuildData/5d73b65ee62239d96cd01f93aa36f177.xcbuilddata
+warning: Skipping duplicate build file in Compile Sources build phase: /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/Services/PomodoroTimer.swift (in target 'PlannerApp' from project 'PlannerApp')
+ProcessProductPackaging /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/PlannerApp.entitlements /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    
+    Entitlements:
+    
+    {
+    "com.apple.security.app-sandbox" = 1;
+    "com.apple.security.application-groups" =     (
+    );
+    "com.apple.security.files.user-selected.read-only" = 1;
+    "com.apple.security.get-task-allow" = 1;
+}
+    
+    builtin-productPackagingUtility /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp/PlannerApp.entitlements -entitlements -format xml -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent
+
+ProcessProductPackagingDER /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent.der (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    /usr/bin/derq query -f xml -i /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent.der --raw
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk /Users/danielstevens/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C58-e8867d0c40613ffc63e0238af232dc5000fa09913b459cbbc988d1f6730289ae.sdkstatcache
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerApp.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C58-e8867d0c40613ffc63e0238af232dc5000fa09913b459cbbc988d1f6730289ae.sdkstatcache
+
+ProcessProductPackaging "" /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    
+    Entitlements:
+    
+    {
+    "com.apple.application-identifier" = "3N5528D82R.com.DanielStevens.PlannerAppUITests.xctrunner";
+    "com.apple.security.app-sandbox" = 1;
+    "com.apple.security.get-task-allow" = 1;
+    "com.apple.security.network.client" = 1;
+    "com.apple.security.temporary-exception.files.absolute-path.read-only" =     (
+        "/"
+    );
+    "com.apple.security.temporary-exception.mach-lookup.global-name" =     (
+        "com.apple.testmanagerd",
+        "com.apple.dt.testmanagerd.runner",
+        "com.apple.coresymbolicationd",
+        "com.apple.coredevice.version",
+        "com.apple.coredevice.service",
+        "com.apple.remoted"
+    );
+    "com.apple.security.temporary-exception.mach-lookup.local-name" =     (
+        "com.apple.axserver"
+    );
+    "com.apple.security.temporary-exception.sbpl" =     (
+        "(allow hid-control)",
+        "(allow signal)"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent
+
+ProcessProductPackagingDER /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent.der (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    /usr/bin/derq query -f xml -i /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent.der --raw
+
+CopySwiftLibs /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-swiftStdLibTool --copy --verbose --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 --scan-executable /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/MacOS/PlannerApp.debug.dylib --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Frameworks --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Library/SystemExtensions --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.3.519.0.NkMBR0/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Info.plist /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/empty-PlannerApp.plist (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-infoPlistUtility /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/empty-PlannerApp.plist -producttype com.apple.product-type.application -genpkginfo /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PkgInfo -expandbuildsettings -platform macosx -additionalcontentfile /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/assetcatalog_generated_info.plist -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/Info.plist
+
+ProcessInfoPlistFile /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Info.plist /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppTests.build/empty-PlannerAppTests.plist (in target 'PlannerAppTests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-infoPlistUtility /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppTests.build/empty-PlannerAppTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Info.plist
+
+CopySwiftLibs /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest (in target 'PlannerAppTests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-swiftStdLibTool --copy --verbose --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 --scan-executable /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/MacOS/PlannerAppTests --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Frameworks --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/PlugIns --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.3.519.0.NkMBR0/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app/Contents/PlugIns/PlannerAppTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    
+    Signing Identity:     "Apple Development: dboone9@msn.com (72RDLR687H)"
+    
+    /usr/bin/codesign --force --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 -o runtime --entitlements /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerApp.build/PlannerApp.app.xcent --timestamp\=none --generate-entitlement-der /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app
+/Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app: replacing existing signature
+
+Validate /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-validationUtility /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app -no-validate-extension -infoplist-subpath Contents/Info.plist
+
+RegisterWithLaunchServices /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app (in target 'PlannerApp' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerApp.app
+
+CopySwiftLibs /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-swiftStdLibTool --copy --verbose --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 --scan-executable /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/MacOS/PlannerAppUITests --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Frameworks --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/PlugIns --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.3.519.0.NkMBR0/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Info.plist /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/empty-PlannerAppUITests.plist (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    builtin-infoPlistUtility /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/empty-PlannerAppUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -platform macosx -additionalcontentfile /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest/Contents/Info.plist
+
+CodeSign /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    
+    Signing Identity:     "Apple Development: dboone9@msn.com (72RDLR687H)"
+    
+    /usr/bin/codesign --force --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 --entitlements /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest
+/Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app/Contents/PlugIns/PlannerAppUITests.xctest: replacing existing signature
+
+CodeSign /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app (in target 'PlannerAppUITests' from project 'PlannerApp')
+    cd /Users/danielstevens/github-projects/tools-automation/PlannerApp
+    
+    Signing Identity:     "Apple Development: dboone9@msn.com (72RDLR687H)"
+    
+    /usr/bin/codesign --force --sign C8FE4D15A7DE881CE3CCAEC52B7CC5E2DC30C6C1 --entitlements /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Intermediates.noindex/PlannerApp.build/Debug/PlannerAppUITests.build/PlannerAppUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app
+/Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Build/Products/Debug/PlannerAppUITests-Runner.app: replacing existing signature
+
+Testing started
+Test suite 'CloudKitSyncTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'CloudKitSyncTests.testBulkGoalInsertion()' passed on 'My Mac - PlannerApp (85424)' (0.014 seconds)
+Test case 'CloudKitSyncTests.testBulkTaskInsertion()' passed on 'My Mac - PlannerApp (85424)' (0.021 seconds)
+Test case 'CloudKitSyncTests.testCloudKitContainerConfiguration()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'CloudKitSyncTests.testGoalModifiedAtUpdatesOnProgress()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'CloudKitSyncTests.testTaskDataIntegrityAfterMultipleUpdates()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test case 'CloudKitSyncTests.testTaskModifiedAtUpdatesOnChange()' passed on 'My Mac - PlannerApp (85424)' (0.105 seconds)
+Test case 'CloudKitSyncTests.testTaskUniqueIdConstraint()' failed on 'My Mac - PlannerApp (85424)' (0.194 seconds)
+Test suite 'TaskManagerTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'TaskManagerTests.testCreateTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testDeleteTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testFetchAllTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testFetchCompletedTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testFetchOverdueTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testFetchTasksDueToday()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testMarkTaskComplete()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskManagerTests.testSortByPriority()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskManagerTests.testUpdateTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test suite 'TaskDataManagerTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'TaskDataManagerTests.testAddMultipleTasks()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testAddTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testClearAllTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testDeleteOnlySpecifiedTask()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testDeleteTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testFilterByCompletionStatus()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testFindNonexistentTask()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testFindTaskById()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testGetTaskStatistics()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testHandlesEmptyTitle()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testHandlesTasksWithoutDueDate()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testLoadReturnsEmptyArrayInitially()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testOverdueTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testPersistenceAcrossInstances()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testSaveAndLoadTasks()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testSharedInstanceExists()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testSharedInstanceIsSingleton()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testStatisticsWithNoTasks()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testTasksDueWithin()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testTasksDueWithinExcludesCompleted()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TaskDataManagerTests.testTasksSortedByDate()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testTasksSortedByPriority()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TaskDataManagerTests.testUpdateNonexistentTask()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDataManagerTests.testUpdateTask()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test suite 'DashboardViewModelTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'DashboardViewModelTests.testFetchDashboardDataFiltersIncompleteTasks()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataFiltersTodaysEvents()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataFiltersUpcomingGoals()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataRespectsLimit()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataSortsEventsByTime()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataSortsGoalsByDate()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testFetchDashboardDataWithNoData()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewModelTests.testFullDashboardDataFlow()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'DashboardViewModelTests.testHandlesDateBoundaryConditions()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testHandlesEmptyDataGracefully()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewModelTests.testHandlesLargeDatasets()' passed on 'My Mac - PlannerApp (85424)' (0.141 seconds)
+Test case 'DashboardViewModelTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewModelTests.testPublishedProperties()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewModelTests.testQuickStatsProperties()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewModelTests.testRefreshDataCallsFetchDashboardData()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'DashboardViewModelTests.testRefreshDataUpdatesQuickStats()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test suite 'PlannerAppTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'PlannerAppTests.testAdvancedFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.006 seconds)
+Test case 'PlannerAppTests.testBulkOperationsPerformance()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testCalendarEventCreation()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testCategoryTaskIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testConcurrentAccess()' passed on 'My Mac - PlannerApp (85424)' (0.021 seconds)
+Test case 'PlannerAppTests.testContentViewDataBinding()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testContentViewInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testDashboardViewModelDataFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testDashboardViewModelFetchData()' passed on 'My Mac - PlannerApp (85424)' (0.033 seconds)
+Test case 'PlannerAppTests.testDashboardViewModelInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testDashboardViewModelItemLimit()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testDashboardViewModelRefreshData()' passed on 'My Mac - PlannerApp (85424)' (0.009 seconds)
+Test case 'PlannerAppTests.testDataBackupAndRestore()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testDataExport()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testDataExportServiceInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testDataManagerIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.006 seconds)
+Test case 'PlannerAppTests.testDataMigration()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testDataPersistence()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testDateCalculations()' passed on 'My Mac - PlannerApp (85424)' (0.008 seconds)
+Test case 'PlannerAppTests.testDateDisplayFormatting()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testDueDateValidation()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testEmptyTaskValidation()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testExportFormats()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testFullWorkflowIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.031 seconds)
+Test case 'PlannerAppTests.testGoalCompletion()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testGoalCreation()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testInvalidDateHandling()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testLargeDataSets()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test case 'PlannerAppTests.testPriorityColorMapping()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testSearchPerformance()' passed on 'My Mac - PlannerApp (85424)' (0.051 seconds)
+Test case 'PlannerAppTests.testTaskCompletionToggle()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskCreation()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskCreationPerformance()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerAdd()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerDelete()' passed on 'My Mac - PlannerApp (85424)' (0.022 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerDueDateFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerFindById()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerOverdueTasks()' passed on 'My Mac - PlannerApp (85424)' (0.006 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerSaveAndLoad()' passed on 'My Mac - PlannerApp (85424)' (0.005 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerSorting()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerStatistics()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskDataManagerUpdate()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskDisplayFormatting()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskDueDate()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskEquality()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskOverdueDetection()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'PlannerAppTests.testTaskPriority()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'PlannerAppTests.testTaskProjectIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'PlannerAppTests.testTaskSearch()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test suite 'CalendarComponentsTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'CalendarComponentsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'CalendarComponentsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'CalendarComponentsTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'CalendarComponentsTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'CalendarComponentsTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.020 seconds)
+Test case 'CalendarComponentsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test suite 'WorkspaceManagerTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'WorkspaceManagerTests.testAddMember()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'WorkspaceManagerTests.testCreateWorkspace()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'WorkspaceManagerTests.testCurrentWorkspace()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'WorkspaceManagerTests.testDeleteWorkspace()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test suite 'CalendarDataManagerTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CalendarDataManagerTests.testAddEvent()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'WorkspaceManagerTests.testRemoveMember()' passed on 'My Mac - PlannerApp (85424)' (0.011 seconds)
+Test case 'WorkspaceManagerTests.testSelectWorkspace()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'WorkspaceManagerTests.testUpdateWorkspace()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'GoalsViewTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'CalendarDataManagerTests.testAddMultipleEvents()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testClearAllEvents()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testDeleteEvent()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testDeleteOnlySpecifiedEvent()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testEventsBetweenDates()' passed on 'My Mac - PlannerApp (85427)' (0.008 seconds)
+Test case 'CalendarDataManagerTests.testEventsBetweenDatesSorted()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testEventsForDateReturnsSortedByTime()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'GoalsViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'GoalsViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.016 seconds)
+Test case 'GoalsViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'GoalsViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalsViewTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalsViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'CalendarDataManagerTests.testEventsForSpecificDate()' passed on 'My Mac - PlannerApp (85427)' (0.004 seconds)
+Test case 'CalendarDataManagerTests.testEventsSortedByDate()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testFindEventById()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testFindNonexistentEvent()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'GoalTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'GoalTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'GoalTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'CalendarDataManagerTests.testGetEventStatistics()' passed on 'My Mac - PlannerApp (85427)' (0.004 seconds)
+Test case 'CalendarDataManagerTests.testHandlesMidnightBoundary()' passed on 'My Mac - PlannerApp (85427)' (0.004 seconds)
+Test case 'CalendarDataManagerTests.testLoadReturnsEmptyArrayInitially()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testPersistenceAcrossInstances()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testSaveAndLoadEvents()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testSharedInstanceExists()' passed on 'My Mac - PlannerApp (85427)' (0.050 seconds)
+Test case 'GoalTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.057 seconds)
+Test case 'CalendarDataManagerTests.testSharedInstanceIsSingleton()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarDataManagerTests.testStatisticsWithNoEvents()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarDataManagerTests.testUpcomingEventsExcludesPast()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testUpcomingEventsSorted()' passed on 'My Mac - PlannerApp (85427)' (0.004 seconds)
+Test suite 'NetworkMonitorTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'NetworkMonitorTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'NetworkMonitorTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'NetworkMonitorTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'NetworkMonitorTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'ModernCardTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'CalendarDataManagerTests.testUpcomingEventsWithinDays()' passed on 'My Mac - PlannerApp (85427)' (0.003 seconds)
+Test case 'CalendarDataManagerTests.testUpdateEvent()' passed on 'My Mac - PlannerApp (85427)' (0.002 seconds)
+Test case 'CalendarDataManagerTests.testUpdateNonexistentEvent()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'TaskDependencyServiceTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'ModernCardTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'ModernCardTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'ModernCardTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'ModernCardTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'ModernCardTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'NetworkMonitorTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'NetworkMonitorTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'EnhancedPlatformNavigationTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'EnhancedPlatformNavigationTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'EnhancedPlatformNavigationTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDependencyServiceTests.testAddDependency()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'ModernCardTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'TaskDependencyServiceTests.testAutoCompletion()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'EnhancedPlatformNavigationTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.036 seconds)
+Test case 'TaskDependencyServiceTests.testBlockTask()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EnhancedPlatformNavigationTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'EnhancedPlatformNavigationTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDependencyServiceTests.testCircularDependencyCheck()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskDependencyServiceTests.testRemoveDependency()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EnhancedPlatformNavigationTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskDependencyServiceTests.testUnblockTask()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'CalendarSyncManagerTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'CalendarSyncManagerTests.testSetupCalendar_Failure()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'EventRowViewTests' started on 'My Mac - PlannerApp (85427)'
+Test suite 'RunTestsTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'RunTestsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'RunTestsTests.testFunctionality()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'RunTestsTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'ThemePreviewViewTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'ThemePreviewViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'ThemePreviewViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'ThemePreviewViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'EventRowViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'EventRowViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EventRowViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EventRowViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EventRowViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'EventRowViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'SettingsViewTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'SettingsViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.069 seconds)
+Test case 'SettingsViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'CalendarSyncManagerTests.testSetupCalendar_Success()' passed on 'My Mac - PlannerApp (85424)' (0.121 seconds)
+Test case 'CalendarSyncManagerTests.testSyncTaskToCalendar_CreatesEvent()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'SettingsViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'CalendarEventTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CalendarEventTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarEventTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarEventTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarEventTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'TaskListViewTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'TaskListViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TaskListViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'TaskListViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'TaskListViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'CloudKitManagerSimplifiedTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'CloudKitManagerSimplifiedTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'CloudKitManagerSimplifiedTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'CloudKitManagerSimplifiedTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'TaskListViewTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'CalendarEventTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarEventTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'QuickActionCardTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'QuickActionCardTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'QuickActionCardTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'QuickActionCardTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.078 seconds)
+Test case 'QuickActionCardTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CloudKitManagerSimplifiedTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'CloudKitManagerSimplifiedTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.088 seconds)
+Test case 'CloudKitManagerSimplifiedTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'TaskListViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'QuickActionCardTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'QuickActionCardTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'SyncRefreshViewTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'SyncRefreshViewTests.testCompletionAnimation()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'SyncRefreshViewTests.testErrorState()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'SyncRefreshViewTests.testRefreshControl()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'SyncRefreshViewTests.testSpinAnimation()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'SyncRefreshViewTests.testSyncIndicator()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'SyncRefreshViewTests.testSyncTrigger()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'AddGoalViewWorkingTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'AddGoalViewWorkingTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AddGoalViewWorkingTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'AddGoalViewWorkingTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'TagManagerTests' started on 'My Mac - PlannerApp (85424)'
+Test suite 'NotificationExtensionsTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'NotificationExtensionsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'NotificationExtensionsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'NotificationExtensionsTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'AddGoalViewWorkingTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'AddGoalViewWorkingTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AddGoalViewWorkingTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'AccessibilityEnhancementsTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'AccessibilityEnhancementsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AccessibilityEnhancementsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TagManagerTests.testCreatedTagIsRetrievable()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TagManagerTests.testCreateTagAddsToList()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TagManagerTests.testCreateTagReturnsNewTag()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TagManagerTests.testDefaultTagsExist()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'NotificationExtensionsTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'AccessibilityEnhancementsTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AccessibilityEnhancementsTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TagManagerTests.testPersonalTagExists()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'AccessibilityEnhancementsTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'NotificationExtensionsTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.050 seconds)
+Test case 'NotificationExtensionsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'CalendarSyncServiceTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'AccessibilityEnhancementsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'DashboardViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'DashboardViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'DashboardViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'DashboardViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TagManagerTests.testTagHasUniqueId()' passed on 'My Mac - PlannerApp (85424)' (0.046 seconds)
+Test case 'TagManagerTests.testTagIsHashable()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TagManagerTests.testTagsForEmptyNames()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TagManagerTests.testTagsForNames()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'TagManagerTests.testTagsForNonexistentNames()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'DashboardViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarSyncServiceTests.testFetchEvents_Authorized()' passed on 'My Mac - PlannerApp (85428)' (0.028 seconds)
+Test case 'DashboardViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TagManagerTests.testUrgentTagExists()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'DashboardViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TagManagerTests.testWaitingTagExists()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'TagManagerTests.testWorkTagExists()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'CalendarSyncServiceTests.testFetchEvents_NotAuthorized()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'CalendarSyncServiceTests.testRequestAccess_Granted()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'CloudKitOnboardingViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CloudKitOnboardingViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'AddGoalViewNewTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'AddGoalViewNewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'AddGoalViewNewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AddGoalViewNewTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AddGoalViewNewTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'CloudKitOnboardingViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CloudKitOnboardingViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CloudKitOnboardingViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CloudKitOnboardingViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'ProgressUpdateSheetTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'ProgressUpdateSheetTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProgressUpdateSheetTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProgressUpdateSheetTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProgressUpdateSheetTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'AddGoalViewNewTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'CloudKitOnboardingViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'ProgressUpdateSheetTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProgressUpdateSheetTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'AddGoalViewNewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'ThemeManagerTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'ThemeManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ThemeManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'ThemeManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'ThemeManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'PerformanceManagerTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'PerformanceManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'PerformanceManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'PerformanceManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'UpcomingItemViewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'UpcomingItemViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'UpcomingItemViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'UpcomingItemViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'UpcomingItemViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'UpcomingItemViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.033 seconds)
+Test case 'UpcomingItemViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test suite 'DataManagersTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'DataManagersTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.003 seconds)
+Test case 'DataManagersTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'DataManagersTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'DataManagersTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'DataManagersTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'DataManagersTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test suite 'ModernThemesTests' started on 'My Mac - PlannerApp (85432)'
+Test suite 'JournalListViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'JournalListViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'JournalListViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'JournalListViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'JournalListViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'ThemeManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'ThemeManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'ThemeTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'ThemeTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ThemeTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'PerformanceManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'PerformanceManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'PerformanceManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'TimeBlockServiceTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'TimeBlockServiceTests.testCreateTimeBlock()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'SDTaskTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'SDTaskTests.testSDTaskCompletionFiltering()' passed on 'My Mac - PlannerApp (85431)' (0.007 seconds)
+Test case 'SDTaskTests.testSDTaskDefaultValues()' passed on 'My Mac - PlannerApp (85431)' (0.003 seconds)
+Test case 'SDTaskTests.testSDTaskDeletion()' passed on 'My Mac - PlannerApp (85431)' (0.004 seconds)
+Test case 'SDTaskTests.testSDTaskInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.003 seconds)
+Test suite 'PlatformAdaptiveNavigationTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'PlatformAdaptiveNavigationTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PlatformAdaptiveNavigationTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'PlatformAdaptiveNavigationTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PlatformAdaptiveNavigationTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'ModernThemesTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'ModernThemesTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'ModernThemesTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'ModernThemesTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'ModernThemesTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test suite 'SDGoalTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'SDGoalTests.testSDGoalActiveFiltering()' passed on 'My Mac - PlannerApp (85424)' (0.007 seconds)
+Test case 'SDGoalTests.testSDGoalAutoCompleteAtFullProgress()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'SDGoalTests.testSDGoalDefaultValues()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'SDGoalTests.testSDGoalDeletion()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'ThemeTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'ThemeTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ThemeTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'ThemeTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'ConflictResolverTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'JournalListViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'JournalListViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TimeBlockServiceTests.testDeleteTimeBlock()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'TimeBlockServiceTests.testGapFinding()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'TimeBlockServiceTests.testOptimizeSchedule()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'TimeBlockServiceTests.testOverlapDetection()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'TimeBlockServiceTests.testSuggestTimeSlot()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'SDGoalTests.testSDGoalInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'SDGoalTests.testSDGoalPersistence()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'SDGoalTests.testSDGoalPrioritySortOrder()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'SDGoalTests.testSDGoalProgressClampedToMax()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'ModernThemesTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test suite 'FocusModeManagerTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'FocusModeManagerTests.testDoubleToggleReturnsToOriginal()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'FocusModeManagerTests.testInitialStateIsOff()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'PlatformAdaptiveNavigationTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.015 seconds)
+Test case 'PlatformAdaptiveNavigationTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test suite 'AddGoalViewFinalTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'AddGoalViewFinalTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'ConflictResolverTests.testCompilationSucceeds()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ConflictResolverTests.testDetectConflict_IdenticalRecords_ReturnsNil()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ConflictResolverTests.testDetermineConflictType_Deleted()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'SDTaskTests.testSDTaskNegativeSentiment()' passed on 'My Mac - PlannerApp (85431)' (0.003 seconds)
+Test case 'SDTaskTests.testSDTaskPersistence()' passed on 'My Mac - PlannerApp (85431)' (0.004 seconds)
+Test case 'SDTaskTests.testSDTaskPrioritySortOrder()' passed on 'My Mac - PlannerApp (85431)' (0.003 seconds)
+Test case 'SDTaskTests.testSDTaskSentimentAnalysis()' passed on 'My Mac - PlannerApp (85431)' (0.002 seconds)
+Test case 'SDTaskTests.testSDTaskUpdate()' passed on 'My Mac - PlannerApp (85431)' (0.004 seconds)
+Test case 'SDGoalTests.testSDGoalProgressClampedToMin()' passed on 'My Mac - PlannerApp (85424)' (0.002 seconds)
+Test case 'SDGoalTests.testSDGoalUpdate()' passed on 'My Mac - PlannerApp (85424)' (0.004 seconds)
+Test case 'SDGoalTests.testSDGoalUpdateProgress()' passed on 'My Mac - PlannerApp (85424)' (0.003 seconds)
+Test case 'TimeBlockServiceTests.testUpdateTimeBlock()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'FocusModeManagerTests.testMultipleToggles()' passed on 'My Mac - PlannerApp (85432)' (0.003 seconds)
+Test case 'FocusModeManagerTests.testToggleTurnsOff()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'FocusModeManagerTests.testToggleTurnsOn()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'AddGoalViewFinalTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'AddGoalViewFinalTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'AddGoalViewFinalTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'AddGoalViewFinalTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'AddGoalViewFinalTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test suite 'JournalViewTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'JournalViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'JournalViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'CalendarGridTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CalendarGridTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarGridTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarGridTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'GoalsHeaderViewTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'GoalsHeaderViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test suite 'GoalDataManagerTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'GoalDataManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'GoalDataManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalDataManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test suite 'AppIntentsTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'AppIntentsTests.testAddTaskShortcut()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'AppIntentsTests.testOpenListShortcut()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'AppIntentsTests.testSiriIntentHandling()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'AppIntentsTests.testSiriIntentParameters()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'AppIntentsTests.testWidgetConfigurationIntent()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test suite 'JournalHeaderViewTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'JournalHeaderViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'JournalHeaderViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'JournalHeaderViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'JournalHeaderViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'GoalsHeaderViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test suite 'MainTabViewEnhancedTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'MainTabViewEnhancedTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test case 'MainTabViewEnhancedTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'MainTabViewEnhancedTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'MainTabViewEnhancedTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'MainTabViewEnhancedTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'MainTabViewEnhancedTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test suite 'CloudKitMigrationHelperTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'CloudKitMigrationHelperTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitMigrationHelperTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitMigrationHelperTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CloudKitMigrationHelperTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CalendarGridTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarGridTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarGridTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'GoalsHeaderViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalsHeaderViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'GoalsHeaderViewTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'JournalHeaderViewTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.005 seconds)
+Test case 'JournalHeaderViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'DarkModeSupportTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'GoalDataManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalDataManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalDataManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test suite 'AddGoalViewSimpleTests' started on 'My Mac - PlannerApp (85432)'
+Test suite 'TaskRowTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'TaskRowTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CloudKitMigrationHelperTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitMigrationHelperTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'CloudKitSyncViewTests' started on 'My Mac - PlannerApp (85429)'
+Test suite 'AppSettingKeysTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'CloudKitSyncViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'DarkModeSupportTests.testAdaptiveColors()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'TaskRowTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'AppSettingKeysTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'CloudKitSyncViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'TaskRowTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskRowTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskRowTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskRowTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'AppSettingKeysTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'AppSettingKeysTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'AppSettingKeysTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'AppSettingKeysTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'AppSettingKeysTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'DarkModeSupportTests.testAdaptiveImages()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'DarkModeSupportTests.testAppearanceOverride()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'GoalsHeaderViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'AddGoalViewSimpleTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'AddGoalViewSimpleTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'AddGoalViewSimpleTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'AddGoalViewSimpleTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'DarkModeSupportTests.testContrastRatios()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'DarkModeSupportTests.testSystemAppearanceMatch()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'AddGoalViewSimpleTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test case 'AddGoalViewSimpleTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test suite 'GoalRowViewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'GoalRowViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'GoalRowViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'GoalRowViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'GoalRowViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'CloudKitSyncViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitSyncViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitSyncViewTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CloudKitSyncViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test suite 'IOSAdaptivePopupsTests' started on 'My Mac - PlannerApp (85427)'
+Test suite 'PriorityManagerTests' started on 'My Mac - PlannerApp (85430)'
+Test suite 'AddGoalViewTests' started on 'My Mac - PlannerApp (85424)'
+Test case 'AddGoalViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test suite 'BackupManagerTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'BackupManagerTests.testAutoBackupSchedule()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'BackupManagerTests.testBackupFormat()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'BackupManagerTests.testCreateBackup()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'BackupManagerTests.testDeleteBackup()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'QuickStatCardTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'QuickStatCardTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'GoalRowViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'GoalRowViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test suite 'JournalEmptyStateViewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'JournalEmptyStateViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test suite 'TaskRowViewTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'TaskRowViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'TaskRowViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'TaskRowViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'TaskRowViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'IOSAdaptivePopupsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'IOSAdaptivePopupsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'IOSAdaptivePopupsTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'IOSAdaptivePopupsTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'PriorityManagerTests.testCalculatePriority()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PriorityManagerTests.testDueDateImpact()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PriorityManagerTests.testImportanceImpact()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'PriorityManagerTests.testPriorityLevels()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PriorityManagerTests.testPriorityUpdates()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'AddGoalViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'AddGoalViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'AddGoalViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85424)' (0.001 seconds)
+Test case 'AddGoalViewTests.testProperties()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'AddGoalViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85424)' (0.000 seconds)
+Test case 'BackupManagerTests.testListBackups()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'BackupManagerTests.testRestoreFromBackup()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'BackupManagerTests.testRestoreValidation()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'TaskTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'TaskTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'QuickStatCardTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'QuickStatCardTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'QuickStatCardTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'QuickStatCardTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'QuickStatCardTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'JournalEmptyStateViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'TaskRowViewTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'TaskRowViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'IOSAdaptivePopupsTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TaskTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.204 seconds)
+Test case 'PriorityManagerTests.testSortByPriority()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'IOSAdaptivePopupsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.217 seconds)
+Test case 'TaskTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'JournalEmptyStateViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.216 seconds)
+Test suite 'CloudKitManagerTests' started on 'My Mac - PlannerApp (85429)'
+Test suite 'TaskInputViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'TaskTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'TaskTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'TaskTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'AddGoalViewMinimalTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'AddGoalViewMinimalTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'DataManagerErrorTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'DataManagerErrorTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'DataManagerErrorTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'DataManagerErrorTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'JournalEmptyStateViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'JournalEmptyStateViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'JournalEmptyStateViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test suite 'AddCalendarEventViewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'AddCalendarEventViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'CloudKitManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'CloudKitManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CloudKitManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CloudKitManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'CloudKitManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'TaskInputViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TaskInputViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TaskInputViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TaskInputViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskInputViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'JournalEntrySentimentTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'JournalEntrySentimentTests.testEmptyContentHasNeutralSentiment()' passed on 'My Mac - PlannerApp (85430)' (0.002 seconds)
+Test case 'JournalEntrySentimentTests.testNegativeSentimentDetection()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'JournalEntrySentimentTests.testNeutralSentimentDetection()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'DataManagerErrorTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test case 'CloudKitManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalEntrySentimentTests.testPositiveSentimentDetection()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'JournalEntrySentimentTests.testSentimentUpdateOnContentChange()' passed on 'My Mac - PlannerApp (85430)' (0.099 seconds)
+Test case 'TaskInputViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AddGoalViewMinimalTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'SyncStatusViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'SyncStatusViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'AddGoalViewMinimalTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AddGoalViewMinimalTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'AddGoalViewMinimalTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AddGoalViewMinimalTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'DependenciesTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'DataManagerErrorTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.109 seconds)
+Test case 'DataManagerErrorTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test suite 'VisualEnhancementsTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'VisualEnhancementsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'VisualEnhancementsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test suite 'JournalRowTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'JournalRowTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalRowTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalRowTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'JournalRowTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test suite 'GoalsListViewTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'GoalsListViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'GoalsListViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalsListViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalsListViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'AddCalendarEventViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'AddCalendarEventViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'AddCalendarEventViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'AddCalendarEventViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'AddCalendarEventViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'SyncStatusViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'SyncStatusViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'SyncStatusViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'SyncStatusViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'SyncStatusViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'JournalRowTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'DependenciesTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'DependenciesTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'GoalsListViewTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'GoalsListViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.048 seconds)
+Test suite 'RecurringTaskTemplatesTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'RecurringTaskTemplatesTests.testCreateDailyTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'VisualEnhancementsTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'VisualEnhancementsTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'JournalRowTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.050 seconds)
+Test suite 'JournalDataManagerTests' started on 'My Mac - PlannerApp (85430)'
+Test suite 'DashboardViewModernTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'JournalDataManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'JournalDataManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test case 'JournalDataManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'JournalDataManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'DashboardViewModernTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'DashboardViewModernTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'DashboardViewModernTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'DashboardViewModernTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'DependenciesTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.003 seconds)
+Test case 'DependenciesTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'DependenciesTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'DependenciesTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test suite 'PlatformFeaturesTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'VisualEnhancementsTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test case 'VisualEnhancementsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test suite 'AccessControlTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'AccessControlTests.testAdminPermission()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'AccessControlTests.testEditorRole()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'RecurringTaskTemplatesTests.testCreateWeeklyTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.005 seconds)
+Test case 'RecurringTaskTemplatesTests.testGenerateNextOccurrence()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'RecurringTaskTemplatesTests.testLoadTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'RecurringTaskTemplatesTests.testSaveTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'RecurringTaskTemplatesTests.testSkipOccurrence()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'JournalEntryTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'JournalEntryTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalEntryTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalEntryTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalEntryTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'JournalDataManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'JournalDataManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.050 seconds)
+Test case 'DashboardViewModernTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'DashboardViewModernTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.050 seconds)
+Test case 'JournalEntryTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.000 seconds)
+Test case 'PlatformFeaturesTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'PlatformFeaturesTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AccessControlTests.testReadPermission()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test suite 'CalendarViewNewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CalendarViewNewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarViewNewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarViewNewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarViewNewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'JournalEntryTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.044 seconds)
+Test suite 'GoalItemViewTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'GoalItemViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'GoalItemViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85429)' (0.002 seconds)
+Test case 'GoalItemViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'PlatformFeaturesTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'PlatformFeaturesTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'PlatformFeaturesTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'PlatformFeaturesTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'SettingsViewNewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'SettingsViewNewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'SettingsViewNewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'SettingsViewNewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test suite 'GoalsEmptyStateViewTests' started on 'My Mac - PlannerApp (85431)'
+Test suite 'PomodoroTimerTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'PomodoroTimerTests.testInitialState()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PomodoroTimerTests.testReset()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PomodoroTimerTests.testSetMode()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'PomodoroTimerTests.testStart()' passed on 'My Mac - PlannerApp (85430)' (0.002 seconds)
+Test case 'AccessControlTests.testUserRole()' passed on 'My Mac - PlannerApp (85432)' (0.002 seconds)
+Test case 'AccessControlTests.testViewerRole()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'AccessControlTests.testWritePermission()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test suite 'TaskManagerHeaderViewTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'CalendarViewNewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'CalendarViewNewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'CalendarViewTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'CalendarViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'GoalsEmptyStateViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'PomodoroTimerTests.testStop()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'GoalsEmptyStateViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'GoalItemViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'GoalsEmptyStateViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'GoalItemViewTests.testProperties()' passed on 'My Mac - PlannerApp (85429)' (0.002 seconds)
+Test case 'TaskManagerHeaderViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.000 seconds)
+Test suite 'MainTabViewTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'MainTabViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'MainTabViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.000 seconds)
+Test suite 'EnhancedCloudKitManagerTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'CalendarViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'GoalsEmptyStateViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'GoalsEmptyStateViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'GoalsEmptyStateViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test suite 'DateSectionViewTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'GoalItemViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test suite 'ProductivityAnalyticsTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'ProductivityAnalyticsTests.testFocusTimeTracking()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProductivityAnalyticsTests.testProductivityScore()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'TaskManagerHeaderViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85432)' (0.054 seconds)
+Test case 'TaskManagerHeaderViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'TaskManagerHeaderViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'TaskManagerHeaderViewTests.testProperties()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'EnhancedCloudKitManagerTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.054 seconds)
+Test case 'EnhancedCloudKitManagerTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'EnhancedCloudKitManagerTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'EnhancedCloudKitManagerTests.testIntegration()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'MainTabViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'MainTabViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'MainTabViewTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'MainTabViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'CalendarViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.047 seconds)
+Test case 'CalendarViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarViewTests.testProperties()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'CalendarViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test suite 'TaskTemplateServiceTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'DateSectionViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'DateSectionViewTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85431)' (0.039 seconds)
+Test case 'DateSectionViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'TaskManagerHeaderViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'EnhancedCloudKitManagerTests.testProperties()' passed on 'My Mac - PlannerApp (85428)' (0.000 seconds)
+Test case 'EnhancedCloudKitManagerTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85428)' (0.037 seconds)
+Test suite 'CloudKitEnhancementsTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'TaskTemplateServiceTests.testApplyTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'TaskTemplateServiceTests.testCreateTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'DateSectionViewTests.testIntegration()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'DateSectionViewTests.testProperties()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'TaskTemplateServiceTests.testDeleteTemplate()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'TaskTemplateServiceTests.testDuplicateDetection()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'DateSectionViewTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85431)' (0.000 seconds)
+Test case 'TaskTemplateServiceTests.testTemplateValidation()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'ConflictDetectorTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'ConflictDetectorTests.testAdjacentBlocks_NoConflict()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'CloudKitEnhancementsTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.037 seconds)
+Test case 'CloudKitEnhancementsTests.testErrorHandling()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'ProductivityAnalyticsTests.testProductivityTrends()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ProductivityAnalyticsTests.testTaskCompletionRate()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test suite 'JournalDetailViewTests' started on 'My Mac - PlannerApp (85428)'
+Test suite 'SettingsViewSimpleTestTests' started on 'My Mac - PlannerApp (85431)'
+Test case 'ProductivityAnalyticsTests.testWeeklyReportGeneration()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ConflictDetectorTests.testNestedOverlap()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'ConflictDetectorTests.testNoConflicts()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'ConflictDetectorTests.testSimpleOverlap()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test suite 'SettingsViewBackupTests' started on 'My Mac - PlannerApp (85432)'
+Test case 'SettingsViewBackupTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'JournalDetailViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'JournalDetailViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'JournalDetailViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test suite 'SettingsViewSimpleTests' started on 'My Mac - PlannerApp (85428)'
+Test case 'CloudKitEnhancementsTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'CloudKitEnhancementsTests.testIntegration()' passed on 'My Mac - PlannerApp (85430)' (0.002 seconds)
+Test case 'CloudKitEnhancementsTests.testProperties()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'CloudKitEnhancementsTests.testPublicMethods()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test suite 'TaskManagerViewTests' started on 'My Mac - PlannerApp (85430)'
+Test case 'SettingsViewSimpleTestTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'SettingsViewSimpleTestTests.testFunctionality()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'SettingsViewSimpleTestTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test suite 'AddJournalEntryViewTests' started on 'My Mac - PlannerApp (85431)'
+Test suite 'ContentViewTests' started on 'My Mac - PlannerApp (85429)'
+Test case 'ContentViewTests.testContentViewInitialization()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ContentViewTests.testContentViewMethods()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test case 'ContentViewTests.testContentViewProperties()' passed on 'My Mac - PlannerApp (85429)' (0.001 seconds)
+Test suite 'SettingsViewCleanTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'SettingsViewCleanTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'SettingsViewCleanTests.testFunctionality()' passed on 'My Mac - PlannerApp (85427)' (0.000 seconds)
+Test case 'SettingsViewCleanTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'FixesDashboardItemsTests' started on 'My Mac - PlannerApp (85427)'
+Test case 'SettingsViewBackupTests.testFunctionality()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'SettingsViewSimpleTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85428)' (0.001 seconds)
+Test case 'AddJournalEntryViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'SettingsViewBackupTests.testInitialization()' passed on 'My Mac - PlannerApp (85432)' (0.001 seconds)
+Test case 'AddJournalEntryViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'AddJournalEntryViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85431)' (0.001 seconds)
+Test case 'TaskManagerViewTests.testEdgeCases()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'SettingsViewSimpleTests.testFunctionality()' passed on 'My Mac - PlannerApp (85428)' (0.048 seconds)
+Test case 'TaskManagerViewTests.testFunctionality()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'TaskManagerViewTests.testInitialization()' passed on 'My Mac - PlannerApp (85430)' (0.001 seconds)
+Test case 'SettingsViewSimpleTests.testInitialization()' passed on 'My Mac - PlannerApp (85428)' (0.002 seconds)
+Test case 'FixesDashboardItemsTests.testEdgeCases()2026-02-09 07:29:54.235087-0600 PlannerAppUITests-Runner[85448:2259489] [Default] Running tests...
+Test Suite 'All tests' started at 2026-02-09 07:29:57.607.
+Test Suite 'PlannerAppUITests.xctest' started at 2026-02-09 07:29:57.608.
+Test Suite 'PlannerAppUITests' started at 2026-02-09 07:29:57.608.
+Test Case '-[PlannerAppUITests.PlannerAppUITests testExample]' started.
+    t =     0.00s Start Test at 2026-02-09 07:29:57.609
+    t =     0.84s Set Up
+    t =     0.86s Open com.DanielStevens.PlannerApp
+    t =     0.86s     Launch com.DanielStevens.PlannerApp
+    t =     1.30s         Wait for accessibility to load
+    t =     1.62s         Setting up automation session
+    t =     1.63s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     1.64s Tear Down
+Test Case '-[PlannerAppUITests.PlannerAppUITests testExample]' passed (1.912 seconds).
+Test Case '-[PlannerAppUITests.PlannerAppUITests testLaunchPerformance]' started.
+    t =     0.00s Start Test at 2026-02-09 07:29:59.522
+    t =     0.13s Set Up
+    t =     0.14s Open com.DanielStevens.PlannerApp
+    t =     0.14s     Launch com.DanielStevens.PlannerApp
+    t =     0.14s         Terminate com.DanielStevens.PlannerApp:85514
+    t =     1.58s         Wait for accessibility to load
+    t =     1.86s         Setting up automation session
+    t =     1.87s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     2.94s Open com.DanielStevens.PlannerApp
+    t =     2.94s     Launch com.DanielStevens.PlannerApp
+    t =     2.94s         Terminate com.DanielStevens.PlannerApp:85669
+    t =     4.41s         Wait for accessibility to load
+    t =     4.72s         Setting up automation session
+    t =     4.77s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     5.45s Open com.DanielStevens.PlannerApp
+    t =     5.45s     Launch com.DanielStevens.PlannerApp
+    t =     5.45s         Terminate com.DanielStevens.PlannerApp:85744
+    t =     6.88s         Wait for accessibility to load
+    t =     7.18s         Setting up automation session
+    t =     7.19s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     7.90s Open com.DanielStevens.PlannerApp
+    t =     7.90s     Launch com.DanielStevens.PlannerApp
+    t =     7.90s         Terminate com.DanielStevens.PlannerApp:85749
+    t =     9.24s         Wait for accessibility to load
+    t =     9.53s         Setting up automation session
+    t =     9.55s         Wait for com.DanielStevens.PlannerApp to idle
+    t =    10.24s Open com.DanielStevens.PlannerApp
+    t =    10.24s     Launch com.DanielStevens.PlannerApp
+    t =    10.24s         Terminate com.DanielStevens.PlannerApp:85750
+    t =    11.75s         Wait for accessibility to load
+    t =    12.02s         Setting up automation session
+    t =    12.03s         Wait for com.DanielStevens.PlannerApp to idle
+    t =    12.72s Open com.DanielStevens.PlannerApp
+    t =    12.72s     Launch com.DanielStevens.PlannerApp
+    t =    12.72s         Terminate com.DanielStevens.PlannerApp:85956
+    t =    14.18s         Wait for accessibility to load
+    t =    14.50s         Setting up automation session
+    t =    14.51s         Wait for com.DanielStevens.PlannerApp to idle
+/Users/danielstevens/github-projects/tools-automation/PlannerApp/PlannerAppUITests/PlannerAppUITests.swift:51: Test Case '-[PlannerAppUITests.PlannerAppUITests testLaunchPerformance]' measured [Duration (ApplicationLaunch), s] average: 0.637, relative standard deviation: 4.526%, values: [0.675423, 0.635752, 0.602011, 0.608554, 0.662331], performanceMetricID:com.apple.dt.XCTMetric_ApplicationLaunch-ApplicationLaunch.duration, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+    t =    15.36s Tear Down
+Test Case '-[PlannerAppUITests.PlannerAppUITests testLaunchPerformance]' passed (15.874 seconds).
+Test Case '-[PlannerAppUITests.PlannerAppUITests testScreenshot]' started.
+    t =     0.00s Start Test at 2026-02-09 07:30:15.397
+    t =     0.16s Set Up
+    t =     0.16s Open com.DanielStevens.PlannerApp
+    t =     0.16s     Launch com.DanielStevens.PlannerApp
+    t =     0.16s         Terminate com.DanielStevens.PlannerApp:85960
+    t =     1.58s         Wait for accessibility to load
+    t =     1.89s         Setting up automation session
+    t =     1.91s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     2.14s Added attachment named 'Screenshot of main screen (ID 1).png'
+    t =     2.14s Tear Down
+Test Case '-[PlannerAppUITests.PlannerAppUITests testScreenshot]' passed (2.412 seconds).
+Test Suite 'PlannerAppUITests' passed at 2026-02-09 07:30:17.809.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 20.198 (20.201) seconds
+Test Suite 'PlannerAppUITestsLaunchTests' started at 2026-02-09 07:30:17.810.
+Test Case '-[PlannerAppUITests.PlannerAppUITestsLaunchTests testLaunch]' started.
+    t =     0.00s Setting appearance mode to Light
+    t =     0.76s     Wait for com.DanielStevens.PlannerApp to idle
+    t =     0.78s Start Test at 2026-02-09 07:30:18.588
+    t =     0.94s Set Up
+    t =     0.94s Open com.DanielStevens.PlannerApp
+    t =     0.94s     Launch com.DanielStevens.PlannerApp
+    t =     0.94s         Terminate com.DanielStevens.PlannerApp:85963
+    t =     2.37s         Wait for accessibility to load
+    t =     2.69s         Setting up automation session
+    t =     2.71s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     2.72s Find the Target Application 'com.DanielStevens.PlannerApp'
+    t =     3.19s Added attachment named 'Launch Screen'
+    t =     3.19s Tear Down
+Test Case '-[PlannerAppUITests.PlannerAppUITestsLaunchTests testLaunch]' passed (3.457 seconds).
+Test Case '-[PlannerAppUITests.PlannerAppUITestsLaunchTests testLaunch]' started.
+    t =     0.00s Setting appearance mode to Dark
+    t =     0.24s     Wait for com.DanielStevens.PlannerApp to idle
+    t =     0.27s Start Test at 2026-02-09 07:30:21.533
+    t =     0.38s Set Up
+    t =     0.38s Open com.DanielStevens.PlannerApp
+    t =     0.38s     Launch com.DanielStevens.PlannerApp
+    t =     0.38s         Terminate com.DanielStevens.PlannerApp:85967
+    t =     1.81s         Wait for accessibility to load
+    t =     2.10s         Setting up automation session
+    t =     2.12s         Wait for com.DanielStevens.PlannerApp to idle
+    t =     2.14s Find the Target Application 'com.DanielStevens.PlannerApp'
+    t =     2.50s Added attachment named 'Launch Screen'
+    t =     2.50s Tear Down
+Test Case '-[PlannerAppUITests.PlannerAppUITestsLaunchTests testLaunch]' passed (2.769 seconds).
+Test Suite 'PlannerAppUITestsLaunchTests' passed at 2026-02-09 07:30:24.038.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 6.226 (6.228) seconds
+Test Suite 'PlannerAppUITests.xctest' passed at 2026-02-09 07:30:24.038.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 26.424 (26.430) seconds
+Test Suite 'All tests' passed at 2026-02-09 07:30:24.039.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 26.424 (26.432) seconds
+2026-02-09 07:30:30.686 xcodebuild[85373:2258449] [MT] IDETestOperationsObserverDebug: 44.247 elapsed -- Testing started completed.
+2026-02-09 07:30:30.686 xcodebuild[85373:2258449] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-02-09 07:30:30.686 xcodebuild[85373:2258449] [MT] IDETestOperationsObserverDebug: 44.247 sec, +44.247 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/danielstevens/Library/Developer/Xcode/DerivedData/PlannerApp-gchxksaawkyzgwdajloyqsapshop/Logs/Test/Test-PlannerApp-2026.02.09_07-29-40--0600.xcresult
+
+** TEST FAILED **
+
+' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'FixesDashboardItemsTests.testFunctionality()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test case 'FixesDashboardItemsTests.testInitialization()' passed on 'My Mac - PlannerApp (85427)' (0.001 seconds)
+Test suite 'All tests' started on 'My Mac - PlannerAppUITests-Runner (85448)'
+Test suite 'PlannerAppUITests.xctest' started on 'My Mac - PlannerAppUITests-Runner (85448)'
+Test suite 'PlannerAppUITests' started on 'My Mac - PlannerAppUITests-Runner (85448)'
+Test case 'PlannerAppUITests.testExample()' passed on 'My Mac - PlannerAppUITests-Runner (85448)' (1.912 seconds)
+Test case 'PlannerAppUITests.testLaunchPerformance()' passed on 'My Mac - PlannerAppUITests-Runner (85448)' (15.874 seconds)
+Test case 'PlannerAppUITests.testScreenshot()' passed on 'My Mac - PlannerAppUITests-Runner (85448)' (2.412 seconds)
+Test suite 'PlannerAppUITestsLaunchTests' started on 'My Mac - PlannerAppUITests-Runner (85448)'
+Test case 'PlannerAppUITestsLaunchTests.testLaunch()' passed on 'My Mac - PlannerAppUITests-Runner (85448)' (3.457 seconds)
+Test case 'PlannerAppUITestsLaunchTests.testLaunch()' passed on 'My Mac - PlannerAppUITests-Runner (85448)' (2.769 seconds)

@@ -1,0 +1,21 @@
+/* Navigation */
+"calendar.title" = "Calendario";
+
+/* Accessibility - Navigation */
+"calendar.previous_month" = "Mes Anterior";
+"calendar.previous_month.hint" = "Navegar al mes anterior";
+"calendar.next_month" = "Mes Siguiente";
+"calendar.next_month.hint" = "Navegar al mes siguiente";
+
+/* Accessibility - Actions */
+"calendar.add_event" = "Agregar Evento";
+"calendar.add_event.hint" = "Crear un nuevo evento de calendario";
+
+/* Sections */
+"calendar.section.events" = "Eventos";
+"calendar.section.goals" = "Objetivos";
+"calendar.section.tasks" = "Tareas";
+
+/* Empty States */
+"calendar.empty.no_items" = "No hay elementos para esta fecha";
+"calendar.empty.add_hint" = "Toca + para agregar un evento";

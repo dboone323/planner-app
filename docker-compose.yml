@@ -1,0 +1,55 @@
+# Planner App - February 2026 Standards
+# Features: BuildKit cache, health checks, resource limits, non-root execution
+
+services:
+  planner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: planner:latest
+    container_name: planner-app
+    
+    # Non-root execution (hardened by default in Dockerfile)
+    user: "1001:1001"
+    
+    # Resource limits to prevent resource exhaustion
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+        reservations:
+          cpus: '1'
+          memory: 256M
+    
+    # Port mapping
+    ports:
+      - "8080:8080"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "test", "-f", "/app/bin/planner"]
+      interval: 30s
+      timeout: 10s
+      start_period: 5s
+      retries: 3
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=planner"
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    
+    # Read-only root filesystem (where possible)
+    read_only: false  # Swift app may need write access, adjust based on actual needs
+
+networks:
+  default:
+    name: planner-network
+    driver: bridge

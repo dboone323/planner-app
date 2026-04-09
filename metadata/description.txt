@@ -1,0 +1,3 @@
+App Name: PlannerApp
+Description: Modern productivity and task management application. Plan your day, track progress, and organize missions with ease. Powered by swiftdata.
+Keywords: planner, task, productivity, mission, management, swiftdata

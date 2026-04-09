@@ -1,0 +1,168 @@
+//
+// SDTaskTests.swift
+// PlannerAppTests
+//
+// Unit tests for the SDTask SwiftData model.
+//
+
+import SwiftData
+import XCTest
+@testable import PlannerApp
+
+final class SDTaskTests: XCTestCase {
+    var container: ModelContainer!
+    var context: ModelContext!
+
+    override func setUpWithError() throws {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+        self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
+        self.context = ModelContext(self.container)
+    }
+
+    override func tearDownWithError() throws {
+        self.container = nil
+        self.context = nil
+    }
+
+    // MARK: - Initialization Tests
+
+    func testSDTaskInitialization() {
+        let task = SDTask(
+            title: "Test Task",
+            taskDescription: "Test Description",
+            isCompleted: false,
+            priority: 3, // High
+            dueDate: Date()
+        )
+
+        XCTAssertEqual(task.title, "Test Task")
+        XCTAssertEqual(task.taskDescription, "Test Description")
+        XCTAssertFalse(task.isCompleted)
+        XCTAssertEqual(task.priority, 3)
+        XCTAssertNotNil(task.dueDate)
+        XCTAssertNotNil(task.id)
+        XCTAssertNotNil(task.createdAt)
+    }
+
+    func testSDTaskDefaultValues() {
+        let task = SDTask(title: "Minimal Task")
+
+        XCTAssertEqual(task.title, "Minimal Task")
+        XCTAssertEqual(task.taskDescription, "")
+        XCTAssertFalse(task.isCompleted)
+        XCTAssertEqual(task.priority, 2)
+        XCTAssertNil(task.dueDate)
+    }
+
+    // MARK: - Persistence Tests
+
+    func testSDTaskPersistence() throws {
+        let task = SDTask(
+            title: "Persistent Task",
+            taskDescription: "Should be saved",
+            isCompleted: true,
+            priority: 3
+        )
+
+        self.context.insert(task)
+        try self.context.save()
+
+        // Fetch back
+        let descriptor = FetchDescriptor<SDTask>(
+            predicate: #Predicate { $0.title == "Persistent Task" }
+        )
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertEqual(fetched.count, 1)
+        XCTAssertEqual(fetched.first?.title, "Persistent Task")
+        XCTAssertEqual(fetched.first?.taskDescription, "Should be saved")
+        XCTAssertTrue(fetched.first?.isCompleted ?? false)
+        XCTAssertEqual(fetched.first?.priority, 3)
+    }
+
+    func testSDTaskUpdate() throws {
+        let task = SDTask(title: "Original Title")
+        self.context.insert(task)
+        try self.context.save()
+
+        // Update
+        task.title = "Updated Title"
+        task.isCompleted = true
+        try self.context.save()
+
+        // Verify
+        let descriptor = FetchDescriptor<SDTask>()
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertEqual(fetched.first?.title, "Updated Title")
+        XCTAssertTrue(fetched.first?.isCompleted ?? false)
+    }
+
+    func testSDTaskDeletion() throws {
+        let task = SDTask(title: "To Delete")
+        self.context.insert(task)
+        try self.context.save()
+
+        // Delete
+        self.context.delete(task)
+        try self.context.save()
+
+        // Verify
+        let descriptor = FetchDescriptor<SDTask>()
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertTrue(fetched.isEmpty)
+    }
+
+    // MARK: - Priority Tests
+
+    func testSDTaskPrioritySortOrder() {
+        let lowPriority = SDTask(title: "Low", priority: 1)
+        let mediumPriority = SDTask(title: "Medium", priority: 2)
+        let highPriority = SDTask(title: "High", priority: 3)
+        let criticalPriority = SDTask(title: "Critical", priority: 4)
+
+        XCTAssertEqual(lowPriority.prioritySortOrder, 1)
+        XCTAssertEqual(mediumPriority.prioritySortOrder, 2)
+        XCTAssertEqual(highPriority.prioritySortOrder, 3)
+        XCTAssertEqual(criticalPriority.prioritySortOrder, 4)
+    }
+
+    // MARK: - Completion Tests
+
+    func testSDTaskCompletionFiltering() throws {
+        let completed = SDTask(title: "Done", isCompleted: true)
+        let pending = SDTask(title: "Pending", isCompleted: false)
+
+        self.context.insert(completed)
+        self.context.insert(pending)
+        try self.context.save()
+
+        // Fetch only completed
+        let descriptor = FetchDescriptor<SDTask>(
+            predicate: #Predicate { $0.isCompleted }
+        )
+        let completedTasks = try context.fetch(descriptor)
+
+        XCTAssertEqual(completedTasks.count, 1)
+        XCTAssertEqual(completedTasks.first?.title, "Done")
+    }
+
+    // MARK: - Sentiment Tests
+
+    func testSDTaskSentimentAnalysis() {
+        let task = SDTask(title: "Test", taskDescription: "This is a great and amazing feature")
+        task.analyzeSentiment()
+
+        XCTAssertEqual(task.sentiment, "positive")
+        XCTAssertGreaterThan(task.sentimentScore, 0)
+    }
+
+    func testSDTaskNegativeSentiment() {
+        let task = SDTask(title: "Test", taskDescription: "This is terrible and has a bug")
+        task.analyzeSentiment()
+
+        XCTAssertEqual(task.sentiment, "negative")
+        XCTAssertLessThan(task.sentimentScore, 0)
+    }
+}

@@ -1,0 +1,51 @@
+# Antigravity IDE Configuration
+# planner-app workspace
+# Updated: March 27, 2026
+
+ide:
+  name: "Antigravity"
+  version: "latest"
+  description: "Configuration for Antigravity IDE integration with planner-app workspace"
+
+# Code Style Configuration
+code_style:
+  swift_version: "6.2"
+  formatter: "swiftformat"
+  linter: "swiftlint"
+  
+  indent_width: 4
+  max_line_length: 120
+  use_tabs: false
+  line_ending: "lf"
+
+# Project Configuration
+projects:
+  - name: "PlannerApp"
+    path: "."
+    type: "ios_app"
+    swift_version: "6.2"
+
+# Testing Configuration
+testing:
+  enabled: true
+  framework: "XCTest"
+  test_schemes:
+    - "PlannerAppTests"
+
+# Quantum Workspace Specific Settings
+quantum_workspace:
+  enabled: true
+  features:
+    - name: "cross_project_intelligence"
+      enabled: true
+      description: "Share AI learning across all 7 projects"
+
+# Agent behavior safeguards: prevent autonomous repeated command execution
+agent_behavior:
+  allow_command_execution: false
+  command_execution_mode: "manual"
+  max_concurrent_agent_runs: 1
+  command_deduplication: true
+  prevent_repetition: true
+  max_command_retries: 1
+  command_execution_cooldown_ms: 500

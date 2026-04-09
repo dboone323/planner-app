@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  ci:
+    uses: dboone323/tools-automation/.github/workflows/reusable-ci-v3.yml@main
+    with:
+      project_name: "planner-app"
+    secrets: inherit

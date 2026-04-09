@@ -1,0 +1,54 @@
+{
+  "configurations" : [
+    {
+      "id" : "9A761E5C-DBAB-4A8D-82A9-BD2A4F512F90",
+      "name" : "Default Configuration",
+      "options" : {
+
+      }
+    },
+    {
+      "id" : "24482894-5721-4A40-9A14-639307B3A88F",
+      "name" : "Integration",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "gatherCoverageData" : true,
+      "targets" : [
+        {
+          "containerPath" : "container:PlannerApp.xcodeproj",
+          "identifier" : "68F097142DC01EFA00092697",
+          "name" : "PlannerApp"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PlannerApp.xcodeproj",
+      "identifier" : "68F097142DC01EFA00092697",
+      "name" : "PlannerApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PlannerApp.xcodeproj",
+        "identifier" : "68F097222DC01EFB00092697",
+        "name" : "PlannerAppTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:PlannerApp.xcodeproj",
+        "identifier" : "68F0972C2DC01EFB00092697",
+        "name" : "PlannerAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

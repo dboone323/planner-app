@@ -1,0 +1,181 @@
+//
+// SDGoalTests.swift
+// PlannerAppTests
+//
+// Unit tests for the SDGoal SwiftData model.
+//
+
+import SwiftData
+import XCTest
+@testable import PlannerApp
+
+final class SDGoalTests: XCTestCase {
+    var container: ModelContainer!
+    var context: ModelContext!
+
+    override func setUpWithError() throws {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+        self.container = try ModelContainer(for: SDTask.self, SDGoal.self, configurations: config)
+        self.context = ModelContext(self.container)
+    }
+
+    override func tearDownWithError() throws {
+        self.container = nil
+        self.context = nil
+    }
+
+    // MARK: - Initialization Tests
+
+    func testSDGoalInitialization() {
+        let targetDate = Date().addingTimeInterval(86400 * 30) // 30 days from now
+        let goal = SDGoal(
+            title: "Test Goal",
+            goalDescription: "Test Description",
+            targetDate: targetDate,
+            isCompleted: false,
+            priority: 3, // High
+            progress: 0.5
+        )
+
+        XCTAssertEqual(goal.title, "Test Goal")
+        XCTAssertEqual(goal.goalDescription, "Test Description")
+        XCTAssertEqual(goal.priority, 3)
+        XCTAssertEqual(goal.progress, 0.5, accuracy: 0.001)
+        XCTAssertFalse(goal.isCompleted)
+        XCTAssertNotNil(goal.id)
+        XCTAssertNotNil(goal.createdAt)
+    }
+
+    func testSDGoalDefaultValues() {
+        let goal = SDGoal(title: "Minimal Goal", targetDate: Date())
+
+        XCTAssertEqual(goal.title, "Minimal Goal")
+        XCTAssertEqual(goal.goalDescription, "")
+        XCTAssertEqual(goal.priority, 2)
+        XCTAssertEqual(goal.progress, 0.0, accuracy: 0.001)
+        XCTAssertFalse(goal.isCompleted)
+    }
+
+    // MARK: - Persistence Tests
+
+    func testSDGoalPersistence() throws {
+        let goal = SDGoal(
+            title: "Persistent Goal",
+            goalDescription: "Long term objective",
+            targetDate: Date().addingTimeInterval(86400 * 90),
+            priority: 2,
+            progress: 0.25
+        )
+
+        self.context.insert(goal)
+        try self.context.save()
+
+        // Fetch back
+        let descriptor = FetchDescriptor<SDGoal>(
+            predicate: #Predicate { $0.title == "Persistent Goal" }
+        )
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertEqual(fetched.count, 1)
+        XCTAssertEqual(fetched.first?.goalDescription, "Long term objective")
+        XCTAssertEqual(fetched.first?.progress ?? 0, 0.25, accuracy: 0.001)
+    }
+
+    func testSDGoalUpdate() throws {
+        let goal = SDGoal(title: "Original Goal", targetDate: Date())
+        self.context.insert(goal)
+        try self.context.save()
+
+        // Update progress
+        goal.progress = 0.75
+        goal.title = "Updated Goal"
+        try self.context.save()
+
+        // Verify
+        let descriptor = FetchDescriptor<SDGoal>()
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertEqual(fetched.first?.title, "Updated Goal")
+        XCTAssertEqual(fetched.first?.progress ?? 0, 0.75, accuracy: 0.001)
+    }
+
+    func testSDGoalDeletion() throws {
+        let goal = SDGoal(title: "To Delete", targetDate: Date())
+        self.context.insert(goal)
+        try self.context.save()
+
+        self.context.delete(goal)
+        try self.context.save()
+
+        let descriptor = FetchDescriptor<SDGoal>()
+        let fetched = try context.fetch(descriptor)
+
+        XCTAssertTrue(fetched.isEmpty)
+    }
+
+    // MARK: - Progress Tests
+
+    func testSDGoalUpdateProgress() {
+        let goal = SDGoal(title: "Progress Test", targetDate: Date())
+
+        goal.updateProgress(0.5)
+        XCTAssertEqual(goal.progress, 0.5, accuracy: 0.001)
+        XCTAssertFalse(goal.isCompleted)
+        XCTAssertNotNil(goal.modifiedAt)
+    }
+
+    func testSDGoalAutoCompleteAtFullProgress() {
+        let goal = SDGoal(title: "Complete Test", targetDate: Date())
+
+        goal.updateProgress(1.0)
+        XCTAssertEqual(goal.progress, 1.0, accuracy: 0.001)
+        XCTAssertTrue(goal.isCompleted)
+    }
+
+    func testSDGoalProgressClampedToMax() {
+        let goal = SDGoal(title: "Clamp Test", targetDate: Date())
+
+        goal.updateProgress(1.5)
+        XCTAssertEqual(goal.progress, 1.0, accuracy: 0.001)
+    }
+
+    func testSDGoalProgressClampedToMin() {
+        let goal = SDGoal(title: "Clamp Test", targetDate: Date())
+
+        goal.updateProgress(-0.5)
+        XCTAssertEqual(goal.progress, 0.0, accuracy: 0.001)
+    }
+
+    // MARK: - Priority Tests
+
+    func testSDGoalPrioritySortOrder() {
+        let low = SDGoal(title: "Low", targetDate: Date(), priority: 1)
+        let medium = SDGoal(title: "Medium", targetDate: Date(), priority: 2)
+        let high = SDGoal(title: "High", targetDate: Date(), priority: 3)
+        let critical = SDGoal(title: "Critical", targetDate: Date(), priority: 4)
+
+        XCTAssertEqual(low.prioritySortOrder, 1)
+        XCTAssertEqual(medium.prioritySortOrder, 2)
+        XCTAssertEqual(high.prioritySortOrder, 3)
+        XCTAssertEqual(critical.prioritySortOrder, 4)
+    }
+
+    // MARK: - Completion Tests
+
+    func testSDGoalActiveFiltering() throws {
+        let active = SDGoal(title: "In Progress", targetDate: Date(), isCompleted: false, progress: 0.5)
+        let done = SDGoal(title: "Completed", targetDate: Date(), isCompleted: true, progress: 1.0)
+
+        self.context.insert(active)
+        self.context.insert(done)
+        try self.context.save()
+
+        let descriptor = FetchDescriptor<SDGoal>(
+            predicate: #Predicate { !$0.isCompleted }
+        )
+        let activeGoals = try context.fetch(descriptor)
+
+        XCTAssertEqual(activeGoals.count, 1)
+        XCTAssertEqual(activeGoals.first?.title, "In Progress")
+    }
+}
