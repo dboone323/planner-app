@@ -1,8 +1,9 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct JournalRow: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let entry: JournalEntry
+    let entry: PlannerJournalEntry
 
     private var rowDateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -52,7 +53,7 @@ public struct JournalRow: View {
 
 public struct JournalRow_Previews: PreviewProvider {
     public static var previews: some View {
-        JournalRow(entry: JournalEntry(title: "Sample Entry", body: "This is a test entry", date: Date(), mood: "😊"))
+        JournalRow(entry: PlannerJournalEntry(title: "Sample Entry", body: "This is a test entry", date: Date(), mood: "😊"))
             .environmentObject(ThemeManager())
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PlannerAppCore
 
 public enum SupportedPlatform: String, CaseIterable, Sendable {
     case iOS

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 import XCTest
 @testable import PlannerApp
 
@@ -14,14 +15,14 @@ final class QuickActionCardTests: XCTestCase {
     func testInitialization() {
         var tapped = false
         let card = QuickActionCard(
-            title: "Add Task",
+            title: "Add PlannerTask",
             icon: "plus.circle.fill",
             color: .blue
         ) {
             tapped = true
         }
 
-        XCTAssertEqual(card.title, "Add Task")
+        XCTAssertEqual(card.title, "Add PlannerTask")
         XCTAssertEqual(card.icon, "plus.circle.fill")
         XCTAssertEqual(card.color, .blue)
         XCTAssertFalse(tapped)

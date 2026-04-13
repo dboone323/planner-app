@@ -2,6 +2,7 @@
 // A utility class to monitor network connectivity status
 
 import Foundation
+import PlannerAppCore
 import Network
 
 /// Add the extension to define the notification name

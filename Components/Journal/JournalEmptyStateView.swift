@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct JournalEmptyStateView: View {
     @EnvironmentObject var themeManager: ThemeManager

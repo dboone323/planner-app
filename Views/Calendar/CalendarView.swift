@@ -2,8 +2,10 @@
 // PlannerApp/Views/Calendar/CalendarView.swift
 
 import Foundation
+import PlannerAppCore
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 public struct CalendarView: View {
     // Access shared ThemeManager and data
@@ -15,7 +17,7 @@ public struct CalendarView: View {
     @Query(sort: \SDGoal.targetDate) private var sdGoals: [SDGoal]
 
     // Events still use manual loading (not yet migrated to SwiftData)
-    @State private var events: [CalendarEvent] = []
+    @State private var events: [PlannerCalendarEvent] = []
     @State private var showAddEvent = false
     @State private var selectedDate = Date()
     @State private var showingDateDetails = false
@@ -26,7 +28,7 @@ public struct CalendarView: View {
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
     /// Computed property to group events by the start of their day
-    private var groupedEvents: [Date: [CalendarEvent]] {
+    private var groupedEvents: [Date: [PlannerCalendarEvent]] {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Dictionary(grouping: self.events.sorted(by: { $0.date < $1.date })) { event in
@@ -62,7 +64,7 @@ public struct CalendarView: View {
 
     /// Structure for selected date items (using SwiftData types)
     private struct SelectedDateItems {
-        let events: [CalendarEvent]
+        let events: [PlannerCalendarEvent]
         let goals: [SDGoal]
         let tasks: [SDTask]
     }
@@ -337,7 +339,7 @@ public struct CalendarView: View {
 
     private func loadAllData() {
         // Only load events manually - tasks and goals are auto-fetched via @Query
-        self.events = CalendarDataManager.shared.load()
+        self.events = WorkspaceManager.shared.load()
         print(
             "Calendar data loaded. Events: \(self.events.count), "
                 + "Goals: \(self.sdGoals.count), Tasks: \(self.sdTasks.count)"
@@ -345,10 +347,10 @@ public struct CalendarView: View {
     }
 
     private func saveEvents() {
-        CalendarDataManager.shared.save(events: self.events)
+        WorkspaceManager.shared.save(events: self.events)
         print("Calendar events saved.")
         // Reload events only
-        self.events = CalendarDataManager.shared.load()
+        self.events = WorkspaceManager.shared.load()
     }
 }
 
@@ -389,3 +391,96 @@ public struct CalendarView_Previews: PreviewProvider {
             .environmentObject(ThemeManager())
     }
 }
+
+/// SwiftData-compatible goal row view for CalendarView.
+public struct SDGoalRowView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    let goal: SDGoal
+
+    private var priorityColor: Color {
+        switch self.goal.priority {
+        case "high": .red
+        case "medium": .orange
+        case "low": .green
+        default: .gray
+        }
+    }
+
+    private var priorityText: String {
+        switch self.goal.priority {
+        case "high": "High"
+        case "medium": "Medium"
+        case "low": "Low"
+        default: "None"
+        }
+    }
+
+    public var body: some View {
+        HStack(spacing: 12) {
+            // Priority indicator
+            VStack(alignment: .center, spacing: 2) {
+                Circle()
+                    .fill(self.priorityColor)
+                    .frame(width: 8, height: 8)
+
+                Text(self.priorityText)
+                    .font(.caption2)
+                    .fontWeight(.medium)
+                    .foregroundColor(self.priorityColor)
+            }
+            .frame(width: 50)
+
+            // PlannerGoal details
+            VStack(alignment: .leading, spacing: 4) {
+                Text(self.goal.title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
+                    .lineLimit(2)
+
+                if !self.goal.goalDescription.isEmpty {
+                    Text(self.goal.goalDescription)
+                        .font(.caption)
+                        .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                        .lineLimit(1)
+                }
+
+                // Progress bar
+                if self.goal.progress > 0 {
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack {
+                            Text("Progress")
+                                .font(.caption2)
+                                .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
+                            Spacer()
+                            Text("\(Int(self.goal.progress * 100))%")
+                                .font(.caption2)
+                                .fontWeight(.medium)
+                                .foregroundColor(.green)
+                        }
+
+                        ProgressView(value: self.goal.progress)
+                            .progressViewStyle(LinearProgressViewStyle(tint: .green))
+                            .scaleEffect(y: 0.8)
+                    }
+                }
+            }
+
+            Spacer()
+
+            // Completion status
+            if self.goal.isCompleted {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .font(.title3)
+            } else {
+                Image(systemName: "target")
+                    .foregroundColor(.green)
+                    .font(.title3)
+            }
+        }
+        .padding(.vertical, 4)
+        .contentShape(Rectangle())
+    }
+}
+

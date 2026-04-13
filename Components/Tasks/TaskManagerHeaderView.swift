@@ -1,6 +1,8 @@
 // PlannerApp/Components/Tasks/TaskManagerHeaderView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit
@@ -26,7 +28,7 @@ public struct TaskManagerHeaderView: View {
 
             Spacer()
 
-            Text(NSLocalizedString("task_manager.title", comment: "Task manager title"))
+            Text(NSLocalizedString("task_manager.title", comment: "PlannerTask manager title"))
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(self.themeManager.currentTheme.primaryTextColor)

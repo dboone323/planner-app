@@ -1,8 +1,10 @@
 // PlannerApp/Views/Settings/SettingsView.swift
 
 import Foundation
+import PlannerAppCore
 import LocalAuthentication
 import SwiftUI
+import PlannerAppCore
 import UserNotifications
 
 #if os(macOS)

@@ -1,8 +1,10 @@
 // PlannerApp/ViewModels/DashboardViewModel.swift (Updated)
 import Combine
 import Foundation
+import PlannerAppCore
 import SwiftData
 import SwiftUI // Needed for @AppStorage
+import PlannerAppCore
 
 // MARK: - Data Structures
 
@@ -39,9 +41,9 @@ public class DashboardViewModel: ObservableObject {
     @Published var navigationPath = NavigationPath()
 
     // These arrays hold the data to be displayed on the dashboard, limited by user settings.
-    @Published var todaysEvents: [CalendarEvent] = []
+    @Published var todaysEvents: [PlannerCalendarEvent] = []
     @Published var incompleteTasks: [PlannerTask] = []
-    @Published var upcomingGoals: [Goal] = []
+    @Published var upcomingGoals: [PlannerGoal] = []
 
     // These hold the *total* counts before the limit is applied.
     // Useful for displaying accurate "...and X more" messages.
@@ -54,9 +56,9 @@ public class DashboardViewModel: ObservableObject {
     @Published var upcomingItems: [UpcomingItem] = []
 
     // Full data arrays for Add* views to bind to
-    @Published var allGoals: [Goal] = []
-    @Published var allEvents: [CalendarEvent] = []
-    @Published var allJournalEntries: [JournalEntry] = []
+    @Published var allGoals: [PlannerGoal] = []
+    @Published var allEvents: [PlannerCalendarEvent] = []
+    @Published var allJournalEntries: [PlannerJournalEntry] = []
 
     // Quick Stats Properties
     @Published var totalTasks: Int = 0
@@ -80,9 +82,9 @@ public class DashboardViewModel: ObservableObject {
         print("Fetching dashboard data...") // Debugging log
 
         // Load all data from the respective data managers.
-        let allEvents = CalendarDataManager.shared.load()
-        let allTasks = TaskDataManager.shared.load()
-        let allGoals = GoalDataManager.shared.load()
+        let allEvents: [PlannerCalendarEvent] = WorkspaceManager.shared.loadEvents()
+        let allTasks: [PlannerTask] = WorkspaceManager.shared.loadTasks()
+        let allGoals: [PlannerGoal] = WorkspaceManager.shared.loadGoals()
 
         // Get the current calendar and configure it with the user's setting for the first day of the week.
         var calendar = Calendar.current
@@ -132,7 +134,7 @@ public class DashboardViewModel: ObservableObject {
         self.allEvents = allEvents
         self.allGoals = allGoals
         // Load journal entries
-        self.allJournalEntries = JournalDataManager.shared.load()
+        self.allJournalEntries = WorkspaceManager.shared.loadJournalEntries()
 
         // --- Apply Limit and Update Published Arrays ---
         // Get the current limit value from @AppStorage.
@@ -187,13 +189,13 @@ public class DashboardViewModel: ObservableObject {
 
     @MainActor
     private func updateQuickStats() {
-        let allTasks = TaskDataManager.shared.load()
-        let allGoals = GoalDataManager.shared.load()
+        let allTasks: [PlannerTask] = WorkspaceManager.shared.loadTasks()
+        let allGoals: [PlannerGoal] = WorkspaceManager.shared.loadGoals()
 
         self.totalTasks = allTasks.count
         self.completedTasks = allTasks.count(where: { $0.isCompleted })
         self.totalGoals = allGoals.count
-        self.completedGoals = 0 // Goal completion not yet implemented
+        self.completedGoals = 0 // PlannerGoal completion not yet implemented
         self.todayEvents = self.totalTodaysEventsCount
     }
 
@@ -202,7 +204,7 @@ public class DashboardViewModel: ObservableObject {
         var activities: [DashboardActivity] = []
 
         // Add completed tasks from last few days
-        let allTasks = TaskDataManager.shared.load()
+        let allTasks: [PlannerTask] = WorkspaceManager.shared.loadTasks()
         let completedTasksFilter = allTasks.filter { task in
             // Only include tasks that are actually completed AND were created or completed recently
             task.isCompleted
@@ -214,7 +216,7 @@ public class DashboardViewModel: ObservableObject {
         for task in recentCompletedTasks {
             activities.append(
                 DashboardActivity(
-                    title: "Completed Task",
+                    title: "Completed PlannerTask",
                     subtitle: task.title,
                     icon: "checkmark.circle.fill",
                     color: .green,
@@ -224,7 +226,7 @@ public class DashboardViewModel: ObservableObject {
         }
 
         // Add recent events
-        let allEvents = CalendarDataManager.shared.load()
+        let allEvents: [PlannerCalendarEvent] = WorkspaceManager.shared.loadEvents()
         let recentEventsFilter = allEvents.filter { event in
             Calendar.current.isDateInYesterday(event.date)
                 || Calendar.current.isDateInToday(event.date)
@@ -251,7 +253,7 @@ public class DashboardViewModel: ObservableObject {
         var items: [UpcomingItem] = []
 
         // Add upcoming events
-        let allEvents = CalendarDataManager.shared.load()
+        let allEvents: [PlannerCalendarEvent] = WorkspaceManager.shared.loadEvents()
         let futureEventsFilter = allEvents.filter { $0.date > Date() }
         let futureEvents = futureEventsFilter.prefix(3)
 
@@ -269,14 +271,14 @@ public class DashboardViewModel: ObservableObject {
         }
 
         // Add upcoming goals
-        let allGoals = GoalDataManager.shared.load()
+        let allGoals: [PlannerGoal] = WorkspaceManager.shared.loadGoals()
         let futureGoals = allGoals.filter { $0.targetDate > Date() }.prefix(2)
 
         for goal in futureGoals {
             items.append(
                 UpcomingItem(
                     title: goal.title,
-                    subtitle: "Goal deadline",
+                    subtitle: "PlannerGoal deadline",
                     date: goal.targetDate,
                     icon: "target",
                     color: .green,

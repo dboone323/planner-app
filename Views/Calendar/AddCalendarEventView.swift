@@ -1,9 +1,11 @@
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct AddCalendarEventView: View {
     @Environment(\.dismiss) var dismiss // Use dismiss environment
-    @Binding var events: [CalendarEvent] // Assumes using model from PlannerApp/Models/
+    @Binding var events: [PlannerCalendarEvent] // Assumes using model from PlannerApp/Models/
 
     @State private var title = ""
     @State private var date = Date()
@@ -107,13 +109,13 @@ public struct AddCalendarEventView: View {
     }
 
     private func saveEvent() {
-        let newEvent = CalendarEvent(
+        let newEvent = PlannerCalendarEvent(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
             date: self.date
         )
         self.events.append(newEvent)
 
-        CalendarDataManager.shared.save(events: self.events)
+        WorkspaceManager.shared.save(events: self.events)
     }
 }
 

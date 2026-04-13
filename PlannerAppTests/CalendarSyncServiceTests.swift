@@ -29,7 +29,7 @@ class CalendarSyncServiceTests: XCTestCase {
         service.requestAccess()
         
         // Short delay to allow published property to update
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await PlannerTask.sleep(nanoseconds: 100_000_000)
         
         let expectedAuthorized = status == .authorized || status == .fullAccess
         XCTAssertEqual(service.isAuthorized, expectedAuthorized)

@@ -1,6 +1,7 @@
 // PlannerApp/Views/Calendar/SDTaskRowView.swift
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 /// SwiftData-compatible task row view for CalendarView.
 public struct SDTaskRowView: View {
@@ -8,21 +9,21 @@ public struct SDTaskRowView: View {
     let task: SDTask
 
     private var priorityColor: Color {
-        switch self.task.priority {
-        case 4: .red // critical
-        case 3: .orange // high
-        case 2: .yellow // medium
-        case 1: .blue // low
+        switch self.task.priority.lowercased() {
+        case "critical", "3": .red
+        case "high", "2": .orange
+        case "medium", "1": .yellow
+        case "low", "0": .blue
         default: .gray
         }
     }
 
     private var priorityText: String {
-        switch self.task.priority {
-        case 4: "Critical"
-        case 3: "High"
-        case 2: "Medium"
-        case 1: "Low"
+        switch self.task.priority.lowercased() {
+        case "critical", "3": "Critical"
+        case "high", "2": "High"
+        case "medium", "1": "Medium"
+        case "low", "0": "Low"
         default: "None"
         }
     }
@@ -57,7 +58,7 @@ public struct SDTaskRowView: View {
             }
             .frame(width: 50)
 
-            // Task details
+            // PlannerTask details
             VStack(alignment: .leading, spacing: 2) {
                 Text(self.task.title)
                     .font(.subheadline)

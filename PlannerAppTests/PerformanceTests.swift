@@ -1,5 +1,6 @@
 import XCTest
 import SwiftUI
+import PlannerAppCore
 import PlannerAgentCore
 @testable import PlannerApp
 
@@ -17,7 +18,7 @@ class PerformanceTests: XCTestCase {
         try await super.tearDown()
     }
 
-    // MARK: - Task Management Performance Tests
+    // MARK: - PlannerTask Management Performance Tests
 
     func testTaskDependencyServicePerformance() {
         let dependencyService = TaskDependencyService.shared
@@ -65,13 +66,13 @@ class PerformanceTests: XCTestCase {
     // MARK: - Concurrent Operations Performance Tests
 
     func testConcurrentTaskOperationsPerformance() {
-        let expectation = XCTestExpectation(description: "Concurrent task operations")
+        let expectation = XCTestExpectation(taskDescription: "Concurrent task operations")
 
         measure {
             let group = DispatchGroup()
 
             group.enter()
-            Task.detached(priority: .userInitiated) {
+            PlannerTask.detached(priority: .userInitiated) {
                 let dependencyService = await TaskDependencyService.shared
                 for i in 0..<50 {
                     let task = PlannerTask(title: "concurrent_task_\(i)")
@@ -82,7 +83,7 @@ class PerformanceTests: XCTestCase {
             }
 
             group.enter()
-            Task {
+            PlannerTask {
                 let priorityManager = await PriorityManager.shared
                 let context = self.createRealContext()
                 for i in 0..<50 {

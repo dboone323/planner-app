@@ -1,5 +1,6 @@
 import EventKit
 import Foundation
+import PlannerAppCore
 
 /// Protocol for testing
 @MainActor
@@ -142,7 +143,7 @@ class CalendarSyncManager {
     private func createEvent(for task: inout PlannerTask, in calendar: EKCalendar) throws {
         let event = self.eventStore.newEvent()
         event.title = task.title
-        event.notes = task.description
+        event.notes = task.taskDescription
         event.calendar = calendar
         event.startDate = task.dueDate ?? Date()
         event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
@@ -156,7 +157,7 @@ class CalendarSyncManager {
 
     private func updateEvent(_ event: EKEvent, with task: PlannerTask) throws {
         event.title = task.title
-        event.notes = task.description
+        event.notes = task.taskDescription
         event.startDate = task.dueDate
         event.endDate = (task.dueDate ?? Date()).addingTimeInterval(task.estimatedDuration)
         event.isAllDay = task.isAllDay
@@ -229,7 +230,7 @@ class CalendarSyncManager {
     private func createTask(from event: EKEvent) -> PlannerTask {
         PlannerTask(
             title: event.title ?? "",
-            description: event.notes ?? "",
+            taskDescription: event.notes ?? "",
             dueDate: event.startDate,
             estimatedDuration: event.endDate.timeIntervalSince(event.startDate),
             calendarEventId: event.eventIdentifier
@@ -251,7 +252,7 @@ struct SyncResult {
     let deleted: Int
 }
 
-/// Mock Task extension for calendar sync
+/// Mock PlannerTask extension for calendar sync
 extension PlannerTask {
     var syncToCalendar: Bool {
         true

@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 /// A view that provides pull-to-refresh functionality for iOS
 /// Wraps content in a scroll view with pull-to-refresh capability
@@ -29,7 +30,7 @@ public struct PullToRefresh<Content: View>: View {
         .coordinateSpace(name: coordinateSpaceName)
         .onPreferenceChange(OffsetPreferenceKey.self) { offset in
             if offset > 50 && !isRefreshing {
-                Task {
+                PlannerTask {
                     isRefreshing = true
                     await onRefresh()
                     isRefreshing = false

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 /// App-wide color scheme manager.
 public final class AppearanceManager: ObservableObject {

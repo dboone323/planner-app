@@ -1,7 +1,7 @@
 import Foundation
+import PlannerAppCore
 import Security
 import SwiftUI
-import PlannerAppCore
 
 #if os(iOS)
     import UIKit
@@ -20,8 +20,6 @@ enum PlannerAppLifecycleCoordinator {
         if PlannerSecureStore.bool(forKey: "planner.biometric_enabled") == nil {
             _ = PlannerSecureStore.set(false, forKey: "planner.biometric_enabled")
         }
-
-        _ = NetworkSecurityPolicy.makeSecureSession()
 
         #if os(iOS)
             Task {

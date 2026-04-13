@@ -2,7 +2,7 @@
 //  GoalTests.swift
 //  PlannerAppTests
 //
-//  Comprehensive test suite for Goal
+//  Comprehensive test suite for PlannerGoal
 //
 
 import XCTest

@@ -1,6 +1,8 @@
 // PlannerApp/Components/Goals/GoalsEmptyStateView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct GoalsEmptyStateView: View {
     @EnvironmentObject var themeManager: ThemeManager

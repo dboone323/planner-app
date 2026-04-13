@@ -1,9 +1,10 @@
 // PlannerApp/Views/Calendar/EventRowView.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct EventRowView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let event: CalendarEvent
+    let event: PlannerCalendarEvent
 
     /// Read time format setting from UserDefaults
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
@@ -49,12 +50,12 @@ public struct EventRowView: View {
 
 #Preview {
     VStack {
-        EventRowView(event: CalendarEvent(
+        EventRowView(event: PlannerCalendarEvent(
             title: "Team Meeting",
             date: Date()
         ))
 
-        EventRowView(event: CalendarEvent(
+        EventRowView(event: PlannerCalendarEvent(
             title: "Conference",
             date: Date()
         ))

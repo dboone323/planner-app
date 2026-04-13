@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PlannerAppCore
 import SwiftData
 import XCTest
 @testable import PlannerApp
@@ -24,7 +25,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             // Create in-memory model container for testing
             let schema = Schema([
                 // Add your PlannerApp models here when they are defined
-                // Example: Task.self, Project.self, Category.self
+                // Example: PlannerTask.self, PlannerProject.self, Category.self
             ])
             let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
             do {
@@ -42,18 +43,18 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             }
 
             // Ensure each test starts with an empty data store
-            TaskDataManager.shared.clearAllTasks()
-            GoalDataManager.shared.clearAllGoals()
-            CalendarDataManager.shared.clearAllEvents()
+            WorkspaceManager.shared.clearAllTasks()
+            WorkspaceManager.shared.clearAllGoals()
+            WorkspaceManager.shared.clearAllEvents()
         }
     }
 
     override nonisolated func tearDown() async throws {
         await MainActor.run {
             // Reset shared data managers to avoid cross-test state leakage
-            TaskDataManager.shared.clearAllTasks()
-            GoalDataManager.shared.clearAllGoals()
-            CalendarDataManager.shared.clearAllEvents()
+            WorkspaceManager.shared.clearAllTasks()
+            WorkspaceManager.shared.clearAllGoals()
+            WorkspaceManager.shared.clearAllEvents()
 
             self.modelContainer = nil
             self.modelContext = nil
@@ -61,15 +62,15 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         try await super.tearDown()
     }
 
-    // MARK: - Task Model Tests
+    // MARK: - PlannerTask Model Tests
 
     @MainActor
     func testTaskCreation() {
         // Test basic task creation
         let task = AppTask(
-            title: "Test Task", description: "A test task", priority: .medium, dueDate: Date()
+            title: "Test PlannerTask", taskDescription: "A test task", priority: .medium, dueDate: Date()
         )
-        XCTAssertEqual(task.title, "Test Task")
+        XCTAssertEqual(task.title, "Test PlannerTask")
         XCTAssertEqual(task.description, "A test task")
         XCTAssertEqual(task.priority, TaskPriority.medium)
         XCTAssertFalse(task.isCompleted)
@@ -80,13 +81,13 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     func testTaskPriority() {
         let highPriorityTask = AppTask(
             title: "High Priority",
-            description: "Urgent task",
+            taskDescription: "Urgent task",
             priority: .high,
             dueDate: Date()
         )
         let lowPriorityTask = AppTask(
             title: "Low Priority",
-            description: "Optional task",
+            taskDescription: "Optional task",
             priority: .low,
             dueDate: Date()
         )
@@ -109,7 +110,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskCompletionToggle() {
-        var task = AppTask(title: "Toggle Test", description: "Test completion toggle")
+        var task = AppTask(title: "Toggle Test", taskDescription: "Test completion toggle")
 
         XCTAssertFalse(task.isCompleted)
 
@@ -123,8 +124,8 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testTaskEquality() {
         let id = UUID()
-        let task1 = AppTask(id: id, title: "Test", description: "Description")
-        let task2 = AppTask(id: id, title: "Test", description: "Description")
+        let task1 = AppTask(id: id, title: "Test", taskDescription: "Description")
+        let task2 = AppTask(id: id, title: "Test", taskDescription: "Description")
 
         XCTAssertEqual(task1.id, task2.id)
         XCTAssertEqual(task1.title, task2.title)
@@ -135,17 +136,17 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testTaskDataManagerSaveAndLoad() {
         // Clear existing tasks first
-        TaskDataManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllTasks()
 
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
 
         // Create test tasks
         let task1 = AppTask(
-            title: "Test Task 1", description: "First test task", priority: .medium, dueDate: Date()
+            title: "Test PlannerTask 1", taskDescription: "First test task", priority: .medium, dueDate: Date()
         )
         let task2 = AppTask(
-            title: "Test Task 2",
-            description: "Second test task",
+            title: "Test PlannerTask 2",
+            taskDescription: "Second test task",
             priority: .high,
             dueDate: Date().addingTimeInterval(86400)
         )
@@ -158,8 +159,8 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Verify tasks were saved and loaded correctly
         XCTAssertEqual(loadedTasks.count, 2)
-        XCTAssertEqual(loadedTasks[0].title, "Test Task 1")
-        XCTAssertEqual(loadedTasks[1].title, "Test Task 2")
+        XCTAssertEqual(loadedTasks[0].title, "Test PlannerTask 1")
+        XCTAssertEqual(loadedTasks[1].title, "Test PlannerTask 2")
         XCTAssertEqual(loadedTasks[0].priority, TaskPriority.medium)
         XCTAssertEqual(loadedTasks[1].priority, TaskPriority.high)
     }
@@ -167,77 +168,77 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testTaskDataManagerAdd() {
         // Clear existing tasks first
-        TaskDataManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllTasks()
 
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
 
         // Create and add a task
         let task = AppTask(
-            title: "Added Task", description: "Task added via add method", priority: .low
+            title: "Added PlannerTask", taskDescription: "PlannerTask added via add method", priority: .low
         )
         manager.add(task)
 
         // Verify task was added
         let loadedTasks = manager.load()
         XCTAssertEqual(loadedTasks.count, 1)
-        XCTAssertEqual(loadedTasks[0].title, "Added Task")
+        XCTAssertEqual(loadedTasks[0].title, "Added PlannerTask")
         XCTAssertEqual(loadedTasks[0].priority, TaskPriority.low)
     }
 
     @MainActor
     func testTaskDataManagerUpdate() {
         // Clear existing tasks first
-        TaskDataManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllTasks()
 
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
 
         // Create and add a task
         let originalTask = AppTask(
-            title: "Original Task", description: "Original description", priority: .medium
+            title: "Original PlannerTask", taskDescription: "Original description", priority: .medium
         )
         manager.add(originalTask)
 
         // Update the task
         var updatedTask = originalTask
-        updatedTask.title = "Updated Task"
+        updatedTask.title = "Updated PlannerTask"
         updatedTask.isCompleted = true
         manager.update(updatedTask)
 
         // Verify task was updated
         let loadedTasks = manager.load()
         XCTAssertEqual(loadedTasks.count, 1)
-        XCTAssertEqual(loadedTasks[0].title, "Updated Task")
+        XCTAssertEqual(loadedTasks[0].title, "Updated PlannerTask")
         XCTAssertTrue(loadedTasks[0].isCompleted)
     }
 
     @MainActor
     func testTaskDataManagerDelete() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let task1 = AppTask(title: "Task 1", description: "First task")
-        let task2 = AppTask(title: "Task 2", description: "Second task")
+        let task1 = AppTask(title: "PlannerTask 1", taskDescription: "First task")
+        let task2 = AppTask(title: "PlannerTask 2", taskDescription: "Second task")
         manager.save(tasks: [task1, task2])
 
         manager.delete(task1)
 
         let loadedTasks = manager.load()
         XCTAssertEqual(loadedTasks.count, 1)
-        XCTAssertEqual(loadedTasks[0].title, "Task 2")
+        XCTAssertEqual(loadedTasks[0].title, "PlannerTask 2")
     }
 
     @MainActor
     func testTaskDataManagerFindById() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let task1 = AppTask(title: "Task 1", description: "First task")
-        let task2 = AppTask(title: "Task 2", description: "Second task")
+        let task1 = AppTask(title: "PlannerTask 1", taskDescription: "First task")
+        let task2 = AppTask(title: "PlannerTask 2", taskDescription: "Second task")
         manager.save(tasks: [task1, task2])
 
         let foundTask = manager.find(by: task1.id)
         XCTAssertNotNil(foundTask)
-        XCTAssertEqual(foundTask?.title, "Task 1")
+        XCTAssertEqual(foundTask?.title, "PlannerTask 1")
 
         let notFoundTask = manager.find(by: UUID())
         XCTAssertNil(notFoundTask)
@@ -245,12 +246,12 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskDataManagerFiltering() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
+        let completedTask = AppTask(title: "Completed", taskDescription: "Done", isCompleted: true)
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", taskDescription: "Not done", isCompleted: false
         )
         manager.save(tasks: [completedTask, incompleteTask])
 
@@ -265,19 +266,19 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskDataManagerDueDateFiltering() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let dueToday = AppTask(title: "Due Today", description: "Urgent", dueDate: Date())
+        let dueToday = AppTask(title: "Due Today", taskDescription: "Urgent", dueDate: Date())
         let dueTomorrow = AppTask(
-            title: "Due Tomorrow", description: "Soon", dueDate: Date().addingTimeInterval(86400)
+            title: "Due Tomorrow", taskDescription: "Soon", dueDate: Date().addingTimeInterval(86400)
         )
         let dueNextWeek = AppTask(
             title: "Due Next Week",
-            description: "Later",
+            taskDescription: "Later",
             dueDate: Date().addingTimeInterval(7 * 86400)
         )
-        let noDueDate = AppTask(title: "No Due Date", description: "Flexible")
+        let noDueDate = AppTask(title: "No Due Date", taskDescription: "Flexible")
 
         manager.save(tasks: [dueToday, dueTomorrow, dueNextWeek, noDueDate])
 
@@ -290,24 +291,24 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskDataManagerOverdueTasks() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
         let overdueTask = AppTask(
             title: "Overdue",
-            description: "Late",
+            taskDescription: "Late",
             isCompleted: false,
             dueDate: Date().addingTimeInterval(-86400)
         )
         let completedOverdueTask = AppTask(
             title: "Completed Overdue",
-            description: "Done late",
+            taskDescription: "Done late",
             isCompleted: true,
             dueDate: Date().addingTimeInterval(-86400)
         )
         let notOverdueTask = AppTask(
             title: "Not Overdue",
-            description: "On time",
+            taskDescription: "On time",
             dueDate: Date().addingTimeInterval(86400)
         )
 
@@ -320,14 +321,14 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskDataManagerSorting() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let highPriority = AppTask(title: "High", description: "High priority", priority: .high)
+        let highPriority = AppTask(title: "High", taskDescription: "High priority", priority: .high)
         let mediumPriority = AppTask(
-            title: "Medium", description: "Medium priority", priority: .medium
+            title: "Medium", taskDescription: "Medium priority", priority: .medium
         )
-        let lowPriority = AppTask(title: "Low", description: "Low priority", priority: .low)
+        let lowPriority = AppTask(title: "Low", taskDescription: "Low priority", priority: .low)
 
         manager.save(tasks: [lowPriority, highPriority, mediumPriority])
 
@@ -339,16 +340,16 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testTaskDataManagerStatistics() {
-        let manager = TaskDataManager.shared
+        let manager = WorkspaceManager.shared
         manager.clearAllTasks()
 
-        let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
+        let completedTask = AppTask(title: "Completed", taskDescription: "Done", isCompleted: true)
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", taskDescription: "Not done", isCompleted: false
         )
         let overdueTask = AppTask(
             title: "Overdue",
-            description: "Late",
+            taskDescription: "Late",
             isCompleted: false,
             dueDate: Date().addingTimeInterval(-86400)
         )
@@ -362,7 +363,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
             calendar.date(byAdding: .second, value: -60, to: startOfTomorrow)
                 ?? startOfTomorrow.addingTimeInterval(-60)
         let dueTodayTask = AppTask(
-            title: "Due Today", description: "Urgent", isCompleted: false, dueDate: lateEveningToday
+            title: "Due Today", taskDescription: "Urgent", isCompleted: false, dueDate: lateEveningToday
         )
 
         manager.save(tasks: [completedTask, incompleteTask, overdueTask, dueTodayTask])
@@ -403,21 +404,21 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
-        TaskDataManager.shared.clearAllTasks()
-        GoalDataManager.shared.clearAllGoals()
-        CalendarDataManager.shared.clearAllEvents()
+        WorkspaceManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllGoals()
+        WorkspaceManager.shared.clearAllEvents()
 
         // Add test data
-        let task = AppTask(title: "Test Task", description: "Test description", isCompleted: false)
-        let goal = Goal(
-            title: "Test Goal", description: "Test goal",
+        let task = AppTask(title: "Test PlannerTask", taskDescription: "Test description", isCompleted: false)
+        let goal = PlannerGoal(
+            title: "Test PlannerGoal", taskDescription: "Test goal",
             targetDate: Date().addingTimeInterval(86400)
         )
-        let event = CalendarEvent(title: "Test Event", date: Date())
+        let event = PlannerCalendarEvent(title: "Test Event", date: Date())
 
-        TaskDataManager.shared.add(task)
-        GoalDataManager.shared.add(goal)
-        CalendarDataManager.shared.add(event)
+        WorkspaceManager.shared.add(task)
+        WorkspaceManager.shared.add(goal)
+        WorkspaceManager.shared.add(event)
 
         // Fetch data
         viewModel.fetchDashboardData()
@@ -433,13 +434,13 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
-        TaskDataManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllTasks()
 
         // Add test data
         let task = AppTask(
-            title: "Refresh Test Task", description: "Test refresh", isCompleted: true
+            title: "Refresh Test PlannerTask", taskDescription: "Test refresh", isCompleted: true
         )
-        TaskDataManager.shared.add(task)
+        WorkspaceManager.shared.add(task)
 
         // Refresh data
         await viewModel.refreshData()
@@ -455,21 +456,21 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
-        TaskDataManager.shared.clearAllTasks()
-        GoalDataManager.shared.clearAllGoals()
+        WorkspaceManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllGoals()
 
         // Add test data
         let incompleteTask = AppTask(
-            title: "Incomplete", description: "Not done", isCompleted: false
+            title: "Incomplete", taskDescription: "Not done", isCompleted: false
         )
-        let completedTask = AppTask(title: "Completed", description: "Done", isCompleted: true)
-        let futureGoal = Goal(
-            title: "Future Goal", description: "Future",
+        let completedTask = AppTask(title: "Completed", taskDescription: "Done", isCompleted: true)
+        let futureGoal = PlannerGoal(
+            title: "Future PlannerGoal", taskDescription: "Future",
             targetDate: Date().addingTimeInterval(86400)
         )
 
-        TaskDataManager.shared.save(tasks: [incompleteTask, completedTask])
-        GoalDataManager.shared.add(futureGoal)
+        WorkspaceManager.shared.save(tasks: [incompleteTask, completedTask])
+        WorkspaceManager.shared.add(futureGoal)
 
         // Fetch data
         viewModel.fetchDashboardData()
@@ -484,17 +485,17 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         let viewModel = DashboardViewModel()
 
         // Clear existing data
-        TaskDataManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllTasks()
 
         // Add multiple tasks
         var tasks: [AppTask] = []
         for index in 1...10 {
             let task = AppTask(
-                title: "Task \(index)", description: "Task \(index)", isCompleted: false
+                title: "PlannerTask \(index)", taskDescription: "PlannerTask \(index)", isCompleted: false
             )
             tasks.append(task)
         }
-        TaskDataManager.shared.save(tasks: tasks)
+        WorkspaceManager.shared.save(tasks: tasks)
 
         // Fetch data (default limit is 3)
         viewModel.fetchDashboardData()
@@ -504,14 +505,14 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual(viewModel.totalIncompleteTasksCount, 10)
     }
 
-    // MARK: - Goal Model Tests
+    // MARK: - PlannerGoal Model Tests
 
     @MainActor
     func testGoalCreation() {
         let targetDate = Date().addingTimeInterval(7 * 86400) // One week from now
-        let goal = Goal(title: "Test Goal", description: "A test goal", targetDate: targetDate)
+        let goal = PlannerGoal(title: "Test PlannerGoal", taskDescription: "A test goal", targetDate: targetDate)
 
-        XCTAssertEqual(goal.title, "Test Goal")
+        XCTAssertEqual(goal.title, "Test PlannerGoal")
         XCTAssertEqual(goal.description, "A test goal")
         XCTAssertEqual(
             goal.targetDate.timeIntervalSince1970, targetDate.timeIntervalSince1970, accuracy: 1.0
@@ -523,9 +524,9 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testGoalCompletion() {
-        var goal = Goal(
+        var goal = PlannerGoal(
             title: "Completion Test",
-            description: "Test completion",
+            taskDescription: "Test completion",
             targetDate: Date().addingTimeInterval(86400)
         )
 
@@ -540,7 +541,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testCalendarEventCreation() {
         let eventDate = Date().addingTimeInterval(3600) // One hour from now
-        let event = CalendarEvent(title: "Test Event", date: eventDate)
+        let event = PlannerCalendarEvent(title: "Test Event", date: eventDate)
 
         XCTAssertEqual(event.title, "Test Event")
         XCTAssertEqual(
@@ -554,36 +555,36 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testDataManagerIntegration() {
         // Clear all data
-        TaskDataManager.shared.clearAllTasks()
-        GoalDataManager.shared.clearAllGoals()
-        CalendarDataManager.shared.clearAllEvents()
+        WorkspaceManager.shared.clearAllTasks()
+        WorkspaceManager.shared.clearAllGoals()
+        WorkspaceManager.shared.clearAllEvents()
 
         // Add test data
         let task = AppTask(
-            title: "Integration Task", description: "Test integration", isCompleted: false
+            title: "Integration PlannerTask", taskDescription: "Test integration", isCompleted: false
         )
-        let goal = Goal(
-            title: "Integration Goal",
-            description: "Test goal",
+        let goal = PlannerGoal(
+            title: "Integration PlannerGoal",
+            taskDescription: "Test goal",
             targetDate: Date().addingTimeInterval(86400)
         )
-        let event = CalendarEvent(title: "Integration Event", date: Date())
+        let event = PlannerCalendarEvent(title: "Integration Event", date: Date())
 
-        TaskDataManager.shared.add(task)
-        GoalDataManager.shared.add(goal)
-        CalendarDataManager.shared.add(event)
+        WorkspaceManager.shared.add(task)
+        WorkspaceManager.shared.add(goal)
+        WorkspaceManager.shared.add(event)
 
         // Verify data was saved and can be loaded
-        let loadedTasks = TaskDataManager.shared.load()
-        let loadedGoals = GoalDataManager.shared.load()
-        let loadedEvents = CalendarDataManager.shared.load()
+        let loadedTasks = WorkspaceManager.shared.load()
+        let loadedGoals = WorkspaceManager.shared.load()
+        let loadedEvents = WorkspaceManager.shared.load()
 
         XCTAssertEqual(loadedTasks.count, 1)
         XCTAssertEqual(loadedGoals.count, 1)
         XCTAssertEqual(loadedEvents.count, 1)
 
-        XCTAssertEqual(loadedTasks[0].title, "Integration Task")
-        XCTAssertEqual(loadedGoals[0].title, "Integration Goal")
+        XCTAssertEqual(loadedTasks[0].title, "Integration PlannerTask")
+        XCTAssertEqual(loadedGoals[0].title, "Integration PlannerGoal")
         XCTAssertEqual(loadedEvents[0].title, "Integration Event")
     }
 
@@ -642,7 +643,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         // XCTAssertGreaterThanOrEqual(highPriorityTasks.count, 0)
         // XCTAssertGreaterThanOrEqual(mediumPriorityTasks.count, 0)
 
-        XCTAssertTrue(true, "Task filtering test framework ready")
+        XCTAssertTrue(true, "PlannerTask filtering test framework ready")
     }
 
     @MainActor
@@ -706,7 +707,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
 
         // Simulate creating multiple tasks
         for identifier in 1...100 {
-            let taskData: [String: Any] = ["id": identifier, "title": "Task \(identifier)"]
+            let taskData: [String: Any] = ["id": identifier, "title": "PlannerTask \(identifier)"]
             XCTAssertEqual((taskData["id"] as? Int), identifier)
         }
 
@@ -743,7 +744,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
         for taskIndex in 1...500 {
             let task: [String: Any] = [
                 "id": taskIndex,
-                "title": "Bulk Task \(taskIndex)",
+                "title": "Bulk PlannerTask \(taskIndex)",
                 "completed": taskIndex % 2 == 0,
             ]
             tasks.append(task)
@@ -762,7 +763,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testTaskDisplayFormatting() {
         // Test formatting of task display strings
-        let taskTitle = "Complete Project Report"
+        let taskTitle = "Complete PlannerProject Report"
         let formattedTitle = taskTitle.uppercased()
 
         XCTAssertEqual(formattedTitle, "COMPLETE PROJECT REPORT")
@@ -797,22 +798,22 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testTaskProjectIntegration() {
         // Test integration between tasks and projects
-        // let project = Project(name: "Integration Test", description: "Test integration", color: .red)
-        // let task = Task(title: "Integration Task", description: "Test task", dueDate: Date(), priority: .high)
+        // let project = PlannerProject(name: "Integration Test", taskDescription: "Test integration", color: .red)
+        // let task = PlannerTask(title: "Integration PlannerTask", taskDescription: "Test task", dueDate: Date(), priority: .high)
 
         // project.addTask(task)
 
         // XCTAssertTrue(project.tasks.contains(task))
         // XCTAssertEqual(task.project, project)
 
-        XCTAssertTrue(true, "Task-project integration test framework ready")
+        XCTAssertTrue(true, "PlannerTask-project integration test framework ready")
     }
 
     @MainActor
     func testCategoryTaskIntegration() {
         // Test integration between categories and tasks
         // let category = Category(name: "Integration", color: .purple, icon: "circle")
-        // let task = Task(title: "Category Task", description: "Test category task", dueDate: Date(), priority:
+        // let task = PlannerTask(title: "Category PlannerTask", taskDescription: "Test category task", dueDate: Date(), priority:
         // .medium)
 
         // category.addTask(task)
@@ -826,9 +827,9 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testFullWorkflowIntegration() {
         // Test complete workflow from project creation to task completion
-        // let project = Project(name: "Full Workflow", description: "Complete workflow test", color: .blue)
+        // let project = PlannerProject(name: "Full Workflow", taskDescription: "Complete workflow test", color: .blue)
         // let category = Category(name: "Workflow Category", color: .green, icon: "checklist")
-        // let task = Task(title: "Workflow Task", description: "Test full workflow", dueDate: Date(), priority: .high)
+        // let task = PlannerTask(title: "Workflow PlannerTask", taskDescription: "Test full workflow", dueDate: Date(), priority: .high)
 
         // project.addTask(task)
         // category.addTask(task)
@@ -950,7 +951,7 @@ final class PlannerAppTests: XCTestCase, @unchecked Sendable {
     func testConcurrentAccess() {
         // Test concurrent access to data
         // This would typically use expectations for async testing
-        let expectation = XCTestExpectation(description: "Concurrent access test")
+        let expectation = XCTestExpectation(taskDescription: "Concurrent access test")
 
         DispatchQueue.global().async {
             // Simulate concurrent data access

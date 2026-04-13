@@ -35,10 +35,10 @@ public class CalendarSyncService: ObservableObject, @unchecked Sendable {
         }
     }
     
-    /// Syncs a local CalendarEvent model to the system calendar
-    public func syncEvent(_ event: CalendarEvent) {
+    /// Syncs a local PlannerCalendarEvent model to the system calendar
+    public func syncEvent(_ event: PlannerCalendarEvent) {
         // guard self.isAuthorized else { return }
-        // Real implementation would convert CalendarEvent to EKEvent and save.
+        // Real implementation would convert PlannerCalendarEvent to EKEvent and save.
     }
 
     /// Fetches all events for a specific date
@@ -54,12 +54,12 @@ public class CalendarSyncService: ObservableObject, @unchecked Sendable {
     }
     
     /// Returns the events matching a specific date (alias for fetchEvents)
-    public func getEventsForDate(_ date: Date) -> [CalendarEvent] {
-        return fetchEvents(for: date).map { CalendarEvent(title: $0.title ?? "", date: $0.startDate) }
+    public func getEventsForDate(_ date: Date) -> [PlannerCalendarEvent] {
+        return fetchEvents(for: date).map { PlannerCalendarEvent(title: $0.title ?? "", date: $0.startDate) }
     }
     
     /// Detects conflicts for a given event in the real system calendar
-    public func getConflictingEvents(for event: CalendarEvent) -> [CalendarEvent] {
+    public func getConflictingEvents(for event: PlannerCalendarEvent) -> [PlannerCalendarEvent] {
         // guard self.isAuthorized else { return [] }
         // Real implementation: search for overlapping EKEvent objects
         return []

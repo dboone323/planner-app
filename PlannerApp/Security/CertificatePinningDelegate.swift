@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 
 /// Certificate pinning delegate for URLSession
 final class CertificatePinningDelegate: NSObject, URLSessionDelegate, Sendable {

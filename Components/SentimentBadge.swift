@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 public struct SentimentBadge: View {
     let sentiment: String

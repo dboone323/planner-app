@@ -10,7 +10,7 @@ import XCTest
 
 final class JournalEntrySentimentTests: XCTestCase {
     func testPositiveSentimentDetection() {
-        var entry = JournalEntry(
+        var entry = PlannerJournalEntry(
             title: "Great Day",
             body: "I had an amazing and wonderful day! Everything was excellent and I feel happy.",
             date: Date(),
@@ -24,7 +24,7 @@ final class JournalEntrySentimentTests: XCTestCase {
     }
 
     func testNegativeSentimentDetection() {
-        var entry = JournalEntry(
+        var entry = PlannerJournalEntry(
             title: "Tough Day",
             body: "This was terrible and awful. Everything felt broken and bad today.",
             date: Date(),
@@ -38,7 +38,7 @@ final class JournalEntrySentimentTests: XCTestCase {
     }
 
     func testNeutralSentimentDetection() {
-        var entry = JournalEntry(
+        var entry = PlannerJournalEntry(
             title: "Regular Day",
             body: "Today was a normal day. I went to work and came home.",
             date: Date(),
@@ -52,7 +52,7 @@ final class JournalEntrySentimentTests: XCTestCase {
     }
 
     func testSentimentUpdateOnContentChange() {
-        var entry = JournalEntry(
+        var entry = PlannerJournalEntry(
             title: "Changing Mood",
             body: "I love this great day!",
             date: Date(),
@@ -70,7 +70,7 @@ final class JournalEntrySentimentTests: XCTestCase {
     }
 
     func testEmptyContentHasNeutralSentiment() {
-        var entry = JournalEntry(
+        var entry = PlannerJournalEntry(
             title: "Empty Entry",
             body: "",
             date: Date(),

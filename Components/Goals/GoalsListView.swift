@@ -1,10 +1,12 @@
 // PlannerApp/Components/Goals/GoalsListView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct GoalsListView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let goals: [Goal]
+    let goals: [PlannerGoal]
     let onDelete: (IndexSet) -> Void
     let onProgressUpdate: (UUID, Double) -> Void
     let onCompletionToggle: (UUID) -> Void

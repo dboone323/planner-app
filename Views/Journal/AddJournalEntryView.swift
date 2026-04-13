@@ -1,9 +1,11 @@
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct AddJournalEntryView: View {
     @Environment(\.dismiss) var dismiss // Use dismiss environment
-    @Binding var journalEntries: [JournalEntry] // Assumes using model from PlannerApp/Models/
+    @Binding var journalEntries: [PlannerJournalEntry] // Assumes using model from PlannerApp/Models/
 
     @State private var title = ""
     @State private var entryBody = "" // Renamed for clarity
@@ -136,7 +138,7 @@ public struct AddJournalEntryView: View {
     }
 
     private func saveEntry() {
-        let newEntry = JournalEntry(
+        let newEntry = PlannerJournalEntry(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
             body: self.entryBody.trimmingCharacters(in: .whitespacesAndNewlines), // Use entryBody
             date: self.date,
@@ -144,7 +146,7 @@ public struct AddJournalEntryView: View {
         )
         self.journalEntries.append(newEntry)
 
-        JournalDataManager.shared.save(entries: self.journalEntries)
+        WorkspaceManager.shared.save(entries: self.journalEntries)
     }
 }
 

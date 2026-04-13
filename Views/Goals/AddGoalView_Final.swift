@@ -1,9 +1,10 @@
 import PlannerApp
 import SwiftUI
+import PlannerAppCore
 
 public struct AddGoalView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var goals: [Goal]
+    @Binding var goals: [PlannerGoal]
 
     @State private var title = ""
     @State private var description = ""
@@ -12,22 +13,22 @@ public struct AddGoalView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                TextField("PlannerGoal Title", text: self.$title).accessibilityLabel("Text Field")
                     .accessibilityLabel("Text Field")
                 TextField("Description", text: self.$description).accessibilityLabel("Text Field")
                     .accessibilityLabel("Text Field")
                 DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
             }
-            .navigationTitle("New Goal")
+            .navigationTitle("New PlannerGoal")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") { self.dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save").accessibilityLabel("Button").accessibilityLabel("Button") {
-                        let newGoal = Goal(title: title, description: description, targetDate: targetDate)
+                        let newGoal = PlannerGoal(title: title, taskDescription: description, targetDate: targetDate)
                         self.goals.append(newGoal)
-                        GoalDataManager.shared.save(goals: self.goals)
+                        WorkspaceManager.shared.save(goals: self.goals)
                         self.dismiss()
                     }
                     .disabled(self.title.isEmpty || self.description.isEmpty)

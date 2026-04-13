@@ -7,10 +7,11 @@
 
 import Charts
 import SwiftUI
+import PlannerAppCore
 
 public struct SentimentAnalyticsView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let entries: [JournalEntry]
+    let entries: [PlannerJournalEntry]
 
     /// Computed analytics data
     private var averageSentiment: Double {
@@ -29,7 +30,7 @@ public struct SentimentAnalyticsView: View {
         ]
     }
 
-    private var topPositiveEntries: [JournalEntry] {
+    private var topPositiveEntries: [PlannerJournalEntry] {
         self.entries
             .filter { $0.sentiment == "positive" }
             .sorted { $0.sentimentScore > $1.sentimentScore }
@@ -37,7 +38,7 @@ public struct SentimentAnalyticsView: View {
             .map(\.self)
     }
 
-    private var topNegativeEntries: [JournalEntry] {
+    private var topNegativeEntries: [PlannerJournalEntry] {
         self.entries
             .filter { $0.sentiment == "negative" }
             .sorted { $0.sentimentScore < $1.sentimentScore }
@@ -209,7 +210,7 @@ public struct SentimentAnalyticsView: View {
 
 struct EntryPreviewCard: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let entry: JournalEntry
+    let entry: PlannerJournalEntry
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -249,7 +250,7 @@ struct EntryPreviewCard: View {
 public struct SentimentAnalyticsView_Previews: PreviewProvider {
     public static var previews: some View {
         let sampleEntries = [
-            JournalEntry(
+            PlannerJournalEntry(
                 title: "Great Day",
                 body: "I had an amazing and wonderful day! Everything was excellent.",
                 date: Date().addingTimeInterval(-86400 * 7),
@@ -257,7 +258,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 sentiment: "positive",
                 sentimentScore: 0.8
             ),
-            JournalEntry(
+            PlannerJournalEntry(
                 title: "Tough Times",
                 body: "This was terrible and awful. Everything felt broken.",
                 date: Date().addingTimeInterval(-86400 * 5),
@@ -265,7 +266,7 @@ public struct SentimentAnalyticsView_Previews: PreviewProvider {
                 sentiment: "negative",
                 sentimentScore: -0.7
             ),
-            JournalEntry(
+            PlannerJournalEntry(
                 title: "Regular Day",
                 body: "Today was a normal day at work.",
                 date: Date().addingTimeInterval(-86400 * 2),

@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct QuickActionCard: View {
     let title: String
@@ -35,7 +36,7 @@ public struct QuickActionCard: View {
 
 #Preview {
     QuickActionCard(
-        title: "Add Task",
+        title: "Add PlannerTask",
         icon: "plus.circle.fill",
         color: .blue
     ) {

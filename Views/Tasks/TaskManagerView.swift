@@ -1,15 +1,17 @@
 // PlannerApp/Views/Tasks/TaskManagerView.swift (Updated with iOS enhancements)
 import Foundation
+import PlannerAppCore
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit
 #endif
 
-// Type alias to distinguish our custom PlannerTask model from Swift's concurrency Task
+// Type alias to distinguish our custom PlannerTask model from Swift's concurrency PlannerTask
 // Use explicit reference to avoid ambiguity
-// typealias PlannerTask = Task
+// typealias PlannerTask = PlannerTask
 
 public struct TaskManagerView: View {
     // Access shared ThemeManager and data arrays
@@ -48,7 +50,7 @@ public struct TaskManagerView: View {
                 )
                 .environmentObject(self.themeManager)
 
-                // --- Task List ---
+                // --- PlannerTask List ---
                 SDTaskListView(
                     isInputFieldFocused: self.$isInputFieldFocused,
                     incompleteTasks: self.incompleteTasks,

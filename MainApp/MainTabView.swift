@@ -1,5 +1,6 @@
 // PlannerApp/MainApp/MainTabView.swift (Updated)
 import SwiftUI
+import PlannerAppCore
 
 #if os(macOS)
     import AppKit

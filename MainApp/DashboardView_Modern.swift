@@ -1,8 +1,10 @@
 import _Concurrency
 import Foundation
+import PlannerAppCore
 
 // PlannerApp/MainApp/DashboardView.swift (Modern Enhanced Version)
 import SwiftUI
+import PlannerAppCore
 
 public struct DashboardView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -115,7 +117,7 @@ public struct DashboardView: View {
                             spacing: 16
                         ) {
                             QuickActionCard(
-                                title: "Add Task",
+                                title: "Add PlannerTask",
                                 icon: "plus.circle.fill",
                                 color: self.themeManager.currentTheme.primaryAccentColor
                             ) {
@@ -123,7 +125,7 @@ public struct DashboardView: View {
                             }
 
                             QuickActionCard(
-                                title: "New Goal",
+                                title: "New PlannerGoal",
                                 icon: "target",
                                 color: .green
                             ) {
@@ -323,13 +325,13 @@ public struct DashboardView: View {
         self.showLoadingOverlay = true
 
         // Small delay to ensure UI updates are visible
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+        try? await PlannerTask.sleep(nanoseconds: 100_000_000) // 0.1 seconds
 
         // Perform data refresh asynchronously
         await self.viewModel.refreshData()
 
         // Small delay to ensure UI has time to update with new data
-        try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+        try? await PlannerTask.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
         self.isRefreshing = false
         self.showLoadingOverlay = false
@@ -340,7 +342,7 @@ public struct DashboardView: View {
         guard !self.isRefreshing else { return } // Prevent multiple concurrent refreshes
 
         self.showLoadingOverlay = true
-        await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay for demonstration
+        await PlannerTask.sleep(nanoseconds: 1_000_000_000) // 1 second delay for demonstration
         await self.viewModel.refreshData()
         self.showLoadingOverlay = false
     }

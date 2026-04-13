@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct QuickStatCard: View {
     let title: String

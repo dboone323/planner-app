@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 public struct ContentView: View {
     @State private var tasks: [PlannerTask] = []
     @State private var showingAddTask = false
     @State private var refreshID = UUID() // Force refresh
 
-    private let dataManager = TaskDataManager.shared
+    private let dataManager = WorkspaceManager.shared
 
     public init() {}
 
@@ -120,19 +121,19 @@ public struct ContentView: View {
         let samples = [
             PlannerTask(
                 title: "Review Design Specs",
-                description: "Check color contrast and typography scale.",
+                taskDescription: "Check color contrast and typography scale.",
                 priority: .high,
                 dueDate: Date().addingTimeInterval(3600 * 4)
             ),
             PlannerTask(
                 title: "Weekly Sync",
-                description: "Team status update meeting.",
+                taskDescription: "Team status update meeting.",
                 priority: .medium,
                 dueDate: Date().addingTimeInterval(3600 * 24)
             ),
             PlannerTask(
                 title: "Update Documentation",
-                description: "Reflect recent API changes in the wiki.",
+                taskDescription: "Reflect recent API changes in the wiki.",
                 priority: .low,
                 dueDate: Date().addingTimeInterval(3600 * 48)
             ),
@@ -224,8 +225,8 @@ struct TasksWidgetView: View {
 
 #Preview("Widget") {
     TasksWidgetView(tasks: [
-        PlannerTask(title: "Urgent Fix", description: "", priority: .high, dueDate: Date()),
-        PlannerTask(title: "Client Call", description: "", priority: .medium, dueDate: Date().addingTimeInterval(3600)),
+        PlannerTask(title: "Urgent Fix", taskDescription: "", priority: .high, dueDate: Date()),
+        PlannerTask(title: "Client Call", taskDescription: "", priority: .medium, dueDate: Date().addingTimeInterval(3600)),
     ])
     .frame(width: 170, height: 170)
     .cornerRadius(20)

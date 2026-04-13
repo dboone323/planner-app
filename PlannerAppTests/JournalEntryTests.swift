@@ -2,7 +2,7 @@
 //  JournalEntryTests.swift
 //  PlannerAppTests
 //
-//  Comprehensive test suite for JournalEntry
+//  Comprehensive test suite for PlannerJournalEntry
 //
 
 import XCTest

@@ -1,9 +1,10 @@
 // PlannerApp/Components/Goals/ProgressUpdateSheet.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct ProgressUpdateSheet: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let goal: Goal
+    let goal: PlannerGoal
     let onProgressUpdate: (Double) -> Void
     let onCompletionToggle: () -> Void
 
@@ -11,7 +12,7 @@ public struct ProgressUpdateSheet: View {
     @State private var showCompletionAlert = false
     @Environment(\.dismiss) private var dismiss
 
-    init(goal: Goal, onProgressUpdate: @escaping (Double) -> Void, onCompletionToggle: @escaping () -> Void) {
+    init(goal: PlannerGoal, onProgressUpdate: @escaping (Double) -> Void, onCompletionToggle: @escaping () -> Void) {
         self.goal = goal
         self.onProgressUpdate = onProgressUpdate
         self.onCompletionToggle = onCompletionToggle
@@ -34,7 +35,7 @@ public struct ProgressUpdateSheet: View {
                 .padding(.vertical)
             }
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
-            .navigationTitle("Update Goal")
+            .navigationTitle("Update PlannerGoal")
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -43,12 +44,12 @@ public struct ProgressUpdateSheet: View {
                         self.cancelButton
                     }
                 }
-                .alert("Complete Goal?", isPresented: self.$showCompletionAlert) {
+                .alert("Complete PlannerGoal?", isPresented: self.$showCompletionAlert) {
                     Button("Just Update Progress", role: .cancel) {
                         self.onProgressUpdate(self.progress)
                         self.dismiss()
                     }
-                    Button("Complete Goal") {
+                    Button("Complete PlannerGoal") {
                         self.onProgressUpdate(1.0)
                         self.onCompletionToggle()
                         self.dismiss()
@@ -66,7 +67,7 @@ public struct ProgressUpdateSheet: View {
                 .fontWeight(.bold)
                 .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
 
-            Text(self.goal.description)
+            Text(self.goal.goalDescription)
                 .font(.body)
                 .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                 .lineLimit(3)

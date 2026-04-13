@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 public struct ThemePreviewView: View {
     @EnvironmentObject var themeManager: ThemeManager

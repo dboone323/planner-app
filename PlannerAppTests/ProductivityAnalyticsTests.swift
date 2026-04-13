@@ -10,7 +10,7 @@ final class ProductivityAnalyticsTests: XCTestCase {
     // MARK: - Metric Collection
 
     func testTaskCompletionRate() {
-        XCTAssertTrue(true, "Task completion rate test")
+        XCTAssertTrue(true, "PlannerTask completion rate test")
     }
 
     func testFocusTimeTracking() {

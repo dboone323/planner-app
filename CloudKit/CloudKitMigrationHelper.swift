@@ -1,7 +1,9 @@
 // CloudKitMigrationHelper.swift - Handles migration of local data to CloudKit
 import CloudKit
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 @MainActor
 class CloudKitMigrationHelper {
@@ -72,7 +74,7 @@ class CloudKitMigrationHelper {
 
     private func migrateGoalsToCloudKit() async throws {
         // Simplified implementation with empty array
-        let goals: [Goal] = [] // Use direct Goal type
+        let goals: [PlannerGoal] = [] // Use direct PlannerGoal type
 
         print("Migrating goals to CloudKit - stub implementation")
 
@@ -82,7 +84,7 @@ class CloudKitMigrationHelper {
 
     private func migrateEventsToCloudKit() async throws {
         // Simplified implementation with empty array
-        let events: [CalendarEvent] = [] // Use direct CalendarEvent type
+        let events: [PlannerCalendarEvent] = [] // Use direct PlannerCalendarEvent type
 
         print("Migrating calendar events to CloudKit - stub implementation")
 
@@ -92,7 +94,7 @@ class CloudKitMigrationHelper {
 
     private func migrateJournalEntriesToCloudKit() async throws {
         // Simplified implementation with empty array
-        let entries: [JournalEntry] = [] // Use direct JournalEntry type
+        let entries: [PlannerJournalEntry] = [] // Use direct PlannerJournalEntry type
 
         print("Migrating journal entries to CloudKit - stub implementation")
 

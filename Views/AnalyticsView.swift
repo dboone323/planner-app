@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 /// View for displaying productivity analytics and statistics
 public struct AnalyticsView: View {
@@ -6,7 +7,7 @@ public struct AnalyticsView: View {
     @State private var projects: [PlannerProject] = []
     @State private var selectedTimeRange: TimeRange = .week
 
-    private let taskDataManager = TaskDataManager.shared
+    private let taskDataManager = WorkspaceManager.shared
     private let projectDataManager = ProjectDataManager.shared
 
     enum TimeRange: String, CaseIterable {
@@ -87,7 +88,7 @@ public struct AnalyticsView: View {
 
                     // Priority distribution
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Task Priority Distribution")
+                        Text("PlannerTask Priority Distribution")
                             .font(.headline)
                             .padding(.horizontal)
 

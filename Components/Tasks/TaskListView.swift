@@ -1,6 +1,8 @@
 // PlannerApp/Components/Tasks/TaskListView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit

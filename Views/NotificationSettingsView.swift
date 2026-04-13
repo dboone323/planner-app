@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 /// View for managing notification settings
 struct NotificationSettingsView: View {
@@ -60,7 +61,7 @@ struct NotificationSettingsView: View {
 
                 Section("About Notifications") {
                     Text(
-                        "Task notifications help you stay on top of your deadlines. "
+                        "PlannerTask notifications help you stay on top of your deadlines. "
                             + "You'll receive reminders before tasks are due and notifications when they become due."
                     )
                     .font(.caption)

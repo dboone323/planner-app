@@ -1,7 +1,9 @@
 // PlannerApp/CloudKit/CloudKitOnboardingView.swift
 import CloudKit
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct CloudKitOnboardingView: View {
     @StateObject private var cloudKit = EnhancedCloudKitManager.shared // Changed to EnhancedCloudKitManager
@@ -35,7 +37,7 @@ public struct CloudKitOnboardingView: View {
                             "sync_across_devices",
                             comment: "Sync across devices benefit"
                         ),
-                        description: NSLocalizedString(
+                        taskDescription: NSLocalizedString(
                             "sync_across_devices_desc",
                             comment: "Sync across devices description"
                         )
@@ -46,7 +48,7 @@ public struct CloudKitOnboardingView: View {
                             "private_secure",
                             comment: "Private and secure benefit"
                         ),
-                        description: NSLocalizedString("private_secure_desc", comment: "Private and secure description")
+                        taskDescription: NSLocalizedString("private_secure_desc", comment: "Private and secure description")
                     )
 
                     self.benefitRow(
@@ -54,7 +56,7 @@ public struct CloudKitOnboardingView: View {
                             "automatic_backup",
                             comment: "Automatic backup benefit"
                         ),
-                        description: NSLocalizedString("automatic_backup_desc", comment: "Automatic backup description")
+                        taskDescription: NSLocalizedString("automatic_backup_desc", comment: "Automatic backup description")
                     )
 
                     self.benefitRow(
@@ -62,7 +64,7 @@ public struct CloudKitOnboardingView: View {
                             "just_for_you",
                             comment: "Just for you benefit"
                         ),
-                        description: NSLocalizedString("just_for_you_desc", comment: "Just for you description")
+                        taskDescription: NSLocalizedString("just_for_you_desc", comment: "Just for you description")
                     )
                 }
                 .padding()
@@ -128,7 +130,7 @@ public struct CloudKitOnboardingView: View {
         }
     }
 
-    private func benefitRow(icon: String, title: String, description: String) -> some View {
+    private func benefitRow(icon: String, title: String, taskDescription: String) -> some View {
         HStack(alignment: .top, spacing: 15) {
             Image(systemName: icon)
                 .font(.title2)
@@ -139,7 +141,7 @@ public struct CloudKitOnboardingView: View {
                 Text(title)
                     .font(.headline)
 
-                Text(description)
+                Text("")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

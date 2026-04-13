@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 import SwiftData
 
 /// SwiftData-based goal manager that replaces the legacy UserDefaults-based GoalDataManager.

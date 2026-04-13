@@ -7,7 +7,9 @@
 
 import CloudKit
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 @MainActor
 public class CloudKitManager: ObservableObject {
@@ -130,17 +132,17 @@ public class CloudKitManager: ObservableObject {
         print("Uploading \(tasks.count) tasks to CloudKit")
     }
 
-    func uploadGoals(_ goals: [Goal]) async throws {
+    func uploadGoals(_ goals: [PlannerGoal]) async throws {
         // Stub implementation for goal uploading
         print("Uploading \(goals.count) goals to CloudKit")
     }
 
-    func uploadEvents(_ events: [CalendarEvent]) async throws {
+    func uploadEvents(_ events: [PlannerCalendarEvent]) async throws {
         // Stub implementation for event uploading
         print("Uploading \(events.count) events to CloudKit")
     }
 
-    func uploadJournalEntries(_ entries: [JournalEntry]) async throws {
+    func uploadJournalEntries(_ entries: [PlannerJournalEntry]) async throws {
         // Stub implementation for journal entry uploading
         print("Uploading \(entries.count) journal entries to CloudKit")
     }

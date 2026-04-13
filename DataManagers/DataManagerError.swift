@@ -8,6 +8,7 @@
 // PlannerApp/DataManagers/DataManagerError.swift
 // (Optional but good practice: Define a common error type)
 import Foundation
+import PlannerAppCore
 
 public enum DataManagerError: Error {
     case encodingFailed(Error?)

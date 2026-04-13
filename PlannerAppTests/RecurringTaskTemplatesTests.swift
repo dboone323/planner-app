@@ -17,7 +17,7 @@ final class RecurringTaskTemplatesTests: XCTestCase {
         XCTAssertTrue(true, "Create weekly template test")
     }
 
-    // MARK: - Task Generation
+    // MARK: - PlannerTask Generation
 
     func testGenerateNextOccurrence() {
         XCTAssertTrue(true, "Generate next occurrence test")

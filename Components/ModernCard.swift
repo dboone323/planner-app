@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 struct ModernCard<Content: View>: View {
     let content: Content

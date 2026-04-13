@@ -28,14 +28,14 @@ final class SDTaskTests: XCTestCase {
 
     func testSDTaskInitialization() {
         let task = SDTask(
-            title: "Test Task",
+            title: "Test PlannerTask",
             taskDescription: "Test Description",
             isCompleted: false,
             priority: 3, // High
             dueDate: Date()
         )
 
-        XCTAssertEqual(task.title, "Test Task")
+        XCTAssertEqual(task.title, "Test PlannerTask")
         XCTAssertEqual(task.taskDescription, "Test Description")
         XCTAssertFalse(task.isCompleted)
         XCTAssertEqual(task.priority, 3)
@@ -45,9 +45,9 @@ final class SDTaskTests: XCTestCase {
     }
 
     func testSDTaskDefaultValues() {
-        let task = SDTask(title: "Minimal Task")
+        let task = SDTask(title: "Minimal PlannerTask")
 
-        XCTAssertEqual(task.title, "Minimal Task")
+        XCTAssertEqual(task.title, "Minimal PlannerTask")
         XCTAssertEqual(task.taskDescription, "")
         XCTAssertFalse(task.isCompleted)
         XCTAssertEqual(task.priority, 2)
@@ -58,7 +58,7 @@ final class SDTaskTests: XCTestCase {
 
     func testSDTaskPersistence() throws {
         let task = SDTask(
-            title: "Persistent Task",
+            title: "Persistent PlannerTask",
             taskDescription: "Should be saved",
             isCompleted: true,
             priority: 3
@@ -69,12 +69,12 @@ final class SDTaskTests: XCTestCase {
 
         // Fetch back
         let descriptor = FetchDescriptor<SDTask>(
-            predicate: #Predicate { $0.title == "Persistent Task" }
+            predicate: #Predicate { $0.title == "Persistent PlannerTask" }
         )
         let fetched = try context.fetch(descriptor)
 
         XCTAssertEqual(fetched.count, 1)
-        XCTAssertEqual(fetched.first?.title, "Persistent Task")
+        XCTAssertEqual(fetched.first?.title, "Persistent PlannerTask")
         XCTAssertEqual(fetched.first?.taskDescription, "Should be saved")
         XCTAssertTrue(fetched.first?.isCompleted ?? false)
         XCTAssertEqual(fetched.first?.priority, 3)

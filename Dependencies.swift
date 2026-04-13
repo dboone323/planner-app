@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import PlannerAppCore
 
 /// Dependency injection container
 public struct Dependencies {

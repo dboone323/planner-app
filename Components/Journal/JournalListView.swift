@@ -1,10 +1,11 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct JournalListView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let filteredEntries: [JournalEntry]
+    let filteredEntries: [PlannerJournalEntry]
     let searchText: String
-    let journalEntries: [JournalEntry]
+    let journalEntries: [PlannerJournalEntry]
     let onDeleteEntry: (IndexSet) -> Void
 
     public var body: some View {
@@ -35,7 +36,7 @@ public struct JournalListView: View {
 public struct JournalListView_Previews: PreviewProvider {
     public static var previews: some View {
         let sampleEntries = [
-            JournalEntry(title: "Sample Entry", body: "This is a test entry", date: Date(), mood: "😊"),
+            PlannerJournalEntry(title: "Sample Entry", body: "This is a test entry", date: Date(), mood: "😊"),
         ]
         JournalListView(
             filteredEntries: sampleEntries,

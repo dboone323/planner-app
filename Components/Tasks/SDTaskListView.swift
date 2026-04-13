@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 /// A list view component for displaying SDTask items.
 /// Works with SwiftData's automatic observation.

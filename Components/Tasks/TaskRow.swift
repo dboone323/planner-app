@@ -1,11 +1,12 @@
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit
 #endif
 
-// Type alias to resolve conflict between Swift's built-in Task and our custom Task model
-// typealias TaskModel = Task  // Removed - already defined in TaskManagerView
+// Type alias to resolve conflict between Swift's built-in PlannerTask and our custom PlannerTask model
+// typealias TaskModel = PlannerTask  // Removed - already defined in TaskManagerView
 
 public struct TaskRow: View {
     /// Access shared ThemeManager
@@ -28,7 +29,7 @@ public struct TaskRow: View {
                 .font(.title3) // Make icon slightly larger
                 .onTapGesture { self.toggleCompletion() } // Toggle completion on icon tap
 
-            // Task title text
+            // PlannerTask title text
             Text(self.taskItem.title)
                 .font(
                     self.themeManager.currentTheme.font(
@@ -68,10 +69,10 @@ public struct TaskRow: View {
 
             // Toggle the boolean state
             self.tasks[index].isCompleted.toggle()
-            // ** IMPORTANT: Update completionDate if Task model supports it **
+            // ** IMPORTANT: Update completionDate if PlannerTask model supports it **
             // tasks[index].completionDate = tasks[index].isCompleted ? Date() : nil
             // Persist the change immediately
-            TaskDataManager.shared.save(tasks: self.tasks)
+            WorkspaceManager.shared.save(tasks: self.tasks)
             print("Toggled task '\(self.tasks[index].title)' to \(self.tasks[index].isCompleted)")
         }
     }
@@ -79,8 +80,8 @@ public struct TaskRow: View {
 
 #Preview {
     let sampleTask = PlannerTask(
-        title: "Sample Task",
-        description: "This is a sample task",
+        title: "Sample PlannerTask",
+        taskDescription: "This is a sample task",
         isCompleted: false,
         priority: .medium,
         dueDate: Date().addingTimeInterval(86400) // Tomorrow

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import HealthKit
@@ -21,7 +22,7 @@ import SwiftUI
     /// Widget support for iOS
     struct PlannerWidget: View {
         let tasks: [PlannerTask]
-        let goals: [Goal]
+        let goals: [PlannerGoal]
 
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
@@ -294,7 +295,7 @@ import SwiftUI
                 //             .foregroundColor(.secondary)
                 //
                 //         Button("Enable Health Access") {
-                //             Task {
+                //             PlannerTask {
                 //                 try? await healthKit.requestAuthorization()
                 //             }
                 //         }
@@ -311,7 +312,7 @@ import SwiftUI
             )
             // .onAppear {
             //     if healthKit.isAuthorized {
-            //         Task {
+            //         PlannerTask {
             //             await healthKit.fetchTodayStats()
             //         }
             //     }
@@ -378,12 +379,12 @@ import SwiftUI
 
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Task", action: #selector(self.quickAddTask), keyEquivalent: ""
+                    title: "Quick Add PlannerTask", action: #selector(self.quickAddTask), keyEquivalent: ""
                 )
             )
             menu.addItem(
                 NSMenuItem(
-                    title: "Quick Add Goal", action: #selector(self.quickAddGoal), keyEquivalent: ""
+                    title: "Quick Add PlannerGoal", action: #selector(self.quickAddGoal), keyEquivalent: ""
                 )
             )
             menu.addItem(NSMenuItem.separator())
@@ -451,7 +452,7 @@ import SwiftUI
             case .addTask:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Task", target: self, action: #selector(self.addTask)
+                    title: "Add PlannerTask", target: self, action: #selector(self.addTask)
                 )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item
@@ -459,7 +460,7 @@ import SwiftUI
             case .addGoal:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.view = NSButton(
-                    title: "Add Goal", target: self, action: #selector(self.addGoal)
+                    title: "Add PlannerGoal", target: self, action: #selector(self.addGoal)
                 )
                 (item.view as? NSButton)?.setAccessibilityLabel("Button")
                 return item

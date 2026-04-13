@@ -1,14 +1,16 @@
 import Foundation
+import PlannerAppCore
 
 // PlannerApp/Views/Goals/AddGoalView.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct AddGoalView: View {
     // Access shared ThemeManager and dismiss action
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) var dismiss
     /// Binding to the goals array in the parent view (GoalsView)
-    @Binding var goals: [Goal]
+    @Binding var goals: [PlannerGoal]
 
     // State variables for the form fields
     @State private var title = ""
@@ -34,7 +36,7 @@ public struct AddGoalView: View {
 
                 Spacer()
 
-                Text("Add Goal")
+                Text("Add PlannerGoal")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(self.themeManager.currentTheme.primaryTextColor)
@@ -43,9 +45,9 @@ public struct AddGoalView: View {
 
                 Button("Save").accessibilityLabel("Button").accessibilityLabel("Button") {
                     // Create the new goal
-                    let newGoal = Goal(
+                    let newGoal = PlannerGoal(
                         title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-                        description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
+                        taskDescription: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
                         targetDate: self.targetDate
                     )
 
@@ -53,7 +55,7 @@ public struct AddGoalView: View {
                     self.goals.append(newGoal)
 
                     // Save goals to the data manager
-                    GoalDataManager.shared.save(goals: self.goals)
+                    WorkspaceManager.shared.save(goals: self.goals)
 
                     // Dismiss the sheet
                     self.dismiss()
@@ -70,9 +72,9 @@ public struct AddGoalView: View {
             // Use Form for standard iOS settings/input layout
             Form {
                 // Section for the main goal details
-                Section("Goal Details") {
+                Section("PlannerGoal Details") {
                     // TextField for the goal title
-                    TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                    TextField("PlannerGoal Title", text: self.$title).accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,

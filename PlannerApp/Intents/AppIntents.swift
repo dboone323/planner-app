@@ -6,16 +6,18 @@
 //
 
 import AppIntents
+import Foundation
 import SwiftData
+import PlannerAppCore
 
-// MARK: - Add Task Intent
+// MARK: - Add PlannerTask Intent
 
 @available(iOS 16.0, macOS 13.0, *)
 struct AddTaskIntent: AppIntent {
-    static let title: LocalizedStringResource = "Add Task"
+    static let title: LocalizedStringResource = "Add PlannerTask"
     static let description = IntentDescription("Adds a new task to your planner")
 
-    @Parameter(title: "Task Title")
+    @Parameter(title: "PlannerTask Title")
     var title: String
 
     @Parameter(title: "Priority", default: "medium")
@@ -33,18 +35,11 @@ struct AddTaskIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let priorityValue: Int = {
-            switch priority?.lowercased() {
-            case "low": 1
-            case "medium": 2
-            case "high": 3
-            case "critical": 4
-            default: 2
-            }
-        }()
+        let priorityValue = self.priority ?? "medium"
 
         _ = SDTask(
             title: title,
+            taskDescription: "",
             priority: priorityValue,
             dueDate: dueDate
         )
@@ -55,14 +50,14 @@ struct AddTaskIntent: AppIntent {
     }
 }
 
-// MARK: - Complete Task Intent
+// MARK: - Complete PlannerTask Intent
 
 @available(iOS 16.0, macOS 13.0, *)
 struct CompleteTaskIntent: AppIntent {
-    static let title: LocalizedStringResource = "Complete Task"
+    static let title: LocalizedStringResource = "Complete PlannerTask"
     static let description = IntentDescription("Marks a task as completed")
 
-    @Parameter(title: "Task Name")
+    @Parameter(title: "PlannerTask Name")
     var taskName: String
 
     @MainActor
@@ -90,14 +85,14 @@ struct ListTasksIntent: AppIntent {
     }
 }
 
-// MARK: - Add Goal Intent
+// MARK: - Add PlannerGoal Intent
 
 @available(iOS 16.0, macOS 13.0, *)
 struct AddGoalIntent: AppIntent {
-    static let title: LocalizedStringResource = "Add Goal"
+    static let title: LocalizedStringResource = "Add PlannerGoal"
     static let description = IntentDescription("Adds a new goal to your planner")
 
-    @Parameter(title: "Goal Title")
+    @Parameter(title: "PlannerGoal Title")
     var title: String
 
     @Parameter(title: "Target Date")
@@ -105,7 +100,7 @@ struct AddGoalIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        .result(dialog: "Goal added successfully")
+        .result(dialog: "PlannerGoal added successfully")
     }
 }
 
@@ -121,7 +116,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "Create task in \(.applicationName)",
                 "New task in \(.applicationName)",
             ],
-            shortTitle: "Add Task",
+            shortTitle: "Add PlannerTask",
             systemImageName: "plus.circle"
         )
 
@@ -131,7 +126,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "Complete task in \(.applicationName)",
                 "Mark task done in \(.applicationName)",
             ],
-            shortTitle: "Complete Task",
+            shortTitle: "Complete PlannerTask",
             systemImageName: "checkmark.circle"
         )
 
@@ -152,7 +147,7 @@ struct PlannerAppShortcuts: AppShortcutsProvider {
                 "Add a goal to \(.applicationName)",
                 "Create goal in \(.applicationName)",
             ],
-            shortTitle: "Add Goal",
+            shortTitle: "Add PlannerGoal",
             systemImageName: "target"
         )
     }

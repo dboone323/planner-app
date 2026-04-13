@@ -9,6 +9,7 @@
 // (Create a new folder Styling if it doesn't exist)
 
 import SwiftUI
+import PlannerAppCore
 #if os(macOS)
     import AppKit
 #else

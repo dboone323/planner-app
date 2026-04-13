@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 import XCTest
 @testable import PlannerApp
 

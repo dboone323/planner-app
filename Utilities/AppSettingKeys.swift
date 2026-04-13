@@ -2,6 +2,7 @@
 // (Create a new folder Utilities if it doesn't exist)
 
 import Foundation
+import PlannerAppCore
 
 /// Centralized keys for UserDefaults settings accessed via @AppStorage
 enum AppSettingKeys {

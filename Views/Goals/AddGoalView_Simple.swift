@@ -1,9 +1,10 @@
 import PlannerApp
 import SwiftUI
+import PlannerAppCore
 
 public struct AddGoalView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var goals: [Goal]
+    @Binding var goals: [PlannerGoal]
 
     @State private var title = ""
     @State private var description = ""
@@ -17,8 +18,8 @@ public struct AddGoalView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("Goal Details") {
-                    TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                Section("PlannerGoal Details") {
+                    TextField("PlannerGoal Title", text: self.$title).accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
 
                     TextField("Description", text: self.$description, axis: .vertical).accessibilityLabel("Text Field")
@@ -28,7 +29,7 @@ public struct AddGoalView: View {
                     DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
                 }
             }
-            .navigationTitle("New Goal")
+            .navigationTitle("New PlannerGoal")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -49,13 +50,13 @@ public struct AddGoalView: View {
     }
 
     private func saveGoal() {
-        let newGoal = Goal(
+        let newGoal = PlannerGoal(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
+            taskDescription: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
             targetDate: self.targetDate
         )
         self.goals.append(newGoal)
-        GoalDataManager.shared.save(goals: self.goals)
+        WorkspaceManager.shared.save(goals: self.goals)
     }
 }
 

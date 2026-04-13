@@ -2,7 +2,7 @@
 //  CalendarEventTests.swift
 //  PlannerAppTests
 //
-//  Comprehensive test suite for CalendarEvent
+//  Comprehensive test suite for PlannerCalendarEvent
 //
 
 import XCTest

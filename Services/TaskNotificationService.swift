@@ -1,10 +1,11 @@
 import Foundation
+import PlannerAppCore
 
 /// Service that coordinates task management with notifications
 final class TaskNotificationService {
     static let shared = TaskNotificationService()
 
-    private let taskDataManager = TaskDataManager.shared
+    private let taskDataManager = WorkspaceManager.shared
     private let notificationManager = NotificationManager.shared
 
     private init() {}

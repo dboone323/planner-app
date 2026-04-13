@@ -7,7 +7,9 @@
 
 import CloudKit
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 @MainActor
 public class CloudKitManager: ObservableObject {
@@ -110,7 +112,7 @@ public class CloudKitManager: ObservableObject {
     private func scheduleNextSync() {
         // Schedule next sync in 15 minutes
         DispatchQueue.main.asyncAfter(deadline: .now() + 900) {
-            SwiftUI.Task { [weak self] in
+            SwiftUI.PlannerTask { [weak self] in
                 await self?.syncAllData()
             }
         }
@@ -120,10 +122,10 @@ public class CloudKitManager: ObservableObject {
 
     func syncTasks() async throws {
         // - Pending: Implement task synchronization
-        print("Task sync - placeholder implementation")
+        print("PlannerTask sync - placeholder implementation")
 
         // Fetch local tasks
-        let localTasks = TaskDataManager.shared.load()
+        let localTasks = WorkspaceManager.shared.load()
 
         // Upload local tasks to CloudKit
         for task in localTasks {
@@ -132,26 +134,26 @@ public class CloudKitManager: ObservableObject {
         }
 
         // Fetch remote tasks and merge
-        let query = CKQuery(recordType: "Task", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerTask", predicate: NSPredicate(value: true))
         let result = try await database.records(matching: query)
 
         for (_, recordResult) in result.matchResults {
             let record = try recordResult.get()
-            let remoteTask = try Task.from(ckRecord: record)
+            let remoteTask = try PlannerTask.from(ckRecord: record)
 
             // Check if task exists locally, if not add it
             if !localTasks.contains(where: { $0.id == remoteTask.id }) {
-                TaskDataManager.shared.tasks.append(remoteTask)
+                WorkspaceManager.shared.tasks.append(remoteTask)
             }
         }
     }
 
     func syncGoals() async throws {
         // - Pending: Implement goal synchronization
-        print("Goal sync - placeholder implementation")
+        print("PlannerGoal sync - placeholder implementation")
 
         // Fetch local goals
-        let localGoals = GoalDataManager.shared.load()
+        let localGoals = WorkspaceManager.shared.load()
 
         // Upload local goals to CloudKit
         for goal in localGoals {
@@ -160,12 +162,12 @@ public class CloudKitManager: ObservableObject {
         }
 
         // Fetch remote goals and merge
-        let query = CKQuery(recordType: "Goal", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerGoal", predicate: NSPredicate(value: true))
         let result = try await database.records(matching: query)
 
         for (_, recordResult) in result.matchResults {
             let record = try recordResult.get()
-            let remoteGoal = try Goal.from(ckRecord: record)
+            let remoteGoal = try PlannerGoal.from(ckRecord: record)
 
             // Check if goal exists locally, if not add it
             if !localGoals.contains(where: { $0.id == remoteGoal.id }) {
@@ -180,7 +182,7 @@ public class CloudKitManager: ObservableObject {
         print("Journal entry sync - placeholder implementation")
 
         // Fetch local journal entries
-        let localEntries = JournalDataManager.shared.load()
+        let localEntries = WorkspaceManager.shared.load()
 
         // Upload local entries to CloudKit
         for entry in localEntries {
@@ -189,16 +191,16 @@ public class CloudKitManager: ObservableObject {
         }
 
         // Fetch remote entries and merge
-        let query = CKQuery(recordType: "JournalEntry", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerJournalEntry", predicate: NSPredicate(value: true))
         let result = try await database.records(matching: query)
 
         for (_, recordResult) in result.matchResults {
             let record = try recordResult.get()
-            let remoteEntry = try JournalEntry.from(ckRecord: record)
+            let remoteEntry = try PlannerJournalEntry.from(ckRecord: record)
 
             // Check if entry exists locally, if not add it
             if !localEntries.contains(where: { $0.id == remoteEntry.id }) {
-                JournalDataManager.shared.entries.append(remoteEntry)
+                WorkspaceManager.shared.entries.append(remoteEntry)
             }
         }
     }
@@ -208,7 +210,7 @@ public class CloudKitManager: ObservableObject {
         print("Calendar event sync - placeholder implementation")
 
         // Fetch local calendar events
-        let localEvents = CalendarDataManager.shared.load()
+        let localEvents = WorkspaceManager.shared.load()
 
         // Upload local events to CloudKit
         for event in localEvents {
@@ -217,16 +219,16 @@ public class CloudKitManager: ObservableObject {
         }
 
         // Fetch remote events and merge
-        let query = CKQuery(recordType: "CalendarEvent", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerCalendarEvent", predicate: NSPredicate(value: true))
         let result = try await database.records(matching: query)
 
         for (_, recordResult) in result.matchResults {
             let record = try recordResult.get()
-            let remoteEvent = try CalendarEvent.from(ckRecord: record)
+            let remoteEvent = try PlannerCalendarEvent.from(ckRecord: record)
 
             // Check if event exists locally, if not add it
             if !localEvents.contains(where: { $0.id == remoteEvent.id }) {
-                CalendarDataManager.shared.events.append(remoteEvent)
+                WorkspaceManager.shared.events.append(remoteEvent)
             }
         }
     }

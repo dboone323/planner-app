@@ -8,7 +8,7 @@ final class TaskManagerTests: XCTestCase, @unchecked Sendable {
         try await super.setUp()
         await MainActor.run {
             // Reset relevant UserDefaults for TaskDataManager if any
-            self.taskManager = TaskDataManager.shared
+            self.taskManager = WorkspaceManager.shared
             self.taskManager.clearAllTasks()
         }
     }
@@ -25,12 +25,12 @@ final class TaskManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testCreateTask() {
-        let task = PlannerTask(title: "Test Task", dueDate: Date())
+        let task = PlannerTask(title: "Test PlannerTask", dueDate: Date())
         self.taskManager.add(task)
 
         let tasks = self.taskManager.load()
         XCTAssertEqual(tasks.count, 1)
-        XCTAssertEqual(tasks.first?.title, "Test Task")
+        XCTAssertEqual(tasks.first?.title, "Test PlannerTask")
     }
 
     @MainActor
@@ -58,8 +58,8 @@ final class TaskManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testFetchAllTasks() {
-        let task1 = PlannerTask(title: "Task 1", dueDate: Date())
-        let task2 = PlannerTask(title: "Task 2", dueDate: Date())
+        let task1 = PlannerTask(title: "PlannerTask 1", dueDate: Date())
+        let task2 = PlannerTask(title: "PlannerTask 2", dueDate: Date())
 
         self.taskManager.add(task1)
         self.taskManager.add(task2)

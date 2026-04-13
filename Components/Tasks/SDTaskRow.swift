@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit
@@ -26,7 +27,7 @@ public struct SDTaskRow: View {
                 .font(.title3)
                 .onTapGesture { self.toggleCompletion() }
 
-            // Task title text
+            // PlannerTask title text
             Text(self.taskItem.title)
                 .font(
                     self.themeManager.currentTheme.font(

@@ -1,5 +1,7 @@
 import Foundation
+import PlannerAppCore
 import UserNotifications
+import PlannerAppCore
 
 /// Manages notifications for task reminders and due dates
 @MainActor
@@ -36,14 +38,14 @@ public class NotificationManager {
         guard reminderDate > Date() else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Task Reminder"
+        content.title = "PlannerTask Reminder"
         content.body = "\"\(task.title)\" is due soon"
         content.sound = .default
         content.badge = 1
 
         // Add task details if available
-        if !task.taskDescription.isEmpty {
-            content.body = "\"\(task.title)\" is due soon: \(task.taskDescription)"
+        if let description = task.taskDescription, !description.isEmpty {
+            content.body = "\"\(task.title)\" is due soon: \(description)"
         }
 
         let components = Calendar.current.dateComponents(
@@ -73,7 +75,7 @@ public class NotificationManager {
         guard dueDate > Date() else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Task Due"
+        content.title = "PlannerTask Due"
         content.body = "\"\(task.title)\" is due now"
         content.sound = .default
         content.badge = 1

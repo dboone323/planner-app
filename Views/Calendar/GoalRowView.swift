@@ -1,8 +1,9 @@
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 import PlannerAgentCore
 
-/// Goal row view compatible with consolidated models.
+/// PlannerGoal row view compatible with consolidated models.
 public struct GoalRowView: View {
     @EnvironmentObject var themeManager: ThemeManager
     let goal: PlannerGoal
@@ -35,7 +36,7 @@ public struct GoalRowView: View {
             }
             .frame(width: 50)
 
-            // Goal details
+            // PlannerGoal details
             VStack(alignment: .leading, spacing: 4) {
                 Text(self.goal.title)
                     .font(.subheadline)
@@ -89,5 +90,3 @@ public struct GoalRowView: View {
     }
 }
 
-// Keep typealias for backward compatibility during transition
-public typealias SDGoalRowView = GoalRowView

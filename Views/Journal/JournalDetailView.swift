@@ -1,11 +1,12 @@
 // PlannerApp/Views/Journal/JournalDetailView.swift (Updated)
 import SwiftUI
+import PlannerAppCore
 
 public struct JournalDetailView: View {
     /// Access shared ThemeManager
     @EnvironmentObject var themeManager: ThemeManager
     /// The specific journal entry to display
-    var entry: JournalEntry
+    var entry: PlannerJournalEntry
 
     /// Read settings if needed (e.g., for date formatting)
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
@@ -87,7 +88,7 @@ public struct JournalDetailView_Previews: PreviewProvider {
         NavigationStack {
             // Create a sample entry for the preview
             JournalDetailView(
-                entry: JournalEntry(
+                entry: PlannerJournalEntry(
                     title: "A Wonderful Day",
                     body: "Spent the afternoon reading in the park. "
                         + "The weather was perfect and it felt great to relax and unwind.",

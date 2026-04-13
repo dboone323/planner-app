@@ -1,10 +1,11 @@
 // PlannerApp/Views/Goals/GoalsView.swift (Updated)
 import SwiftUI
+import PlannerAppCore
 
 public struct GoalsView: View {
     // Access shared ThemeManager and data
     @EnvironmentObject var themeManager: ThemeManager
-    @State private var goals: [Goal] = [] // Holds all goals
+    @State private var goals: [PlannerGoal] = [] // Holds all goals
     @State private var showAddGoal = false // State to control presentation of AddGoal sheet
 
     /// Read date/time settings if needed for display (e.g., formatter locale)
@@ -82,13 +83,13 @@ public struct GoalsView: View {
 
     /// Loads goals from the data manager
     private func loadGoals() {
-        self.goals = GoalDataManager.shared.load()
+        self.goals = WorkspaceManager.shared.loadGoals()
         print("Goals loaded. Count: \(self.goals.count)")
     }
 
     /// Saves the current state of the `goals` array to the data manager
     private func saveGoals() {
-        GoalDataManager.shared.save(goals: self.goals)
+        WorkspaceManager.shared.save(goals: self.goals)
         print("Goals saved.")
     }
 }

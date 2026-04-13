@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct EmptyStateView: View {
     public let imageSystemName: String

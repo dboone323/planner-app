@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 import XCTest
 @testable import PlannerApp
 

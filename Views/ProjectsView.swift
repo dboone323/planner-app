@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 /// View for managing and displaying projects
 public struct ProjectsView: View {
@@ -7,7 +8,7 @@ public struct ProjectsView: View {
     @State private var selectedStatus: PlannerProject.ProjectStatus = .active
 
     private let projectDataManager = ProjectDataManager.shared
-    private let taskDataManager = TaskDataManager.shared
+    private let taskDataManager = WorkspaceManager.shared
 
     var body: some View {
         NavigationStack {
@@ -58,7 +59,7 @@ public struct ProjectsView: View {
                     Button(
                         action: { showingAddProject = true },
                         label: {
-                            Label("Add Project", systemImage: "plus")
+                            Label("Add PlannerProject", systemImage: "plus")
                         }
                     )
                 }
@@ -100,7 +101,7 @@ public struct ProjectsView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
 
-            Button("Create Project") {
+            Button("Create PlannerProject") {
                 showingAddProject = true
             }
             .buttonStyle(.borderedProminent)
@@ -280,8 +281,8 @@ struct AddProjectView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Project Details") {
-                    TextField("Project Name", text: $name)
+                Section("PlannerProject Details") {
+                    TextField("PlannerProject Name", text: $name)
 
                     TextEditor(text: $description)
                         .frame(height: 100)
@@ -330,7 +331,7 @@ struct AddProjectView: View {
                     }
                 }
             }
-            .navigationTitle("New Project")
+            .navigationTitle("New PlannerProject")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -352,7 +353,7 @@ struct AddProjectView: View {
     private func saveProject() {
         let project = PlannerProject(
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-            description: description.trimmingCharacters(in: .whitespacesAndNewlines),
+            taskDescription: description.trimmingCharacters(in: .whitespacesAndNewlines),
             color: color,
             targetCompletionDate: targetCompletionDate
         )

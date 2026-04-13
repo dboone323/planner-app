@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 import SharedKit
 import PlannerAgentCore
 
@@ -22,13 +23,13 @@ struct ScheduleAudit {
             "preferences": "morning"
         ]
 
-        print(">>> [Task] Analysing 5 tasks for optimal scheduling...")
+        print(">>> [PlannerTask] Analysing 5 tasks for optimal scheduling...")
         do {
             let result = try await agent.execute(context: context)
             print("\n--- Agent Result: \(result.agentId) ---")
             print("Status: \(result.success ? "SUCCESS" : "NEEDS ATTENTION")")
             print("Summary: \(result.summary)")
-            print("Task Count: \(result.detail["task_count"] ?? "N/A")")
+            print("PlannerTask Count: \(result.detail["task_count"] ?? "N/A")")
             print("High Priority: \(result.detail["high_priority"] ?? "0")")
             print("Overdue: \(result.detail["overdue"] ?? "0")")
             print("Preferred Slot: \(result.detail["preferred_slot"] ?? "N/A")")
@@ -38,6 +39,6 @@ struct ScheduleAudit {
             print("Error executing agent: \(error)")
         }
 
-        print("\n>>> [PlannerApp Agent] Task completed.")
+        print("\n>>> [PlannerApp Agent] PlannerTask completed.")
     }
 }

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import PlannerAppCore
 import QuartzCore
 
 /// Monitors application performance metrics with caching and thread safety

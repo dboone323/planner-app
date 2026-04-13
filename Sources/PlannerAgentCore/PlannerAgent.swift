@@ -1,5 +1,7 @@
 import Foundation
+import PlannerAppCore
 import SharedKit
+import PlannerAppCore
 
 /// A `BaseAgent`-compliant scheduling agent for PlannerApp.
 ///
@@ -73,7 +75,7 @@ public struct PlannerAgent: BaseAgent {
         Remaining Tasks:
         \(taskList)
 
-        Task: Provide a professional, concise scheduling strategy. 
+        PlannerTask: Provide a professional, concise scheduling strategy. 
         Focus on resolving priority conflicts and suggesting the best order of execution.
         Return ONLY the recommendation text.
         """
@@ -85,7 +87,7 @@ public struct PlannerAgent: BaseAgent {
                 maxTokens: 500,
                 useCache: true
             )
-            return response.trimmingCharacters(in: .whitespacesAndNewlines)
+            return response.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         } catch {
             return nil
         }

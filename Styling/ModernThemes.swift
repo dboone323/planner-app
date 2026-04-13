@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 extension Theme {
     // MARK: - Modern Enhanced Themes

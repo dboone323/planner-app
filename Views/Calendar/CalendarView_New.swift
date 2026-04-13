@@ -1,16 +1,18 @@
 import SwiftUI
+import PlannerAppCore
 
 // filepath: /Users/danielstevens/Desktop/PlannerApp/Views/Calendar/CalendarView.swift
 // PlannerApp/Views/Calendar/CalendarView.swift
 
 import Foundation
+import PlannerAppCore
 
 public struct CalendarView: View {
     // Access shared ThemeManager and data
     @EnvironmentObject var themeManager: ThemeManager
-    @State private var events: [CalendarEvent] = []
-    @State private var goals: [Goal] = []
-    @State private var tasks: [Task] = []
+    @State private var events: [PlannerCalendarEvent] = []
+    @State private var goals: [PlannerGoal] = []
+    @State private var tasks: [PlannerTask] = []
     @State private var showAddEvent = false
     @State private var selectedDate = Date()
     @State private var showingDateDetails = false
@@ -20,7 +22,7 @@ public struct CalendarView: View {
     @AppStorage(AppSettingKeys.use24HourTime) private var use24HourTime: Bool = false
 
     /// Computed property to group events by the start of their day
-    private var groupedEvents: [Date: [CalendarEvent]] {
+    private var groupedEvents: [Date: [PlannerCalendarEvent]] {
         var calendar = Calendar.current
         calendar.firstWeekday = self.firstDayOfWeekSetting
         return Dictionary(grouping: self.events.sorted(by: { $0.date < $1.date })) { event in
@@ -54,9 +56,9 @@ public struct CalendarView: View {
 
     /// Structure for selected date items
     private struct SelectedDateItems {
-        let events: [CalendarEvent]
-        let goals: [Goal]
-        let tasks: [Task]
+        let events: [PlannerCalendarEvent]
+        let goals: [PlannerGoal]
+        let tasks: [PlannerTask]
     }
 
     /// Get items for selected date
@@ -241,16 +243,16 @@ public struct CalendarView: View {
     // MARK: - Data Functions
 
     private func loadAllData() {
-        self.events = CalendarDataManager.shared.load()
-        self.goals = GoalDataManager.shared.load()
-        self.tasks = TaskDataManager.shared.load()
+        self.events = WorkspaceManager.shared.load()
+        self.goals = WorkspaceManager.shared.loadGoals()
+        self.tasks = WorkspaceManager.shared.load()
         print(
             "Calendar data loaded. Events: \(self.events.count), Goals: \(self.goals.count), Tasks: \(self.tasks.count)"
         )
     }
 
     private func saveEvents() {
-        CalendarDataManager.shared.save(events: self.events)
+        WorkspaceManager.shared.save(events: self.events)
         print("Calendar events saved.")
         self.loadAllData()
     }

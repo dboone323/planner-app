@@ -1,6 +1,8 @@
 // PlannerApp/Components/Tasks/TaskInputView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct TaskInputView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -10,7 +12,7 @@ public struct TaskInputView: View {
 
     public var body: some View {
         HStack {
-            TextField("New Task", text: self.$newTaskTitle, onCommit: self.onAddTask)
+            TextField("New PlannerTask", text: self.$newTaskTitle, onCommit: self.onAddTask)
                 .focused(self.isInputFieldFocused)
                 .padding()
                 .background(Color.gray.opacity(0.2))

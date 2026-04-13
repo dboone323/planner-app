@@ -1,5 +1,6 @@
 // PlannerApp/Views/Calendar/DateSectionView.swift
 import SwiftUI
+import PlannerAppCore
 
 struct DateSectionView<Content: View>: View {
     @EnvironmentObject var themeManager: ThemeManager

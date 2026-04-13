@@ -1,8 +1,9 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct AddGoalView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var goals: [Goal]
+    @Binding var goals: [PlannerGoal]
 
     @State private var title = ""
     @State private var description = ""
@@ -11,11 +12,11 @@ public struct AddGoalView: View {
     public var body: some View {
         NavigationView {
             Form {
-                TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                TextField("PlannerGoal Title", text: self.$title).accessibilityLabel("Text Field")
                 TextField("Description", text: self.$description).accessibilityLabel("Text Field")
                 DatePicker("Target Date", selection: self.$targetDate, displayedComponents: .date)
             }
-            .navigationTitle("New Goal")
+            .navigationTitle("New PlannerGoal")
         }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -26,11 +27,11 @@ public struct AddGoalView: View {
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save", action: {
-                    let newGoal = Goal(
-                        title: title, description: description, targetDate: targetDate
+                    let newGoal = PlannerGoal(
+                        title: title, goalDescription: description, targetDate: targetDate
                     )
                     self.goals.append(newGoal)
-                    GoalDataManager.shared.save(goals: self.goals)
+                    WorkspaceManager.shared.save(goals: self.goals)
                     self.dismiss()
                 })
                 .accessibilityLabel("Button")

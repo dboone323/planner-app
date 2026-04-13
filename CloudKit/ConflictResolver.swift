@@ -8,6 +8,7 @@
 
 import CloudKit
 import Foundation
+import PlannerAppCore
 
 /// Represents a sync conflict between local and server data
 struct SyncConflictInfo: Identifiable, Equatable {

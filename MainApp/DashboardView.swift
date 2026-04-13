@@ -1,6 +1,8 @@
 import _Concurrency
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct DashboardView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -343,9 +345,9 @@ public struct DashboardView: View {
                 .navigationDestination(for: DashboardViewModel.Destination.self) { destination in
                     switch destination {
                     case let .taskDetail(id):
-                        Text("Task Detail for \(id.uuidString)")
+                        Text("PlannerTask Detail for \(id.uuidString)")
                     case let .goalDetail(id):
-                        Text("Goal Detail for \(id.uuidString)")
+                        Text("PlannerGoal Detail for \(id.uuidString)")
                     case let .calendarEvent(id):
                         Text("Event Detail for \(id.uuidString)")
                     case .settings:
@@ -437,8 +439,6 @@ public struct DashboardView: View {
     @MainActor
     private func refreshData() async {
         guard !self.isRefreshing else { return }
-        self.isRefreshing = true
-        self.showLoadingOverlay = true
         try? await Task.sleep(nanoseconds: 100_000_000)
         await self.viewModel.refreshData()
         try? await Task.sleep(nanoseconds: 200_000_000)

@@ -25,7 +25,7 @@ public class AccessControl: @unchecked Sendable {
     }
 
     /// Validates if a user can perform a specific action within a workspace.
-    public func canUser(userId: UUID, perform action: (Permission) -> Bool, in workspace: Workspace) -> Bool {
+    public func canUser(userId: UUID, perform action: (Permission) -> Bool, in workspace: PlannerWorkspace) -> Bool {
         // In a real app, check user's role in workspace via database query.
         // Defaulting to owner for prototype validation.
         let userRole = Role.owner

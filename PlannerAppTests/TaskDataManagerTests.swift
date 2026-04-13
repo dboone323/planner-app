@@ -16,7 +16,7 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
     override nonisolated func setUp() async throws {
         try await super.setUp()
         await MainActor.run {
-            self.manager = TaskDataManager.shared
+            self.manager = WorkspaceManager.shared
             self.manager.clearAllTasks()
         }
     }
@@ -32,13 +32,13 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testSharedInstanceExists() {
-        XCTAssertNotNil(TaskDataManager.shared)
+        XCTAssertNotNil(WorkspaceManager.shared)
     }
 
     @MainActor
     func testSharedInstanceIsSingleton() {
-        let instance1 = TaskDataManager.shared
-        let instance2 = TaskDataManager.shared
+        let instance1 = WorkspaceManager.shared
+        let instance2 = WorkspaceManager.shared
         XCTAssertTrue(instance1 === instance2, "Should return same instance")
     }
 
@@ -52,35 +52,35 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testSaveAndLoadTasks() {
-        let task1 = PlannerTask(title: "Task 1")
-        let task2 = PlannerTask(title: "Task 2")
+        let task1 = PlannerTask(title: "PlannerTask 1")
+        let task2 = PlannerTask(title: "PlannerTask 2")
 
         self.manager.save(tasks: [task1, task2])
         let loadedTasks = self.manager.load()
 
         XCTAssertEqual(loadedTasks.count, 2)
-        XCTAssertEqual(loadedTasks[0].title, "Task 1")
-        XCTAssertEqual(loadedTasks[1].title, "Task 2")
+        XCTAssertEqual(loadedTasks[0].title, "PlannerTask 1")
+        XCTAssertEqual(loadedTasks[1].title, "PlannerTask 2")
     }
 
     // MARK: - Add Tests
 
     @MainActor
     func testAddTask() {
-        let task = PlannerTask(title: "New Task")
+        let task = PlannerTask(title: "New PlannerTask")
         self.manager.add(task)
 
         let tasks = self.manager.load()
         XCTAssertEqual(tasks.count, 1)
-        XCTAssertEqual(tasks.first?.title, "New Task")
+        XCTAssertEqual(tasks.first?.title, "New PlannerTask")
         XCTAssertEqual(tasks.first?.id, task.id)
     }
 
     @MainActor
     func testAddMultipleTasks() {
-        self.manager.add(PlannerTask(title: "Task 1"))
-        self.manager.add(PlannerTask(title: "Task 2"))
-        self.manager.add(PlannerTask(title: "Task 3"))
+        self.manager.add(PlannerTask(title: "PlannerTask 1"))
+        self.manager.add(PlannerTask(title: "PlannerTask 2"))
+        self.manager.add(PlannerTask(title: "PlannerTask 3"))
 
         let tasks = self.manager.load()
         XCTAssertEqual(tasks.count, 3)
@@ -285,8 +285,8 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testClearAllTasks() {
-        self.manager.add(PlannerTask(title: "Task 1"))
-        self.manager.add(PlannerTask(title: "Task 2"))
+        self.manager.add(PlannerTask(title: "PlannerTask 1"))
+        self.manager.add(PlannerTask(title: "PlannerTask 2"))
         XCTAssertEqual(self.manager.load().count, 2)
 
         self.manager.clearAllTasks()
@@ -301,7 +301,7 @@ final class TaskDataManagerTests: XCTestCase, @unchecked Sendable {
         self.manager.add(task)
 
         // Access shared instance again (simulating app restart)
-        let newAccess = TaskDataManager.shared
+        let newAccess = WorkspaceManager.shared
         let tasks = newAccess.load()
 
         XCTAssertEqual(tasks.count, 1)

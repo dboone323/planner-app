@@ -1,10 +1,12 @@
 // PlannerApp/Components/Goals/GoalItemView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct GoalItemView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    let goal: Goal
+    let goal: PlannerGoal
     let onProgressUpdate: (UUID, Double) -> Void
     let onCompletionToggle: (UUID) -> Void
 
@@ -76,7 +78,7 @@ public struct GoalItemView: View {
             // Header with title and priority
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    // Goal Title with completion indicator
+                    // PlannerGoal Title with completion indicator
                     HStack(spacing: 8) {
                         if self.goal.isCompleted {
                             Image(systemName: "checkmark.circle.fill")
@@ -142,8 +144,8 @@ public struct GoalItemView: View {
                     self.showProgressSheet = true
                 }
 
-            // Goal Description
-            Text(self.goal.description)
+            // PlannerGoal Description
+            Text(self.goal.goalDescription)
                 .font(
                     self.themeManager.currentTheme.font(
                         forName: self.themeManager.currentTheme.secondaryFontName,

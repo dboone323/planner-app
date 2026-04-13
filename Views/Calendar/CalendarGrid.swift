@@ -1,5 +1,6 @@
 // PlannerApp/Views/Calendar/CalendarGrid.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct CalendarGrid: View {
     @EnvironmentObject var themeManager: ThemeManager

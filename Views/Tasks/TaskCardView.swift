@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 import PlannerAgentCore
 
 struct TaskCardView: View {
@@ -32,8 +33,8 @@ struct TaskCardView: View {
                 }
 
                 // Description (if present)
-                if !self.task.taskDescription.isEmpty {
-                    Text(self.task.taskDescription)
+                if let description = task.taskDescription, !description.isEmpty {
+                    Text("")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .lineLimit(2)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 /// Pull-to-refresh enabled list with sync status indicator.
 struct SyncRefreshableView<Content: View>: View {

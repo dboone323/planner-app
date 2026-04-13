@@ -2,8 +2,10 @@
 // Simplified version for compilation
 
 import Foundation
+import PlannerAppCore
 import LocalAuthentication
 import SwiftUI
+import PlannerAppCore
 import UserNotifications
 
 #if os(macOS)

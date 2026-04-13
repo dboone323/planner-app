@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PlannerAppCore
 import SwiftData
 
 // MARK: - Recurrence Types
@@ -21,12 +22,12 @@ public enum RecurrenceType: String, Codable, CaseIterable {
     case custom = "Custom"
 }
 
-// MARK: - Task Template
+// MARK: - PlannerTask Template
 
 public struct RecurringTaskTemplate: Codable, Identifiable {
     public var id: UUID
     public var title: String
-    public var description: String
+    public var taskDescription: String
     public var priority: String
     public var recurrence: RecurrenceType
     public var customDays: Set<Int>? // For custom recurrence (1=Sunday, 7=Saturday)
@@ -38,7 +39,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
     public init(
         id: UUID = UUID(),
         title: String,
-        description: String = "",
+        taskDescription: String = "",
         priority: String = "medium",
         recurrence: RecurrenceType = .daily,
         customDays: Set<Int>? = nil,
@@ -47,7 +48,7 @@ public struct RecurringTaskTemplate: Codable, Identifiable {
     ) {
         self.id = id
         self.title = title
-        self.description = description
+        self.taskDescription = taskDescription
         self.priority = priority
         self.recurrence = recurrence
         self.customDays = customDays
@@ -166,7 +167,7 @@ final class RecurringTaskTemplateManager: ObservableObject {
 
             let task = SDTask(
                 title: templates[i].title,
-                taskDescription: self.templates[i].description,
+                taskDescription: self.templates[i].taskDescription,
                 priority: self.templates[i].priority,
                 dueDate: nextDue
             )

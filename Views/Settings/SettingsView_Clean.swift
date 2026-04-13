@@ -2,11 +2,13 @@
 
 import LocalAuthentication
 import SwiftUI
+import PlannerAppCore
 import UserNotifications
 #if os(macOS)
     import AppKit
 #endif
 import Foundation
+import PlannerAppCore
 
 public struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager

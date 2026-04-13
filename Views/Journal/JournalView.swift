@@ -1,12 +1,13 @@
 // PlannerApp/Views/Journal/JournalView.swift (Biometrics Removed - v10)
 import SwiftUI
+import PlannerAppCore
 
 // Removed LocalAuthentication import
 
 public struct JournalView: View {
     // Access shared ThemeManager and data/settings
     @EnvironmentObject var themeManager: ThemeManager
-    @State private var journalEntries: [JournalEntry] = []
+    @State private var journalEntries: [PlannerJournalEntry] = []
     @State private var showAddEntry = false
     @State private var searchText = ""
     @State private var sentimentFilter: SentimentFilter = .all
@@ -20,7 +21,7 @@ public struct JournalView: View {
     // @State private var isAuthenticating = false
 
     /// Filtered and sorted entries
-    private var filteredEntries: [JournalEntry] {
+    private var filteredEntries: [PlannerJournalEntry] {
         // Apply text search filter
         let searched = self.searchText.isEmpty
             ? self.journalEntries
@@ -31,7 +32,7 @@ public struct JournalView: View {
             }
 
         // Apply sentiment filter
-        let sentimentFiltered: [JournalEntry] = switch self.sentimentFilter {
+        let sentimentFiltered: [PlannerJournalEntry] = switch self.sentimentFilter {
         case .all:
             searched
         case .positive:
@@ -144,13 +145,13 @@ public struct JournalView: View {
 
     private func loadEntries() {
         print("[JournalView Simplified] loadEntries called")
-        self.journalEntries = JournalDataManager.shared.load()
+        self.journalEntries = WorkspaceManager.shared.load()
         print("[JournalView Simplified] Loaded \(self.journalEntries.count) entries.")
     }
 
     private func saveEntries() {
         print("[JournalView Simplified] saveEntries called")
-        JournalDataManager.shared.save(entries: self.journalEntries)
+        WorkspaceManager.shared.save(entries: self.journalEntries)
     }
 }
 

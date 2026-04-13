@@ -1,10 +1,12 @@
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct AddGoalView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) var dismiss
-    @Binding var goals: [Goal]
+    @Binding var goals: [PlannerGoal]
 
     @State private var title = ""
     @State private var description = ""
@@ -22,8 +24,8 @@ public struct AddGoalView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("Goal Details") {
-                    TextField("Goal Title", text: self.$title).accessibilityLabel("Text Field")
+                Section("PlannerGoal Details") {
+                    TextField("PlannerGoal Title", text: self.$title).accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
                         .font(self.themeManager.currentTheme.font(
                             forName: self.themeManager.currentTheme.primaryFontName,
@@ -78,7 +80,7 @@ public struct AddGoalView: View {
             .background(self.themeManager.currentTheme.primaryBackgroundColor.ignoresSafeArea())
             .scrollContentBackground(.hidden)
             .accentColor(self.themeManager.currentTheme.primaryAccentColor)
-            .navigationTitle("New Goal")
+            .navigationTitle("New PlannerGoal")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -104,15 +106,15 @@ public struct AddGoalView: View {
     }
 
     private func saveGoal() {
-        let newGoal = Goal(
+        let newGoal = PlannerGoal(
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            description: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
+            taskDescription: self.description.trimmingCharacters(in: .whitespacesAndNewlines),
             targetDate: self.targetDate,
             priority: self.priority,
             progress: self.progress
         )
         self.goals.append(newGoal)
-        GoalDataManager.shared.save(goals: self.goals)
+        WorkspaceManager.shared.save(goals: self.goals)
     }
 }
 

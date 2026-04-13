@@ -1,7 +1,9 @@
 // PlannerApp/MainApp/PlannerApp.swift (Updated)
 import Foundation
+import PlannerAppCore
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 @main
 public struct PlannerApp: App {
@@ -77,10 +79,6 @@ public struct PlannerApp: App {
                 .environmentObject(self.themeManager)
                 .plannerAccessibilityDefaults()
                 .onAppear {
-                    // Perform one-time legacy data migration
-                    LegacyDataMigrator.migrateIfNeeded(
-                        context: self.sharedModelContainer.mainContext
-                    )
                     PlannerAppLifecycleCoordinator.configureOnLaunch()
                 }
         }

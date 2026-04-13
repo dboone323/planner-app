@@ -1,5 +1,6 @@
 // PlannerApp/Views/Calendar/TaskRowView.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct TaskRowView: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -61,7 +62,7 @@ public struct TaskRowView: View {
             }
             .frame(width: 50)
 
-            // Task details
+            // PlannerTask details
             VStack(alignment: .leading, spacing: 2) {
                 Text(self.task.title)
                     .font(.subheadline)
@@ -72,8 +73,8 @@ public struct TaskRowView: View {
                         .strikethrough(self.task.isCompleted)
                         .lineLimit(2)
 
-                if !self.task.description.isEmpty {
-                    Text(self.task.description)
+                if let description = task.taskDescription, !description.isEmpty {
+                    Text(description)
                         .font(.caption)
                         .foregroundColor(self.themeManager.currentTheme.secondaryTextColor)
                         .lineLimit(1)
@@ -112,7 +113,7 @@ public struct TaskRowView: View {
         TaskRowView(task: PlannerTask(
             id: UUID(),
             title: "Review Pull Request",
-            description: "Check the new feature implementation",
+            taskDescription: "Check the new feature implementation",
             isCompleted: false,
             priority: .high,
             dueDate: Date()
@@ -121,7 +122,7 @@ public struct TaskRowView: View {
         TaskRowView(task: PlannerTask(
             id: UUID(),
             title: "Buy Groceries",
-            description: "Get items for dinner party",
+            taskDescription: "Get items for dinner party",
             isCompleted: false,
             priority: .medium,
             dueDate: Calendar.current.date(byAdding: .hour, value: -2, to: Date())
@@ -129,8 +130,8 @@ public struct TaskRowView: View {
 
         TaskRowView(task: PlannerTask(
             id: UUID(),
-            title: "Completed Task",
-            description: "This task is done",
+            title: "Completed PlannerTask",
+            taskDescription: "This task is done",
             isCompleted: true,
             priority: .low,
             dueDate: Date()

@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 
 /// Protocol defining the interface for project data management
 protocol ProjectDataManaging {

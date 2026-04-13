@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 import UserNotifications
 
 /// Manages notifications for task reminders and due dates
@@ -36,7 +37,7 @@ final class NotificationManager {
         guard reminderDate > Date() else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Task Reminder"
+        content.title = "PlannerTask Reminder"
         content.body = "\"\(task.title)\" is due soon"
         content.sound = .default
         content.badge = 1
@@ -73,7 +74,7 @@ final class NotificationManager {
         guard dueDate > Date() else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Task Due"
+        content.title = "PlannerTask Due"
         content.body = "\"\(task.title)\" is due now"
         content.sound = .default
         content.badge = 1

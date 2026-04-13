@@ -1,32 +1,30 @@
 import Foundation
 import SwiftData
-import SwiftUI // For Color (used in TaskPriority logic if needed, but not in model)
 
 /// The versioned schema definitions for PlannerApp.
-/// Note: This file replaces the standalone SDTask and SDGoal definitions.
-enum PlannerSchemaV1: VersionedSchema {
-    static let versionIdentifier = Schema.Version(1, 0, 0)
+public enum PlannerSchemaV1: VersionedSchema {
+    public static let versionIdentifier = Schema.Version(1, 0, 0)
 
-    static var models: [any PersistentModel.Type] {
+    public static var models: [any PersistentModel.Type] {
         [SDTask.self, SDGoal.self]
     }
 
     @Model
-    final class SDTask: Hashable {
-        @Attribute(.unique) var id: UUID
-        var title: String
-        var taskDescription: String
-        var isCompleted: Bool
-        var priority: String
-        var dueDate: Date?
-        var createdAt: Date
-        var modifiedAt: Date?
-        var calendarEventId: String?
-        var estimatedDuration: TimeInterval
-        var sentiment: String
-        var sentimentScore: Double
+    public final class SDTask {
+        @Attribute(.unique) public var id: UUID
+        public var title: String
+        public var taskDescription: String
+        public var isCompleted: Bool
+        public var priority: String
+        public var dueDate: Date?
+        public var createdAt: Date
+        public var modifiedAt: Date?
+        public var calendarEventId: String?
+        public var estimatedDuration: TimeInterval
+        public var sentiment: String
+        public var sentimentScore: Double
 
-        init(
+        public init(
             id: UUID = UUID(),
             title: String,
             taskDescription: String = "",
@@ -56,7 +54,7 @@ enum PlannerSchemaV1: VersionedSchema {
 
         // MARK: - Logic
 
-        func analyzeSentiment() {
+        public func analyzeSentiment() {
             let lower = self.taskDescription.lowercased()
             let positives = [
                 "love", "great", "excellent", "happy", "good", "amazing", "wonderful", "fast",
@@ -79,7 +77,7 @@ enum PlannerSchemaV1: VersionedSchema {
             self.modifiedAt = Date()
         }
 
-        var prioritySortOrder: Int {
+        public var prioritySortOrder: Int {
             switch self.priority {
             case "high": 3
             case "medium": 2
@@ -87,29 +85,21 @@ enum PlannerSchemaV1: VersionedSchema {
             default: 0
             }
         }
-
-        static func == (lhs: SDTask, rhs: SDTask) -> Bool {
-            lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.id)
-        }
     }
 
     @Model
-    final class SDGoal: Hashable {
-        @Attribute(.unique) var id: UUID
-        var title: String
-        var goalDescription: String
-        var targetDate: Date
-        var createdAt: Date
-        var modifiedAt: Date?
-        var isCompleted: Bool
-        var priority: String
-        var progress: Double
+    public final class SDGoal {
+        @Attribute(.unique) public var id: UUID
+        public var title: String
+        public var goalDescription: String
+        public var targetDate: Date
+        public var createdAt: Date
+        public var modifiedAt: Date?
+        public var isCompleted: Bool
+        public var priority: String
+        public var progress: Double
 
-        init(
+        public init(
             id: UUID = UUID(),
             title: String,
             goalDescription: String = "",
@@ -133,7 +123,7 @@ enum PlannerSchemaV1: VersionedSchema {
 
         // MARK: - Logic
 
-        var prioritySortOrder: Int {
+        public var prioritySortOrder: Int {
             switch self.priority {
             case "high": 3
             case "medium": 2
@@ -142,75 +132,65 @@ enum PlannerSchemaV1: VersionedSchema {
             }
         }
 
-        func updateProgress(_ newProgress: Double) {
+        public func updateProgress(_ newProgress: Double) {
             self.progress = min(1.0, max(0.0, newProgress))
             self.modifiedAt = Date()
             if self.progress >= 1.0 {
                 self.isCompleted = true
             }
         }
-
-        static func == (lhs: SDGoal, rhs: SDGoal) -> Bool {
-            lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.id)
-        }
     }
 }
 
-// MARK: - Legacy Migration Migration Plan
+// MARK: - Migration Plan
 
-enum PlannerMigrationPlan: SchemaMigrationPlan {
-    static var stages: [MigrationStage] {
+public enum PlannerMigrationPlan: SchemaMigrationPlan {
+    public static var stages: [MigrationStage] {
         [] // No migrations yet
     }
 
-    static var schemas: [any VersionedSchema.Type] {
+    public static var schemas: [any VersionedSchema.Type] {
         [PlannerSchemaV1.self]
     }
 }
 
 // MARK: - Typealiases
 
-// These typealiases ensure that existing code using SDTask and SDGoal continues to work
-// targeting the V1 schema.
-typealias SDTask = PlannerSchemaV1.SDTask
-typealias SDGoal = PlannerSchemaV1.SDGoal
+public typealias SDTask = PlannerSchemaV1.SDTask
+public typealias SDGoal = PlannerSchemaV1.SDGoal
 
 // MARK: - Legacy Migration Extensions
 
 extension SDTask {
-    convenience init(from legacy: PlannerTask) {
+    public convenience init(from legacy: PlannerTask) {
         self.init(
             id: legacy.id,
             title: legacy.title,
-            taskDescription: legacy.description,
+            taskDescription: legacy.taskDescription ?? "",
             isCompleted: legacy.isCompleted,
-            priority: legacy.priority.rawValue,
+            priority: legacy.priority.rawValue.description,
             dueDate: legacy.dueDate,
             createdAt: legacy.createdAt,
             modifiedAt: legacy.modifiedAt,
-            calendarEventId: legacy.calendarEventId,
+            calendarEventId: nil,
             estimatedDuration: legacy.estimatedDuration,
-            sentiment: legacy.sentiment,
+            sentiment: "neutral",
             sentimentScore: legacy.sentimentScore
         )
     }
 }
 
 extension SDGoal {
-    convenience init(from legacy: Goal) {
+    public convenience init(from legacy: PlannerGoal) {
         self.init(
             id: legacy.id,
             title: legacy.title,
-            goalDescription: legacy.description,
+            goalDescription: legacy.goalDescription,
             targetDate: legacy.targetDate,
             createdAt: legacy.createdAt,
             modifiedAt: legacy.modifiedAt,
             isCompleted: legacy.isCompleted,
-            priority: legacy.priority.rawValue,
+            priority: legacy.priority.rawValue.description,
             progress: legacy.progress
         )
     }

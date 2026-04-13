@@ -1,5 +1,6 @@
 import EventKit
 import Foundation
+import PlannerAppCore
 
 /// Smart scheduling AI for PlannerApp
 class SmartScheduler {

@@ -1,9 +1,7 @@
-//
-// PlannerModels.swift
-// PlannerAppCore
-//
-
 import Foundation
+import CoreTransferable
+
+// MARK: - PlannerTask Model
 
 /// A label that can be applied to tasks or goals.
 public struct PlannerTag: Identifiable, Hashable, Codable, Sendable {
@@ -24,6 +22,15 @@ public enum TaskPriority: Int, Codable, Sendable, CaseIterable {
     case medium = 1
     case high = 2
     case critical = 3
+    
+    public var displayName: String {
+        switch self {
+        case .low: return "Low"
+        case .medium: return "Medium"
+        case .high: return "High"
+        case .critical: return "Critical"
+        }
+    }
 }
 
 /// Contextual data for task prioritization.
@@ -40,7 +47,10 @@ public struct TaskContext: Codable, Sendable {
 }
 
 /// A foundational task model for the Planner ecosystem.
-public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Sendable {
+public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Sendable, Transferable {
+    public static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .item)
+    }
     public let id: UUID
     public var title: String
     public var taskDescription: String?
@@ -50,6 +60,7 @@ public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Send
     public var dueDate: Date?
     public var estimatedDuration: TimeInterval
     public var sentimentScore: Double
+    public var calendarEventId: String?
     public var createdAt: Date
     public var modifiedAt: Date
     
@@ -62,7 +73,8 @@ public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Send
         priority: TaskPriority = .medium,
         dueDate: Date? = nil,
         estimatedDuration: TimeInterval = 1800,
-        sentimentScore: Double = 0.5
+        sentimentScore: Double = 0.5,
+        calendarEventId: String? = nil
     ) {
         self.id = id
         self.title = title
@@ -73,11 +85,11 @@ public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Send
         self.dueDate = dueDate
         self.estimatedDuration = estimatedDuration
         self.sentimentScore = sentimentScore
+        self.calendarEventId = calendarEventId
         let now = Date()
         self.createdAt = now
         self.modifiedAt = now
     }
-
 
     public static func == (lhs: PlannerTask, rhs: PlannerTask) -> Bool {
         lhs.id == rhs.id
@@ -88,7 +100,171 @@ public final class PlannerTask: Identifiable, Hashable, Codable, @unchecked Send
     }
 }
 
-/// Represents a discrete period of focused work within the application.
+/// A goal model representing long-term objectives.
+public final class PlannerGoal: Identifiable, Hashable, Codable, @unchecked Sendable {
+    public let id: UUID
+    public var title: String
+    public var goalDescription: String
+    public var targetDate: Date
+    public var isCompleted: Bool
+    public var priority: TaskPriority
+    public var progress: Double
+    public var createdAt: Date
+    public var modifiedAt: Date
+
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        goalDescription: String = "",
+        targetDate: Date,
+        isCompleted: Bool = false,
+        priority: TaskPriority = .medium,
+        progress: Double = 0.0
+    ) {
+        self.id = id
+        self.title = title
+        self.goalDescription = goalDescription
+        self.targetDate = targetDate
+        self.isCompleted = isCompleted
+        self.priority = priority
+        self.progress = progress
+        let now = Date()
+        self.createdAt = now
+        self.modifiedAt = now
+    }
+
+    public static func == (lhs: PlannerGoal, rhs: PlannerGoal) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+/// A high-level organizational structure for grouping projects and tasks.
+public final class PlannerProject: Identifiable, Hashable, Codable, @unchecked Sendable {
+    public let id: UUID
+    public var title: String
+    public var projectDescription: String
+    public var createdAt: Date
+    public var modifiedAt: Date
+    public var tasks: [PlannerTask]
+    
+    public init(id: UUID = UUID(), title: String, projectDescription: String = "", tasks: [PlannerTask] = []) {
+        self.id = id
+        self.title = title
+        self.projectDescription = projectDescription
+        let now = Date()
+        self.createdAt = now
+        self.modifiedAt = now
+        self.tasks = tasks
+    }
+
+    public static func == (lhs: PlannerProject, rhs: PlannerProject) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+/// A high-level organizational structure for grouping projects and tasks.
+public struct PlannerWorkspace: Identifiable, Codable, Sendable {
+    public let id: UUID
+    public var name: String
+    public let colorName: String
+    public let ownerId: UUID
+    public var projects: [PlannerProject]
+    
+    public init(id: UUID = UUID(), name: String, colorName: String = "blue", ownerId: UUID = UUID(), projects: [PlannerProject] = []) {
+        self.id = id
+        self.name = name
+        self.colorName = colorName
+        self.ownerId = ownerId
+        self.projects = projects
+    }
+}
+
+/// Access roles within a ecosystem.
+public enum Role: String, Codable, Sendable {
+    case owner
+    case editor
+    case viewer
+}
+
+/// A set of distinct permissions granted to a role.
+public struct Permission: Sendable {
+    public let canEdit: Bool
+    public let canDelete: Bool
+    public let canInvite: Bool
+    
+    public init(canEdit: Bool, canDelete: Bool, canInvite: Bool) {
+        self.canEdit = canEdit
+        self.canDelete = canDelete
+        self.canInvite = canInvite
+    }
+}
+
+/// A journal entry for reflecting on productivity.
+public final class PlannerJournalEntry: Identifiable, Hashable, Codable, @unchecked Sendable {
+    public let id: UUID
+    public var title: String
+    public var body: String
+    public var date: Date
+    public var mood: String
+    public var sentiment: String
+    public var sentimentScore: Double
+    public var createdAt: Date
+    public var modifiedAt: Date
+
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        body: String,
+        date: Date,
+        mood: String,
+        sentiment: String = "neutral",
+        sentimentScore: Double = 0.5
+    ) {
+        self.id = id
+        self.title = title
+        self.body = body
+        self.date = date
+        self.mood = mood
+        self.sentiment = sentiment
+        self.sentimentScore = sentimentScore
+        let now = Date()
+        self.createdAt = now
+        self.modifiedAt = now
+    }
+
+    public static func == (lhs: PlannerJournalEntry, rhs: PlannerJournalEntry) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+/// Represents an event synchronized with the system calendar.
+public struct PlannerCalendarEvent: Identifiable, Codable, Sendable {
+    public let id: UUID
+    public var title: String
+    public var date: Date
+    public var location: String?
+    
+    public init(id: UUID = UUID(), title: String, date: Date, location: String? = nil) {
+        self.id = id
+        self.title = title
+        self.date = date
+        self.location = location
+    }
+}
+
+/// Represents a discrete period of focused work.
 public struct FocusSession: Identifiable, Codable, Sendable {
     public let id: UUID
     public let startTime: Date
@@ -155,75 +331,6 @@ public struct ProductivityReport: Codable, Sendable {
     public init() {}
 }
 
-/// Access roles within a workspace.
-public enum Role: String, Codable, Sendable {
-    case owner
-    case editor
-    case viewer
-}
-
-/// A set of distinct permissions granted to a role.
-public struct Permission: Sendable {
-    public let canEdit: Bool
-    public let canDelete: Bool
-    public let canInvite: Bool
-    
-    public init(canEdit: Bool, canDelete: Bool, canInvite: Bool) {
-        self.canEdit = canEdit
-        self.canDelete = canDelete
-        self.canInvite = canInvite
-    }
-}
-
-/// A collection of tasks within a workspace.
-public struct Project: Identifiable, Codable, Sendable {
-    public let id: UUID
-    public let name: String
-    public let color: String
-    public var tasks: [PlannerTask]
-    
-    public init(id: UUID = UUID(), name: String, color: String, tasks: [PlannerTask] = []) {
-        self.id = id
-        self.name = name
-        self.color = color
-        self.tasks = tasks
-    }
-}
-
-/// A high-level organizational structure for grouping projects and tasks.
-public struct Workspace: Identifiable, Codable, Sendable {
-    public let id: UUID
-    public var name: String
-    public let colorName: String
-    public let ownerId: UUID
-    public var projects: [Project]
-    
-    public init(id: UUID = UUID(), name: String, colorName: String = "blue", ownerId: UUID = UUID(), projects: [Project] = []) {
-        self.id = id
-        self.name = name
-        self.colorName = colorName
-        self.ownerId = ownerId
-        self.projects = projects
-    }
-}
-
-
-
-/// Represents an event synchronized with the system calendar.
-public struct CalendarEvent: Identifiable, Codable, Sendable {
-    public let id: UUID
-    public var title: String
-    public var date: Date
-    public var location: String?
-    
-    public init(id: UUID = UUID(), title: String, date: Date, location: String? = nil) {
-        self.id = id
-        self.title = title
-        self.date = date
-        self.location = location
-    }
-}
-
 /// Metadata regarding a specific backup instance.
 public struct BackupInfo: Codable, Sendable, Identifiable {
     public let id: UUID
@@ -239,11 +346,9 @@ public struct BackupInfo: Codable, Sendable, Identifiable {
     }
 }
 
-/// Defines how one task relates to another in terms of execution order.
+/// Defines how one task relates to another.
 public enum DependencyType: String, Codable, Sendable {
-    /// Source task must be completed before target task can start.
     case blocks
-    /// Target task is waiting for source task.
     case blockedBy
 }
 
@@ -262,7 +367,6 @@ public struct TaskDependency: Identifiable, Codable, Sendable {
     }
 }
 
-
 /// Defines categories for task templates.
 public enum TemplateCategory: String, Codable, Sendable {
     case work
@@ -271,7 +375,7 @@ public enum TemplateCategory: String, Codable, Sendable {
     case meeting
 }
 
-/// A blueprint for creating new tasks quickly with pre-defined values.
+/// A blueprint for creating new tasks quickly.
 public struct TaskTemplate: Identifiable, Codable, Sendable {
     public let id: UUID
     public let name: String
@@ -299,10 +403,3 @@ public struct TaskTemplate: Identifiable, Codable, Sendable {
         self.checklistItems = checklistItems
     }
 }
-
-
-
-
-
-
-

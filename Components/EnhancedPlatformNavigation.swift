@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 // MARK: - Enhanced Platform Navigation
 
@@ -196,20 +197,20 @@ public struct IPadSidebarView: View {
 
             Section("Quick Actions") {
                 QuickActionButton(
-                    title: "Add Task", icon: "plus.circle", color: .blue,
+                    title: "Add PlannerTask", icon: "plus.circle", color: .blue,
                     action: {
                         // Handle add task
                     }
                 )
-                .accessibilityLabel("Add Task Button")
+                .accessibilityLabel("Add PlannerTask Button")
 
                 QuickActionButton(
-                    title: "Add Goal", icon: "target", color: .green,
+                    title: "Add PlannerGoal", icon: "target", color: .green,
                     action: {
                         // Handle add goal
                     }
                 )
-                .accessibilityLabel("Add Goal Button")
+                .accessibilityLabel("Add PlannerGoal Button")
 
                 QuickActionButton(
                     title: "Add Event", icon: "calendar.badge.plus", color: .orange,
@@ -348,16 +349,16 @@ public struct KeyboardShortcutsView: View {
                 .padding()
 
             VStack(alignment: .leading, spacing: 8) {
-                ShortcutRow(key: "⌘1", description: "Dashboard")
-                ShortcutRow(key: "⌘2", description: "Tasks")
-                ShortcutRow(key: "⌘3", description: "Goals")
-                ShortcutRow(key: "⌘4", description: "Calendar")
-                ShortcutRow(key: "⌘5", description: "Journal")
-                ShortcutRow(key: "⌘,", description: "Settings")
+                ShortcutRow(key: "⌘1", taskDescription: "Dashboard")
+                ShortcutRow(key: "⌘2", taskDescription: "Tasks")
+                ShortcutRow(key: "⌘3", taskDescription: "Goals")
+                ShortcutRow(key: "⌘4", taskDescription: "Calendar")
+                ShortcutRow(key: "⌘5", taskDescription: "Journal")
+                ShortcutRow(key: "⌘,", taskDescription: "Settings")
                 Divider()
-                ShortcutRow(key: "⌘N", description: "New Item")
-                ShortcutRow(key: "⌘F", description: "Search")
-                ShortcutRow(key: "⌘R", description: "Refresh")
+                ShortcutRow(key: "⌘N", taskDescription: "New Item")
+                ShortcutRow(key: "⌘F", taskDescription: "Search")
+                ShortcutRow(key: "⌘R", taskDescription: "Refresh")
             }
             .padding()
         }
@@ -366,7 +367,7 @@ public struct KeyboardShortcutsView: View {
 
 public struct ShortcutRow: View {
     let key: String
-    let description: String
+    let taskDescription: String
 
     public var body: some View {
         HStack {
@@ -375,7 +376,7 @@ public struct ShortcutRow: View {
                 .foregroundColor(.secondary)
                 .frame(width: 60, alignment: .leading)
 
-            Text(self.description)
+            Text(self.taskDescription)
                 .font(.body)
 
             Spacer()

@@ -2,7 +2,7 @@
 //  TaskTests.swift
 //  PlannerAppTests
 //
-//  Comprehensive test suite for Task
+//  Comprehensive test suite for PlannerTask
 //
 
 import XCTest

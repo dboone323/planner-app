@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct SettingRow<Accessory: View>: View {
     public let title: String

@@ -1,6 +1,7 @@
 // PlannerApp/Views/Calendar/SDGoalRowView.swift
 import SwiftData
 import SwiftUI
+import PlannerAppCore
 
 /// SwiftData-compatible goal row view for CalendarView.
 public struct SDGoalRowView: View {
@@ -40,7 +41,7 @@ public struct SDGoalRowView: View {
             }
             .frame(width: 50)
 
-            // Goal details
+            // PlannerGoal details
             VStack(alignment: .leading, spacing: 4) {
                 Text(self.goal.title)
                     .font(.subheadline)

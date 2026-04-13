@@ -1,7 +1,9 @@
 // Simple test version of SettingsView to verify compilation
 
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager

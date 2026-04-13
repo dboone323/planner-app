@@ -1,5 +1,6 @@
 // PlannerApp/Views/Tasks/TaskInputView.swift
 import SwiftUI
+import PlannerAppCore
 
 public struct TaskInputView: View {
     @Binding var newTaskTitle: String
@@ -7,6 +8,6 @@ public struct TaskInputView: View {
     var onAddTask: () -> Void
 
     public var body: some View {
-        Text("Task Input View")
+        Text("PlannerTask Input View")
     }
 }

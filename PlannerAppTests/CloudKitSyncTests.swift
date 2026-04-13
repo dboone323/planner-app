@@ -42,7 +42,7 @@ final class CloudKitSyncTests: XCTestCase {
     // MARK: - Sync Status Tests
 
     func testTaskModifiedAtUpdatesOnChange() throws {
-        let task = SDTask(title: "Sync Test Task")
+        let task = SDTask(title: "Sync Test PlannerTask")
         self.context.insert(task)
         try self.context.save()
 
@@ -58,7 +58,7 @@ final class CloudKitSyncTests: XCTestCase {
     }
 
     func testGoalModifiedAtUpdatesOnProgress() throws {
-        let goal = SDGoal(title: "Sync Test Goal", targetDate: Date())
+        let goal = SDGoal(title: "Sync Test PlannerGoal", targetDate: Date())
         self.context.insert(goal)
         try self.context.save()
 
@@ -77,7 +77,7 @@ final class CloudKitSyncTests: XCTestCase {
         let taskCount = 100
 
         for i in 0..<taskCount {
-            let task = SDTask(title: "Bulk Task \(i)")
+            let task = SDTask(title: "Bulk PlannerTask \(i)")
             self.context.insert(task)
         }
         try self.context.save()
@@ -92,7 +92,7 @@ final class CloudKitSyncTests: XCTestCase {
         let goalCount = 50
 
         for i in 0..<goalCount {
-            let goal = SDGoal(title: "Bulk Goal \(i)", targetDate: Date())
+            let goal = SDGoal(title: "Bulk PlannerGoal \(i)", targetDate: Date())
             self.context.insert(goal)
         }
         try self.context.save()
@@ -108,12 +108,12 @@ final class CloudKitSyncTests: XCTestCase {
     func testTaskUniqueIdConstraint() throws {
         let uuid = UUID()
 
-        let task1 = SDTask(id: uuid, title: "First Task")
+        let task1 = SDTask(id: uuid, title: "First PlannerTask")
         self.context.insert(task1)
         try self.context.save()
 
         // Attempt to insert duplicate ID should cause constraint issue
-        let task2 = SDTask(id: uuid, title: "Duplicate Task")
+        let task2 = SDTask(id: uuid, title: "Duplicate PlannerTask")
         self.context.insert(task2)
 
         // SwiftData handles unique constraint by merging (upsert)
@@ -123,7 +123,7 @@ final class CloudKitSyncTests: XCTestCase {
         let fetched = try context.fetch(descriptor)
 
         XCTAssertEqual(fetched.count, 1)
-        XCTAssertEqual(fetched.first?.title, "Duplicate Task")
+        XCTAssertEqual(fetched.first?.title, "Duplicate PlannerTask")
     }
 
     // MARK: - Data Integrity Tests

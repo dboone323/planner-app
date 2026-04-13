@@ -8,6 +8,7 @@
 
 import CloudKit
 import Foundation
+import PlannerAppCore
 
 /// Protocol for mapping CKRecord to and from local model types
 protocol RecordMappable {
@@ -18,13 +19,13 @@ protocol RecordMappable {
 
 /// Pure mapping logic for CloudKit records - no I/O operations
 enum RecordMapper {
-    // MARK: - Task Mapping
+    // MARK: - PlannerTask Mapping
 
-    /// Map a CKRecord to a Task model
+    /// Map a CKRecord to a PlannerTask model
     /// - Parameter record: The CloudKit record
-    /// - Returns: A Task model if mapping succeeds, nil otherwise
+    /// - Returns: A PlannerTask model if mapping succeeds, nil otherwise
     static func mapToTask(from record: CKRecord) -> [String: Any]? {
-        guard record.recordType == "Task" else { return nil }
+        guard record.recordType == "PlannerTask" else { return nil }
 
         var taskData: [String: Any] = [:]
         taskData["id"] = record.recordID.recordName
@@ -39,14 +40,14 @@ enum RecordMapper {
         return taskData
     }
 
-    /// Map Task model data to a CKRecord
+    /// Map PlannerTask model data to a CKRecord
     /// - Parameters:
     ///   - taskData: Dictionary containing task properties
     ///   - recordID: Optional existing record ID for updates
     /// - Returns: A CKRecord ready to be saved
     static func mapFromTask(_ taskData: [String: Any], recordID: CKRecord.ID? = nil) -> CKRecord {
         let id = recordID ?? CKRecord.ID(recordName: taskData["id"] as? String ?? UUID().uuidString)
-        let record = CKRecord(recordType: "Task", recordID: id)
+        let record = CKRecord(recordType: "PlannerTask", recordID: id)
 
         record["title"] = taskData["title"] as? String
         record["description"] = taskData["description"] as? String
@@ -57,11 +58,11 @@ enum RecordMapper {
         return record
     }
 
-    // MARK: - Goal Mapping
+    // MARK: - PlannerGoal Mapping
 
-    /// Map a CKRecord to a Goal model
+    /// Map a CKRecord to a PlannerGoal model
     static func mapToGoal(from record: CKRecord) -> [String: Any]? {
-        guard record.recordType == "Goal" else { return nil }
+        guard record.recordType == "PlannerGoal" else { return nil }
 
         var goalData: [String: Any] = [:]
         goalData["id"] = record.recordID.recordName
@@ -76,10 +77,10 @@ enum RecordMapper {
         return goalData
     }
 
-    /// Map Goal model data to a CKRecord
+    /// Map PlannerGoal model data to a CKRecord
     static func mapFromGoal(_ goalData: [String: Any], recordID: CKRecord.ID? = nil) -> CKRecord {
         let id = recordID ?? CKRecord.ID(recordName: goalData["id"] as? String ?? UUID().uuidString)
-        let record = CKRecord(recordType: "Goal", recordID: id)
+        let record = CKRecord(recordType: "PlannerGoal", recordID: id)
 
         record["title"] = goalData["title"] as? String
         record["targetValue"] = goalData["targetValue"] as? Double
@@ -92,9 +93,9 @@ enum RecordMapper {
 
     // MARK: - Calendar Event Mapping
 
-    /// Map a CKRecord to a CalendarEvent model
+    /// Map a CKRecord to a PlannerCalendarEvent model
     static func mapToEvent(from record: CKRecord) -> [String: Any]? {
-        guard record.recordType == "CalendarEvent" else { return nil }
+        guard record.recordType == "PlannerCalendarEvent" else { return nil }
 
         var eventData: [String: Any] = [:]
         eventData["id"] = record.recordID.recordName
@@ -110,10 +111,10 @@ enum RecordMapper {
         return eventData
     }
 
-    /// Map CalendarEvent model data to a CKRecord
+    /// Map PlannerCalendarEvent model data to a CKRecord
     static func mapFromEvent(_ eventData: [String: Any], recordID: CKRecord.ID? = nil) -> CKRecord {
         let id = recordID ?? CKRecord.ID(recordName: eventData["id"] as? String ?? UUID().uuidString)
-        let record = CKRecord(recordType: "CalendarEvent", recordID: id)
+        let record = CKRecord(recordType: "PlannerCalendarEvent", recordID: id)
 
         record["title"] = eventData["title"] as? String
         record["notes"] = eventData["notes"] as? String
@@ -127,9 +128,9 @@ enum RecordMapper {
 
     // MARK: - Journal Entry Mapping
 
-    /// Map a CKRecord to a JournalEntry model
+    /// Map a CKRecord to a PlannerJournalEntry model
     static func mapToJournalEntry(from record: CKRecord) -> [String: Any]? {
-        guard record.recordType == "JournalEntry" else { return nil }
+        guard record.recordType == "PlannerJournalEntry" else { return nil }
 
         var entryData: [String: Any] = [:]
         entryData["id"] = record.recordID.recordName
@@ -144,10 +145,10 @@ enum RecordMapper {
         return entryData
     }
 
-    /// Map JournalEntry model data to a CKRecord
+    /// Map PlannerJournalEntry model data to a CKRecord
     static func mapFromJournalEntry(_ entryData: [String: Any], recordID: CKRecord.ID? = nil) -> CKRecord {
         let id = recordID ?? CKRecord.ID(recordName: entryData["id"] as? String ?? UUID().uuidString)
-        let record = CKRecord(recordType: "JournalEntry", recordID: id)
+        let record = CKRecord(recordType: "PlannerJournalEntry", recordID: id)
 
         record["title"] = entryData["title"] as? String
         record["content"] = entryData["content"] as? String

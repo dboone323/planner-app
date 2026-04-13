@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 #if os(iOS)
     import UIKit
@@ -373,27 +374,27 @@ public struct AccessibilityDemoView: View {
                             ScreenReaderAnnouncement.announce("Edit mode activated")
                         },
                         .init(name: "Delete") {
-                            ScreenReaderAnnouncement.announce("Task deleted")
+                            ScreenReaderAnnouncement.announce("PlannerTask deleted")
                         },
                     ]
                 ) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        DynamicTypeText(text: "Sample Task", style: .body)
+                        DynamicTypeText(text: "Sample PlannerTask", style: .body)
                         Spacer()
                     }
                 }
 
                 AccessibleButton(
-                    title: "Add New Task",
+                    title: "Add New PlannerTask",
                     action: {
                         ScreenReaderAnnouncement.announce("Add task button pressed")
                     },
                     hint: "Opens the add task screen"
                 )
 
-                AccessibleProgressView(progress: self.progress, label: "Goal Progress")
+                AccessibleProgressView(progress: self.progress, label: "PlannerGoal Progress")
 
                 Group {
                     HStack {

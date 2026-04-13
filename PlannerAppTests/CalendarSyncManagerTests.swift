@@ -52,7 +52,7 @@ class CalendarSyncManagerTests: XCTestCase {
         _ = await manager.setupCalendar()
 
         let task = PlannerTask(
-            title: "Test Task",
+            title: "Test PlannerTask",
             taskDescription: "Notes",
             dueDate: Date(),
             estimatedDuration: 3600,
@@ -65,7 +65,7 @@ class CalendarSyncManagerTests: XCTestCase {
         
         // Verify against real store
         let savedEvent = try XCTUnwrap(realStore.event(withIdentifier: task.calendarEventId!))
-        XCTAssertEqual(savedEvent.title, "Test Task")
+        XCTAssertEqual(savedEvent.title, "Test PlannerTask")
         // EKEvent notes maps to PlannerTask taskDescription
         XCTAssertEqual(savedEvent.notes, "Notes")
         XCTAssertFalse(savedEvent.isAllDay)

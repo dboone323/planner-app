@@ -22,18 +22,18 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
             
             self.viewModel = DashboardViewModel()
             // Clear all data managers
-            TaskDataManager.shared.clearAllTasks()
-            CalendarDataManager.shared.clearAllEvents()
-            GoalDataManager.shared.clearAllGoals()
+            WorkspaceManager.shared.clearAllTasks()
+            WorkspaceManager.shared.clearAllEvents()
+            WorkspaceManager.shared.clearAllGoals()
         }
     }
 
     override nonisolated func tearDown() async throws {
         await MainActor.run {
             // Cleanup test environment
-            TaskDataManager.shared.clearAllTasks()
-            CalendarDataManager.shared.clearAllEvents()
-            GoalDataManager.shared.clearAllGoals()
+            WorkspaceManager.shared.clearAllTasks()
+            WorkspaceManager.shared.clearAllEvents()
+            WorkspaceManager.shared.clearAllGoals()
             self.viewModel = nil
         }
         try await super.tearDown()
@@ -96,9 +96,9 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let yesterday = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: today))
         let tomorrow = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
 
-        CalendarDataManager.shared.add(CalendarEvent(title: "Today Event", date: today))
-        CalendarDataManager.shared.add(CalendarEvent(title: "Yesterday Event", date: yesterday))
-        CalendarDataManager.shared.add(CalendarEvent(title: "Tomorrow Event", date: tomorrow))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Today Event", date: today))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Yesterday Event", date: yesterday))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Tomorrow Event", date: tomorrow))
 
         self.viewModel.fetchDashboardData()
 
@@ -111,9 +111,9 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testFetchDashboardDataFiltersIncompleteTasks() {
-        TaskDataManager.shared.add(PlannerTask(title: "Incomplete Task", isCompleted: false))
-        TaskDataManager.shared.add(PlannerTask(title: "Complete Task", isCompleted: true))
-        TaskDataManager.shared.add(PlannerTask(title: "Another Incomplete", isCompleted: false))
+        WorkspaceManager.shared.add(PlannerTask(title: "Incomplete PlannerTask", isCompleted: false))
+        WorkspaceManager.shared.add(PlannerTask(title: "Complete PlannerTask", isCompleted: true))
+        WorkspaceManager.shared.add(PlannerTask(title: "Another Incomplete", isCompleted: false))
 
         self.viewModel.fetchDashboardData()
 
@@ -129,11 +129,11 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
         let nextMonth = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 30, to: today))
 
-        GoalDataManager.shared.add(
-            Goal(title: "This Week", description: "Soon", targetDate: nextWeek)
+        WorkspaceManager.shared.add(
+            PlannerGoal(title: "This Week", taskDescription: "Soon", targetDate: nextWeek)
         )
-        GoalDataManager.shared.add(
-            Goal(title: "Next Month", description: "Later", targetDate: nextMonth)
+        WorkspaceManager.shared.add(
+            PlannerGoal(title: "Next Month", taskDescription: "Later", targetDate: nextMonth)
         )
 
         self.viewModel.fetchDashboardData()
@@ -149,7 +149,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
     func testFetchDashboardDataRespectsLimit() {
         // Add 5 incomplete tasks
         for i in 1...5 {
-            TaskDataManager.shared.add(PlannerTask(title: "Task \(i)", isCompleted: false))
+            WorkspaceManager.shared.add(PlannerTask(title: "PlannerTask \(i)", isCompleted: false))
         }
 
         self.viewModel.fetchDashboardData()
@@ -173,9 +173,9 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
             Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: today)
         )
 
-        CalendarDataManager.shared.add(CalendarEvent(title: "Evening", date: evening))
-        CalendarDataManager.shared.add(CalendarEvent(title: "Morning", date: morning))
-        CalendarDataManager.shared.add(CalendarEvent(title: "Afternoon", date: afternoon))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Evening", date: evening))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Morning", date: morning))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Afternoon", date: afternoon))
 
         self.viewModel.fetchDashboardData()
 
@@ -195,9 +195,9 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let day5 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
         let day1 = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: today))
 
-        GoalDataManager.shared.add(Goal(title: "Day 3", description: "", targetDate: day3))
-        GoalDataManager.shared.add(Goal(title: "Day 5", description: "", targetDate: day5))
-        GoalDataManager.shared.add(Goal(title: "Day 1", description: "", targetDate: day1))
+        WorkspaceManager.shared.add(PlannerGoal(title: "Day 3", taskDescription: "", targetDate: day3))
+        WorkspaceManager.shared.add(PlannerGoal(title: "Day 5", taskDescription: "", targetDate: day5))
+        WorkspaceManager.shared.add(PlannerGoal(title: "Day 1", taskDescription: "", targetDate: day1))
 
         self.viewModel.fetchDashboardData()
 
@@ -210,7 +210,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testRefreshDataCallsFetchDashboardData() async {
-        TaskDataManager.shared.add(PlannerTask(title: "Test Task", isCompleted: false))
+        WorkspaceManager.shared.add(PlannerTask(title: "Test PlannerTask", isCompleted: false))
 
         await self.viewModel.refreshData()
 
@@ -220,9 +220,9 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testRefreshDataUpdatesQuickStats() async {
-        TaskDataManager.shared.add(PlannerTask(title: "Task 1", isCompleted: false))
-        TaskDataManager.shared.add(PlannerTask(title: "Task 2", isCompleted: true))
-        GoalDataManager.shared.add(Goal(title: "Goal 1", description: "", targetDate: Date()))
+        WorkspaceManager.shared.add(PlannerTask(title: "PlannerTask 1", isCompleted: false))
+        WorkspaceManager.shared.add(PlannerTask(title: "PlannerTask 2", isCompleted: true))
+        WorkspaceManager.shared.add(PlannerGoal(title: "PlannerGoal 1", taskDescription: "", targetDate: Date()))
 
         await self.viewModel.refreshData()
 
@@ -248,8 +248,8 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let midnight = Calendar.current.startOfDay(for: Date())
         let almostMidnight = midnight.addingTimeInterval(86399) // 23:59:59
 
-        CalendarDataManager.shared.add(CalendarEvent(title: "Start of Day", date: midnight))
-        CalendarDataManager.shared.add(CalendarEvent(title: "End of Day", date: almostMidnight))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Start of Day", date: midnight))
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "End of Day", date: almostMidnight))
 
         self.viewModel.fetchDashboardData()
 
@@ -262,7 +262,7 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
     func testHandlesLargeDatasets() {
         // Add 100 tasks
         for i in 1...100 {
-            TaskDataManager.shared.add(PlannerTask(title: "Task \(i)", isCompleted: false))
+            WorkspaceManager.shared.add(PlannerTask(title: "PlannerTask \(i)", isCompleted: false))
         }
 
         self.viewModel.fetchDashboardData()
@@ -279,15 +279,15 @@ final class DashboardViewModelTests: XCTestCase, @unchecked Sendable {
         let today = Date()
         let nextWeek = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 5, to: today))
 
-        TaskDataManager.shared.add(
+        WorkspaceManager.shared.add(
             PlannerTask(title: "Buy groceries", isCompleted: false, priority: .high)
         )
-        TaskDataManager.shared.add(
+        WorkspaceManager.shared.add(
             PlannerTask(title: "Finish project", isCompleted: false, priority: .medium)
         )
-        CalendarDataManager.shared.add(CalendarEvent(title: "Team meeting", date: today))
-        GoalDataManager.shared.add(
-            Goal(title: "Learn Swift", description: "Complete tutorial", targetDate: nextWeek)
+        WorkspaceManager.shared.add(PlannerCalendarEvent(title: "Team meeting", date: today))
+        WorkspaceManager.shared.add(
+            PlannerGoal(title: "Learn Swift", taskDescription: "Complete tutorial", targetDate: nextWeek)
         )
 
         self.viewModel.fetchDashboardData()

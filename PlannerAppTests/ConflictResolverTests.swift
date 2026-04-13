@@ -9,7 +9,7 @@ class ConflictResolverTests: XCTestCase {
     /// In 100% Reality mode, we work with real records and accept their system-managed lifecycle.
     func createRecord(id: String, title: String) -> CKRecord {
         let recordID = CKRecord.ID(recordName: id)
-        let record = CKRecord(recordType: "Task", recordID: recordID)
+        let record = CKRecord(recordType: "PlannerTask", recordID: recordID)
         record["title"] = title
         return record
     }

@@ -1,6 +1,8 @@
 // PlannerApp/Components/Goals/GoalsHeaderView.swift
 import Foundation
+import PlannerAppCore
 import SwiftUI
+import PlannerAppCore
 
 public struct GoalsHeaderView: View {
     @EnvironmentObject var themeManager: ThemeManager

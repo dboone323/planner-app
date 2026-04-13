@@ -1,4 +1,5 @@
 import SwiftUI
+import PlannerAppCore
 
 public struct UpcomingItemView: View {
     let item: UpcomingItem

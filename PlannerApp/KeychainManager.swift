@@ -1,4 +1,5 @@
 import Foundation
+import PlannerAppCore
 import Security
 
 /// Secure Keychain Manager for handling sensitive data storage

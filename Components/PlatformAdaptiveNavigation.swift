@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlannerAppCore
 
 struct PlatformAdaptiveNavigation<Content: View>: View {
     let content: Content

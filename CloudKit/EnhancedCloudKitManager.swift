@@ -9,13 +9,15 @@ import CloudKit
 import Combine
 import Network // For NWPathMonitor
 import SwiftUI
+import PlannerAppCore
 
 // Import utilities and models
 import Foundation
+import PlannerAppCore
 
-/// Typealias to prevent conflict with Task model
+/// Typealias to prevent conflict with PlannerTask model
 typealias AsyncTask = _Concurrency.Task
-// typealias PlannerTask = Task
+// typealias PlannerTask = PlannerTask
 
 /// Conflict type for sync conflicts
 enum ConflictType {
@@ -74,7 +76,7 @@ public class EnhancedCloudKitManager: ObservableObject {
             }
         }
 
-        var description: String {
+        var taskDescription: String {
             switch self {
             case .idle: "Ready to sync"
             case .syncing: "Syncing..."
@@ -293,7 +295,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
         // Using the non-deprecated initializer
         let subscription = CKQuerySubscription(
-            recordType: "Task",
+            recordType: "PlannerTask",
             predicate: predicate,
             subscriptionID: "task-changes",
             options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
@@ -317,7 +319,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
         // Using the non-deprecated initializer
         let subscription = CKQuerySubscription(
-            recordType: "Goal",
+            recordType: "PlannerGoal",
             predicate: predicate,
             subscriptionID: "goal-changes",
             options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
@@ -341,7 +343,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
         // Using the non-deprecated initializer
         let subscription = CKQuerySubscription(
-            recordType: "CalendarEvent",
+            recordType: "PlannerCalendarEvent",
             predicate: predicate,
             subscriptionID: "event-changes",
             options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
@@ -365,7 +367,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
         // Using the non-deprecated initializer
         let subscription = CKQuerySubscription(
-            recordType: "JournalEntry",
+            recordType: "PlannerJournalEntry",
             predicate: predicate,
             subscriptionID: "journal-changes",
             options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
@@ -431,7 +433,7 @@ public class EnhancedCloudKitManager: ObservableObject {
 
     private func syncTasks() async throws {
         // Fetch remote tasks
-        let query = CKQuery(recordType: "Task", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerTask", predicate: NSPredicate(value: true))
         let (records, _) = try await database.records(matching: query)
 
         var conflicts: [SyncConflict] = []
@@ -458,7 +460,7 @@ public class EnhancedCloudKitManager: ObservableObject {
     }
 
     private func syncGoals() async throws {
-        let query = CKQuery(recordType: "Goal", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerGoal", predicate: NSPredicate(value: true))
         let (records, _) = try await database.records(matching: query)
 
         for (_, result) in records {
@@ -476,7 +478,7 @@ public class EnhancedCloudKitManager: ObservableObject {
     }
 
     private func syncEvents() async throws {
-        let query = CKQuery(recordType: "CalendarEvent", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerCalendarEvent", predicate: NSPredicate(value: true))
         let (records, _) = try await database.records(matching: query)
 
         for (_, result) in records {
@@ -494,7 +496,7 @@ public class EnhancedCloudKitManager: ObservableObject {
     }
 
     private func syncJournalEntries() async throws {
-        let query = CKQuery(recordType: "JournalEntry", predicate: NSPredicate(value: true))
+        let query = CKQuery(recordType: "PlannerJournalEntry", predicate: NSPredicate(value: true))
         let (records, _) = try await database.records(matching: query)
 
         for (_, result) in records {
@@ -575,7 +577,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         }
     }
 
-    // MARK: - Background Task Management
+    // MARK: - Background PlannerTask Management
 
     private func beginBackgroundTask() {
         #if os(iOS)
@@ -675,7 +677,7 @@ public class EnhancedCloudKitManager: ObservableObject {
         self.syncStatus = .syncing
 
         do {
-            let query = CKQuery(recordType: "Task", predicate: NSPredicate(value: true))
+            let query = CKQuery(recordType: "PlannerTask", predicate: NSPredicate(value: true))
             let (records, _) = try await database.records(matching: query)
 
             let recordIDs = records.compactMap { _, result in
@@ -808,17 +810,17 @@ public class EnhancedCloudKitManager: ObservableObject {
         print("Uploading \(tasks.count) tasks to CloudKit")
     }
 
-    func uploadGoals(_ goals: [Goal]) async throws {
+    func uploadGoals(_ goals: [PlannerGoal]) async throws {
         // Stub implementation for goal uploading
         print("Uploading \(goals.count) goals to CloudKit")
     }
 
-    func uploadEvents(_ events: [CalendarEvent]) async throws {
+    func uploadEvents(_ events: [PlannerCalendarEvent]) async throws {
         // Stub implementation for event uploading
         print("Uploading \(events.count) events to CloudKit")
     }
 
-    func uploadJournalEntries(_ entries: [JournalEntry]) async throws {
+    func uploadJournalEntries(_ entries: [PlannerJournalEntry]) async throws {
         // Stub implementation for journal entry uploading
         print("Uploading \(entries.count) journal entries to CloudKit")
     }
@@ -826,35 +828,35 @@ public class EnhancedCloudKitManager: ObservableObject {
     /// Placeholder local fetch/save methods - these should call your DataManagers
     /// These need to be implemented properly by interacting with your existing DataManagers
     private func fetchLocalTasks() async throws -> [PlannerTask] {
-        TaskDataManager.shared.load()
+        WorkspaceManager.shared.load()
     }
 
     private func saveLocalTasks(_ tasks: [PlannerTask]) async throws {
-        TaskDataManager.shared.save(tasks: tasks)
+        WorkspaceManager.shared.save(tasks: tasks)
     }
 
-    private func fetchLocalGoals() async throws -> [Goal] {
-        GoalDataManager.shared.load()
+    private func fetchLocalGoals() async throws -> [PlannerGoal] {
+        WorkspaceManager.shared.load()
     }
 
-    private func saveLocalGoals(_ goals: [Goal]) async throws {
-        GoalDataManager.shared.save(goals: goals)
+    private func saveLocalGoals(_ goals: [PlannerGoal]) async throws {
+        WorkspaceManager.shared.save(goals: goals)
     }
 
-    private func fetchLocalEvents() async throws -> [CalendarEvent] {
-        CalendarDataManager.shared.load()
+    private func fetchLocalEvents() async throws -> [PlannerCalendarEvent] {
+        WorkspaceManager.shared.load()
     }
 
-    private func saveLocalEvents(_ events: [CalendarEvent]) async throws {
-        CalendarDataManager.shared.save(events: events)
+    private func saveLocalEvents(_ events: [PlannerCalendarEvent]) async throws {
+        WorkspaceManager.shared.save(events: events)
     }
 
-    private func fetchLocalJournalEntries() async throws -> [JournalEntry] {
-        JournalDataManager.shared.load()
+    private func fetchLocalJournalEntries() async throws -> [PlannerJournalEntry] {
+        WorkspaceManager.shared.load()
     }
 
-    private func saveLocalJournalEntries(_ entries: [JournalEntry]) async throws {
-        JournalDataManager.shared.save(entries: entries)
+    private func saveLocalJournalEntries(_ entries: [PlannerJournalEntry]) async throws {
+        WorkspaceManager.shared.save(entries: entries)
     }
 }
 
@@ -936,7 +938,7 @@ public struct EnhancedSyncStatusView: View {
             return "Not signed into iCloud"
         }
 
-        return self.cloudKit.syncStatus.description
+        return self.cloudKit.syncStatus.taskDescription
     }
 
     private var statusColor: Color {
@@ -993,7 +995,7 @@ extension EnhancedCloudKitManager {
     }
 
     /// Upload multiple goals to CloudKit in efficient batches
-    func uploadGoalsInBatches(_ goals: [Goal]) async throws {
+    func uploadGoalsInBatches(_ goals: [PlannerGoal]) async throws {
         let batchSize = 100
         for batch in stride(from: 0, to: goals.count, by: batchSize) {
             let endIndex = min(batch + batchSize, goals.count)
@@ -1041,7 +1043,7 @@ extension EnhancedCloudKitManager {
         do {
             // Subscription for tasks
             let taskSubscription = CKQuerySubscription(
-                recordType: "Task",
+                recordType: "PlannerTask",
                 predicate: NSPredicate(value: true),
                 subscriptionID: "TaskSubscription",
                 options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]
@@ -1055,7 +1057,7 @@ extension EnhancedCloudKitManager {
 
             // Similar subscriptions for Goals, JournalEntries, and CalendarEvents
             let goalSubscription = CKQuerySubscription(
-                recordType: "Goal",
+                recordType: "PlannerGoal",
                 predicate: NSPredicate(value: true),
                 subscriptionID: "GoalSubscription",
                 options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion]

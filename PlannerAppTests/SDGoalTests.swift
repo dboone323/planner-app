@@ -29,7 +29,7 @@ final class SDGoalTests: XCTestCase {
     func testSDGoalInitialization() {
         let targetDate = Date().addingTimeInterval(86400 * 30) // 30 days from now
         let goal = SDGoal(
-            title: "Test Goal",
+            title: "Test PlannerGoal",
             goalDescription: "Test Description",
             targetDate: targetDate,
             isCompleted: false,
@@ -37,7 +37,7 @@ final class SDGoalTests: XCTestCase {
             progress: 0.5
         )
 
-        XCTAssertEqual(goal.title, "Test Goal")
+        XCTAssertEqual(goal.title, "Test PlannerGoal")
         XCTAssertEqual(goal.goalDescription, "Test Description")
         XCTAssertEqual(goal.priority, 3)
         XCTAssertEqual(goal.progress, 0.5, accuracy: 0.001)
@@ -47,9 +47,9 @@ final class SDGoalTests: XCTestCase {
     }
 
     func testSDGoalDefaultValues() {
-        let goal = SDGoal(title: "Minimal Goal", targetDate: Date())
+        let goal = SDGoal(title: "Minimal PlannerGoal", targetDate: Date())
 
-        XCTAssertEqual(goal.title, "Minimal Goal")
+        XCTAssertEqual(goal.title, "Minimal PlannerGoal")
         XCTAssertEqual(goal.goalDescription, "")
         XCTAssertEqual(goal.priority, 2)
         XCTAssertEqual(goal.progress, 0.0, accuracy: 0.001)
@@ -60,7 +60,7 @@ final class SDGoalTests: XCTestCase {
 
     func testSDGoalPersistence() throws {
         let goal = SDGoal(
-            title: "Persistent Goal",
+            title: "Persistent PlannerGoal",
             goalDescription: "Long term objective",
             targetDate: Date().addingTimeInterval(86400 * 90),
             priority: 2,
@@ -72,7 +72,7 @@ final class SDGoalTests: XCTestCase {
 
         // Fetch back
         let descriptor = FetchDescriptor<SDGoal>(
-            predicate: #Predicate { $0.title == "Persistent Goal" }
+            predicate: #Predicate { $0.title == "Persistent PlannerGoal" }
         )
         let fetched = try context.fetch(descriptor)
 
@@ -82,20 +82,20 @@ final class SDGoalTests: XCTestCase {
     }
 
     func testSDGoalUpdate() throws {
-        let goal = SDGoal(title: "Original Goal", targetDate: Date())
+        let goal = SDGoal(title: "Original PlannerGoal", targetDate: Date())
         self.context.insert(goal)
         try self.context.save()
 
         // Update progress
         goal.progress = 0.75
-        goal.title = "Updated Goal"
+        goal.title = "Updated PlannerGoal"
         try self.context.save()
 
         // Verify
         let descriptor = FetchDescriptor<SDGoal>()
         let fetched = try context.fetch(descriptor)
 
-        XCTAssertEqual(fetched.first?.title, "Updated Goal")
+        XCTAssertEqual(fetched.first?.title, "Updated PlannerGoal")
         XCTAssertEqual(fetched.first?.progress ?? 0, 0.75, accuracy: 0.001)
     }
 
