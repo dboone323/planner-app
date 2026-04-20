@@ -29,8 +29,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        sharedKitDependency,
-        .package(path: "../healthquest")
+        sharedKitDependency
     ],
     targets: [
         // Application core framework
@@ -49,8 +48,7 @@ let package = Package(
             name: "PlannerAgentCore",
             dependencies: [
                 "PlannerAppCore",
-                .product(name: "SharedKit", package: "shared-kit"),
-                .product(name: "HealthQuestCore", package: "healthquest")
+                .product(name: "SharedKit", package: "shared-kit")
             ],
             path: "Sources/PlannerAgentCore",
             swiftSettings: [

@@ -6,11 +6,6 @@
 	objectVersion = 90;
 	objects = {
 
-/* Begin XCSwiftPackageProductDependency section */
-		68F000022DC0000200092697 /* PlannerAppCore */ = {isa = XCSwiftPackageProductDependency; package = 68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */; productName = PlannerAppCore; };
-		68F000032DC0000300092697 /* PlannerAgentCore */ = {isa = XCSwiftPackageProductDependency; package = 68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */; productName = PlannerAgentCore; };
-/* End XCSwiftPackageProductDependency section */
-
 /* Begin PBXBuildFile section */
 		0509AF50C02984F80B7097A5 /* Tasks/SDTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF7236B16280C3F2D8F29E /* Tasks/SDTaskListView.swift */; };
 		0631A476FC374621BC21A58C /* Platform/PlatformFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC6142FC88F4A8B969FE162 /* Platform/PlatformFeatures.swift */; };
@@ -22,7 +17,8 @@
 		21BAD7D2378327B009F15F9D /* JournalEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BD86FF3B81ABBF6E80B3F5 /* JournalEmptyStateView.swift */; };
 		249783CC7293CA1AC4FE3F41 /* GoalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CE66A27B669533E41CF4ED /* GoalItemView.swift */; };
 		294A965B2C181381C5794419 /* TaskManagerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C170FDFEBC7979AC62BA42F5 /* TaskManagerHeaderView.swift */; };
-		2979003D497008247A47681B /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C94F4AAD22B1FF3C05D35B2 /* TaskRow.swift */; };		32249CDEC69EAC530CFCBAEA /* CalendarSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8A2226D0D1C337165DD59 /* CalendarSyncManager.swift */; };
+		2979003D497008247A47681B /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C94F4AAD22B1FF3C05D35B2 /* TaskRow.swift */; };
+		32249CDEC69EAC530CFCBAEA /* CalendarSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA8A2226D0D1C337165DD59 /* CalendarSyncManager.swift */; };
 		35AE9E7F2E454E2EBE420FC1 /* Components/EnhancedPlatformNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DD74B7533C421198F24E98 /* Components/EnhancedPlatformNavigation.swift */; };
 		59B649CEF0CB23ADE638EFCD /* QuickStatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67ACE95BBA199F7EAE8FE14 /* QuickStatCard.swift */; };
 		5B7F39BAB84F61147B4EC7C7 /* ConflictResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B0F0F3148FD3DCAEBC105E /* ConflictResolver.swift */; };
@@ -36,7 +32,8 @@
 		683216312DE49E4C003EDB36 /* CloudKitOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683216252DE49E4C003EDB36 /* CloudKitOnboardingView.swift */; };
 		683216322DE49E4C003EDB36 /* SyncStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6832162B2DE49E4C003EDB36 /* SyncStatusView.swift */; };
 		683216332DE49E4C003EDB36 /* iOSAdaptivePopups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683216282DE49E4C003EDB36 /* iOSAdaptivePopups.swift */; };
-		683216342DE49E4C003EDB36 /* ModernCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683216292DE49E4C003EDB36 /* ModernCard.swift */; };		685D29CA2DC14A7900967CFB /* DataManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29C92DC14A7900967CFB /* DataManagerError.swift */; };
+		683216342DE49E4C003EDB36 /* ModernCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683216292DE49E4C003EDB36 /* ModernCard.swift */; };
+		685D29CA2DC14A7900967CFB /* DataManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29C92DC14A7900967CFB /* DataManagerError.swift */; };
 		685D29D42DC14EB000967CFB /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29D32DC14EA900967CFB /* DashboardViewModel.swift */; };
 		685D29D72DC1542000967CFB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29D62DC1542000967CFB /* SettingsView.swift */; };
 		685D29D92DC1545E00967CFB /* AppSettingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29D82DC1545E00967CFB /* AppSettingKeys.swift */; };
@@ -44,6 +41,8 @@
 		685D29DF2DC15A2100967CFB /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D29DE2DC15A2100967CFB /* ThemeManager.swift */; };
 		686B16902DE62BF200FA5A84 /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686B168F2DE62BF200FA5A84 /* NotificationExtensions.swift */; };
 		686B16912DE62BF200FA5A84 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686B168E2DE62BF200FA5A84 /* NetworkMonitor.swift */; };
+		6889477C2F92BEEE00D684DD /* PlannerAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = 68F000022DC0000200092697 /* PlannerAppCore */; };
+		6889477D2F92BEEE00D684DD /* PlannerAgentCore in Frameworks */ = {isa = PBXBuildFile; productRef = 68F000032DC0000300092697 /* PlannerAgentCore */; };
 		68F097572DC0229600092697 /* PlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F097562DC020BC00092697 /* PlannerApp.swift */; };
 		68F097592DC0232400092697 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F097552DC020A200092697 /* MainTabView.swift */; };
 		68F0975A2DC023C100092697 /* AddCalendarEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F097532DC0203600092697 /* AddCalendarEventView.swift */; };
@@ -58,15 +57,18 @@
 		69A6A041A2EEA5D9FAF534A4 /* ProgressUpdateSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90D4582C55CDBEFE61F21F /* ProgressUpdateSheet.swift */; };
 		6B77786B01CC93574EDE8046 /* JournalHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2739643F6B9EF7269FC1F2 /* JournalHeaderView.swift */; };
 		71A0695ED3E4DA9D7A4B732C /* JournalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD109E92AF51E8CD49A8BF8B /* JournalListView.swift */; };
-		780673CFFB374C9A9EA50B1D /* Views/Calendar/GoalRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC37A48E0964021A66D4818 /* Views/Calendar/GoalRowView.swift */; };		7DF8187049581FF6C9402637 /* RecordMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9258D54E3B0F110DB1648847 /* RecordMapper.swift */; };
+		780673CFFB374C9A9EA50B1D /* Views/Calendar/GoalRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC37A48E0964021A66D4818 /* Views/Calendar/GoalRowView.swift */; };
+		7DF8187049581FF6C9402637 /* RecordMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9258D54E3B0F110DB1648847 /* RecordMapper.swift */; };
 		809EA9A9C2704FAD9D8CEE19 /* Components/SentimentBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A72B3DFC9274BC1A4AED333 /* Components/SentimentBadge.swift */; };
 		81AF11E95E35F0BDDDD54B71 /* UpcomingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822D76E9EE901F530EA36CD /* UpcomingItemView.swift */; };
 		8A43F49438381640BA9D6AF0 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2A717B309B616481B7BA0E /* TaskCardView.swift */; };
 		92743B29CFC05A1D9AD104E3 /* GoalsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E365566F7FC5BBEAC8DBB /* GoalsEmptyStateView.swift */; };
-		92C6D340BC754658825D713F /* Views/Calendar/EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143769D581A1407585E7A8B9 /* Views/Calendar/EventRowView.swift */; };		9CF888A7AD4D422C87189DD3 /* Views/Calendar/CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113774714F674A5E8121FF9B /* Views/Calendar/CalendarComponents.swift */; };
+		92C6D340BC754658825D713F /* Views/Calendar/EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143769D581A1407585E7A8B9 /* Views/Calendar/EventRowView.swift */; };
+		9CF888A7AD4D422C87189DD3 /* Views/Calendar/CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113774714F674A5E8121FF9B /* Views/Calendar/CalendarComponents.swift */; };
 		A76AD489B1782EADBAB2143B /* JournalRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582BE53AF6BD3B42500BBFEE /* JournalRow.swift */; };
 		A98E4989293C4E63A94B04DF /* Styling/ModernThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C35CB789C345C39F0E55A3 /* Styling/ModernThemes.swift */; };
-		AF78F1B42F8AF9252F13DE45 /* SwiftDataTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CE9A0266FF1BF5B24686C4 /* SwiftDataTaskManager.swift */; };		B9AE12A20B114A92A5FCA3CE /* Views/Journal/SentimentAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1FCB7086C4C968335F2BD /* Views/Journal/SentimentAnalyticsView.swift */; };
+		AF78F1B42F8AF9252F13DE45 /* SwiftDataTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CE9A0266FF1BF5B24686C4 /* SwiftDataTaskManager.swift */; };
+		B9AE12A20B114A92A5FCA3CE /* Views/Journal/SentimentAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE1FCB7086C4C968335F2BD /* Views/Journal/SentimentAnalyticsView.swift */; };
 		BE39633A2A134D4F112E82F9 /* QuickActionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0106DDABAEA7A50890F935E6 /* QuickActionCard.swift */; };
 		C281D26FA91D4D84A1BACB90 /* CloudKit/CloudKitMigrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D83ECDC90B4A4E86570F04 /* CloudKit/CloudKitMigrationHelper.swift */; };
 		CECD1CA877541BE3DD68D911 /* SwiftDataGoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E22E219DFA7636D96BD27 /* SwiftDataGoalManager.swift */; };
@@ -136,7 +138,8 @@
 		686B168F2DE62BF200FA5A84 /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		68F097152DC01EFA00092697 /* PlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F097232DC01EFB00092697 /* PlannerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		68F0972D2DC01EFB00092697 /* PlannerAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };		68F0974D2DC0201100092697 /* AddJournalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJournalEntryView.swift; sourceTree = "<group>"; };
+		68F0972D2DC01EFB00092697 /* PlannerAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		68F0974D2DC0201100092697 /* AddJournalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJournalEntryView.swift; sourceTree = "<group>"; };
 		68F0974E2DC0201100092697 /* JournalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalDetailView.swift; sourceTree = "<group>"; };
 		68F0974F2DC0201100092697 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
 		68F097502DC0202000092697 /* TaskManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerView.swift; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 		68F097122DC01EFA00092697 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				6889477D2F92BEEE00D684DD /* PlannerAgentCore in Frameworks */,
+				6889477C2F92BEEE00D684DD /* PlannerAppCore in Frameworks */,
 			);
 		};
 		68F097202DC01EFB00092697 /* Frameworks */ = {
@@ -355,7 +360,6 @@
 			isa = PBXGroup;
 			children = (
 				685D29C92DC14A7900967CFB /* DataManagerError.swift */,
-				68F0974C2DC01FF500092697 /* GoalDataManager.swift */,
 				65CE9A0266FF1BF5B24686C4 /* SwiftDataTaskManager.swift */,
 				118E22E219DFA7636D96BD27 /* SwiftDataGoalManager.swift */,
 			);
@@ -456,13 +460,13 @@
 				68F097172DC01EFA00092697 /* PlannerApp */,
 			);
 			name = PlannerApp;
-			productName = PlannerApp;
-			productReference = 68F097152DC01EFA00092697 /* PlannerApp.app */;
-			productType = "com.apple.product-type.application";
 			packageProductDependencies = (
 				68F000022DC0000200092697 /* PlannerAppCore */,
 				68F000032DC0000300092697 /* PlannerAgentCore */,
 			);
+			productName = PlannerApp;
+			productReference = 68F097152DC01EFA00092697 /* PlannerApp.app */;
+			productType = "com.apple.product-type.application";
 		};
 		68F097222DC01EFB00092697 /* PlannerAppTests */ = {
 			isa = PBXNativeTarget;
@@ -542,8 +546,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				556F5515F64C41CA9BB91AFE /* XCLocalSwiftPackageReference "../shared-kit" */,
-			    68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */,
-            );
+				68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */,
+			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 68F097162DC01EFA00092697 /* Products */;
 			projectDirPath = "";
@@ -577,7 +581,8 @@
 /* Begin PBXSourcesBuildPhase section */
 		68F097112DC01EFA00092697 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			files = (				685D29D72DC1542000967CFB /* SettingsView.swift in Sources */,
+			files = (
+				685D29D72DC1542000967CFB /* SettingsView.swift in Sources */,
 				68F097612DC023EB00092697 /* JournalView.swift in Sources */,
 				68F0975B2DC023C700092697 /* CalendarView.swift in Sources */,
 				685D29CA2DC14A7900967CFB /* DataManagerError.swift in Sources */,
@@ -621,8 +626,9 @@
 				686B16912DE62BF200FA5A84 /* NetworkMonitor.swift in Sources */,
 				16FA9BF3C41C4EA2B946F14D /* Views/Settings/ThemePreviewView.swift in Sources */,
 				18E319D4BC52297CAF6E41EC /* GoalsHeaderView.swift in Sources */,
-				5D74BB8E1068F0F00D247109 /* GoalsListView.swift in Sources */,				69A6A041A2EEA5D9FAF534A4 /* ProgressUpdateSheet.swift in Sources */,
-				7B399837B288FA4C1F002145 /* CalendarDataManager.swift in Sources */,				92743B29CFC05A1D9AD104E3 /* GoalsEmptyStateView.swift in Sources */,
+				5D74BB8E1068F0F00D247109 /* GoalsListView.swift in Sources */,
+				69A6A041A2EEA5D9FAF534A4 /* ProgressUpdateSheet.swift in Sources */,
+				92743B29CFC05A1D9AD104E3 /* GoalsEmptyStateView.swift in Sources */,
 				249783CC7293CA1AC4FE3F41 /* GoalItemView.swift in Sources */,
 				21BAD7D2378327B009F15F9D /* JournalEmptyStateView.swift in Sources */,
 				6B77786B01CC93574EDE8046 /* JournalHeaderView.swift in Sources */,
@@ -638,7 +644,8 @@
 				8A43F49438381640BA9D6AF0 /* TaskCardView.swift in Sources */,
 				7DF8187049581FF6C9402637 /* RecordMapper.swift in Sources */,
 				5B7F39BAB84F61147B4EC7C7 /* ConflictResolver.swift in Sources */,
-				32249CDEC69EAC530CFCBAEA /* CalendarSyncManager.swift in Sources */,				AF78F1B42F8AF9252F13DE45 /* SwiftDataTaskManager.swift in Sources */,
+				32249CDEC69EAC530CFCBAEA /* CalendarSyncManager.swift in Sources */,
+				AF78F1B42F8AF9252F13DE45 /* SwiftDataTaskManager.swift in Sources */,
 				CECD1CA877541BE3DD68D911 /* SwiftDataGoalManager.swift in Sources */,
 				1ED43D9E88776B18B3C67557 /* Tasks/SDTaskRow.swift in Sources */,
 				0509AF50C02984F80B7097A5 /* Tasks/SDTaskListView.swift in Sources */,
@@ -1013,18 +1020,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ".";
-		};
 		556F5515F64C41CA9BB91AFE /* XCLocalSwiftPackageReference "../shared-kit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../shared-kit";
 		};
+		68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		68F000022DC0000100092697 /* PlannerAgentCore */ = {
+		68F000022DC0000200092697 /* PlannerAppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */;
+			productName = PlannerAppCore;
+		};
+		68F000032DC0000300092697 /* PlannerAgentCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 68F000012DC0000100092697 /* XCLocalSwiftPackageReference "." */;
 			productName = PlannerAgentCore;
